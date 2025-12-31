@@ -99,6 +99,10 @@
 		background-color: var(--highlight-bg-color) !important;
 	}
 }
+
+.chat-view[data-type="search-results"] .chat-content {
+	margin-top: 45px;
+}
 </style>
 
 <script lang="ts">
