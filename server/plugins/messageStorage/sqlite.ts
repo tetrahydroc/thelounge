@@ -570,8 +570,20 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		// Flush any pending batched writes before searching
 		await this.flushBatch();
 
+		const searchTermParts = query.searchTerm.split(" ");
+
+		let userFilter: string | null = null;
+
+		for (const part of searchTermParts) {
+			if (part.startsWith("from:")) {
+				userFilter = part.slice(5).toLowerCase();
+				searchTermParts.splice(searchTermParts.indexOf(part), 1);
+				break;
+			}
+		}
+
 		// Using the '@' character to escape '%' and '_' in patterns.
-		const escapedSearchTerm = query.searchTerm.replace(/([%_@])/g, "@$1");
+		const escapedSearchTerm = searchTermParts.join(" ").replace(/([%_@])/g, "@$1");
 
 		let select =
 			"SELECT id, msg, type, time, network, channel FROM messages WHERE type = 'message' AND json_extract(msg, '$.text') LIKE ? ESCAPE '@'";
@@ -585,6 +597,11 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		if (query.channelName) {
 			select += " AND channel = ? ";
 			params.push(query.channelName.toLowerCase());
+		}
+
+		if (userFilter) {
+			select += " AND LOWER(json_extract(msg, '$.from.nick')) = ? ";
+			params.push(userFilter.toLowerCase());
 		}
 
 		const maxResults = 100;
