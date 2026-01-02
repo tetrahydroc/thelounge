@@ -573,12 +573,33 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		const searchTermParts = query.searchTerm.split(" ");
 
 		let userFilter: string | null = null;
+		let dateEndFilter: number | null = null;
+		let dateStartFilter: number | null = null;
 
-		for (const part of searchTermParts) {
-			if (part.startsWith("from:")) {
+		for (const part of [...searchTermParts]) {
+			if (part.startsWith("from:") && userFilter === null) {
 				userFilter = part.slice(5).toLowerCase();
 				searchTermParts.splice(searchTermParts.indexOf(part), 1);
-				break;
+			}
+
+			if (part.startsWith("datebefore:") && dateEndFilter === null) {
+				const dateStr = part.slice(11);
+				const date = new Date(dateStr);
+
+				if (!Number.isNaN(date.getTime())) {
+					dateEndFilter = date.getTime();
+					searchTermParts.splice(searchTermParts.indexOf(part), 1);
+				}
+			}
+
+			if (part.startsWith("dateafter:") && dateStartFilter === null) {
+				const dateStr = part.slice(10);
+				const date = new Date(dateStr);
+
+				if (!Number.isNaN(date.getTime())) {
+					dateStartFilter = date.getTime();
+					searchTermParts.splice(searchTermParts.indexOf(part), 1);
+				}
 			}
 		}
 
@@ -599,9 +620,19 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 			params.push(query.channelName.toLowerCase());
 		}
 
-		if (userFilter) {
+		if (userFilter !== null) {
 			select += " AND LOWER(json_extract(msg, '$.from.nick')) = ? ";
 			params.push(userFilter.toLowerCase());
+		}
+
+		if (dateEndFilter !== null) {
+			select += " AND time <= ? ";
+			params.push(dateEndFilter);
+		}
+
+		if (dateStartFilter !== null) {
+			select += " AND time >= ? ";
+			params.push(dateStartFilter);
 		}
 
 		const maxResults = 100;
