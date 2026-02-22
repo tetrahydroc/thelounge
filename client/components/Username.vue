@@ -6,7 +6,7 @@
 		v-on="onHover ? {mouseenter: hover} : {}"
 		@click.prevent="openContextMenu"
 		@contextmenu.prevent="openContextMenu"
-		><slot>{{displayNick}}</slot></span
+		><slot>{{ displayNick }} </slot></span
 	>
 </template>
 
@@ -17,7 +17,7 @@ import eventbus from "../js/eventbus";
 import colorClass from "../js/helpers/colorClass";
 import type {ClientChan, ClientNetwork} from "../js/types";
 import {useStore} from "../js/store";
-import { ChanState } from "../../shared/types/chan";
+import {ChanState} from "../../shared/types/chan";
 
 type UsernameUser = Partial<UserInMessage> & {
 	mode?: string;
@@ -51,7 +51,7 @@ export default defineComponent({
 		});
 
 		// TODO: Nick must be ! because our user prop union includes UserInMessage
-		const nickColor = computed(() => colorClass(props.user.nick!));
+		const nickColor = computed(() => colorClass(props.user.nick));
 
 		const hover = () => {
 			if (props.onHover) {
@@ -73,17 +73,18 @@ export default defineComponent({
 		const store = useStore();
 
 		// Add to autocomplete for bridged users (need to switch channel after connect if channel active on connect)
-		if (store.state.settings.beautifyBridgedMessages
-			&& props.user.shoutbox
-			&& store.state.activeChannel?.channel.state === ChanState.JOINED
-			&& !store.state.activeChannel?.channel.users.find(u => u.nick === props.user.nick)
+		if (
+			store.state.settings.beautifyBridgedMessages &&
+			props.user.shoutbox &&
+			store.state.activeChannel?.channel.state === ChanState.JOINED &&
+			!store.state.activeChannel?.channel.users.find((u) => u.nick === props.user.nick)
 		) {
 			store.state.activeChannel?.channel.users.push({
 				nick: props.user.nick!,
 				modes: [],
 				lastMessage: Date.now(),
 				mode: "",
-				away: ""
+				away: "",
 			});
 		}
 
@@ -92,12 +93,16 @@ export default defineComponent({
 			const umode = mode.value ?? "";
 			const nick = props.user.nick!;
 
-			if (store.state.settings.beautifyBridgedMessages && props.user.shoutbox && store.state.settings.bridgedMessageNicksStyle === "parentheses") {
-				return `(${umode}${nick})`
+			if (
+				store.state.settings.beautifyBridgedMessages &&
+				props.user.shoutbox &&
+				store.state.settings.bridgedMessageNicksStyle === "parentheses"
+			) {
+				return `(${umode}${nick})`;
 			}
 
-			return `${umode}${nick}`
-		})
+			return `${umode}${nick}`;
+		});
 
 		return {
 			displayNick,

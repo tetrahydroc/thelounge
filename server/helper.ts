@@ -24,6 +24,7 @@ const Helper = {
 	compareHostmask,
 	compareWithWildcard,
 	catch_to_error,
+	toTrimmedString,
 
 	password: {
 		hash: passwordHash,
@@ -195,4 +196,12 @@ function catch_to_error(prefix: string, err: unknown): Error {
 	}
 
 	return new Error(`${prefix}: ${msg}`);
+}
+
+function toTrimmedString(value: unknown): string {
+	if (typeof value !== "string") {
+		return "";
+	}
+
+	return String(value ?? "").trim();
 }

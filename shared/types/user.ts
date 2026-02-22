@@ -5,6 +5,6 @@ export type SharedUser = {
 	away: string;
 	nick: string;
 	lastMessage: number;
-	original?: Omit<SharedUser, 'original'>;
+	original?: Omit<SharedUser, "original">;
 	string?: string;
 };

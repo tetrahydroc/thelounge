@@ -20,3 +20,4 @@ memory.db
 *.db-shm
 *.db-wal
 CLAUDE.md
+.claude

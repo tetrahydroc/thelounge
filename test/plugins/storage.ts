@@ -7,7 +7,7 @@ import util from "../util.js";
 import Config from "../../server/config.js";
 import storage from "../../server/plugins/storage.js";
 import link from "../../server/plugins/irc-events/link.js";
-import {Request, Response} from "express";
+import type {Request, Response} from "express";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

@@ -55,22 +55,63 @@ export default function (client: Client, chan: Chan, msg: Msg, cleanText: string
 
 		cleanLinks.push(preview);
 
-		fetch(url, {
-			accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-			language: client.config.browser?.language || "",
-		})
-			.then((res) => {
-				parse(msg, chan, preview, res, client);
-			})
-			.catch((err) => {
-				preview.type = "error";
-				preview.error = "message";
-				preview.message = err.message;
-				emitPreview(client, chan, msg, preview);
-			});
+		const urlObj = new URL(url);
+
+		if (
+			(urlObj.hostname.endsWith("youtube.com") && urlObj.pathname.includes("watch")) ||
+			urlObj.hostname.endsWith("youtu.be")
+		) {
+			fetchYoutube(url, msg, chan, preview, client);
+		} else {
+			fetchUrl(url, msg, chan, preview, client);
+		}
 
 		return cleanLinks;
 	}, []);
+}
+
+function fetchUrl(url: string, msg: Msg, chan: Chan, preview: LinkPreview, client: Client) {
+	fetch(url, {
+		accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+		language: client.config.browser?.language || "",
+	})
+		.then((res) => {
+			parse(msg, chan, preview, res, client);
+		})
+		.catch((err) => {
+			preview.type = "error";
+			preview.error = "message";
+			preview.message = err.message;
+			emitPreview(client, chan, msg, preview);
+		});
+}
+
+function fetchYoutube(url: string, msg: Msg, chan: Chan, preview: LinkPreview, client: Client) {
+	const api_url = `https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`;
+
+	fetch(api_url, {
+		accept: "application/json",
+		language: client.config.browser?.language || "",
+	})
+		.then((res) => {
+			const data = JSON.parse(res.data.toString());
+			let author = data.author_name || "";
+			author = author ? ` ~ ${author}` : "";
+
+			preview.type = "link";
+			preview.link = url;
+			preview.thumbActualUrl = data.thumbnail_url || "";
+			preview.head = data.title || "";
+			preview.body = author;
+
+			handlePreview(client, chan, msg, preview, res);
+		})
+		.catch((err) => {
+			preview.type = "error";
+			preview.error = "message";
+			preview.message = err.message;
+			emitPreview(client, chan, msg, preview);
+		});
 }
 
 function parseHtml(preview: LinkPreview, res: FetchRequest, client: Client) {
@@ -392,7 +433,7 @@ function getRequestHeaders(headers: Record<string, string>): HeadersInit {
 		// Certain websites like Amazon only add <meta> tags to known bots,
 		// lets pretend to be them to get the metadata
 		"User-Agent":
-			"Mozilla/5.0 (compatible; The Lounge IRC Client; +https://github.com/thelounge/thelounge)" +
+			"Mozilla/5.0 (compatible; The Lounge IRC Client; +https://github.com/lordbex/thelounge)" +
 			" facebookexternalhit/1.1 Twitterbot/1.0",
 		Accept: headers.accept || "*/*",
 		"X-Purpose": "preview",

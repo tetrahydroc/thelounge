@@ -175,7 +175,11 @@ async function navigate(
 	}
 }
 
-function switchToChannel(channel: ClientChan, focusedMessageId?: number, focusedMessageTime?: number) {
+function switchToChannel(
+	channel: ClientChan,
+	focusedMessageId?: number,
+	focusedMessageTime?: number
+) {
 	const query: Record<string, number> = {};
 
 	if (focusedMessageId) {

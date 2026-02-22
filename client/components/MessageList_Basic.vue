@@ -22,7 +22,7 @@
 				<DateMarker
 					v-if="shouldDisplayDateMarker(message, id)"
 					:key="message.id + '-date'"
-					:message="(message as any)"
+					:message="message as any"
 					:focused="message.id === focused"
 				/>
 				<div
@@ -61,6 +61,7 @@
 import {condensedTypes} from "../../shared/irc";
 import {ChanType} from "../../shared/types/chan";
 import {MessageType, SharedMsg} from "../../shared/types/msg";
+
 import eventbus from "../js/eventbus";
 import clipboard from "../js/clipboard";
 import socket from "../js/socket";
@@ -89,9 +90,6 @@ type CondensedMessageContainer = {
 	id?: number;
 };
 
-// TODO; move into component
-let unreadMarkerShown = false;
-
 export default defineComponent({
 	name: "MessageListBasic",
 	components: {
@@ -111,8 +109,9 @@ export default defineComponent({
 		const loadMoreButton = ref<HTMLButtonElement | null>(null);
 		const historyObserver = ref<IntersectionObserver | null>(null);
 		const skipNextScrollEvent = ref(false);
-
 		const isWaitingForNextTick = ref(false);
+
+		let unreadMarkerShown = false;
 
 		const jumpToBottom = () => {
 			skipNextScrollEvent.value = true;
@@ -273,6 +272,7 @@ export default defineComponent({
 
 		const isPreviousSource = (currentMessage: ClientMessage, id: number) => {
 			const previousMessage = condensedMessages.value[id - 1];
+
 			return (
 				previousMessage &&
 				currentMessage.type === MessageType.MESSAGE &&
@@ -290,8 +290,6 @@ export default defineComponent({
 		};
 
 		const keepScrollPosition = async () => {
-			// If we are already waiting for the next tick to force scroll position,
-			// we have no reason to perform more checks and set it again in the next tick
 			if (isWaitingForNextTick.value) {
 				return;
 			}
@@ -380,7 +378,6 @@ export default defineComponent({
 				props.channel.scrolledToBottom = true;
 
 				// Re-add the intersection observer to trigger the check again on channel switch
-				// Otherwise if last channel had the button visible, switching to a new channel won't trigger the history
 				if (historyObserver.value && loadMoreButton.value) {
 					historyObserver.value.unobserve(loadMoreButton.value);
 					historyObserver.value.observe(loadMoreButton.value);
@@ -401,7 +398,6 @@ export default defineComponent({
 		watch(
 			() => props.channel.pendingMessage,
 			async () => {
-				// Keep the scroll stuck when input gets resized while typing
 				await keepScrollPosition();
 			}
 		);

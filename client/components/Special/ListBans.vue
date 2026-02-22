@@ -8,7 +8,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="ban in (channel.data as any)" :key="ban.hostmask">
+			<tr v-for="ban in channel.data as any" :key="ban.hostmask">
 				<td class="hostmask"><ParsedMessage :network="network" :text="ban.hostmask" /></td>
 				<td class="banned_by">{{ ban.banned_by }}</td>
 				<td class="banned_at">{{ localetime(ban.banned_at) }}</td>

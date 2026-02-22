@@ -42,10 +42,10 @@ form.message-search input {
 }
 
 form.message-search input::placeholder {
-	color: rgba(0, 0, 0, 0.35);
+	color: rgb(0 0 0 / 35%);
 }
 
-@media (min-width: 480px) {
+@media (width >= 480px) {
 	form.message-search input {
 		min-width: 140px;
 	}

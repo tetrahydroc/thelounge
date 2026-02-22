@@ -100,7 +100,12 @@
 						<div class="scroll-down-arrow" />
 					</div>
 					<ChatUserList v-if="channel.type === 'channel'" :channel="channel" />
-					<template v-if="store.state.settings.searchEnabled && store.state.settings.enableEnhancedSearch">
+					<template
+						v-if="
+							store.state.settings.searchEnabled &&
+							store.state.settings.enableEnhancedSearch
+						"
+					>
 						<MessageList
 							ref="messageList"
 							:network="network"
@@ -173,9 +178,10 @@ export default defineComponent({
 		const store = useStore();
 
 		const MessageListType = computed(() => {
-			if (store.state.settings.searchEnabled && store.state.settings.enableEnhancedSearch) return MessageList;
+			if (store.state.settings.searchEnabled && store.state.settings.enableEnhancedSearch)
+				return MessageList;
 			return MessageListBasic;
-		})
+		});
 
 		const messageList = ref<typeof MessageListType.value>(MessageListType.value);
 		const topicInput = ref<HTMLInputElement | null>(null);

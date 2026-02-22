@@ -1,0 +1,398 @@
+
+/*!
+ * Repo: https://github.com/hivecom/thelounge-theme-hivecom
+ */
+
+::placeholder {
+	color: rgb(110 117 90 / 90%);
+}
+
+:root {
+	--body-bg-color: #202020;
+	--window-bg-color: #151515;
+	--window-heading-color: #5e5f5d;
+	--body-color: #fff;
+	--body-color-muted: #c5d1b7;
+	--button-color: #a8fd30;
+	--link-color: #a8fd30;
+	--focus-color: #d4ff7f;
+	--unread-marker-color: #a8fd30;
+	--date-marker-color: #acf046;
+	--highlight-bg-color: #0c0c0c;
+	--sidebar-bg-color: #1e1e1e;
+	--background-light-color: #151515;
+	--overlay-bg-color: rgb(0 0 0 / 80%);
+}
+
+::placeholder {
+	color: rgb(110 117 90 / 90%);;
+	opacity: 1; /* fix opacity in Firefox */
+}
+
+::-webkit-scrollbar-thumb:vertical {
+	background: hsl(80deg 100% 25%);
+}
+
+::-webkit-scrollbar-thumb:vertical:hover {
+	background: hsl(80deg 100% 30%);
+}
+
+::-webkit-scrollbar-thumb:vertical:active {
+	background: hsl(80deg 100% 40%);
+}
+
+html {
+	scrollbar-color: hsl(80deg 100% 25%) hsl(80deg 100% 25% / 10%);
+	scrollbar-width: thin;
+}
+
+.window .logo,
+#loading .logo,
+.logo-container {
+	display: none;
+}
+
+.window .logo-inverted,
+#loading .logo-inverted {
+	display: inline-block;
+}
+
+#sidebar {
+	color: var(--body-color-muted);
+	background-color: var(--sidebar-bg-color);
+	border-right: 1px solid var(--background-light-color);
+}
+
+#sidebar .logo-container {
+	padding-top: 5px;
+}
+
+#sidebar .logo-inverted {
+	height: 35px;
+}
+
+i.hostmask {
+	font-size: 90%;
+	opacity: 0.7;
+}
+
+.irc-monospace,
+pre,
+code,
+kbd {
+	color: #ddd;
+	background-color: #444;
+	border-color: #666;
+	box-shadow: none;
+	text-shadow: none;
+}
+
+/*
+#chat {
+    background: radial-gradient(circle at top left, rgba(168, 253, 48, .1), rgba(168, 253, 48, .05), var(--body-bg-color), var(--body-bg-color));
+}
+*/
+
+#chat .names .user {
+	padding: 4px 16px;
+}
+
+#chat .count::before,
+#form #submit,
+#form #upload,
+#chat button.menu,
+#viewport .lt,
+#viewport .rt {
+	color: var(--body-color-muted);
+}
+
+#form #nick {
+	background: var(--highlight-bg-color);
+	border: 1px solid var(--background-light-color);
+}
+
+#chat .msg[data-type] .from::before {
+	color: var(--link-color);
+}
+
+#chat .msg[data-type="monospace_block"] .text {
+	background-color: var(--window-bg-color);
+}
+
+#context-menu,
+.textcomplete-menu {
+	border: 0;
+	background-color: #1f1f1f;
+}
+
+.context-menu-item,
+.textcomplete-item {
+	transition: none;
+}
+
+.context-menu-divider {
+	background-color: #aaa;
+}
+
+#loading,
+#chat .userlist,
+.window,
+body {
+	background-color: var(--body-bg-color);
+	color: var(--body-color);
+	box-shadow: none;
+}
+
+.context-menu-item,
+.textcomplete-item a {
+	color: var(--body-color);
+}
+
+#footer button {
+	color: var(--body-color-muted);
+}
+
+#footer button.active, #footer .channel-list-item.active {
+	background-color: var(--background-light-color);
+	color: var(--focus-color);
+}
+
+#footer button:hover, #footer .channel-list-item:hover {
+	background: none;
+	border: 4px solid var(--background-light-color);
+	color: #fff;
+}
+
+.btn:hover {
+	color: #0c0c0c;
+}
+
+#chat .show-more .btn {
+	background: rgb(110 117 90 / 30%);
+	color: var(--body-color);
+	border: 0;
+	border-radius: 0;
+	text-transform: uppercase;
+	transition: background 0.2s;
+}
+
+#chat .show-more .btn:hover {
+	background: #a8fd30;
+}
+
+.btn-reconnect {
+	background: #e74c3c;
+	color: var(--body-color);
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+}
+
+#input,
+#form .input,
+#form,
+#chat .userlist .count {
+	background-color: inherit;
+}
+
+.input:not(:disabled):focus,
+.input:not(:disabled):hover {
+	border-color: var(--button-color) !important;
+	box-shadow: 0 0 0 1px var(--button-color);
+}
+
+.channel-list-item[data-type="lobby"]{
+	color: var(--body-color-muted);
+}
+
+.channel-list-item[data-type="lobby"]:hover{
+	color: #fff;
+}
+
+.channel-list-item[data-type="lobby"].active {
+	color: var(--focus-color);
+}
+
+/* Hide close button on channels, it is not used that frequently */
+.channel-list-item[data-type="channel"] .close-tooltip {
+	display: none;
+}
+
+.channel-list-item.active {
+	background-color: var(--background-light-color);
+	color: var(--focus-color);
+}
+
+.channel-list-item:hover {
+	background-color: rgb(48 48 48 / 25%);
+	color: #fff;
+}
+
+#footer {
+	height: 43px;
+	line-height: 43px;
+}
+
+.context-menu-item.active,
+.textcomplete-item:hover,
+.textcomplete-menu .active,
+#chat .userlist .user.active {
+	color: var(--body-color);
+	background-color: var(--background-light-color);
+}
+
+#chat .self {
+	/* same as background color, but lighter */
+	background: rgb(20 20 20 / 35%);
+}
+
+#form,
+#viewport .lt::after,
+#chat .header,
+#chat .content,
+#chat .userlist {
+	border-color: var(--background-light-color);
+}
+
+#chat .userlist .search,
+#form .input {
+	border: 0;
+	color: var(--body-color);
+}
+
+#chat .userlist {
+	border-left: 1px solid var(--background-light-color);
+}
+
+#chat.colored-nicks .user.color-1,
+#chat.colored-nicks .user.color-17 {
+	color: #ef4657;
+}
+
+#chat.colored-nicks .user.color-2,
+#chat.colored-nicks .user.color-18 {
+	color: #ff93a4;
+}
+
+#chat.colored-nicks .user.color-3,
+#chat.colored-nicks .user.color-19 {
+	color: #ffb03b;
+}
+
+#chat.colored-nicks .user.color-4,
+#chat.colored-nicks .user.color-20 {
+	color: #ec9d28;
+}
+
+#chat.colored-nicks .user.color-5,
+#chat.colored-nicks .user.color-21 {
+	color: #ffd34e;
+}
+
+#chat.colored-nicks .user.color-6,
+#chat.colored-nicks .user.color-22 {
+	color: #fcc03b;
+}
+
+#chat.colored-nicks .user.color-7,
+#chat.colored-nicks .user.color-23 {
+	color: #acf046;
+}
+
+#chat.colored-nicks .user.color-8,
+#chat.colored-nicks .user.color-24 {
+	color: #d5f572;
+}
+
+#chat.colored-nicks .user.color-9,
+#chat.colored-nicks .user.color-25 {
+	color: #499e8d;
+}
+
+#chat.colored-nicks .user.color-10,
+#chat.colored-nicks .user.color-26 {
+	color: #b5ffe1;
+}
+
+#chat.colored-nicks .user.color-11,
+#chat.colored-nicks .user.color-27 {
+	color: #35a7ff;
+}
+
+#chat.colored-nicks .user.color-12,
+#chat.colored-nicks .user.color-28 {
+	color: #91a6ff;
+}
+
+#chat.colored-nicks .user.color-13,
+#chat.colored-nicks .user.color-29 {
+	color: #975af2;
+}
+
+#chat.colored-nicks .user.color-14,
+#chat.colored-nicks .user.color-30 {
+	color: #ff88dc;
+}
+
+#chat.colored-nicks .user.color-15,
+#chat.colored-nicks .user.color-31 {
+	color: #ddad66;
+}
+
+#chat.colored-nicks .user.color-16,
+#chat.colored-nicks .user.color-32 {
+	color: #f0c079;
+}
+
+#chat .msg[data-type="motd"] .text,
+#chat .toggle-content {
+	background-color: var(--background-light-color);
+}
+
+#chat .toggle-content,
+#chat .toggle-text .body,
+#chat .toggle-type-error {
+	color: var(--body-color-muted);
+}
+
+#chat .chat-view[data-type="channel"] .msg.highlight {
+	border: none;
+	background: linear-gradient(to right, var(--focus-color) 5px, rgb(20 20 20 / 75%) 5px);
+	padding-left: 5px;
+}
+
+#chat .chat-view[data-type="channel"] .msg.highlight .time {
+	color: var(--body-color);
+}
+
+#chat .chat-view[data-type="channel"] .highlight .toggle-content {
+	background-color: var(--body-bg-color);
+}
+
+#chat table.channel-list td {
+	color: #999;
+}
+
+#chat table.channel-list th,
+#chat table.ban-list th,
+#chat table.channel-list td,
+#chat table.ban-list td {
+	border-bottom-color: var(--background-light-color);
+}
+
+/* Increase contrast of some IRC colors */
+.irc-fg2 { color: #007ae6; }
+.irc-fg5 { color: #e969a7; }
+.irc-fg6 { color: #d20ff0; }
+.irc-fg12 { color: #66b2ff; }
+
+@media (width <= 479px) {
+	#chat .msg[data-type="message"] .from .user::before {
+		content: "<";
+	}
+
+	#chat .msg[data-type="message"] .from .user::after {
+		content: ">";
+	}
+}
+

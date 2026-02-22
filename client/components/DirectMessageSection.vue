@@ -1,13 +1,30 @@
 <template>
-	<div v-if="(queries.length > 0 && !network.isCollapsed) || (network.isCollapsed && (hasUnread || hasActiveQuery))" class="dm-section" :class="{ collapsed: isCollapsed }">
-		<div class="channel-list-item dm-section-header" :class="hasUnread ? 'has-unread has-highlight': ''" :title="'Total Queries: ' + queries.length + ' - Total Unread: ' + totalUnreadCount" @click.stop="toggleCollapsed">
-			<span class="dm-collapse-icon" :class="{ 'is-collapsed': isCollapsed }"></span>
+	<div
+		v-if="
+			(queries.length > 0 && !network.isCollapsed) ||
+			(network.isCollapsed && (hasUnread || hasActiveQuery))
+		"
+		class="dm-section"
+		:class="{collapsed: isCollapsed}"
+	>
+		<div
+			class="channel-list-item dm-section-header"
+			:class="hasUnread ? 'has-unread has-highlight' : ''"
+			:title="'Total Queries: ' + queries.length + ' - Total Unread: ' + totalUnreadCount"
+			@click.stop="toggleCollapsed"
+		>
+			<span class="dm-collapse-icon" :class="{'is-collapsed': isCollapsed}"></span>
 			<span class="dm-section-title">Direct Messages</span>
-			<span v-if="hasUnread" class="dm-unread-badge highlight badge">{{ totalUnreadCount }}</span>
+			<span v-if="hasUnread" class="dm-unread-badge highlight badge">{{
+				totalUnreadCount
+			}}</span>
 		</div>
 
 		<template v-if="!isCollapsed || hasActiveQuery || hasUnread">
-			<div v-if="queries.length > 2 && store.state.settings.filterdmsEnabled && !isCollapsed" class="dm-filter">
+			<div
+				v-if="queries.length > 2 && store.state.settings.filterdmsEnabled && !isCollapsed"
+				class="dm-filter"
+			>
 				<input
 					ref="filterInput"
 					v-model="filterText"
@@ -30,18 +47,21 @@
 				item-key="id"
 				@change="onDMSort"
 			>
-				<template v-slot:item="{ element: channel }">
+				<template v-slot:item="{element: channel}">
 					<div
 						v-if="shouldShowChannel(channel)"
 						class="dm-channel-wrapper"
-						:class="{ 'is-pinned': channel.pinned }"
+						:class="{'is-pinned': channel.pinned}"
 					>
 						<Channel
 							:key="channel.id"
 							:data-item="channel.id"
 							:channel="channel"
 							:network="network"
-							:active="store.state.activeChannel && channel === store.state.activeChannel.channel"
+							:active="
+								store.state.activeChannel &&
+								channel === store.state.activeChannel.channel
+							"
 						/>
 					</div>
 				</template>
@@ -52,7 +72,7 @@
 				class="channel-list-item dm-show-more"
 				@click="showAll = !showAll"
 			>
-				{{ showAll ? 'Show less' : `Show ${hiddenCount} more...` }}
+				{{ showAll ? "Show less" : `Show ${hiddenCount} more...` }}
 			</div>
 		</template>
 	</div>
@@ -64,7 +84,7 @@
 }
 
 .dm-section-header {
-	color: rgba(255, 255, 255, 0.7);
+	color: rgb(255 255 255 / 70%);
 	user-select: none;
 }
 
@@ -98,7 +118,7 @@
 	font-size: 14px;
 	font-weight: 700;
 	text-transform: capitalize;
-	mask-image: linear-gradient(270deg,#0000,#000 20px);
+	mask-image: linear-gradient(270deg, #0000, #000 20px);
 }
 
 .dm-filter {
@@ -107,7 +127,7 @@
 
 	&::before {
 		bottom: 0;
-		color: rgba(255, 255, 255, 0.349);
+		color: rgb(255 255 255 / 34.9%);
 		content: "\f0b0";
 		font-family: FontAwesome;
 		line-height: 35px !important;
@@ -120,21 +140,21 @@
 
 .dm-filter-input {
 	appearance: none;
-	background-color: rgba(255, 255, 255, 0.102);
+	background-color: rgb(255 255 255 / 10.2%);
 	border: 0;
-	color: rgb(255, 255, 255);
+	color: rgb(255 255 255);
 	margin: 0;
 	padding-right: 35px;
 	width: 100%;
 }
 
 .dm-filter-input::placeholder {
-	color: rgba(255, 255, 255, 0.35);
+	color: rgb(255 255 255 / 35%);
 }
 
 .dm-filter-input:focus {
 	outline: none;
-	background-color: rgba(255, 255, 255, 0.15);
+	background-color: rgb(255 255 255 / 15%);
 }
 
 .dm-list {
@@ -142,7 +162,7 @@
 }
 
 .dm-show-more {
-	color: rgba(255, 255, 255, 0.5);
+	color: rgb(255 255 255 / 50%);
 	font-size: 0.85em;
 	justify-content: center;
 }
@@ -192,24 +212,29 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const uuid = props.network.uuid + '-dms'
-		const PERSISTENT_STORAGE = "thelounge.directMessages.collapsed"
+		const uuid = props.network.uuid + "-dms";
+		const PERSISTENT_STORAGE = "thelounge.directMessages.collapsed";
 
 		const getIsCollapsed = () => {
 			const stored = storage.get(PERSISTENT_STORAGE);
 			const directMessages = stored ? new Set(JSON.parse(stored)) : new Set();
 
-			return directMessages.has(uuid)
+			return directMessages.has(uuid);
 		};
 
 		const store = useStore();
 		const isCollapsed = ref(getIsCollapsed());
 		const filterText = ref("");
 		const showAll = ref(false);
-		const maxVisible = computed(() => store.state.settings.showAllDMs ? Number.MAX_SAFE_INTEGER : 5);
+		const maxVisible = computed(() =>
+			store.state.settings.showAllDMs ? Number.MAX_SAFE_INTEGER : 5
+		);
 
 		const hasActiveQuery = computed(() => {
-			return props.queries.find(q => q.id === store.state.activeChannel?.channel.id) !== undefined
+			return (
+				props.queries.find((q) => q.id === store.state.activeChannel?.channel.id) !==
+				undefined
+			);
 		});
 
 		// Count of unique conversations with unread messages (not total lines)
@@ -218,7 +243,7 @@ export default defineComponent({
 			return props.queries.filter((q) => q.unread > 0 && !q.muted).length > 0;
 		});
 		const totalUnreadCount = computed(() => {
-			return roundBadgeNumber(props.queries.filter((q) => q.unread > 0 && !q.muted).length)
+			return roundBadgeNumber(props.queries.filter((q) => q.unread > 0 && !q.muted).length);
 		});
 
 		const filteredQueries = computed(() => {
@@ -279,8 +304,8 @@ export default defineComponent({
 		});
 
 		const shouldShowChannel = (channel: ClientChan) => {
-			if (isCollapsed.value && channel.highlight) return true
-			if (isCollapsed.value && !channel.highlight) return false
+			if (isCollapsed.value && channel.highlight) return true;
+			if (isCollapsed.value && !channel.highlight) return false;
 
 			return visibleQueries.value.includes(channel);
 		};

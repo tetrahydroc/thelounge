@@ -41,7 +41,9 @@
 
 			<template v-if="message.whois!.real_name">
 				<dt>Real name:</dt>
-				<dd><ParsedMessage :network="network" :text="(message.whois!.real_name as string)" /></dd>
+				<dd>
+					<ParsedMessage :network="network" :text="message.whois!.real_name as string" />
+				</dd>
 			</template>
 
 			<template v-if="message.whois!.registered_nick">
@@ -51,7 +53,9 @@
 
 			<template v-if="message.whois!.channels">
 				<dt>Channels:</dt>
-				<dd><ParsedMessage :network="network" :text="(message.whois!.channels as string)" /></dd>
+				<dd>
+					<ParsedMessage :network="network" :text="message.whois!.channels as string" />
+				</dd>
 			</template>
 
 			<template v-if="message.whois!.modes">
@@ -83,7 +87,7 @@
 
 			<template v-if="message.whois!.away">
 				<dt>Away:</dt>
-				<dd><ParsedMessage :network="network" :text="(message.whois!.away as string)" /></dd>
+				<dd><ParsedMessage :network="network" :text="message.whois!.away as string" /></dd>
 			</template>
 
 			<template v-if="message.whois!.secure">
@@ -107,12 +111,12 @@
 
 			<template v-if="message.whois!.logonTime">
 				<dt>Connected at:</dt>
-				<dd>{{ localetime((message.whois!.logonTime as Date)) }}</dd>
+				<dd>{{ localetime(message.whois!.logonTime as Date) }}</dd>
 			</template>
 
 			<template v-if="message.whois!.idle">
 				<dt>Idle since:</dt>
-				<dd>{{ localetime((message.whois!.idleTime as Date)) }}</dd>
+				<dd>{{ localetime(message.whois!.idleTime as Date) }}</dd>
 			</template>
 		</dl>
 	</span>

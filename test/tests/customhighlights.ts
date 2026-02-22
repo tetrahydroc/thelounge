@@ -4,7 +4,7 @@ import Client from "../../server/client.js";
 import ClientManager from "../../server/clientManager.js";
 import TestUtil from "../util.js";
 import sinon from "sinon";
-import {UserConfig} from "../../shared/types/config.js";
+import type {UserConfig} from "../../shared/types/config.js";
 
 describe("Custom highlights", function () {
 	let userLoadedLog = "";

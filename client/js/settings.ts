@@ -181,7 +181,7 @@ const defaultConfig = {
 	},
 	enableRainbowHotkey: {
 		default: true,
-	}
+	},
 };
 
 export const config = normalizeConfig(defaultConfig);

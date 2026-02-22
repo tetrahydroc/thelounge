@@ -36,7 +36,7 @@
 				/>
 				Beautify supported bridged shoutbox messages
 			</label>
-			<div role="group" style="padding-left: 1.5rem;">
+			<div role="group" style="padding-left: 1.5rem">
 				<label class="opt">
 					<input
 						:disabled="!store.state.settings.beautifyBridgedMessages || undefined"
@@ -283,7 +283,6 @@ export default defineComponent({
 	name: "AppearanceSettings",
 	setup() {
 		const store = useStore();
-
 		return {
 			store,
 		};

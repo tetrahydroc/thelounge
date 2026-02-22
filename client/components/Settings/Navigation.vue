@@ -14,14 +14,16 @@
 <style>
 .settings-menu {
 	position: fixed;
+
 	/* top: Header + (padding bottom of h2 - border) */
 	top: calc(45px + 5px);
+
 	/* Mid page minus width of container and 30 pixels for padding */
 	margin-left: calc(50% - 480px - 30px);
 }
 
 /** The calculation is mobile +  2/3 of container width. Fairly arbitrary. */
-@media screen and (max-width: calc(768px + 320px)) {
+@media screen and (width <= calc(768px + 320px)) {
 	.settings-menu {
 		position: static;
 		width: min(480px, 100%);

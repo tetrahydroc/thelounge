@@ -495,6 +495,7 @@ function initializeClient(
 	// If no valid active channel, default to the first channel of the first network
 	if (!openChannel || openChannel < 0) {
 		const firstNetwork = client.networks[0];
+
 		if (firstNetwork && firstNetwork.channels.length > 0) {
 			openChannel = firstNetwork.channels[0].id;
 		}
@@ -954,6 +955,9 @@ function getClientConfiguration(): SharedConfiguration | LockedSharedConfigurati
 	const common = {
 		fileUpload: Config.values.fileUpload.enable,
 		ldapEnabled: Config.values.ldap.enable,
+		fishEnabled: Config.values.fish.enabled,
+		ftpInviteEnabled: Config.values.ftpInvite.enabled,
+		encodingEnabled: Config.values.encoding.enabled,
 		isUpdateAvailable: changelog.isUpdateAvailable,
 		applicationServerKey: manager!.webPush.vapidKeys!.publicKey,
 		version: Helper.getVersionNumber(),
@@ -964,6 +968,8 @@ function getClientConfiguration(): SharedConfiguration | LockedSharedConfigurati
 		useHexIp: Config.values.useHexIp,
 		prefetch: Config.values.prefetch,
 		fileUploadMaxFileSize: Uploader ? Uploader.getMaxFileSize() : undefined, // TODO can't be undefined?
+		fileUploadType: Config.values.fileUpload.type,
+		fileUploadX0Host: Config.values.fileUpload.x0_host,
 	};
 
 	const defaultsOverride = {

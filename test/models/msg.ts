@@ -3,7 +3,7 @@ import {expect} from "chai";
 import Msg from "../../server/models/msg.js";
 import User from "../../server/models/user.js";
 import Prefix from "../../server/models/prefix.js";
-import {LinkPreview} from "../../shared/types/msg.js";
+import type {LinkPreview} from "../../shared/types/msg.js";
 
 describe("Msg", function () {
 	["from", "target"].forEach((prop) => {
@@ -54,7 +54,7 @@ describe("Msg", function () {
 		});
 
 		it("should not find a preview that does not exist", function () {
-			expect(msg.findPreview("https://github.com/thelounge/thelounge")).to.equal(undefined);
+			expect(msg.findPreview("https://github.com/lordbex/thelounge")).to.equal(undefined);
 		});
 	});
 });

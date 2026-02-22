@@ -10,6 +10,7 @@ import log from "../log.js";
 import contentDisposition from "content-disposition";
 import type {Socket} from "socket.io";
 import {Application, Request, Response} from "express";
+import {fetch, FormData} from "undici";
 
 // Map of allowed mime types to their respecive default filenames
 // that will be rendered in browser without forcing them to be downloaded
@@ -76,7 +77,7 @@ class Uploader {
 	}
 
 	static async routeGetFile(this: void, req: Request, res: Response) {
-		const name = req.params.name;
+		const name = req.params.name as string;
 
 		const nameRegex = /^[0-9a-f]{16}$/;
 
@@ -87,6 +88,7 @@ class Uploader {
 		const folder = name.substring(0, 2);
 		const uploadPath = Config.getFileUploadPath();
 		const filePath = path.join(uploadPath, folder, name);
+
 		let detectedMimeType = await Uploader.getFileType(filePath);
 
 		// doesn't exist
@@ -95,7 +97,7 @@ class Uploader {
 		}
 
 		// Force a download in the browser if it's not an allowed type (binary or otherwise unknown)
-		let slug = req.params.slug;
+		let slug = req.params.slug as string;
 		const isInline = detectedMimeType in inlineContentDispositionTypes;
 		let disposition = isInline ? "inline" : "attachment";
 
@@ -126,7 +128,15 @@ class Uploader {
 		res.setHeader("Cache-Control", "max-age=86400");
 		res.contentType(detectedMimeType);
 
-		return res.sendFile(filePath);
+		const fileStream = fs.createReadStream(filePath);
+		fileStream.on("error", (err) => {
+			log.error(`Failed to stream file ${filePath}: ${err.message}`);
+
+			if (!res.headersSent) {
+				res.status(500).send("Failed to read file");
+			}
+		});
+		return fileStream.pipe(res);
 	}
 
 	static routeUploadFile(this: void, req: Request, res: Response) {
@@ -135,6 +145,7 @@ class Uploader {
 		let randomName: string;
 		let destDir: fs.PathLike;
 		let destPath: fs.PathLike | null;
+		let fileName: string | null;
 		let streamWriter: fs.WriteStream | null;
 
 		const doneCallback = () => {
@@ -167,7 +178,7 @@ class Uploader {
 		};
 
 		// if the authentication token is incorrect, bail out
-		if (uploadTokens.delete(req.params.token) !== true) {
+		if (!uploadTokens.delete(req.params.token)) {
 			return abortWithError(Error("Invalid upload token"));
 		}
 
@@ -237,6 +248,8 @@ class Uploader {
 			(fieldname: string, fileStream: NodeJS.ReadableStream, filename: string) => {
 				uploadUrl = `${randomName}/${encodeURIComponent(filename)}`;
 
+				fileName = filename;
+
 				if (Config.values.fileUpload.baseUrl) {
 					uploadUrl = new URL(uploadUrl, Config.values.fileUpload.baseUrl).toString();
 				} else {
@@ -259,16 +272,124 @@ class Uploader {
 		);
 
 		busboyInstance.on("finish", () => {
-			doneCallback();
+			const handleUploadComplete = async () => {
+				if (!uploadUrl) {
+					return res.status(400).json({error: "Missing file"});
+				}
 
-			if (!uploadUrl) {
-				return res.status(400).json({error: "Missing file"});
+				if (Config.values.fileUpload.type === "x0" && destPath && fs.existsSync(destPath)) {
+					try {
+						const host = Config.values.fileUpload.x0_host || "https://x0.at";
+						const form = new FormData();
+						form.append(
+							"file",
+							new Blob([fs.readFileSync(destPath)]),
+							fileName || path.basename(destPath.toString())
+						);
+
+						const controller = new AbortController();
+						const timeout = setTimeout(() => controller.abort(), 60000); // 60s timeout
+
+						try {
+							const response = await fetch(host, {
+								method: "POST",
+								body: form,
+								signal: controller.signal,
+							});
+
+							clearTimeout(timeout);
+
+							if (!response.ok) {
+								throw new Error(`Upload to ${host} failed: ${response.statusText}`);
+							}
+
+							const resultUrl = await response.text();
+							uploadUrl = resultUrl.trim();
+						} finally {
+							clearTimeout(timeout);
+						}
+
+						// Remove local file
+						fs.unlinkSync(destPath);
+
+						try {
+							// Try to remove the directory if empty
+							fs.rmdirSync(destDir);
+						} catch (e: unknown) {
+							// Ignore if directory is not empty (ENOTEMPTY/EEXIST)
+							if (
+								e instanceof Error &&
+								(e as NodeJS.ErrnoException).code !== "ENOTEMPTY" &&
+								(e as NodeJS.ErrnoException).code !== "EEXIST"
+							) {
+								log.debug(
+									`Failed to remove temporary upload directory: ${e.message}`
+								);
+							}
+						}
+					} catch (err) {
+						log.error(`x0 upload failed: ${String(err)}`);
+
+						// Try to cleanup
+						if (destPath && fs.existsSync(destPath)) {
+							fs.unlinkSync(destPath);
+						}
+
+						try {
+							if (fs.existsSync(destDir)) {
+								fs.rmdirSync(destDir);
+							}
+						} catch {
+							// Ignore cleanup errors on failure
+						}
+
+						return res.status(500).json({error: "External upload failed"});
+					}
+				}
+
+				// upload was done, send the generated file url to the client
+				res.status(200).json({
+					url: uploadUrl,
+					filename: fileName,
+				});
+			};
+
+			// Wait for the write stream to fully close before processing
+			if (streamWriter) {
+				const writer = streamWriter;
+				streamWriter = null;
+
+				writer.end(() => {
+					// Detach busboy after stream is closed
+					if (busboyInstance) {
+						req.unpipe(busboyInstance);
+						req.on("readable", req.read.bind(req));
+						busboyInstance.removeAllListeners();
+						busboyInstance = null;
+					}
+
+					handleUploadComplete().catch((err) => {
+						log.error(`Upload processing failed: ${String(err)}`);
+
+						if (destPath && fs.existsSync(destPath)) {
+							fs.unlinkSync(destPath);
+						}
+
+						if (!res.headersSent) {
+							res.status(500).json({error: "Upload processing failed"});
+						}
+					});
+				});
+			} else {
+				doneCallback();
+				handleUploadComplete().catch((err) => {
+					log.error(`Upload processing failed: ${String(err)}`);
+
+					if (!res.headersSent) {
+						res.status(500).json({error: "Upload processing failed"});
+					}
+				});
 			}
-
-			// upload was done, send the generated file url to the client
-			res.status(200).json({
-				url: uploadUrl,
-			});
 		});
 
 		// pipe request body to busboy for processing

@@ -29,8 +29,6 @@ const versions: SharedChangelogData = {
 };
 
 async function fetch() {
-	return Promise.resolve(versions);
-
 	const time = Date.now();
 
 	// Serving information from cache
@@ -47,7 +45,7 @@ async function fetch() {
 		};
 
 		const response = await globalThis.fetch(
-			"https://api.github.com/repos/thelounge/thelounge/releases",
+			"https://api.github.com/repos/lordbex/thelounge/releases",
 			fetchOptions
 		);
 
@@ -58,7 +56,7 @@ async function fetch() {
 		const body = await response.text();
 		updateVersions(body);
 
-		// Add expiration date to the data to send to the client for later refresh
+		// Add the expiration date to the data to send to the client for later refresh
 		versions.expiresAt = time + TIME_TO_LIVE;
 	} catch (error) {
 		// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -109,8 +107,6 @@ function updateVersions(responseBody: string) {
 }
 
 function checkForUpdates(manager: ClientManager) {
-	return;
-
 	fetch()
 		.then((versionData) => {
 			if (!changelog.isUpdateAvailable) {

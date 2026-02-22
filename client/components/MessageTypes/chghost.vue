@@ -3,7 +3,7 @@
 		<Username :user="message.from!" />
 		has changed
 		<span v-if="message.new_ident"
-			>username to <b>{{ message.new_ident }}</b></span
+			>username to <b>{{ message.new_ident }} </b></span
 		>
 		<span v-if="message.new_host"
 			>hostname to

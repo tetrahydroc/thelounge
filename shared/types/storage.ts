@@ -1,4 +1,4 @@
-import {SharedMsg} from "./msg";
+import {SharedMsg} from "./msg.js";
 
 export type SearchQuery = {
 	searchTerm: string;

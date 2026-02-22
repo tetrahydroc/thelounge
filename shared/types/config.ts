@@ -9,6 +9,9 @@ type SharedConfigurationBase = {
 	prefetch: boolean;
 	fileUpload: boolean;
 	ldapEnabled: boolean;
+	fishEnabled: boolean;
+	ftpInviteEnabled: boolean;
+	encodingEnabled: boolean;
 	isUpdateAvailable: boolean;
 	applicationServerKey: string;
 	version: string;
@@ -16,6 +19,8 @@ type SharedConfigurationBase = {
 	themes: ConfigTheme[];
 	defaultTheme: string;
 	fileUploadMaxFileSize?: number;
+	fileUploadType?: "local" | "x0";
+	fileUploadX0Host?: string;
 };
 
 export type ConfigNetDefaults = {

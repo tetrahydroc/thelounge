@@ -13,7 +13,7 @@ import Client from "../../client.js";
 import PublicClient from "./publicClient.js";
 import Network from "../../models/network.js";
 import Chan from "../../models/chan.js";
-import { pathToFileURL } from "url";
+import {pathToFileURL} from "url";
 
 type PackageAPI = {
 	Stylesheets: {addFile: (filename: string) => void};
@@ -203,7 +203,8 @@ async function loadPackage(packageName: string) {
 				entryPoint = exportsObj.require;
 			} else if (exportsObj["."] && typeof exportsObj["."] === "object") {
 				const dotExports = exportsObj["."] as Record<string, string>;
-				entryPoint = dotExports.import || dotExports.require || dotExports.default || "index.js";
+				entryPoint =
+					dotExports.import || dotExports.require || dotExports.default || "index.js";
 			}
 		} else if (packageInfo.main) {
 			entryPoint = packageInfo.main;
@@ -211,7 +212,9 @@ async function loadPackage(packageName: string) {
 
 		const isJSONImport = entryPoint.endsWith(".json");
 		const fullEntryPath = pathToFileURL(path.join(packagePath, entryPoint)).href;
-		const imported = isJSONImport ? await import(fullEntryPath, { with: { type: "json" } }) : await import(fullEntryPath);
+		const imported = isJSONImport
+			? await import(fullEntryPath, {with: {type: "json"}})
+			: await import(fullEntryPath);
 		// Handle both ESM (direct exports) and CommonJS (wrapped in .default) modules
 		packageFile = imported.default || imported;
 	} catch (e: unknown) {

@@ -61,7 +61,7 @@ socket.on("network:info", function (data) {
 	}
 
 	for (const key in data) {
-		network[key] = data[key];
+		(network as Record<string, unknown>)[key] = data[key];
 	}
 });
 

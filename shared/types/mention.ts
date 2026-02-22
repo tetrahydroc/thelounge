@@ -1,4 +1,4 @@
-import {MessageType, UserInMessage} from "./msg";
+import {MessageType, UserInMessage} from "./msg.js";
 
 export type SharedMention = {
 	chanId: number;

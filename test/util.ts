@@ -3,7 +3,7 @@ import express from "express";
 import Network from "../server/models/network.js";
 import Chan from "../server/models/chan.js";
 import {EventEmitter} from "events";
-import {Message} from "../server/models/msg.js";
+import type {Message} from "../server/models/msg.js";
 
 interface BrowserConfig {
 	[key: string]: unknown;

@@ -16,9 +16,10 @@
 				<div v-if="network && channel" class="header">
 					<SidebarToggle />
 					<span class="title"
-						>Searching in <span class="channel-name">{{ channel.name }}</span> for</span
+						>Searching in
+						<span class="channel-name">{{ channel.name }} </span> for</span
 					>
-					<span class="topic">{{ route.query.q }}</span>
+					<span class="topic">{{ route.query.q }} </span>
 					<MessageSearchForm :network="network" :channel="channel" />
 					<button
 						class="close"
@@ -63,7 +64,9 @@
 								v-for="(message, id) in messages"
 								:key="message.id"
 								class="result"
-								:data-jump-to="store.state.settings.enableEnhancedSearch || undefined"
+								:data-jump-to="
+									store.state.settings.enableEnhancedSearch || undefined
+								"
 							>
 								<DateMarker
 									v-if="shouldDisplayDateMarker(message, id)"

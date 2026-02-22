@@ -24,10 +24,18 @@ yarn.lock
 .thelounge_home
 .editorconfig
 .eslintignore
+.stylelintignore
 .gitattributes
 .browserslistrc
+.idea/
+.claude/
 
 *.css
+
+# Font files
+*.ttf
+*.woff
+*.woff2
 
 # System files
 .DS_Store
@@ -39,3 +47,7 @@ yarn.lock
 
 # Claude local settings
 .claude/
+
+# Unparseable files
+LICENSE
+scripts/git-hooks/*

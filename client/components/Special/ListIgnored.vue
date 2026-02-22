@@ -7,7 +7,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="user in (channel.data as any)" :key="user.hostmask">
+			<tr v-for="user in channel.data as any" :key="user.hostmask">
 				<td class="hostmask"><ParsedMessage :network="network" :text="user.hostmask" /></td>
 				<td class="when">{{ localetime(user.when) }}</td>
 			</tr>

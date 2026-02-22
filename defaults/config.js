@@ -184,6 +184,11 @@ export default {
 	//
 	// - `enable`: When set to `true`, files can be uploaded on the client with a
 	//   drag-and-drop or using the upload dialog.
+	// - `type`: Defines how the upload is handled.
+	//   - `local`: Files are stored in the `${THELOUNGE_HOME}/uploads` folder.
+	//   - `x0`: Files are uploaded to an external x0-compatible host (see `x0_host`).
+	// - `x0_host`: The URL of the x0-compatible host to upload to when `type` is set to `x0`.
+	//   Defaults to `https://x0.at`.
 	// - `maxFileSize`: When file upload is enabled, users sending files above
 	//   this limit will be prompted with an error message in their browser. A value of
 	//   `-1` disables the file size limit and allows files of any size. **Use at
@@ -196,6 +201,8 @@ export default {
 	//   This value is set to `null` by default.
 	fileUpload: {
 		enable: false,
+		type: "local",
+		x0_host: "https://x0.at",
 		maxFileSize: 10240,
 		baseUrl: null,
 	},
@@ -342,9 +349,9 @@ export default {
 	// This value is set to enable mass event detection by default:
 	massEventDetection: {
 		enable: true,
-		threshold: 10,        // Trigger after 10 messages (was 20)
-		windowMs: 10000,      // 10 second window (was 5s)
-		cooldownMs: 10000,    // 10 seconds of inactivity to end (was 3s)
+		threshold: 10, // Trigger after 10 messages (was 20)
+		windowMs: 10000, // 10 second window (was 5s)
+		cooldownMs: 10000, // 10 seconds of inactivity to end (was 3s)
 		maxDurationMs: 300000, // 5 minute max (was 1 min)
 		refreshNamesAfter: true,
 	},
@@ -540,5 +547,42 @@ export default {
 		// When set to `true`, this enables logging of raw IRC messages into each
 		// server window, displayed on the client.
 		raw: false,
+	},
+
+	// ## Feature flags
+
+	// ### `fish`
+	//
+	// FiSH (Blowfish) encryption support for IRC channels and queries.
+	// When disabled, the FiSH section is hidden in the Network settings UI,
+	// the `/blow` command is rejected, and encrypt/decrypt in message handlers
+	// is skipped.
+	//
+	// This value is set to `false` by default.
+	fish: {
+		enabled: true,
+	},
+
+	// ### `ftpInvite`
+	//
+	// FTP SITE INVITE support for IRC networks.
+	// When disabled, the FTP section is hidden in the Network settings UI,
+	// the `/ftp` and `/ftpinvite` commands are rejected, and auto-invite
+	// on connection is skipped.
+	//
+	// This value is set to `false` by default.
+	ftpInvite: {
+		enabled: true,
+	},
+
+	// ### `encoding`
+	//
+	// Per-channel/nick encoding support. When enabled, users can set a specific
+	// character encoding (utf8 or latin1) per channel using the `/encoding` command.
+	// Default is auto-detection.
+	//
+	// This value is set to `false` by default.
+	encoding: {
+		enabled: true,
 	},
 };

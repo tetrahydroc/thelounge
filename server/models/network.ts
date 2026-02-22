@@ -1,7 +1,6 @@
 import _ from "lodash";
 import {v4 as uuidv4} from "uuid";
 import IrcFramework, {Client as IRCClient} from "irc-framework";
-import log from "../log.js";
 import Chan, {ChanConfig, Channel} from "./chan.js";
 import Msg from "./msg.js";
 import Prefix from "./prefix.js";
@@ -13,6 +12,8 @@ import Client from "../client.js";
 import {MessageType} from "../../shared/types/msg.js";
 import {ChanType} from "../../shared/types/chan.js";
 import {SharedNetwork} from "../../shared/types/network.js";
+import {encrypt, decrypt} from "../utils/secretCrypto.js";
+import type {FishMode} from "../utils/fish.js";
 
 type NetworkIrcOptions = {
 	host: string;
@@ -85,6 +86,13 @@ export type NetworkConfig = {
 	proxyEnabled: boolean;
 	highlightRegex?: string;
 	ignoreList: IgnoreListItem[];
+	ftpEnabled: boolean;
+	ftpHost: string;
+	ftpPort: number;
+	ftpUsername: string;
+	ftpPassword: string;
+	ftpTls: boolean;
+	ftpAutoInvite: boolean;
 };
 
 // Form data coming from network create/edit forms
@@ -114,6 +122,17 @@ export type NetworkFormData = {
 	proxyUsername?: string;
 	proxyPassword?: string;
 	join?: string; // backwards compatibility
+	fishGlobalKey?: string;
+	fishKeys?: Record<string, string>;
+	fishGlobalKeyMode?: FishMode;
+	fishKeyModes?: Record<string, FishMode>;
+	ftpEnabled?: boolean;
+	ftpHost?: string;
+	ftpPort?: string | number;
+	ftpUsername?: string;
+	ftpPassword?: string;
+	ftpTls?: boolean;
+	ftpAutoInvite?: boolean;
 };
 
 class Network {
@@ -141,6 +160,24 @@ class Network {
 	proxyPassword!: string;
 	proxyEnabled!: boolean;
 	highlightRegex?: RegExp;
+
+	// FiSH Blowfish settings persisted per-network
+	fishGlobalKey?: string;
+	fishKeys?: Record<string, string>;
+	fishGlobalKeyMode?: FishMode;
+	fishKeyModes?: Record<string, FishMode>;
+
+	// FTP Invite settings persisted per-network
+	ftpEnabled?: boolean;
+	ftpHost?: string;
+	ftpPort?: number;
+	ftpUsername?: string;
+	ftpPassword?: string;
+	ftpTls?: boolean;
+	ftpAutoInvite?: boolean;
+
+	// Per-channel/nick encoding map: channel/nick (lowercase) -> encoding
+	encodingMap?: Record<string, string>;
 
 	irc?: IrcFramework.Client & {
 		options?: NetworkIrcOptions;
@@ -198,6 +235,24 @@ class Network {
 			proxyPassword: "",
 			proxyEnabled: false,
 
+			// FiSH defaults
+			fishGlobalKey: "",
+			fishKeys: {},
+			fishGlobalKeyMode: "ecb" as FishMode,
+			fishKeyModes: {},
+
+			// FTP defaults
+			ftpEnabled: false,
+			ftpHost: "",
+			ftpPort: 21,
+			ftpUsername: "",
+			ftpPassword: "",
+			ftpTls: false,
+			ftpAutoInvite: false,
+
+			// Encoding defaults
+			encodingMap: {},
+
 			chanCache: [],
 			ignoreList: [],
 			keepNick: null,
@@ -222,6 +277,11 @@ class Network {
 					this.channels.every((chan) => chan.muted || chan.type === ChanType.SPECIAL),
 			})
 		);
+
+		// Ensure FiSH keys are applied to any pre-existing channels loaded from disk
+		if (Config.values.fish.enabled) {
+			this.applyBlowKeysToChannels();
+		}
 	}
 
 	validate(this: Network, client: Client) {
@@ -241,6 +301,11 @@ class Network {
 		this.username = cleanString(this.username) || "thelounge";
 		this.realname = cleanString(this.realname) || this.nick;
 		this.leaveMessage = cleanString(this.leaveMessage);
+		// Decrypt any credentials that were encrypted at rest before further validation
+		this.password = decrypt(this.password);
+		this.saslPassword = decrypt(this.saslPassword);
+		this.ftpPassword = decrypt(this.ftpPassword || "");
+
 		this.password = cleanString(this.password);
 		this.host = cleanString(this.host).toLowerCase();
 		this.name = cleanString(this.name);
@@ -252,6 +317,15 @@ class Network {
 		this.proxyUsername = cleanString(this.proxyUsername);
 		this.proxyPassword = cleanString(this.proxyPassword);
 		this.proxyEnabled = !!this.proxyEnabled;
+
+		// FTP settings validation
+		this.ftpHost = cleanString(this.ftpHost || "");
+		this.ftpPort = this.ftpPort || 21;
+		this.ftpUsername = cleanString(this.ftpUsername || "");
+		this.ftpPassword = cleanString(this.ftpPassword || "");
+		this.ftpEnabled = !!this.ftpEnabled;
+		this.ftpTls = !!this.ftpTls;
+		this.ftpAutoInvite = !!this.ftpAutoInvite;
 
 		const error = function (network: Network, text: string) {
 			network.getLobby().pushMessage(
@@ -388,6 +462,46 @@ class Network {
 		}
 	}
 
+	private resolveBlowKeyFor(name: string): string | undefined {
+		if (!name) {
+			return this.fishGlobalKey || undefined;
+		}
+
+		const keyMap = this.fishKeys || {};
+		const lower = name.toLowerCase();
+		return keyMap[lower] || this.fishGlobalKey || undefined;
+	}
+
+	private resolveBlowModeFor(name: string): FishMode {
+		if (!name) {
+			return this.fishGlobalKeyMode || "ecb";
+		}
+
+		const modeMap = this.fishKeyModes || {};
+		const lower = name.toLowerCase();
+		return modeMap[lower] || this.fishGlobalKeyMode || "ecb";
+	}
+
+	private applyBlowKeysToChannels() {
+		for (const c of this.channels) {
+			if (c.type !== ChanType.CHANNEL && c.type !== ChanType.QUERY) {
+				continue;
+			}
+
+			c.blowfishKey = this.resolveBlowKeyFor(c.name);
+			c.blowfishMode = this.resolveBlowModeFor(c.name);
+		}
+	}
+
+	resolveEncodingFor(name: string): string | undefined {
+		if (!name) {
+			return undefined;
+		}
+
+		const map = this.encodingMap || {};
+		return map[name.toLowerCase()] || undefined;
+	}
+
 	createWebIrc(client: Client) {
 		if (
 			!Config.values.webirc ||
@@ -460,6 +574,84 @@ class Network {
 			.split("\n")
 			.filter((command) => command.length > 0);
 
+		// FiSH: read global key and per-target keys (only update when provided)
+		if (Object.prototype.hasOwnProperty.call(args, "fishGlobalKey")) {
+			this.fishGlobalKey = Helper.toTrimmedString(args.fishGlobalKey || "");
+		}
+
+		// FiSH: read per-target keys (only update when provided)
+		if (Object.prototype.hasOwnProperty.call(args, "fishKeys")) {
+			const value = args.fishKeys as unknown;
+			const map: Record<string, string> = {};
+
+			if (value && typeof value === "object") {
+				for (const [rawName, rawKey] of Object.entries(value as Record<string, unknown>)) {
+					const name = Helper.toTrimmedString(rawName).toLowerCase();
+					const key = Helper.toTrimmedString(rawKey);
+
+					if (name && key) {
+						map[name] = key;
+					}
+				}
+			}
+
+			this.fishKeys = map;
+		}
+
+		// FiSH: read global key mode (only update when provided)
+		if (Object.prototype.hasOwnProperty.call(args, "fishGlobalKeyMode")) {
+			const rawMode = args.fishGlobalKeyMode;
+			this.fishGlobalKeyMode = rawMode === "cbc" ? "cbc" : "ecb";
+		}
+
+		// FiSH: read per-target key modes (only update when provided)
+		if (Object.prototype.hasOwnProperty.call(args, "fishKeyModes")) {
+			const value = args.fishKeyModes as unknown;
+			const map: Record<string, FishMode> = {};
+
+			if (value && typeof value === "object") {
+				for (const [rawName, rawMode] of Object.entries(value as Record<string, unknown>)) {
+					const name = Helper.toTrimmedString(rawName).toLowerCase();
+					const mode = rawMode === "cbc" ? "cbc" : "ecb";
+
+					if (name) {
+						map[name] = mode;
+					}
+				}
+			}
+
+			this.fishKeyModes = map;
+		}
+
+		// FTP settings (only update when provided)
+		if (Object.prototype.hasOwnProperty.call(args, "ftpEnabled")) {
+			this.ftpEnabled = !!args.ftpEnabled;
+		}
+
+		if (Object.prototype.hasOwnProperty.call(args, "ftpHost")) {
+			this.ftpHost = String(args.ftpHost ?? "");
+		}
+
+		if (Object.prototype.hasOwnProperty.call(args, "ftpPort")) {
+			this.ftpPort = parseInt(String(args.ftpPort ?? 21), 10);
+		}
+
+		if (Object.prototype.hasOwnProperty.call(args, "ftpUsername")) {
+			this.ftpUsername = String(args.ftpUsername ?? "");
+		}
+
+		if (Object.prototype.hasOwnProperty.call(args, "ftpPassword")) {
+			this.ftpPassword = String(args.ftpPassword ?? "");
+		}
+
+		if (Object.prototype.hasOwnProperty.call(args, "ftpTls")) {
+			this.ftpTls = !!args.ftpTls;
+		}
+
+		if (Object.prototype.hasOwnProperty.call(args, "ftpAutoInvite")) {
+			this.ftpAutoInvite = !!args.ftpAutoInvite;
+		}
+
 		// Sync lobby channel name
 		this.getLobby().name = this.name;
 
@@ -473,6 +665,11 @@ class Network {
 
 		if (!this.validate(client)) {
 			return;
+		}
+
+		// Apply FiSH keys to existing channels after edit
+		if (Config.values.fish.enabled) {
+			this.applyBlowKeysToChannels();
 		}
 
 		if (this.irc) {
@@ -575,6 +772,12 @@ class Network {
 	}
 
 	addChannel(newChan: Chan) {
+		// Assign FiSH key and mode based on network configuration when adding
+		if (newChan && (newChan.type === ChanType.CHANNEL || newChan.type === ChanType.QUERY)) {
+			newChan.blowfishKey = this.resolveBlowKeyFor(newChan.name);
+			newChan.blowfishMode = this.resolveBlowModeFor(newChan.name);
+		}
+
 		let index = this.channels.length; // Default to putting as the last item in the array
 
 		// Don't sort special channels in amongst channels/users.
@@ -639,9 +842,33 @@ class Network {
 			fieldsToReturn.push("rejectUnauthorized");
 		}
 
-		const data = _.pick(this, fieldsToReturn) as Network;
+		const data = _.pick(this, fieldsToReturn) as {uuid: string} & Partial<Network> & {
+				fishGlobalKey?: string;
+				fishKeys?: Record<string, string>;
+				fishGlobalKeyMode?: FishMode;
+				fishKeyModes?: Record<string, FishMode>;
+				hasSTSPolicy?: boolean;
+			};
 
 		data.hasSTSPolicy = !!STSPolicies.get(this.host);
+
+		// Include FiSH fields for editing UI
+		data.fishGlobalKey = this.fishGlobalKey || "";
+		data.fishKeys = {...(this.fishKeys || {})};
+		data.fishGlobalKeyMode = this.fishGlobalKeyMode || "ecb";
+		data.fishKeyModes = {...(this.fishKeyModes || {})};
+
+		// Include FTP fields for editing UI
+		data.ftpEnabled = this.ftpEnabled || false;
+		data.ftpHost = this.ftpHost || "";
+		data.ftpPort = this.ftpPort || 21;
+		data.ftpUsername = this.ftpUsername || "";
+		data.ftpTls = this.ftpTls || false;
+		data.ftpAutoInvite = this.ftpAutoInvite || false;
+		data.ftpPassword = this.ftpPassword || "";
+
+		// Include encoding map for editing UI
+		data.encodingMap = {...(this.encodingMap || {})};
 
 		return data;
 	}
@@ -672,7 +899,30 @@ class Network {
 			"proxyUsername",
 			"proxyEnabled",
 			"proxyPassword",
+
+			// FiSH persistence
+			"fishGlobalKey",
+			"fishKeys",
+			"fishGlobalKeyMode",
+			"fishKeyModes",
+
+			// FTP Invite persistence
+			"ftpEnabled",
+			"ftpHost",
+			"ftpPort",
+			"ftpUsername",
+			"ftpPassword",
+			"ftpTls",
+			"ftpAutoInvite",
+
+			// Encoding persistence
+			"encodingMap",
 		]) as Network;
+
+		// Encrypt credentials at rest when THE_LOUNGE_SECRET is configured
+		if (network.password) network.password = encrypt(network.password);
+		if (network.saslPassword) network.saslPassword = encrypt(network.saslPassword);
+		if (network.ftpPassword) network.ftpPassword = encrypt(network.ftpPassword);
 
 		network.channels = this.channels
 			.filter(function (channel) {

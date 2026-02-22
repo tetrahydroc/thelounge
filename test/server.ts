@@ -3,7 +3,7 @@ import Config from "../server/config.js";
 import {expect, assert} from "chai";
 import got from "got";
 import io from "socket.io-client";
-import util from "./util";
+import util from "./util.js";
 import changelog from "../server/plugins/changelog.js";
 
 import sinon from "sinon";
@@ -35,7 +35,7 @@ describe("Server", function () {
 		});
 
 		checkForUpdatesStub = sinon.stub(changelog, "checkForUpdates");
-		serverInstance = await (await import("../server/server")).default({dev: false});
+		serverInstance = await (await import("../server/server.js")).default({dev: false});
 	});
 
 	after(function (done) {

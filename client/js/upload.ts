@@ -1,7 +1,9 @@
 import {update as updateCursor} from "undate";
+import {BlobReader, BlobWriter, ZipWriter} from "@zip.js/zip.js";
 
 import socket from "./socket";
 import {store} from "./store";
+import eventbus from "./eventbus";
 
 class Uploader {
 	xhr: XMLHttpRequest | null = null;
@@ -122,14 +124,73 @@ class Uploader {
 			return;
 		}
 
+		const validFiles: File[] = [];
+
+		for (const file of files) {
+			if (file) {
+				validFiles.push(file);
+			}
+		}
+
+		if (validFiles.length === 0) {
+			return;
+		}
+
+		if (store.state.serverConfiguration?.fileUploadType === "x0") {
+			type UploadDialogResult = {
+				password: string;
+				bundle: boolean;
+				bundleName: string;
+			} | null;
+
+			eventbus.emit(
+				"upload-confirm-dialog",
+				{files: validFiles},
+				async (result: UploadDialogResult) => {
+					if (result === null) {
+						return;
+					}
+
+					let filesToUpload: File[] = validFiles;
+
+					try {
+						if (result.bundle) {
+							// Bundle all files into a single ZIP
+							const zippedFile = await this.createZip(
+								validFiles,
+								result.password || undefined,
+								result.bundleName
+							);
+							filesToUpload = [zippedFile];
+						} else if (result.password !== "") {
+							// Encrypt each file separately into its own ZIP
+							filesToUpload = await Promise.all(
+								validFiles.map((file) =>
+									this.createZip([file], result.password, file.name + ".zip")
+								)
+							);
+						}
+					} catch (e) {
+						store.commit(
+							"currentUserVisibleError",
+							"ZIP creation failed: " + String(e)
+						);
+						return;
+					}
+
+					this.addToQueue(filesToUpload);
+				}
+			);
+		} else {
+			this.addToQueue(validFiles);
+		}
+	}
+
+	addToQueue(files: File[]) {
 		const wasQueueEmpty = this.fileQueue.length === 0;
 		const maxFileSize = store.state.serverConfiguration?.fileUploadMaxFileSize || 0;
 
 		for (const file of files) {
-			if (!file) {
-				return;
-			}
-
 			if (maxFileSize > 0 && file.size > maxFileSize) {
 				this.handleResponse({
 					error: `File ${file.name} is over the maximum allowed size`,
@@ -146,6 +207,31 @@ class Uploader {
 		if (wasQueueEmpty && this.xhr === null && this.fileQueue.length > 0) {
 			this.requestToken();
 		}
+	}
+
+	async createZip(files: File[], password: string | undefined, zipName: string): Promise<File> {
+		const blobWriter = new BlobWriter("application/zip");
+		const zipWriter = new ZipWriter(blobWriter, {
+			bufferedWrite: true,
+			useWebWorkers: false,
+		});
+
+		for (const file of files) {
+			if (password) {
+				await zipWriter.add(file.name, new BlobReader(file), {
+					password: password,
+					encryptionStrength: 3, // AES-256
+				});
+			} else {
+				await zipWriter.add(file.name, new BlobReader(file));
+			}
+		}
+
+		await zipWriter.close();
+
+		const blob = await blobWriter.getData();
+
+		return new File([blob], zipName, {type: "application/zip"});
 	}
 
 	requestToken() {
@@ -270,7 +356,7 @@ class Uploader {
 		this.xhr.send(formData);
 	}
 
-	handleResponse(response: {error?: string; url?: string}) {
+	handleResponse(response: {error?: string; url?: string; filename?: string}) {
 		this.setProgress(0);
 
 		if (this.tokenKeepAlive) {
@@ -284,11 +370,11 @@ class Uploader {
 		}
 
 		if (response.url) {
-			this.insertUploadUrl(response.url);
+			this.insertUploadUrl(response.url, response?.filename);
 		}
 	}
 
-	insertUploadUrl(url: string) {
+	insertUploadUrl(url: string, filename: string | undefined) {
 		const fullURL = new URL(url, location.toString()).toString();
 		const textbox = document.getElementById("input");
 
@@ -304,8 +390,14 @@ class Uploader {
 		// Get the remaining text after the cursor
 		const cursorToTail = textbox.value.substring(initStart);
 
-		// Construct the value until the point where we want the cursor to be
-		const textBeforeTail = headToCursor + fullURL + " ";
+		let content = fullURL;
+
+		if (filename) {
+			content = `${filename} (${fullURL})`;
+		}
+
+		// Construct the value by the point where we want the cursor to be
+		const textBeforeTail = headToCursor + content + " ";
 
 		updateCursor(textbox, textBeforeTail + cursorToTail);
 

@@ -33,13 +33,9 @@
 				<div class="toggle-text" dir="auto">
 					<div class="head">
 						<div class="overflowable">
-							<a
-								:href="link.link"
-								:title="link.head"
-								target="_blank"
-								rel="noopener"
-								>{{ link.head }}</a
-							>
+							<a :href="link.link" :title="link.head" target="_blank" rel="noopener"
+								>{{ link.head }}
+							</a>
 						</div>
 
 						<button
@@ -55,9 +51,9 @@
 					</div>
 
 					<div class="body overflowable">
-						<a :href="link.link" :title="link.body" target="_blank" rel="noopener">{{
-							link.body
-						}}</a>
+						<a :href="link.link" :title="link.body" target="_blank" rel="noopener"
+							>{{ link.body }}
+						</a>
 					</div>
 				</div>
 			</template>
@@ -100,7 +96,9 @@
 			</template>
 			<template v-else-if="link.type === 'error'">
 				<em v-if="link.error === 'image-too-big'">
-					This image is larger than {{ imageMaxSize }} and cannot be previewed.
+					This image is larger than {{ imageMaxSize }}
+
+					and cannot be previewed.
 					<a :href="link.link" target="_blank" rel="noopener">Click here</a>
 					to open it in a new window.
 				</em>
@@ -112,7 +110,11 @@
 							to open it in a new window.
 						</em>
 						<br />
-						<pre class="prefetch-error">{{ link.message }}</pre>
+						<pre class="prefetch-error"
+							>{{ link.message }}
+
+</pre
+						>
 					</div>
 
 					<button

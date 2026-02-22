@@ -17,7 +17,7 @@
 		•
 		<a href="https://demo.thelounge.chat/">Demo</a>
     •
-		<a href="https://github.com/thelounge/thelounge-docker">Docker</a>
+		<a href="https://github.com/LordBex/thelounge-docker">Docker</a>
 	</strong>
 </p>
 <p align="center">
@@ -27,14 +27,38 @@
 	<a href="https://yarn.pm/thelounge"><img
 		alt="npm version"
 		src="https://img.shields.io/npm/v/thelounge.svg?colorA=333a41&maxAge=3600"></a>
-	<a href="https://github.com/thelounge/thelounge/actions"><img
+	<a href="https://github.com/LordBex/thelounge/actions"><img
 		alt="Build Status"
-		src="https://github.com/thelounge/thelounge/workflows/Build/badge.svg"></a>
+		src="https://github.com/LordBex/thelounge/workflows/Build/badge.svg"></a>
 </p>
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/thelounge/thelounge.github.io/master/img/thelounge-screenshot.png" width="550">
 </p>
+
+## 🔐 FiSH Blowfish Fork
+
+**This is a fork of The Lounge with integrated FiSH Blowfish encryption support.**
+
+This enhanced version adds IRC message encryption capabilities using the FiSH (Blowfish) encryption protocol, compatible with popular IRC clients like HexChat, mIRC, and others.
+
+### FiSH Features
+
+- **Per-channel encryption** - Set individual encryption keys for each channel or query
+- **Global encryption key** - Apply a default key across all channels
+- **Automatic encryption/decryption** - Seamlessly encrypts outgoing and decrypts incoming messages
+- **mIRC compatibility** - Full compatibility with standard FiSH implementations
+- **Easy key management** - Simple `/blow` commands for setting and clearing keys
+
+### Usage
+
+```
+/blow <key>          # Set encryption key for current channel
+/blow off            # Disable encryption for current channel
+/blow                # Show current encryption status
+```
+
+Keys can also be configured via the network settings in the web interface.
 
 ## Overview
 
@@ -63,7 +87,7 @@ Please refer to the [install and upgrade documentation on our website](https://t
 The following commands install and run the development version of The Lounge:
 
 ```sh
-git clone https://github.com/thelounge/thelounge.git
+git clone https://github.com/yourusername/thelounge.git
 cd thelounge
 yarn install
 NODE_ENV=production yarn build
@@ -82,7 +106,7 @@ fork.
 
 Before submitting any change, make sure to:
 
-- Read the [Contributing instructions](https://github.com/thelounge/thelounge/blob/master/.github/CONTRIBUTING.md#contributing)
+- Read the [Contributing instructions](https://github.com/LordBex/thelounge/blob/master/.github/CONTRIBUTING.md#contributing)
 - Run `yarn test` to execute linters and the test suite
   - Run `yarn format:prettier` if linting fails
 - Run `yarn build:client` if you change or add anything in `client/js` or `client/components`

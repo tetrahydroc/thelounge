@@ -149,7 +149,7 @@ class Identification {
 				// once, since we `refresh()` for each one being added/removed. This results
 				// in there possibly being one or more disconnected sockets remaining when we get here.
 				log.warn(
-					`oidentd: socket has no remote or local port (id=${id}). See https://github.com/thelounge/thelounge/pull/4695.`
+					`oidentd: socket has no remote or local port (id=${id}). See https://github.com/lordbex/thelounge/pull/4695.`
 				);
 				return;
 			}

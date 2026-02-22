@@ -1,10 +1,10 @@
 <template>
 	<span class="content">
 		<Username :user="message.from!" />
-		has kicked
+		has kicked;
 		<Username :user="message.target!" />
 		<i v-if="message.text" class="part-reason"
-			>&#32;(<ParsedMessage :network="network" :message="message" />)</i
+			>&#32; (<ParsedMessage :network="network" :message="message" />)</i
 		>
 	</span>
 </template>

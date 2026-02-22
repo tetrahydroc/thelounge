@@ -6,6 +6,7 @@ import vuePlugin from "eslint-plugin-vue";
 import vueParser from "vue-eslint-parser";
 import prettierConfig from "eslint-config-prettier";
 import globals from "globals";
+import importPlugin from "eslint-plugin-import";
 
 const baseRules = {
 	"block-scoped-var": "error",
@@ -110,7 +111,22 @@ export default [
 			"coverage/**",
 			"webpack.config.mjs",
 			"*.min.js",
+			".github/**",
+			".idea/**",
+			".claude/**",
+			".vscode/**",
 		],
+	},
+
+	// Enforce file extensions (import/extensions) for server/shared only
+	{
+		files: ["server/**/*.ts", "server/**/*.js", "shared/**/*.ts", "shared/**/*.js"],
+		plugins: {
+			import: importPlugin,
+		},
+		rules: {
+			"import/extensions": ["error", "ignorePackages"],
+		},
 	},
 
 	// Base JavaScript config for all files

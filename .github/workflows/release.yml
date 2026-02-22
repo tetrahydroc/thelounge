@@ -11,7 +11,6 @@ on:
 jobs:
   release:
     name: Release workflow
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,8 +22,11 @@ jobs:
           node-version: "latest"
           registry-url: "https://registry.npmjs.org/"
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Install
-        run: yarn --frozen-lockfile --non-interactive
+        run: yarn --frozen-lockfile --immutable
 
       - name: Build
         run: yarn build
@@ -35,19 +37,10 @@ jobs:
         run: yarn test
 
       - name: Publish latest
-        if: "!contains(github.ref, '-')"
-        run: npm publish --tag latest --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+        if: "!contains(github.ref, '-pre')"
+        # --provenance ist PFLICHT für Trusted Publishing!
+        run: npm publish --access public --tag latest --provenance
 
       - name: Publish next
-        if: contains(github.ref, '-')
-        run: npm publish --tag next --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-
-      - name: Remove next tag
-        if: "!contains(github.ref, '-')"
-        run: npm dist-tag rm thelounge next || true
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+        if: contains(github.ref, '-pre')
+        run: npm publish --access public --tag next --provenance

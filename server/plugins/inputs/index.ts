@@ -71,6 +71,9 @@ const builtInInputs = [
 	"topic",
 	"whois",
 	"mute",
+	"blow",
+	"ftp",
+	"encoding",
 ];
 
 for (const input of builtInInputs) {

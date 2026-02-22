@@ -35,6 +35,10 @@ class Chan {
 	state!: ChanState;
 	pinned!: boolean;
 
+	// mIRC FiSH Blowfish key, stored server-side only
+	blowfishKey?: string;
+	blowfishMode?: import("../utils/fish.js").FishMode;
+
 	userAway?: boolean;
 	special?: SpecialChanType;
 	data?: unknown;
@@ -309,7 +313,10 @@ class Chan {
 					this.firstUnread = messages[messages.length - 1].id;
 				}
 
-				const enhancedSearch = Boolean(client.config.clientSettings.searchEnabled && client.config.clientSettings.enableEnhancedSearch)
+				const enhancedSearch = Boolean(
+					client.config.clientSettings.searchEnabled &&
+						client.config.clientSettings.enableEnhancedSearch
+				);
 
 				// if enhancedSearchEnabled = true send all loaded messages to the client
 				// otherwise only send 100

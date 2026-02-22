@@ -27,11 +27,14 @@
 							<span class="from">
 								<Username :user="message.from" />
 								<template v-if="message.channel">
-									in {{ message.channel.channel.name }} on
+									in {{ message.channel.channel.name }}
+
+									on
 									{{ message.channel.network.name }}
 								</template>
 								<template v-else> in unknown channel </template> </span
 							>{{ ` ` }}
+
 							<span :title="message.localetime" class="time">
 								{{ messageTime(message.time.toString()) }}
 							</span>
@@ -52,10 +55,14 @@
 					<div
 						class="content"
 						dir="auto"
-						:data-jump-to="(store.state.settings.searchEnabled && store.state.settings.enableEnhancedSearch) || undefined"
+						:data-jump-to="
+							(store.state.settings.searchEnabled &&
+								store.state.settings.enableEnhancedSearch) ||
+							undefined
+						"
 						@click="jumpToMention(message)"
 					>
-						<ParsedMessage :message="(message as any)" />
+						<ParsedMessage :message="message as any" />
 					</div>
 				</div>
 			</template>
@@ -110,7 +117,8 @@
 	word-break: break-word; /* Webkit-specific */
 	cursor: pointer;
 
-	&[data-jump-to]:hover { /** WIP */
+	&[data-jump-to]:hover {
+		/** WIP */
 		color: var(--highlight-bg-color);
 		background-color: var(--highlight-border-color);
 	}
@@ -134,23 +142,20 @@
 	padding: 4px 6px;
 }
 
-@media (min-height: 500px) {
+@media (height >= 500px) {
 	.mentions-popup {
 		max-height: 60vh;
 	}
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
 	.mentions-popup {
 		border-radius: 0;
 		border: 0;
 		box-shadow: none;
 		width: 100%;
 		max-height: none;
-		right: 0;
-		left: 0;
-		bottom: 0;
-		top: 45px; /* header height */
+		inset: 45px 0 0; /* header height */
 	}
 }
 </style>

@@ -338,6 +338,19 @@ class Client {
 			proxyPort: parseInt(String(args.proxyPort ?? 1080), 10),
 			proxyUsername: args.proxyUsername || "",
 			proxyPassword: args.proxyPassword || "",
+
+			fishGlobalKey: String(args.fishGlobalKey || ""),
+			fishKeys: (args.fishKeys as Record<string, string>) || {},
+			fishGlobalKeyMode: (args.fishGlobalKeyMode as "ecb" | "cbc") || "ecb",
+			fishKeyModes: (args.fishKeyModes as Record<string, "ecb" | "cbc">) || {},
+
+			ftpEnabled: !!args.ftpEnabled,
+			ftpHost: String(args.ftpHost || ""),
+			ftpPort: parseInt(String(args.ftpPort ?? 21), 10),
+			ftpUsername: String(args.ftpUsername || ""),
+			ftpPassword: String(args.ftpPassword || ""),
+			ftpTls: !!args.ftpTls,
+			ftpAutoInvite: !!args.ftpAutoInvite,
 		});
 	}
 
@@ -586,12 +599,15 @@ class Client {
 		let messages: Msg[] = [];
 		let index = 0;
 
-		const enhancedSearch = Boolean(this.config.clientSettings.searchEnabled && this.config.clientSettings.enableEnhancedSearch)
+		const enhancedSearch = Boolean(
+			this.config.clientSettings.searchEnabled &&
+				this.config.clientSettings.enableEnhancedSearch
+		);
 
 		// Use batch sizes for "more" requests, batch sizes are based on enableEnhancedSearch setting
 		// When enableEnhancedSearch = true send upto 10000 messages at a time
 		const batchSize = enhancedSearch ? 1000 : 100;
-		const maxBatchSize =  enhancedSearch ? 10000 : 1000;
+		const maxBatchSize = enhancedSearch ? 10000 : 1000;
 
 		// If client requests -1, send last batch of messages
 		if (data.lastId < 0) {

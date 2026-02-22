@@ -43,7 +43,7 @@
 						:class="['icon', 'connect', {active: isActive}]"
 						:aria-selected="isActive"
 						@click="navigate"
-						@keypress.enter="(navigate as (e?: KeyboardEvent) => void)"
+						@keypress.enter="navigate as (e?: KeyboardEvent) => void"
 					/> </router-link
 			></span>
 			<span class="tooltipped tooltipped-n tooltipped-no-touch" aria-label="Settings"
@@ -57,7 +57,7 @@
 						:class="['icon', 'settings', {active: isActive}]"
 						:aria-selected="isActive"
 						@click="navigate"
-						@keypress.enter="(navigate as (e?: KeyboardEvent) => void)"
+						@keypress.enter="navigate as (e?: KeyboardEvent) => void"
 					></button> </router-link
 			></span>
 			<span
@@ -82,7 +82,7 @@
 							{active: isActive},
 						]"
 						@click="navigate"
-						@keypress.enter="(navigate as (e?: KeyboardEvent) => void)"
+						@keypress.enter="navigate as (e?: KeyboardEvent) => void"
 					></button> </router-link
 			></span>
 		</footer>
@@ -90,7 +90,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, nextTick, onMounted, onUnmounted,PropType, ref} from "vue";
+import {defineComponent, nextTick, onMounted, onUnmounted, PropType, ref} from "vue";
 import {useRoute} from "vue-router";
 import {useStore} from "../js/store";
 import NetworkList from "./NetworkList.vue";

@@ -2,7 +2,7 @@ import log from "../../../server/log.js";
 import {expect, assert} from "chai";
 import TestUtil from "../../util.js";
 import sinon from "sinon";
-import packagePlugin from "../../../server/plugins/packages";
+import packagePlugin from "../../../server/plugins/packages/index.js";
 
 let packages: typeof packagePlugin;
 

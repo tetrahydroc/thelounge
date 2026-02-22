@@ -1,1 +1,1 @@
-import "./modules";
+import "./modules/irc-framework.js";

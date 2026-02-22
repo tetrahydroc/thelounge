@@ -1,22 +1,35 @@
 import {expect, assert} from "chai";
+import {isEncrypted} from "../../server/utils/secretCrypto.js";
 import sinon from "sinon";
 import Chan from "../../server/models/chan.js";
 import {ChanType} from "../../shared/types/chan.js";
 import Msg from "../../server/models/msg.js";
 import User from "../../server/models/user.js";
-import Network, {NetworkWithIrcFramework} from "../../server/models/network.js";
+import Network, {type NetworkWithIrcFramework} from "../../server/models/network.js";
 import Config from "../../server/config.js";
-import STSPolicies from "../../server/plugins/sts";
+import STSPolicies from "../../server/plugins/sts.js";
 import ClientCertificate from "../../server/plugins/clientCertificate.js";
 import Client from "../../server/client.js";
-import {MessageStorage} from "../../server/plugins/messageStorage/types.js";
+import type {MessageStorage} from "../../server/plugins/messageStorage/types.js";
 
 // Minimal interface for test client that satisfies Network.validate() requirements
 interface TestClient {
-	idMsg?: number;
-	emit?: (name: string, data?: unknown) => void;
-	save?: () => void;
-	messageStorage?: MessageStorage[];
+	idMsg: number;
+	emit: (name: string, data?: unknown) => void;
+	save: () => void;
+	messageStorage: MessageStorage[];
+	attachedClients: Record<string, unknown>;
+}
+
+// Helper to create a minimal test client
+function createTestClient(): TestClient {
+	return {
+		idMsg: 1,
+		emit() {},
+		save() {},
+		messageStorage: [],
+		attachedClients: {},
+	};
 }
 
 describe("Network", function () {
@@ -137,10 +150,57 @@ describe("Network", function () {
 					{name: "&foobar", key: "", muted: false},
 					{name: "#secret", key: "foo", muted: false},
 					{name: "&secure", key: "bar", muted: true},
-					{name: "PrivateChat", type: "query", muted: true},
+					{name: "PrivateChat", type: "query", muted: true, pinned: false},
 				],
 				ignoreList: [],
+				encodingMap: {},
+				fishGlobalKey: "",
+				fishGlobalKeyMode: "ecb",
+				fishKeys: {},
+				fishKeyModes: {},
+				ftpAutoInvite: false,
+				ftpEnabled: false,
+				ftpHost: "",
+				ftpPassword: "",
+				ftpPort: 21,
+				ftpTls: false,
+				ftpUsername: "",
 			});
+		});
+
+		it("should encrypt credentials when THE_LOUNGE_SECRET is set", function () {
+			process.env.THE_LOUNGE_SECRET = "test-export-secret";
+
+			try {
+				const network = new Network({
+					password: "ircpassword",
+					saslPassword: "saslpassword",
+					ftpPassword: "ftppassword",
+				});
+
+				const exported = network.export();
+
+				expect(isEncrypted(exported.password)).to.equal(true);
+				expect(isEncrypted(exported.saslPassword)).to.equal(true);
+				expect(isEncrypted(exported.ftpPassword ?? "")).to.equal(true);
+			} finally {
+				delete process.env.THE_LOUNGE_SECRET;
+			}
+		});
+
+		it("should leave empty credentials unencrypted", function () {
+			process.env.THE_LOUNGE_SECRET = "test-export-secret";
+
+			try {
+				const network = new Network({password: "", saslPassword: "", ftpPassword: ""});
+				const exported = network.export();
+
+				expect(isEncrypted(exported.password)).to.equal(false);
+				expect(isEncrypted(exported.saslPassword)).to.equal(false);
+				expect(isEncrypted(exported.ftpPassword)).to.equal(false);
+			} finally {
+				delete process.env.THE_LOUNGE_SECRET;
+			}
 		});
 	});
 
@@ -152,7 +212,7 @@ describe("Network", function () {
 				host: "localhost",
 			});
 
-			expect(network.validate({} as Client)).to.equal(true);
+			expect(network.validate(createTestClient() as Client)).to.equal(true);
 			expect(network.nick).to.equal("thelounge");
 			expect(network.username).to.equal("thelounge");
 			expect(network.realname).to.equal("thelounge");
@@ -162,12 +222,13 @@ describe("Network", function () {
 				host: "localhost",
 				nick: "@Invalid Nick?",
 			});
-			expect(network2.validate({} as Client)).to.equal(true);
+			expect(network2.validate(createTestClient() as Client)).to.equal(true);
 			expect(network2.username).to.equal("InvalidNick");
 		});
 
 		it("should enforce lockNetwork", function () {
 			Config.values.lockNetwork = true;
+			Config.values.defaults.host = "irc.example.com";
 
 			// Make sure we lock in private mode
 			Config.values.public = false;
@@ -178,7 +239,7 @@ describe("Network", function () {
 				tls: false,
 				rejectUnauthorized: false,
 			});
-			expect(network.validate({} as Client)).to.equal(true);
+			expect(network.validate(createTestClient() as Client)).to.equal(true);
 			expect(network.host).to.equal("irc.example.com");
 			expect(network.port).to.equal(6697);
 			expect(network.tls).to.equal(true);
@@ -190,10 +251,11 @@ describe("Network", function () {
 			const network2 = new Network({
 				host: "some.fake.tld",
 			});
-			expect(network2.validate({} as Client)).to.equal(true);
+			expect(network2.validate(createTestClient() as Client)).to.equal(true);
 			expect(network2.host).to.equal("irc.example.com");
 
 			Config.values.lockNetwork = false;
+			Config.values.defaults.host = "";
 		});
 
 		it("realname should be set to nick only if realname is empty", function () {
@@ -202,7 +264,7 @@ describe("Network", function () {
 				nick: "dummy",
 			});
 
-			expect(network.validate({} as Client)).to.equal(true);
+			expect(network.validate(createTestClient() as Client)).to.equal(true);
 			expect(network.nick).to.equal("dummy");
 			expect(network.realname).to.equal("dummy");
 
@@ -212,13 +274,13 @@ describe("Network", function () {
 				realname: "notdummy",
 			});
 
-			expect(network2.validate({} as Client)).to.equal(true);
+			expect(network2.validate(createTestClient() as Client)).to.equal(true);
 			expect(network2.nick).to.equal("dummy");
 			expect(network2.realname).to.equal("notdummy");
 		});
 
 		it("should apply STS policies iff they match", function () {
-			const client: TestClient = {idMsg: 1, emit() {}};
+			const client = createTestClient();
 			STSPolicies.update("irc.example.com", 7000, 3600);
 			assert.isNotNull(STSPolicies.get("irc.example.com"));
 
@@ -249,7 +311,7 @@ describe("Network", function () {
 		it("should not remove client certs if TLS is disabled", function () {
 			Config.values.public = false;
 
-			const client: TestClient = {idMsg: 1, emit() {}, messageStorage: []};
+			const client = createTestClient();
 
 			const network = new Network({host: "irc.example.com", sasl: "external"});
 			(network as NetworkWithIrcFramework).createIrcFramework(client as Client);
@@ -270,7 +332,7 @@ describe("Network", function () {
 		it("should not remove client certs if there is a STS policy", function () {
 			Config.values.public = false;
 
-			const client: TestClient = {idMsg: 1, emit() {}, messageStorage: []};
+			const client = createTestClient();
 			STSPolicies.update("irc.example.com", 7000, 3600);
 			assert.isNotNull(STSPolicies.get("irc.example.com"));
 
@@ -298,7 +360,7 @@ describe("Network", function () {
 		it("should generate and use a client certificate when using SASL external", function () {
 			Config.values.public = false;
 
-			const client: TestClient = {idMsg: 1, emit() {}};
+			const client = createTestClient();
 			STSPolicies.update("irc.example.com", 7000, 3600);
 			assert.isNotNull(STSPolicies.get("irc.example.com"));
 

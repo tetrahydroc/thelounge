@@ -1,5 +1,11 @@
 import _ from "lodash";
-import {MessageType, LinkPreview, UserInMessage, WhoisData, MassEventSummary} from "../../shared/types/msg.js";
+import {
+	MessageType,
+	LinkPreview,
+	UserInMessage,
+	WhoisData,
+	MassEventSummary,
+} from "../../shared/types/msg.js";
 
 class Msg {
 	from!: UserInMessage;

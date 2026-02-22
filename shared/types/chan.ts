@@ -1,4 +1,4 @@
-import {SharedMsg} from "./msg";
+import {SharedMsg} from "./msg.js";
 
 // User groups sent by seedpool/enhanced capable servers
 export type UserGroup = {

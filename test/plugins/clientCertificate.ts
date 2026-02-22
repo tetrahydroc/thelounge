@@ -1,7 +1,9 @@
 import fs from "fs";
 import path from "path";
 import {expect} from "chai";
-import ClientCertificate, {ClientCertificateType} from "../../server/plugins/clientCertificate.js";
+import ClientCertificate, {
+	type ClientCertificateType,
+} from "../../server/plugins/clientCertificate.js";
 import Config from "../../server/config.js";
 
 describe("ClientCertificate", function () {

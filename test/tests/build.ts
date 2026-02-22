@@ -1,12 +1,9 @@
 import {expect, assert} from "chai";
 import fs from "fs";
 import path from "path";
-import {fileURLToPath} from "url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 describe("public folder", function () {
-	const publicFolder = path.join(__dirname, "..", "..", "public");
+	const publicFolder = path.join(process.cwd(), "public");
 
 	it("font awesome files are copied", function () {
 		expect(fs.existsSync(path.join(publicFolder, "fonts", "fa-solid-900.woff"))).to.equal(true);

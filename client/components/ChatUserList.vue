@@ -134,7 +134,7 @@ import {computed, defineComponent, nextTick, PropType, ref} from "vue";
 import type {UserInMessage} from "../../shared/types/msg";
 import type {ClientChan, ClientUser} from "../js/types";
 import Username from "./Username.vue";
-import { useStore } from "../js/store";
+import {useStore} from "../js/store";
 
 const modes = {
 	"~": "owner",
@@ -162,7 +162,11 @@ export default defineComponent({
 
 		// Check if we have custom groups from SPGROUPS
 		const hasCustomGroups = computed(() => {
-			return store.state.settings.enhancedUserListEnabled && props.channel.groups && props.channel.groups.length > 0;
+			return (
+				store.state.settings.enhancedUserListEnabled &&
+				props.channel.groups &&
+				props.channel.groups.length > 0
+			);
 		});
 
 		const filteredUsers = computed(() => {
@@ -193,18 +197,16 @@ export default defineComponent({
 		// Get CSS-safe group name
 		const getGroupSlug = (group: string) => {
 			return groupNameSlugs.get(group) ?? slugify(group);
-		}
+		};
 
 		const customGroupedUsers = computed(() => {
 			const groups = {};
 
 			if (hasCustomGroups.value) {
 				if (userSearchInput.value && filteredUsers.value) {
-					const filtered = filteredUsers.value.filter(user =>
-						user.original.nick
-					);
+					const filtered = filteredUsers.value.filter((user) => user.original.nick);
 
-					for (const { name, users } of props.channel.groups ?? []) {
+					for (const {name, users} of props.channel.groups ?? []) {
 						groups[name] ??= [];
 						slugify(name);
 
@@ -217,7 +219,7 @@ export default defineComponent({
 						}
 					}
 				} else {
-					for (const { name, users } of props.channel.groups ?? []) {
+					for (const {name, users} of props.channel.groups ?? []) {
 						groups[name] ??= [];
 						slugify(name);
 

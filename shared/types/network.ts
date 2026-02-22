@@ -1,4 +1,4 @@
-import {SharedChan} from "./chan";
+import {SharedChan} from "./chan.js";
 
 export type SharedPrefixObject = {
 	symbol: string;

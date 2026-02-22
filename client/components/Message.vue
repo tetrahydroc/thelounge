@@ -7,12 +7,17 @@
 				self: prettyMessage.self,
 				highlight: prettyMessage.highlight,
 				'is-focused': isFocused,
-				'previous-source': isPreviousSource
+				'previous-source': isPreviousSource,
 			},
 		]"
 		:data-type="prettyMessage.type"
 		:data-command="prettyMessage.command"
-		:data-from="prettyMessage.from && (prettyMessage.from.shoutbox ? prettyMessage.from.original_nick : prettyMessage.from.nick)"
+		:data-from="
+			prettyMessage.from &&
+			(prettyMessage.from.shoutbox
+				? prettyMessage.from.original_nick
+				: prettyMessage.from.nick)
+		"
 		:data-bridged="prettyMessage.from?.shoutbox"
 	>
 		<span
@@ -112,9 +117,9 @@ import MessageTypes from "./MessageTypes";
 
 import type {ClientChan, ClientMessage, ClientNetwork} from "../js/types";
 import {useStore} from "../js/store";
-import { MessageType } from "../../shared/types/msg";
-import { parser as shoutboxParser } from "../js/helpers/shoutbox-bridge/parser";
-import { ChanType } from "../../shared/types/chan";
+import {MessageType} from "../../shared/types/msg";
+import {parser as shoutboxParser} from "../js/helpers/shoutbox-bridge/parser";
+import {ChanType} from "../../shared/types/chan";
 
 MessageTypes.ParsedMessage = ParsedMessage;
 MessageTypes.LinkPreview = LinkPreview;
@@ -168,7 +173,11 @@ export default defineComponent({
 
 		// IRC Bridge formatter
 		const prettyMessage = computed(() => {
-			if (props.channel?.type !== ChanType.CHANNEL || !store.state.settings.beautifyBridgedMessages || props.message.type !== MessageType.MESSAGE) {
+			if (
+				props.channel?.type !== ChanType.CHANNEL ||
+				!store.state.settings.beautifyBridgedMessages ||
+				props.message.type !== MessageType.MESSAGE
+			) {
 				return props.message;
 			}
 

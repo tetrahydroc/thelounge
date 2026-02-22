@@ -4,7 +4,7 @@ import {fileURLToPath} from "url";
 import util from "../util.js";
 import Config from "../../server/config.js";
 import link from "../../server/plugins/irc-events/link.js";
-import {LinkPreview} from "../../shared/types/msg.js";
+import type {LinkPreview} from "../../shared/types/msg.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

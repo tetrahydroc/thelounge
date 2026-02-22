@@ -25,6 +25,8 @@ type Https = {
 
 type FileUpload = {
 	enable: boolean;
+	type: "local" | "x0";
+	x0_host?: string;
 	maxFileSize: number;
 	baseUrl?: string;
 };
@@ -76,6 +78,18 @@ type Debug = {
 	raw: boolean;
 };
 
+type Fish = {
+	enabled: boolean;
+};
+
+type FtpInvite = {
+	enabled: boolean;
+};
+
+type Encoding = {
+	enabled: boolean;
+};
+
 type StoragePolicy = {
 	enabled: boolean;
 	maxAgeDays: number;
@@ -120,6 +134,9 @@ export type ConfigType = {
 	oidentd?: string;
 	ldap: Ldap;
 	debug: Debug;
+	fish: Fish;
+	ftpInvite: FtpInvite;
+	encoding: Encoding;
 	themeColor: string;
 };
 
@@ -214,6 +231,31 @@ class Config {
 		});
 	}
 
+	validate() {
+		if (this.values.fileUpload.baseUrl) {
+			try {
+				new URL("test/file.png", this.values.fileUpload.baseUrl);
+			} catch (e: unknown) {
+				this.values.fileUpload.baseUrl = undefined;
+
+				log.warn(
+					`The ${colors.bold("fileUpload.baseUrl")} you specified is invalid: ${String(
+						e
+					)}`
+				);
+			}
+		}
+
+		if (this.values.fileUpload.type !== "local" && this.values.fileUpload.type !== "x0") {
+			log.warn(
+				`The ${colors.bold(
+					"fileUpload.type"
+				)} you specified is invalid. It must be either "local" or "x0". Defaulting to "local".`
+			);
+			this.values.fileUpload.type = "local";
+		}
+	}
+
 	async setHome(newPath: string) {
 		this.#homePath = Helper.expandHome(newPath);
 
@@ -247,19 +289,7 @@ class Config {
 			}
 		}
 
-		if (this.values.fileUpload.baseUrl) {
-			try {
-				new URL("test/file.png", this.values.fileUpload.baseUrl);
-			} catch (e: unknown) {
-				this.values.fileUpload.baseUrl = undefined;
-
-				log.warn(
-					`The ${colors.bold("fileUpload.baseUrl")} you specified is invalid: ${String(
-						e
-					)}`
-				);
-			}
-		}
+		this.validate();
 
 		const manifestPath = Utils.getFileFromRelativeToRoot("public", "thelounge.webmanifest");
 

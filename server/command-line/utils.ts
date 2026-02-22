@@ -125,7 +125,11 @@ class Utils {
 				log.debug(`Detected Yarn Classic v${yarnVersion}`);
 				this.#detectedPM = {name: "yarn1"};
 				return this.#detectedPM;
-			} else if (yarnVersion.startsWith("4.") || yarnVersion.startsWith("3.") || yarnVersion.startsWith("2.")) {
+			} else if (
+				yarnVersion.startsWith("4.") ||
+				yarnVersion.startsWith("3.") ||
+				yarnVersion.startsWith("2.")
+			) {
 				log.debug(`Detected Yarn Berry v${yarnVersion}`);
 				this.#detectedPM = {name: "yarn4"};
 				return this.#detectedPM;
@@ -196,13 +200,16 @@ class Utils {
 
 			proc.stdout.on("data", (data) => {
 				const output = data.toString().trim();
+
 				if (output) {
 					// For yarn1 JSON output, check for success type
 					if (pm.name === "yarn1") {
 						try {
 							const lines = output.split("\n");
+
 							for (const line of lines) {
 								const json = JSON.parse(line);
+
 								if (json.type === "success") {
 									success = true;
 								}
@@ -211,12 +218,14 @@ class Utils {
 							// Not JSON, just log it
 						}
 					}
+
 					log.debug(output);
 				}
 			});
 
 			proc.stderr.on("data", (data) => {
 				const output = data.toString().trim();
+
 				if (output) {
 					// Filter out noise
 					if (output.includes("WARN") || output.includes("warning")) {
@@ -252,13 +261,19 @@ class Utils {
 		});
 	}
 
-	static #buildNpmArgs(command: string, parameters: string[], packagesPath: string, cachePath: string): string[] {
+	static #buildNpmArgs(
+		command: string,
+		parameters: string[],
+		packagesPath: string,
+		cachePath: string
+	): string[] {
 		let npmCommand = command;
 		const args: string[] = [];
 
 		switch (command) {
 			case "add":
 				npmCommand = "install";
+
 				for (const param of parameters) {
 					if (param === "--exact") {
 						args.push("--save-exact");
@@ -266,6 +281,7 @@ class Utils {
 						args.push(param);
 					}
 				}
+
 				break;
 			case "remove":
 				npmCommand = "uninstall";
@@ -279,14 +295,29 @@ class Utils {
 				args.push(...parameters);
 		}
 
-		return [npmCommand, "--prefix", packagesPath, "--cache", cachePath, "--ignore-scripts", ...args];
+		return [
+			npmCommand,
+			"--prefix",
+			packagesPath,
+			"--cache",
+			cachePath,
+			"--ignore-scripts",
+			...args,
+		];
 	}
 
-	static #buildYarn1Args(command: string, parameters: string[], packagesPath: string, cachePath: string): string[] {
+	static #buildYarn1Args(
+		command: string,
+		parameters: string[],
+		packagesPath: string,
+		cachePath: string
+	): string[] {
 		const args = [
 			command,
-			"--cache-folder", cachePath,
-			"--cwd", packagesPath,
+			"--cache-folder",
+			cachePath,
+			"--cwd",
+			packagesPath,
 			"--json",
 			"--ignore-scripts",
 			"--non-interactive",
@@ -295,6 +326,7 @@ class Utils {
 		return args;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	static #buildYarn4Args(command: string, parameters: string[], packagesPath: string): string[] {
 		// Yarn 4 (Berry) has different syntax
 		// It uses the cwd option via process.cwd() or --cwd flag
@@ -304,6 +336,7 @@ class Utils {
 		switch (command) {
 			case "add":
 				yarnCommand = "add";
+
 				for (const param of parameters) {
 					if (param === "--exact") {
 						args.push("--exact");
@@ -311,6 +344,7 @@ class Utils {
 						args.push(param);
 					}
 				}
+
 				break;
 			case "remove":
 				yarnCommand = "remove";

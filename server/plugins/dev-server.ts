@@ -38,7 +38,7 @@ export default (app: express.Application) => {
 			publicPath: webpackConfig.output?.publicPath,
 		})
 	).use(
-		webpackHotMiddleware(compiler, {
+		webpackHotMiddleware(compiler as unknown as Parameters<typeof webpackHotMiddleware>[0], {
 			path: "/storage/__webpack_hmr",
 		})
 	);

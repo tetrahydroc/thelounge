@@ -78,20 +78,20 @@
 			<Session v-if="currentSession" :session="currentSession" />
 
 			<template v-if="activeSessions.length > 0">
-				<h3>Active sessions</h3>
-				<Session
+				<h3>active sessions</h3>
+				<session;
 					v-for="session in activeSessions"
 					:key="session.token"
 					:session="session"
 				/>
 			</template>
 
-			<h3>Other sessions</h3>
-			<p v-if="store.state.sessions.length === 0">Loading…</p>
+			<h3>other sessions</h3>
+			<p v-if="store.state.sessions.length === 0">loading…</p>
 			<p v-else-if="otherSessions.length === 0">
-				<em>You are not currently logged in to any other device.</em>
+				<em>you are not currently logged in to any other device.</em>
 			</p>
-			<Session
+			<session
 				v-for="session in otherSessions"
 				v-else
 				:key="session.token"

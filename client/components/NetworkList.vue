@@ -139,7 +139,7 @@
 
 					<DirectMessageSection
 						:network="network"
-						:queries="network.channels.filter(c => c.type === 'query')"
+						:queries="network.channels.filter((c) => c.type === 'query')"
 					/>
 				</div>
 			</template>
@@ -158,18 +158,18 @@
 	width: 100%;
 	border: 0;
 	color: #fff;
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: rgb(255 255 255 / 10%);
 	padding-right: 35px;
 	appearance: none;
 }
 
 .jump-to-input .input::placeholder {
-	color: rgba(255, 255, 255, 0.35);
+	color: rgb(255 255 255 / 35%);
 }
 
 .jump-to-input::before {
 	content: "\f002"; /* http://fontawesome.io/icon/search/ */
-	color: rgba(255, 255, 255, 0.35);
+	color: rgb(255 255 255 / 35%);
 	position: absolute;
 	right: 8px;
 	top: 0;

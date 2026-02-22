@@ -8,6 +8,9 @@ import User from "../../models/user.js";
 import {MessageType} from "../../../shared/types/msg.js";
 import {ChanType} from "../../../shared/types/chan.js";
 import {MessageEventArgs} from "irc-framework";
+import {tryDecryptFishLine} from "../../utils/fish.js";
+import Config from "../../config.js";
+import iconv from "iconv-lite";
 
 const nickRegExp = /(?:\x03[0-9]{1,2}(?:,[0-9]{1,2})?)?([\w[\]\\`^{|}-]+)/g;
 
@@ -26,6 +29,23 @@ type HandleInput = {
 
 function convertForHandle(type: MessageType, data: MessageEventArgs): HandleInput {
 	return {...data, type: type};
+}
+
+function decodeMessage(message: string, encoding?: string): string {
+	const buffer = Buffer.from(message, "binary");
+
+	if (encoding !== undefined && encoding !== null && encoding !== "auto") {
+		return iconv.decode(buffer, encoding);
+	}
+
+	// Auto-detection: try UTF-8 first, fall back to original
+	const decoded = iconv.decode(buffer, "utf8");
+
+	if (!decoded.includes("\uFFFD") && decoded !== message) {
+		return decoded;
+	}
+
+	return message;
 }
 
 export default <IrcEventHandler>function (this: Client, irc, network) {
@@ -112,6 +132,20 @@ export default <IrcEventHandler>function (this: Client, irc, network) {
 			}
 
 			from = chan.getUser(data.nick);
+
+			// Attempt mIRC FiSH Blowfish decryption if applicable
+			if (Config.values.fish.enabled && chan.blowfishKey) {
+				const decrypted = tryDecryptFishLine(data.message, chan.blowfishKey);
+
+				if (decrypted !== null) {
+					data.message = decrypted;
+				}
+			}
+
+			// Encoding-aware decoding (per-nick)
+			if (Config.values.encoding.enabled) {
+				data.message = decodeMessage(data.message, network.resolveEncodingFor(data.nick));
+			}
 
 			// Query messages (unless self or muted) always highlight
 			if (chan.type === ChanType.QUERY) {

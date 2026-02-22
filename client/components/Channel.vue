@@ -3,11 +3,14 @@
 	<ChannelWrapper ref="wrapper" v-bind="$props">
 		<span class="name">{{ channel.name }}</span>
 		<span
-			v-if="channel.unread && (store.state.settings.disableMutedUnread !== true || !channel.muted)"
+			v-if="
+				channel.unread &&
+				(store.state.settings.disableMutedUnread !== true || !channel.muted)
+			"
 			:class="{highlight: channel.highlight && !channel.muted}"
 			class="badge"
-			>{{ unreadCount }}</span
-		>
+			>{{ unreadCount }}
+		</span>
 		<template v-if="channel.type === 'channel'">
 			<span
 				v-if="channel.state === 0"

@@ -8,7 +8,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="invite in (channel.data as any)" :key="invite.hostmask">
+			<tr v-for="invite in channel.data as any" :key="invite.hostmask">
 				<td class="hostmask">
 					<ParsedMessage :network="network" :text="invite.hostmask" />
 				</td>

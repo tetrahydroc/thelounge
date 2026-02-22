@@ -46,12 +46,14 @@
 ::placeholder {
 	color: rgb(0 0 0 / 35%);
 	opacity: 1;
+
 	/* fix opacity in Firefox */
 }
 
 html {
 	box-sizing: border-box;
 	-webkit-tap-highlight-color: transparent;
+
 	/* remove tap highlight on touch devices */
 }
 
@@ -92,6 +94,7 @@ html,
 body {
 	height: 100%;
 	overscroll-behavior: none;
+
 	/* prevent overscroll navigation actions */
 }
 
@@ -109,6 +112,7 @@ body {
 	  * See http://stackoverflow.com/a/29313685/1935861
 	  */
 	overflow: hidden;
+
 	/* iOS Safari requires overflow rather than overflow-y */
 }
 
@@ -186,6 +190,7 @@ kbd {
 	font-family: inherit;
 	line-height: 1em;
 	min-width: 28px;
+
 	/* Ensure 1-char keys have the same width */
 	margin: 0 1px;
 	padding: 4px 6px;
@@ -217,6 +222,7 @@ p {
 	transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
 	word-spacing: 3px;
 	cursor: pointer;
+
 	/* This is useful for `<button>` elements */
 }
 
@@ -288,6 +294,7 @@ p {
 	font-size: 0;
 	opacity: 0;
 	width: 0.01px;
+
 	/* Must be non-zero to be the first selected character on Firefox */
 	display: inline-block;
 }
@@ -356,6 +363,7 @@ p {
 #sidebar .collapse-network-icon::before {
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
+
 	/* Can't have font-size inherit on line above, so need to override */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -363,133 +371,159 @@ p {
 
 #viewport .lt::before {
 	content: "\f0c9";
+
 	/* http://fontawesome.io/icon/bars/ */
 }
 
 #viewport .rt::before {
 	content: "\f0c0";
+
 	/* https://fontawesome.com/icons/users?style=solid */
 }
 
 #chat button.menu::before {
 	content: "\f142";
+
 	/* http://fontawesome.io/icon/ellipsis-v/ */
 }
 
 #chat button.mentions::before {
 	content: "\f1fa";
+
 	/* https://fontawesome.com/icons/at?style=solid */
 }
 
 #chat button.search::before {
 	content: "\f002";
+
 	/* https://fontawesome.com/icons/search?style=solid */
 }
 
 #chat button.close::before {
 	content: "\f00d";
+
 	/* https://fontawesome.com/icons/times?style=solid */
 }
 
 .context-menu-join::before {
 	content: "\f067";
+
 	/* http://fontawesome.io/icon/plus/ */
 }
 
 .context-menu-user::before {
 	content: "\f007";
+
 	/* http://fontawesome.io/icon/user/ */
 }
 
 .context-menu-close::before {
 	content: "\f00d";
+
 	/* http://fontawesome.io/icon/times/ */
 }
 
 .context-menu-list::before {
 	content: "\f03a";
+
 	/* http://fontawesome.io/icon/list/ */
 }
 
 .context-menu-disconnect::before {
 	content: "\f127";
+
 	/* https://fontawesome.com/icons/unlink?style=solid */
 }
 
 .context-menu-connect::before {
 	content: "\f0c1";
+
 	/* https://fontawesome.com/icons/link?style=solid */
 }
 
 .context-menu-action-open::before {
 	content: "\f08e";
+
 	/* https://fontawesome.com/icons/arrow-up-right-from-square?style=solid  */
 }
 
 .context-menu-action-whois::before {
 	content: "\f05a";
+
 	/* http://fontawesome.io/icon/info-circle/  */
 }
 
 .context-menu-action-slap::before {
 	content: "\f256";
+
 	/* https://fontawesome.com/icons/hand?style=solid  */
 	transform: rotate(45deg) translate(0%, 10%);
 }
 
 .context-menu-action-ignore::before {
 	content: "\f506";
+
 	/* https://fontawesome.com/icons/user-slash?style=solid  */
 }
 
 .context-menu-action-kick::before {
 	content: "\f05e";
+
 	/* http://fontawesome.io/icon/ban/ */
 }
 
 .context-menu-action-set-mode::before {
 	content: "\f067";
+
 	/* http://fontawesome.io/icon/plus/ */
 }
 
 .context-menu-action-revoke-mode::before {
 	content: "\f068";
+
 	/* http://fontawesome.io/icon/minus/ */
 }
 
 .context-menu-network::before {
 	content: "\f233";
+
 	/* https://fontawesome.com/icons/server?style=solid */
 }
 
 .context-menu-edit::before {
 	content: "\f303";
+
 	/* https://fontawesome.com/icons/pencil-alt?style=solid */
 }
 
 .context-menu-clear-history::before {
 	content: "\f1f8";
+
 	/* https://fontawesome.com/icons/trash?style=solid */
 }
 
 .context-menu-mute::before {
 	content: "\f6a9";
+
 	/* https://fontawesome.com/v5.15/icons/volume-mute?style=solid */
 }
 
 .context-menu-pin::before {
 	content: "\f08d";
+
 	/* https://fontawesome.com/icons/thumbtack?style=solid */
 }
 
 .channel-list-item .not-secure-icon::before {
 	content: "\f071";
+
 	/* https://fontawesome.com/icons/exclamation-triangle?style=solid */
 }
 
 .channel-list-item .not-connected-icon::before,
 .channel-list-item .parted-channel-icon::before {
 	content: "\f127";
+
 	/* https://fontawesome.com/icons/unlink?style=solid */
 }
 
@@ -497,29 +531,33 @@ p {
 .context-menu-action-query::before,
 .channel-list-item[data-type="query"]::before {
 	content: "\f075";
+
 	/* https://fontawesome.com/icons/comment?style=solid */
 }
 
 .context-menu-chan::before,
 .channel-list-item[data-type="channel"]::before {
 	content: "\f086";
+
 	/* http://fontawesome.io/icon/comments/ */
 }
 
 .channel-list-item[data-type="special"]::before {
 	content: "\f03a";
+
 	/* http://fontawesome.io/icon/list/ */
 }
 
 .channel-list-item.has-draft:not(.active, [data-type="lobby"])::before {
 	content: "\f304";
+
 	/* https://fontawesome.com/icons/pen?style=solid */
 }
 
 .context-menu-item.context-menu-group-bot,
 .custom-group-header.group-header-bot {
 	&, &:hover {
-		color: rgb(255, 215, 0);
+		color: rgb(255 215 0);
 	}
 
 	&::before {
@@ -530,7 +568,7 @@ p {
 .context-menu-item.context-menu-group-sysop,
 .custom-group-header.group-header-sysop {
 	&, &:hover {
-		color: rgb(255, 0, 0);
+		color: rgb(255 0 0);
 	}
 
 	&::before {
@@ -541,7 +579,7 @@ p {
 .context-menu-item.context-menu-group-administrator,
 .custom-group-header.group-header-administrator {
 	&, &:hover {
-		color: rgb(242, 59, 22);
+		color: rgb(242 59 22);
 	}
 
 	&::before {
@@ -552,7 +590,7 @@ p {
 .context-menu-item.context-menu-group-moderator,
 .custom-group-header.group-header-moderator {
 	&, &:hover {
-		color: rgb(201, 26, 26);
+		color: rgb(201 26 26);
 	}
 
 	&::before {
@@ -563,7 +601,7 @@ p {
 .context-menu-item.context-menu-group-fls,
 .custom-group-header.group-header-fls {
 	&, &:hover {
-		color: rgb(255, 211, 156);
+		color: rgb(255 211 156);
 	}
 
 	&::before {
@@ -574,7 +612,7 @@ p {
 .context-menu-item.context-menu-group-editor,
 .custom-group-header.group-header-editor {
 	&, &:hover {
-		color: rgb(21, 176, 151);
+		color: rgb(21 176 151);
 	}
 
 	&::before {
@@ -585,7 +623,7 @@ p {
 .context-menu-item.context-menu-group-internal,
 .custom-group-header.group-header-internal {
 	&, &:hover {
-		color: rgb(255, 77, 77);
+		color: rgb(255 77 77);
 	}
 
 	&::before {
@@ -596,7 +634,7 @@ p {
 .context-menu-item.context-menu-group-uploader,
 .custom-group-header.group-header-uploader {
 	&, &:hover {
-		color: rgb(46, 204, 113);
+		color: rgb(46 204 113);
 	}
 
 	&::before {
@@ -607,7 +645,7 @@ p {
 .context-menu-item.context-menu-group-external,
 .custom-group-header.group-header-external {
 	&, &:hover {
-		color: rgb(0, 153, 255);
+		color: rgb(0 153 255);
 	}
 
 	&::before {
@@ -618,7 +656,7 @@ p {
 .context-menu-item.context-menu-group-specialpool,
 .custom-group-header.group-header-specialpool {
 	&, &:hover {
-		color: rgb(255, 215, 0);
+		color: rgb(255 215 0);
 	}
 
 	&::before {
@@ -629,7 +667,7 @@ p {
 .context-menu-item.context-menu-group-foundingpool,
 .custom-group-header.group-header-foundingpool {
 	&, &:hover {
-		color: rgb(255, 132, 9);
+		color: rgb(255 132 9);
 	}
 
 	&::before {
@@ -640,7 +678,7 @@ p {
 .context-menu-item.context-menu-group-godpool,
 .custom-group-header.group-header-godpool {
 	&, &:hover {
-		color: rgb(212, 172, 13);
+		color: rgb(212 172 13);
 	}
 
 	&::before {
@@ -651,7 +689,7 @@ p {
 .context-menu-item.context-menu-group-megapool,
 .custom-group-header.group-header-megapool {
 	&, &:hover {
-		color: rgb(224, 138, 78);
+		color: rgb(224 138 78);
 	}
 
 	&::before {
@@ -662,7 +700,7 @@ p {
 .context-menu-item.context-menu-group-propool,
 .custom-group-header.group-header-propool {
 	&, &:hover {
-		color: rgb(255, 215, 0);
+		color: rgb(255 215 0);
 	}
 
 	&::before {
@@ -673,7 +711,7 @@ p {
 .context-menu-item.context-menu-group-uberpool,
 .custom-group-header.group-header-uberpool {
 	&, &:hover {
-		color: rgb(255, 255, 128);
+		color: rgb(255 255 128);
 	}
 
 	&::before {
@@ -684,7 +722,7 @@ p {
 .context-menu-item.context-menu-group-superpool,
 .custom-group-header.group-header-superpool {
 	&, &:hover {
-		color: rgb(255, 132, 9);
+		color: rgb(255 132 9);
 	}
 
 	&::before {
@@ -695,7 +733,7 @@ p {
 .context-menu-item.context-menu-group-powerpool,
 .custom-group-header.group-header-powerpool {
 	&, &:hover {
-		color: rgb(17, 85, 204);
+		color: rgb(17 85 204);
 	}
 
 	&::before {
@@ -706,7 +744,7 @@ p {
 .context-menu-item.context-menu-group-pool,
 .custom-group-header.group-header-pool {
 	&, &:hover {
-		color: rgb(99, 230, 190);
+		color: rgb(99 230 190);
 	}
 
 	&::before {
@@ -717,7 +755,7 @@ p {
 .context-menu-item.context-menu-group-user,
 .custom-group-header.group-header-user {
 	&, &:hover {
-		color: rgb(114, 137, 218);
+		color: rgb(114 137 218);
 	}
 
 	&::before {
@@ -728,7 +766,7 @@ p {
 .context-menu-item.context-menu-group-kiddiepool,
 .custom-group-header.group-header-kiddiepool {
 	&, &:hover {
-		color: rgb(48, 47, 145);
+		color: rgb(48 47 145);
 	}
 
 	&::before {
@@ -739,7 +777,7 @@ p {
 .context-menu-item.context-menu-group-validating,
 .custom-group-header.group-header-validating {
 	&, &:hover {
-		color: rgb(149, 165, 166);
+		color: rgb(149 165 166);
 	}
 
 	&::before {
@@ -750,7 +788,7 @@ p {
 .context-menu-item.context-menu-group-cesspool,
 .custom-group-header.group-header-cesspool {
 	&, &:hover {
-		color: rgb(150, 75, 0);
+		color: rgb(150 75 0);
 	}
 
 	&::before {
@@ -761,7 +799,7 @@ p {
 .context-menu-item.context-menu-group-idlepool,
 .custom-group-header.group-header-idlepool {
 	&, &:hover {
-		color: rgb(87, 87, 87);
+		color: rgb(87 87 87);
 	}
 
 	&::before {
@@ -772,7 +810,7 @@ p {
 .context-menu-item.context-menu-group-guest,
 .custom-group-header.group-header-guest {
 	&, &:hover {
-		color: rgb(87, 87, 87);
+		color: rgb(87 87 87);
 	}
 
 	&::before {
@@ -783,7 +821,7 @@ p {
 .context-menu-item.context-menu-group-leech,
 .custom-group-header.group-header-leech {
 	&, &:hover {
-		color: rgb(150, 40, 27);
+		color: rgb(150 40 27);
 	}
 
 	&::before {
@@ -794,7 +832,7 @@ p {
 .context-menu-item.context-menu-group-banned,
 .custom-group-header.group-header-banned {
 	&, &:hover {
-		color: rgb(255, 0, 0);
+		color: rgb(255 0 0);
 	}
 
 	&::before {
@@ -805,7 +843,7 @@ p {
 .context-menu-item.context-menu-group-disabled,
 .custom-group-header.group-header-disabled {
 	&, &:hover {
-		color: rgb(141, 98, 98);
+		color: rgb(141 98 98);
 	}
 
 	&::before {
@@ -816,7 +854,7 @@ p {
 .context-menu-item.context-menu-group-pruned,
 .custom-group-header.group-header-pruned {
 	&, &:hover {
-		color: rgb(141, 98, 98);
+		color: rgb(141 98 98);
 	}
 
 	&::before {
@@ -826,32 +864,38 @@ p {
 
 #footer .connect::before {
 	content: "\f067";
+
 	/* http://fontawesome.io/icon/plus/ */
 }
 
 #footer .settings::before {
 	content: "\f013";
+
 	/* http://fontawesome.io/icon/cog/ */
 }
 
 #footer .help::before {
 	content: "\f059";
+
 	/* http://fontawesome.io/icon/question/ */
 }
 
 #form #upload::before {
 	content: "\f0c6";
+
 	/* https://fontawesome.com/icons/paperclip?style=solid */
 }
 
 #form #submit::before {
 	content: "\f1d8";
+
 	/* http://fontawesome.io/icon/paper-plane/ */
 }
 
 #chat .msg[data-type="away"] .from::before,
 #chat .msg[data-type="back"] .from::before {
 	content: "\f017";
+
 	/* https://fontawesome.com/icons/clock?style=solid */
 	color: #7f8c8d;
 }
@@ -869,33 +913,39 @@ p {
 
 #help .website-link::before {
 	content: "\f0ac";
+
 	/* http://fontawesome.io/icon/globe/ */
 }
 
 #help .documentation-link::before {
 	content: "\f19d";
+
 	/* http://fontawesome.io/icon/graduation-cap/ */
 }
 
 #help .report-issue-link::before {
 	content: "\f188";
+
 	/* http://fontawesome.io/icon/bug/ */
 }
 
 #chat .msg[data-type="invite"] .from::before {
 	content: "\f0e0";
+
 	/* https://fontawesome.com/icons/envelope?style=solid */
 	color: #2ecc40;
 }
 
 #chat .msg[data-type="login"] .from::before {
 	content: "\f007";
+
 	/* https://fontawesome.com/icons/user?style=solid */
 	color: #2ecc40;
 }
 
 #chat .msg[data-type="logout"] .from::before {
 	content: "\f007";
+
 	/* https://fontawesome.com/icons/user?style=solid */
 	color: #ff4136;
 }
@@ -903,6 +953,7 @@ p {
 #chat .msg[data-type="part"] .from::before,
 #chat .msg[data-type="quit"] .from::before {
 	content: "\f2f5";
+
 	/* https://fontawesome.com/icons/sign-out-alt?style=solid */
 	color: #ff4136;
 	display: inline-block;
@@ -911,6 +962,7 @@ p {
 
 #chat .msg[data-type="topic"] .from::before {
 	content: "\f0a1";
+
 	/* http://fontawesome.io/icon/bullhorn/ */
 	color: #2ecc40;
 }
@@ -919,24 +971,28 @@ p {
 #chat .msg[data-type="mode_user"] .from::before,
 #chat .msg[data-type="mode"] .from::before {
 	content: "\f05a";
+
 	/* http://fontawesome.io/icon/info-circle/ */
 	color: #2ecc40;
 }
 
 #chat .msg[data-command="motd"] .from::before {
 	content: "\f02e";
+
 	/* https://fontawesome.com/icons/bookmark?style=solid */
 	color: var(--body-color-muted);
 }
 
 #chat .msg[data-command="help"] .from::before {
 	content: "\f059";
+
 	/* https://fontawesome.com/icons/question-circle?style=solid */
 	color: var(--body-color-muted);
 }
 
 #chat .msg[data-command="info"] .from::before {
 	content: "\f05a";
+
 	/* https://fontawesome.com/icons/info-circle?style=solid */
 	color: var(--body-color-muted);
 }
@@ -944,12 +1000,14 @@ p {
 #chat .msg[data-type="ctcp"] .from::before,
 #chat .msg[data-type="ctcp_request"] .from::before {
 	content: "\f15c";
+
 	/* https://fontawesome.com/icons/file-alt?style=solid */
 	color: var(--body-color-muted);
 }
 
 #chat .msg[data-type="whois"] .from::before {
 	content: "\f007";
+
 	/* http://fontawesome.io/icon/user/ */
 	color: #2ecc40;
 }
@@ -957,40 +1015,47 @@ p {
 #chat .msg[data-type="nick"] .from::before,
 #chat .msg[data-type="chghost"] .from::before {
 	content: "\f007";
+
 	/* http://fontawesome.io/icon/user/ */
 	color: #2ecc40;
 }
 
 #chat .msg[data-type="join"] .from::before {
 	content: "\f2f6";
+
 	/* https://fontawesome.com/icons/sign-in-alt?style=solid */
 	color: #2ecc40;
 }
 
 #chat .msg[data-type="kick"] .from::before {
 	content: "\f05e";
+
 	/* http://fontawesome.io/icon/ban/ */
 	color: #ff4136;
 }
 
 #chat .msg[data-type="raw"] .from::before {
 	content: "\f101";
+
 	/* https://fontawesome.com/icons/angle-double-right?style=solid */
 }
 
 #chat .msg.self[data-type="raw"] .from::before {
 	content: "\f359";
+
 	/* https://fontawesome.com/icons/arrow-alt-circle-left?style=solid */
 	color: #2ecc40;
 }
 
 #chat .msg[data-type="action"] .from::before {
 	content: "\f005";
+
 	/* http://fontawesome.io/icon/star/ */
 }
 
 #chat .msg[data-type="plugin"] .from::before {
 	content: "\f1e6";
+
 	/* http://fontawesome.io/icon/plug/ */
 	transform: rotate(45deg);
 	display: inline-block;
@@ -999,6 +1064,7 @@ p {
 
 #chat .msg[data-type="mass_event"] .from::before {
 	content: "\e49a";
+
 	/* https://fontawesome.com/icons/circle-info?style=solid */
 }
 
@@ -1012,6 +1078,7 @@ p {
 #chat .msg-shown-in-active span::before {
 	font-size: 10px;
 	content: "\f06e";
+
 	/* https://fontawesome.com/icons/eye?style=solid */
 }
 
@@ -1033,12 +1100,14 @@ p {
 
 #chat .toggle-button::after {
 	content: "\f0da";
+
 	/* http://fontawesome.io/icon/caret-right/ */
 }
 
 #chat .count::before {
 	color: #cfcfcf;
 	content: "\f002";
+
 	/* http://fontawesome.io/icon/search/ */
 	position: absolute;
 	right: 13px;
@@ -1048,27 +1117,32 @@ p {
 #connect .extra-help::before,
 #settings .extra-help::before {
 	content: "\f059";
+
 	/* http://fontawesome.io/icon/question-circle/ */
 }
 
 #settings #play::before {
 	content: "\f028";
+
 	/* http://fontawesome.io/icon/volume-up/ */
 	margin-right: 9px;
 }
 
 #image-viewer .previous-image-btn::before {
 	content: "\f104";
+
 	/* http://fontawesome.io/icon/angle-left/ */
 }
 
 #image-viewer .next-image-btn::before {
 	content: "\f105";
+
 	/* http://fontawesome.io/icon/angle-right/ */
 }
 
 #image-viewer .open-btn::before {
 	content: "\f35d";
+
 	/* https://fontawesome.com/icons/external-link-alt?style=solid */
 }
 
@@ -1119,6 +1193,7 @@ p {
 #chat button.close::before {
 	width: 36px;
 	line-height: 36px;
+
 	/* Fix alignment in Microsoft Edge */
 }
 
@@ -1146,6 +1221,7 @@ p {
 	opacity: 0;
 	transition: opacity 0.2s;
 	background-clip: padding-box;
+
 	/* Fix border-radius bleeding color */
 }
 
@@ -1164,6 +1240,7 @@ p {
 	max-height: 100%;
 	will-change: transform;
 	color: #b7c5d1;
+
 	/* same as .channel-list-item color */
 }
 
@@ -1218,6 +1295,7 @@ background on hover (unless active) */
 .channel-list-item:hover,
 #footer button:hover {
 	background-color: rgb(48 62 74 / 50%);
+
 	/* #303e4a x 50% alpha */
 }
 
@@ -1450,6 +1528,7 @@ background on hover (unless active) */
 
 #sidebar .network .collapse-network-icon::before {
 	content: "\f0d7";
+
 	/* http://fontawesome.io/icon/caret-down/ */
 	color: #fff;
 }
@@ -1774,7 +1853,7 @@ textarea.input {
 	pointer-events: auto;
 	padding: 8px 20px;
 	border-radius: 20px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 2px 10px rgb(0 0 0 / 30%);
 	font-weight: 500;
 }
 
@@ -1816,6 +1895,7 @@ textarea.input {
 
 .scroll-down-arrow::after {
 	content: "\f107";
+
 	/* https://fontawesome.com/icons/angle-down?style=solid */
 }
 
@@ -1835,6 +1915,7 @@ textarea.input {
 #chat .msg {
 	word-wrap: break-word;
 	word-break: break-word;
+
 	/* Webkit-specific */
 	display: flex;
 	align-items: flex-start;
@@ -1906,6 +1987,7 @@ textarea.input {
 	width: 55px;
 	font-variant-numeric: tabular-nums;
 	box-sizing: content-box;
+
 	/* highlights have a border-left */
 }
 
@@ -1934,8 +2016,10 @@ textarea.input {
 	padding-right: 6px;
 	border-left: 1px solid #f6f6f6;
 	overflow: hidden;
+
 	/* Prevents Zalgo text to expand beyond messages */
 	text-align: left;
+
 	/* so RTL text will still be aligned left, not right */
 }
 
@@ -2236,6 +2320,7 @@ textarea.input {
 
 #chat .preview {
 	display: flex;
+
 	/* Fix odd margin added by inline-flex in .toggle-content */
 }
 
@@ -2339,6 +2424,7 @@ textarea.input {
 
 #chat .toggle-content .more-caret::before {
 	content: "\f0da";
+
 	/* https://fontawesome.com/icons/caret-right?style=solid */
 }
 
@@ -2491,6 +2577,7 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 #loading .logo-inverted,
 .window .logo-inverted {
 	display: none;
+
 	/* In dark themes, inverted logo must be used instead */
 }
 
@@ -2669,16 +2756,19 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 
 .password-container .reveal-password span::before {
 	content: "\f06e";
+
 	/* https://fontawesome.com/icons/eye?style=solid */
 }
 
 .topic-container .save-topic span::before {
 	content: "\f00c";
+
 	/* https://fontawesome.com/icons/check?style=solid */
 }
 
 .password-container .reveal-password-visible span::before {
 	content: "\f070";
+
 	/* https://fontawesome.com/icons/eye-slash?style=solid */
 	color: #ff4136;
 }
@@ -2784,6 +2874,7 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 
 #version-checker.loading::before {
 	content: "\f253";
+
 	/* https://fontawesome.com/icons/hourglass-end?style=solid */
 }
 
@@ -2796,6 +2887,7 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 #version-checker.new-version::before,
 #version-checker.new-packages::before {
 	content: "\f164";
+
 	/* https://fontawesome.com/icons/thumbs-up?style=solid */
 }
 
@@ -2806,6 +2898,7 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 
 #version-checker.error::before {
 	content: "\f06a";
+
 	/* http://fontawesome.io/icon/exclamation-circle/ */
 }
 
@@ -2816,6 +2909,7 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 
 #version-checker.up-to-date::before {
 	content: "\f00c";
+
 	/* http://fontawesome.io/icon/check/ */
 }
 
@@ -2827,6 +2921,7 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 	visibility: hidden;
 	position: absolute;
 	top: -1px;
+
 	/* put it on top of #form's border */
 	left: 0;
 }
@@ -2882,11 +2977,14 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 	border: none;
 	font: inherit;
 	min-height: 19px;
+
 	/* Required when computing input height at char deletion */
 	height: 19px;
 	max-height: 95px;
+
 	/* min-height/height x number of lines maximum */
 	line-height: 19px;
+
 	/* should match height */
 	outline: none;
 	margin: 5px;
@@ -3828,7 +3926,6 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 }
 
 @media (width >=480px) {
-
 	/* Fade out for long usernames */
 	#chat .from {
 		padding-left: 10px;
@@ -3837,7 +3934,6 @@ part/quit messages where we don't load previews (adds a blank line otherwise) */
 }
 
 @media (width <=768px) {
-
 	/**
 	  * TODO Replace this with `@media (hover: hover)` when Firefox supports it
 	  * See:

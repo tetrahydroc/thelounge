@@ -88,7 +88,7 @@ const bracketWraps = {
 	"*": "*",
 	"`": "`",
 	"~": "~",
-	"_": "_",
+	_: "_",
 };
 
 export default defineComponent({
@@ -260,7 +260,7 @@ export default defineComponent({
 
 			// Allow disable /rainbow hotkey
 			if (store.state.settings.enableRainbowHotkey === false) {
-				enabledHotkeys = enabledHotkeys.filter(k => k !== "mod+r");
+				enabledHotkeys = enabledHotkeys.filter((k) => k !== "mod+r");
 			}
 
 			inputTrap.bind(enabledHotkeys, function (e, key) {
@@ -271,7 +271,7 @@ export default defineComponent({
 				}
 
 				// eslint-disable-next-line eqeqeq
-				if (modifier === '/rainbow' && input.value != null) {
+				if (modifier === "/rainbow" && input.value != null) {
 					if (input.value.value.startsWith(modifier)) {
 						return false;
 					}

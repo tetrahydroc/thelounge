@@ -1,6 +1,6 @@
 <template>
 	<span class="content">
-		Your user mode is <b>{{ message.raw_modes }}</b>
+		your user mode is <b>{{ message.raw_modes }} </b>
 	</span>
 </template>
 

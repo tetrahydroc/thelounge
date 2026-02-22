@@ -215,7 +215,9 @@ describe("Chan", function () {
 				"num_users",
 				"special",
 				"closed",
-				"data"
+				"data",
+				"pinned",
+				"groups"
 			);
 		});
 
