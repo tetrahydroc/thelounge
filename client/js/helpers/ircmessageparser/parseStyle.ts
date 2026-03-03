@@ -44,6 +44,24 @@ function parseStyle(text: string) {
 	let start = 0;
 	let position = 0;
 
+	const convertBBCode = (str: string) => {
+		// convert formatting to irc
+		str = str.replace(/(?:\[b(?:=.*)?\])|(?:\[\/b\])/ig, "");
+		str = str.replace(/(?:\[i(?:=.*)?\])|(?:\[\/i\])/ig, "");
+		str = str.replace(/(?:\[u(?:=.*)?\])|(?:\[\/u\])/ig, "");
+		str = str.replace(/(?:\[s(?:=.*)?\])|(?:\[\/s\])/ig, "");
+		str = str.replace(/(?:\[code(?:=.*)?\])|(?:\[\/code\])/ig, "");
+		str = str.replace(/(?:\[color=#([A-F0-9]{3,6})\])/ig, "$1");
+		str = str.replace(/(?:\[color(?:=.*)?\])|(?:\[\/color\])/ig, "99,99");
+
+		// remove the rest of the bbcodes
+		str = str.replace(/\[\/?(?:b|i|u|s|left|center|right|quote|code|list|icon|url|img|video|size|spoiler|color|effect|note|alert|table|tr|td|font).*?\]/ig, "");
+
+		return str;
+	}
+
+	text = convertBBCode(text)
+
 	// At any given time, these carry style information since last time a styling
 	// control code was met.
 	let colorCodes,
