@@ -26,9 +26,9 @@ export const matchers: Matcher[] = [
 	},
 	{
 		type: "basic",
-		name: "UploadCX + LST + OnlyEncodes+ + HomiesHelpDesk + Aither + DarkPeers + Luminarr",
+		name: "UploadCX + LST + OnlyEncodes+ + HomiesHelpDesk + Aither + DarkPeers + Luminarr + Aura4K",
 		description: "[nick] message | [nick]: message | nick: message | nick message",
-		matches: [ "ulcx", "bot", "bridgebot", "bbot", "chatbot", "darkpeers", "luminarr" ],
+		matches: [ "ulcx", "bot", "bridgebot", "bbot", "chatbot", "darkpeers", "luminarr", "aurarelay" ],
 		regex: /^\[?(?<nick>[^:\]]+)\]?:? (?<content>.*)/,
 		transform (message) {
 			return typedGroups(message.text!.match(this.regex));
