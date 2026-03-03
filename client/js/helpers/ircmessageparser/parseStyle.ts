@@ -55,7 +55,7 @@ function parseStyle(text: string) {
 		str = str.replace(/(?:\[color(?:=.*)?\])|(?:\[\/color\])/ig, "99,99");
 
 		// remove the rest of the bbcodes
-		str = str.replace(/\[\/?(?:b|i|u|s|left|center|right|quote|code|list|icon|url|img|video|size|spoiler|color|effect|note|alert|table|tr|td|font).*?\]/ig, "");
+		str = str.replace(/\[\/?(?:left|center|right|quote|list|icon|url|img|video|size|spoiler|effect|note|alert|table|tr|td|font).*?\]/ig, "");
 
 		return str;
 	}
