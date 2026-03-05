@@ -325,7 +325,7 @@ export function generateUserContextMenu(
 
 					socket.emit("input", {
 						target: channel.id,
-						text: `!user ${user.nick}`,
+						text: `!u ${user.nick}`,
 					});
 				},
 			};
