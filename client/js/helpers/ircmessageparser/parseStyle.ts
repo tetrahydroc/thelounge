@@ -44,24 +44,6 @@ function parseStyle(text: string) {
 	let start = 0;
 	let position = 0;
 
-	const convertBBCode = (str: string) => {
-		// convert formatting to irc
-		str = str.replace(/(?:\[b(?:=.*)?\])|(?:\[\/b\])/ig, "");
-		str = str.replace(/(?:\[i(?:=.*)?\])|(?:\[\/i\])/ig, "");
-		str = str.replace(/(?:\[u(?:=.*)?\])|(?:\[\/u\])/ig, "");
-		str = str.replace(/(?:\[s(?:=.*)?\])|(?:\[\/s\])/ig, "");
-		str = str.replace(/(?:\[code(?:=.*)?\])|(?:\[\/code\])/ig, "");
-		str = str.replace(/(?:\[color=#([A-F0-9]{3,6})\])/ig, "$1");
-		str = str.replace(/(?:\[color(?:=.*)?\])|(?:\[\/color\])/ig, "99,99");
-
-		// remove the rest of the bbcodes
-		str = str.replace(/\[\/?(?:left|center|right|quote|list|icon|url|img|video|size|spoiler|effect|note|alert|table|tr|td|font).*?\]/ig, "");
-
-		return str;
-	}
-
-	text = convertBBCode(text)
-
 	// At any given time, these carry style information since last time a styling
 	// control code was met.
 	let colorCodes,
@@ -244,9 +226,25 @@ const properties = [
 	"monospace",
 ];
 
-function prepare(text: string) {
+function convertBBCode(str: string) {
+	// convert formatting to irc
+	str = str.replace(/(?:\[b(?:=.*)?\])|(?:\[\/b\])/ig, "");
+	str = str.replace(/(?:\[i(?:=.*)?\])|(?:\[\/i\])/ig, "");
+	str = str.replace(/(?:\[u(?:=.*)?\])|(?:\[\/u\])/ig, "");
+	str = str.replace(/(?:\[s(?:=.*)?\])|(?:\[\/s\])/ig, "");
+	str = str.replace(/(?:\[code(?:=.*)?\])|(?:\[\/code\])/ig, "");
+	str = str.replace(/(?:\[color=#([A-F0-9]{3,6})\])/ig, "$1");
+	str = str.replace(/(?:\[color(?:=.*)?\])|(?:\[\/color\])/ig, "99,99");
+
+	// remove the rest of the bbcodes
+	str = str.replace(/\[\/?(?:left|center|right|quote|list|icon|url|img|video|size|spoiler|effect|note|alert|table|tr|td|font).*?\]/ig, "");
+
+	return str;
+}
+
+function prepare(text: string, isBridged: boolean) {
 	return (
-		parseStyle(text)
+		parseStyle(isBridged ? convertBBCode(text) : text)
 			// This optimizes fragments by combining them together when all their values
 			// for the properties defined above are equal.
 			.reduce((prev: ParsedStyle[], curr) => {

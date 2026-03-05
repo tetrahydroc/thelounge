@@ -131,8 +131,10 @@ function createFragment(fragment: StyledFragment): VNode | string | undefined {
 // Transform an IRC message potentially filled with styling control codes, URLs,
 // nicknames, and channels into a string of HTML elements to display on the client.
 function parse(text: string, message?: ClientMessage, network?: ClientNetwork) {
+	const isBridged = message?.from?.shoutbox ?? false
+
 	// Extract the styling information and get the plain text version from it
-	const styleFragments = parseStyle(text);
+	const styleFragments = parseStyle(text, isBridged);
 	const cleanText = styleFragments.map((fragment) => fragment.text).join("");
 
 	// On the plain text, find channels and URLs, returned as "parts". Parts are
