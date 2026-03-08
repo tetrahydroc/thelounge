@@ -6,40 +6,50 @@ import { type Matcher } from "./types/matcher";
 export const matchers: Matcher[] = [
 	{
 		type: "basic",
+		name: "Aither",
+		description: "[nick] message",
+		matches: [ "chatbot" ],
+		regex: /^\[(?<nick>[^:\]]+)\] (?<content>.*)/,
+		transform (message) {
+			return typedGroups(message.text!.match(this.regex));
+		}
+	},
+	{
+		type: "basic",
 		name: "Anthelion",
 		description: "[ SB ] (<nick>): <message>",
 		matches: [ "sauron" ],
-		regex: /^.*?\[.*?SB.*?\][^(]+\((?<nick>[^):]+)\):.+?(?<content>.*)/,
+		regex: /^0 \[2 SB0 \] \((?<nick>[^):]+)\): (?<content>.*)/,
 		transform (message) {
 			return typedGroups(message.text!.match(this.regex));
 		}
 	},
 	{
 		type: "basic",
-		name: "BeyondHD + ReelFliX",
-		description: "[SB] <nick>: <message> | [Chatbox] <nick>: <message>",
-		matches: [ "willie", "wall-e" ],
-		regex: /^.*?\[(?:SB|Chatbox)\][^\w]+(?<nick>[^:]+): (?<content>.*)/,
+		name: "Aura4K",
+		description: "[nick] message",
+		matches: [ "aurarelay" ],
+		regex: /^11\[04(?<nick>[^:\]]+?)11\] (?<content>.*)/,
 		transform (message) {
 			return typedGroups(message.text!.match(this.regex));
 		}
 	},
 	{
 		type: "basic",
-		name: "UploadCX + LST + OnlyEncodes+ + HomiesHelpDesk + Aither + DarkPeers + Luminarr + Aura4K",
-		description: "[nick] message | [nick]: message | nick: message | nick message",
-		matches: [ "ulcx", "bot", "bridgebot", "bbot", "chatbot", "darkpeers", "luminarr", "aurarelay" ],
-		regex: /^\[?(?<nick>[^:\]]+)\]?:? (?<content>.*)/,
+		name: "BeyondHD",
+		description: "[SB] <nick>: <message>",
+		matches: [ "willie" ],
+		regex: /^09\[SB\] (?<nick>[^:]+): (?<content>.*)/,
 		transform (message) {
 			return typedGroups(message.text!.match(this.regex));
 		}
 	},
 	{
 		type: "basic",
-		name: "RocketHD",
-		description: "🛰️<nick>: <message>",
-		matches: [ "rocketnouncer" ],
-		regex: /^🛰️(?<nick>[^:]+?): (?<content>.*)/v,
+		name: "DarkPeers",
+		description: "[nick] message",
+		matches: [ "darkpeers" ],
+		regex: /^\[(?<nick>[^:\]]+)\] (?<content>.*)/,
 		transform (message) {
 			return typedGroups(message.text!.match(this.regex));
 		}
@@ -50,6 +60,16 @@ export const matchers: Matcher[] = [
 		description: "<<nick>> <message>",
 		matches: [ "endor" ],
 		regex: /^<(?<nick>[^>]+?)> (?<content>.*)/,
+		transform (message) {
+			return typedGroups(message.text!.match(this.regex));
+		}
+	},
+	{
+		type: "basic",
+		name: "HomiesHelpDesk",
+		description: "[nick]: message",
+		matches: [ "bbot" ],
+		regex: /^\[(?<nick>[^:\]]+)\]: (?<content>.*)/,
 		transform (message) {
 			return typedGroups(message.text!.match(this.regex));
 		}
@@ -73,8 +93,69 @@ export const matchers: Matcher[] = [
 		},
 		transform (message) {
 			return {
-				nick: message.from!.nick!.slice(0, -4)
+				nick: message.from!.nick!.slice(0, -4),
+				content: message.text
 			};
+		}
+	},
+	{
+		type: "basic",
+		name: "LST",
+		description: "[nick] message",
+		matches: [ "bot" ],
+		regex: /^\[(?<nick>[^:\]]+)\] (?<content>.*)/,
+		transform (message) {
+			return typedGroups(message.text!.match(this.regex));
+		}
+	},
+	{
+		type: "basic",
+		name: "Luminarr",
+		description: "[nick] message",
+		matches: [ "luminarr" ],
+		regex: /^\[(?<nick>[^:\]]+)\] (?<content>.*)/,
+		transform (message) {
+			return typedGroups(message.text!.match(this.regex));
+		}
+	},
+	{
+		type: "basic",
+		name: "OnlyEncodes+",
+		description: "[nick] message",
+		matches: [ "bridgebot" ],
+		regex: /^\[(?<nick>[^:\]]+)\] (?<content>.*)/,
+		transform (message) {
+			return typedGroups(message.text!.match(this.regex));
+		}
+	},
+	{
+		type: "basic",
+		name: "ReelFliX",
+		description: "[Chatbox] <nick>: <message>",
+		matches: [ "wall-e" ],
+		regex: /^04\[Chatbox\] (?<nick>[^:]+): (?<content>.*)/,
+		transform (message) {
+			return typedGroups(message.text!.match(this.regex));
+		}
+	},
+	{
+		type: "basic",
+		name: "RocketHD",
+		description: "🛰️<nick>: <message>",
+		matches: [ "rocketnouncer" ],
+		regex: /^🛰️(?<nick>[^:]+?): (?<content>.*)/v,
+		transform (message) {
+			return typedGroups(message.text!.match(this.regex));
+		}
+	},
+	{
+		type: "basic",
+		name: "UploadCX",
+		description: "[nick]: message",
+		matches: [ "ulcx" ],
+		regex: /^\[(?<nick>[^:\]]+)\]: (?<content>.*)/,
+		transform (message) {
+			return typedGroups(message.text!.match(this.regex));
 		}
 	},
 ];
