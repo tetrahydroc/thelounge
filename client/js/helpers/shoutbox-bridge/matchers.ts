@@ -69,7 +69,7 @@ export const matchers: Matcher[] = [
 		name: "HomiesHelpDesk",
 		description: "[nick]: message",
 		matches: [ "bbot" ],
-		regex: /^\[(?<nick>[^:\]]+)\]: (?<content>.*)/,
+		regex: /^\[(?<nick>[^:\]]+)\](?: \(MTX\))?: (?<content>.*)/,
 		transform (message) {
 			return typedGroups(message.text!.match(this.regex));
 		}
