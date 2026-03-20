@@ -226,6 +226,13 @@ class Uploader {
 	}
 
 	performUpload(token: string, file: File) {
+		const uploadEndpoint = store.state.serverConfiguration?.allowFileUploadBackendSelection ? store.state.settings.uploadTo : "new";
+
+		// if not using local uploads set the token to user given api token
+		if (uploadEndpoint !== "new") {
+			token = store.state.settings.uploadToken;
+		}
+
 		this.xhr = new XMLHttpRequest();
 
 		this.xhr.upload.addEventListener(
@@ -266,7 +273,7 @@ class Uploader {
 
 		const formData = new FormData();
 		formData.append("file", file);
-		this.xhr.open("POST", `uploads/new/${token}`);
+		this.xhr.open("POST", `uploads/${uploadEndpoint}/${token ? token : `_${uploadEndpoint}_`}`);
 		this.xhr.send(formData);
 	}
 

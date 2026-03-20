@@ -10,6 +10,7 @@ import log from "../log.js";
 import contentDisposition from "content-disposition";
 import type {Socket} from "socket.io";
 import {Application, Request, Response} from "express";
+import mime from "mime";
 
 // Map of allowed mime types to their respecive default filenames
 // that will be rendered in browser without forcing them to be downloaded
@@ -72,7 +73,7 @@ class Uploader {
 
 	static router(this: void, express: Application) {
 		express.get("/uploads/:name{/:slug}", Uploader.routeGetFile);
-		express.post("/uploads/new/:token", Uploader.routeUploadFile);
+		express.post("/uploads/:service/:token", Uploader.routeUploadFile);
 	}
 
 	static async routeGetFile(this: void, req: Request, res: Response) {
@@ -133,9 +134,13 @@ class Uploader {
 		let busboyInstance: busboy | null | undefined;
 		let uploadUrl: string | URL;
 		let randomName: string;
+		let originalFilename: string;
 		let destDir: fs.PathLike;
 		let destPath: fs.PathLike | null;
 		let streamWriter: fs.WriteStream | null;
+
+		const service = req.params.service;
+		const token = req.params.token;
 
 		const doneCallback = () => {
 			// detach the stream and drain any remaining data
@@ -166,10 +171,23 @@ class Uploader {
 			return res.status(400).json({error: err instanceof Error ? err.message : String(err)});
 		};
 
-		// if the authentication token is incorrect, bail out
-		if (uploadTokens.delete(req.params.token) !== true) {
-			return abortWithError(Error("Invalid upload token"));
+		if (token === `_${service}_`) {
+			const noTokenNeeded = [
+				"catbox"
+			]
+
+			if (!noTokenNeeded.includes(service)) {
+				return abortWithError(Error("Missing API Key"));
+			}
 		}
+
+		if (service === "new") {
+			// if the authentication token is incorrect, bail out
+			if (uploadTokens.delete(req.params.token) !== true) {
+				return abortWithError(Error("Invalid upload token"));
+			}
+		}
+
 
 		// if the request does not contain any body data, bail out
 		if (req.headers["content-length"] && parseInt(req.headers["content-length"]) < 1) {
@@ -236,6 +254,7 @@ class Uploader {
 			"file",
 			(fieldname: string, fileStream: NodeJS.ReadableStream, filename: string) => {
 				uploadUrl = `${randomName}/${encodeURIComponent(filename)}`;
+				originalFilename = filename
 
 				if (Config.values.fileUpload.baseUrl) {
 					uploadUrl = new URL(uploadUrl, Config.values.fileUpload.baseUrl).toString();
@@ -258,18 +277,141 @@ class Uploader {
 			}
 		);
 
-		busboyInstance.on("finish", () => {
-			doneCallback();
 
-			if (!uploadUrl) {
-				return res.status(400).json({error: "Missing file"});
-			}
+		if (service === "new") { // local upload
+			busboyInstance.on("finish", () => {
+				doneCallback();
 
-			// upload was done, send the generated file url to the client
-			res.status(200).json({
-				url: uploadUrl,
+				if (!uploadUrl) {
+					return res.status(400).json({error: "Missing file"});
+				}
+
+				// upload was done, send the generated file url to the client
+				res.status(200).json({
+					url: uploadUrl,
+				});
 			});
-		});
+		} else { // service upload
+			busboyInstance.on("finish", () => {
+				const upload = () => {
+					const payload = new FormData();
+					const payloadType = mime.getType(originalFilename) ?? undefined;
+					const payloadFile = new File([new Blob([fs.readFileSync(<string>destPath)])], originalFilename, {
+						type: payloadType
+					});
+
+					// yes i know this code is shit, but so is the rest of lounge lmao
+					const processUpload = async () => {
+						// if you are adding new upload services here, don't forget
+						// to add them to client/components/Settings/General.vue so you can select them
+						switch (service) {
+							case "imagebb": {
+								payload.append("key", token);
+								payload.append("expiration", "259200");
+								payload.append("image", payloadFile);
+
+								const r = await fetch(`https://api.imgbb.com/1/upload`, {
+									method: "POST",
+									body: payload
+								});
+
+								const json = await r.json();
+
+								if ((r.status < 200 || r.status > 200)) {
+									throw new Error(json.error?.message ?? "Unknown Error");
+								}
+
+								const url = json.data?.url ?? "";
+
+								if (!url.startsWith("http")) {
+									throw new Error(url ?? "Unknown Error");
+								}
+
+								uploadUrl = url;
+								break;
+							}
+
+							case "catbox": {
+								payload.append("reqtype", "fileupload");
+								payload.append("time", "72h");
+								payload.append("fileToUpload", payloadFile);
+
+								const r = await fetch("https://litterbox.catbox.moe/resources/internals/api.php", {
+									method: "POST",
+									body: payload
+								});
+
+								const url = await r.text();
+
+								if (!url.startsWith("http") || (r.status < 200 || r.status > 200)) {
+									throw new Error(url ?? "Unknown Error");
+								}
+
+								uploadUrl = url;
+								break;
+							}
+
+							case "onlyimage":
+
+							case "ptscreens": {
+								payload.append("format", "txt");
+								payload.append("key", token);
+								payload.append("expiration", "P3D");
+								payload.append("source", payloadFile);
+
+								let host = "onlyimage.org";
+
+								if (service === "ptscreens") {
+									host = "ptscreens.com";
+								}
+
+								const r = await fetch(`https://${host}/api/1/upload`, {
+									method: "POST",
+									body: payload
+								});
+								const url = await r.text();
+
+								if (!url.startsWith("http")) {
+									throw new Error(url);
+								}
+
+								uploadUrl = url;
+								break;
+							}
+
+							default: {
+								throw new Error("Invalid upload service");
+							}
+						}
+					}
+
+					processUpload()
+					.then(() => {
+						fs.unlink(<string>destPath, () => undefined)
+
+						if (!uploadUrl) {
+							return res.status(400).json({error: "Missing file"});
+						}
+
+						// upload was done, send the generated file url to the client
+						return res.status(200).json({
+							url: uploadUrl,
+						});
+					})
+					.catch(err => {
+						abortWithError(err)
+					})
+				}
+
+				if (!streamWriter || streamWriter.closed === true) {
+					upload()
+				} else {
+					streamWriter?.once("finish", upload)
+				}
+
+				doneCallback();
+			});
+		}
 
 		// pipe request body to busboy for processing
 		return req.pipe(busboyInstance);

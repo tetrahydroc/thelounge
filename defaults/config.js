@@ -200,6 +200,13 @@ export default {
 		baseUrl: null,
 	},
 
+	// ### `allowFileUploadBackendSelection`
+	//
+	// Allow changing the backend for uploaded file hosting.
+	//
+	// This value is set to `true` by default.
+	allowFileUploadBackendSelection: true,
+
 	// ### `transports`
 	//
 	// Set `socket.io` transports.

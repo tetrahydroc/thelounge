@@ -130,6 +130,12 @@ const defaultConfig = {
 	uploadCanvas: {
 		default: true,
 	},
+	uploadTo: {
+		default: "new",
+	},
+	uploadToken: {
+		default: "",
+	},
 	userStyles: {
 		default: "",
 		apply(store: TypedStore, value: string) {

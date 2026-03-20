@@ -107,6 +107,7 @@ export type ConfigType = {
 	prefetchMaxSearchSize: number;
 	prefetchTimeout: number;
 	fileUpload: FileUpload;
+	allowFileUploadBackendSelection: boolean;
 	transports: ("polling" | "websocket")[];
 	leaveMessage: string;
 	defaults: Defaults;

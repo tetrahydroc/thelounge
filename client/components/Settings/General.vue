@@ -37,6 +37,45 @@
 						<button class="extra-help" />
 					</span>
 				</label>
+				<div v-if="store.state.serverConfiguration?.allowFileUploadBackendSelection">
+					<label for="uploadTo" class="opt">Upload Backend</label>
+					<select
+						id="uploadTo"
+						:value="store.state.settings.uploadTo"
+						name="uploadTo"
+						class="input"
+					>
+						<option value="new">TheLounge (Local)</option>
+						<option value="imagebb">ImageBB</option>
+						<option value="catbox">Catbox</option>
+						<option value="onlyimage">OnlyImage</option>
+						<option value="ptscreens">PTScreens</option>
+					</select>
+					<div v-if="store.state.settings.uploadTo !== 'new' && store.state.settings.uploadTo !== 'catbox'">
+						<label for="uploadToken" class="opt">
+							Upload API Key
+							<span
+								class="tooltipped tooltipped-n tooltipped-no-delay"
+								aria-label="The API Key used to authorize uploads to the selected service."
+							>
+								<button class="extra-help" />
+							</span>
+						</label>
+						<div class="password-container">
+							<RevealPassword v-slot:default="slotProps">
+								<input
+									id="uploadToken"
+									:value="store.state.settings.uploadToken"
+									autocomplete="off"
+									:type="slotProps.isVisible ? 'text' : 'password'"
+									name="uploadToken"
+									class="input"
+									placeholder="Enter api auth key"
+								/>
+							</RevealPassword>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div v-if="store.state.settings.searchEnabled">
@@ -123,6 +162,7 @@
 import {computed, defineComponent, onMounted, ref} from "vue";
 import {useStore} from "../../js/store";
 import {BeforeInstallPromptEvent} from "../../js/types";
+import RevealPassword from "../RevealPassword.vue";
 
 let installPromptEvent: BeforeInstallPromptEvent | null = null;
 
@@ -133,6 +173,9 @@ window.addEventListener("beforeinstallprompt", (e) => {
 
 export default defineComponent({
 	name: "GeneralSettings",
+	components: {
+		RevealPassword,
+	},
 	setup() {
 		const store = useStore();
 		const canRegisterProtocol = ref(false);

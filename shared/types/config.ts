@@ -16,6 +16,7 @@ type SharedConfigurationBase = {
 	themes: ConfigTheme[];
 	defaultTheme: string;
 	fileUploadMaxFileSize?: number;
+	allowFileUploadBackendSelection?: boolean;
 };
 
 export type ConfigNetDefaults = {

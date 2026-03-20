@@ -495,6 +495,7 @@ function initializeClient(
 	// If no valid active channel, default to the first channel of the first network
 	if (!openChannel || openChannel < 0) {
 		const firstNetwork = client.networks[0];
+
 		if (firstNetwork && firstNetwork.channels.length > 0) {
 			openChannel = firstNetwork.channels[0].id;
 		}
@@ -964,6 +965,7 @@ function getClientConfiguration(): SharedConfiguration | LockedSharedConfigurati
 		useHexIp: Config.values.useHexIp,
 		prefetch: Config.values.prefetch,
 		fileUploadMaxFileSize: Uploader ? Uploader.getMaxFileSize() : undefined, // TODO can't be undefined?
+		allowFileUploadBackendSelection: Config.values.allowFileUploadBackendSelection ?? true,
 	};
 
 	const defaultsOverride = {

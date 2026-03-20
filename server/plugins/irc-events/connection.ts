@@ -20,13 +20,15 @@ export default <IrcEventHandler>function (irc, network) {
 		this.emit("network:status", toSend);
 	};
 
-	network.getLobby().pushMessage(
-		this,
-		new Msg({
-			text: "Network created, connecting to " + network.host + ":" + network.port + "...",
-		}),
-		true
-	);
+	if (!network.userDisconnected) {
+		network.getLobby().pushMessage(
+			this,
+			new Msg({
+				text: "Network created, connecting to " + network.host + ":" + network.port + "...",
+			}),
+			true
+		);
+	}
 
 	irc.on("registered", () => {
 		if (network.irc.network.cap.enabled.length > 0) {
