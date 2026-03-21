@@ -46,21 +46,15 @@
 						class="input"
 					>
 						<option value="new">TheLounge (Local)</option>
+						<option value="imagebb">ImageBB</option>
 						<option value="catbox">Catbox</option>
 						<option value="uguu">Uguu</option>
 						<option value="quax">qu.ax</option>
 						<option value="ptpimg">ptpimg</option>
-						<option value="imagebb">ImageBB</option>
 						<option value="onlyimage">OnlyImage</option>
 						<option value="ptscreens">PTScreens</option>
 					</select>
-					<div
-						v-if="
-							!['new', 'catbox', 'uguu', 'quax'].includes(
-								store.state.settings.uploadTo
-							)
-						"
-					>
+					<div v-if="!['new', 'catbox', 'uguu', 'quax'].includes(store.state.settings.uploadTo)">
 						<label for="uploadToken" class="opt">
 							Upload API Key
 							<span
