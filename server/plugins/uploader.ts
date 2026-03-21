@@ -77,7 +77,7 @@ class Uploader {
 	}
 
 	static async routeGetFile(this: void, req: Request, res: Response) {
-		const name = req.params.name as string;
+		const name = req.params.name;
 
 		const nameRegex = /^[0-9a-f]{16}$/;
 
@@ -96,7 +96,7 @@ class Uploader {
 		}
 
 		// Force a download in the browser if it's not an allowed type (binary or otherwise unknown)
-		let slug = req.params.slug as string | undefined;
+		let slug = req.params.slug;
 		const isInline = detectedMimeType in inlineContentDispositionTypes;
 		let disposition = isInline ? "inline" : "attachment";
 
@@ -139,8 +139,8 @@ class Uploader {
 		let destPath: fs.PathLike | null;
 		let streamWriter: fs.WriteStream | null;
 
-		const service = req.params.service as string;
-		const token = req.params.token as string;
+		const service = req.params.service;
+		const token = req.params.token;
 
 		const doneCallback = () => {
 			// detach the stream and drain any remaining data
@@ -172,7 +172,7 @@ class Uploader {
 		};
 
 		if (token === `_${service}_`) {
-			const noTokenNeeded = ["catbox", "uguu", "quax"];
+			const noTokenNeeded = [ "catbox", "uguu", "quax" ];
 
 			if (!noTokenNeeded.includes(service)) {
 				return abortWithError(Error("Missing API Key"));
@@ -294,13 +294,9 @@ class Uploader {
 				const upload = () => {
 					const payload = new FormData();
 					const payloadType = mime.getType(originalFilename) ?? undefined;
-					const payloadFile = new File(
-						[new Blob([fs.readFileSync(<string>destPath)])],
-						originalFilename,
-						{
-							type: payloadType,
-						}
-					);
+					const payloadFile = new File([new Blob([fs.readFileSync(<string>destPath)])], originalFilename, {
+						type: payloadType,
+					});
 
 					// yes i know this code is shit, but so is the rest of lounge lmao
 					const processUpload = async () => {
@@ -338,13 +334,10 @@ class Uploader {
 								payload.append("time", "72h");
 								payload.append("fileToUpload", payloadFile);
 
-								const r = await fetch(
-									"https://litterbox.catbox.moe/resources/internals/api.php",
-									{
-										method: "POST",
-										body: payload,
-									}
-								);
+								const r = await fetch("https://litterbox.catbox.moe/resources/internals/api.php", {
+									method: "POST",
+									body: payload,
+								});
 
 								const url = await r.text();
 
@@ -395,9 +388,14 @@ class Uploader {
 								}
 
 								// json?.files?.[0]?.url is not the url to the raw image
-								const url = `https://qu.ax/x/${json?.files?.[0]?.file_name}.${payloadFile.name.split(".").pop()}`;
+								const fName = json?.files?.[0]?.file_name
+								
+								// eslint-disable-next-line eqeqeq
+								if (fName == null) {
+									throw new Error("Unknown Error");
+								}
 
-								uploadUrl = url;
+								uploadUrl = `https://qu.ax/x/${fName}.${payloadFile.name.split(".").pop()}`;
 								break;
 							}
 
@@ -417,12 +415,10 @@ class Uploader {
 								const json = await r.json();
 
 								if (r.status < 200 || r.status > 200) {
-									throw new Error(json.error?.message ?? "Unknown Error");
+									throw new Error(json?.error?.message ?? "Unknown Error");
 								}
 
-								const url = `https://ptpimg.me/${json[0].code}.${json[0].ext}`;
-
-								uploadUrl = url;
+								uploadUrl = `https://ptpimg.me/${json[0].code}.${json[0].ext}`;
 								break;
 							}
 
@@ -461,21 +457,21 @@ class Uploader {
 					};
 
 					processUpload()
-						.then(() => {
-							fs.unlink(<string>destPath, () => undefined);
+					.then(() => {
+						fs.unlink(<string>destPath, () => undefined);
 
-							if (!uploadUrl) {
-								return res.status(400).json({error: "Missing file"});
-							}
+						if (!uploadUrl) {
+							return res.status(400).json({error: "Missing file"});
+						}
 
-							// upload was done, send the generated file url to the client
-							return res.status(200).json({
-								url: uploadUrl,
-							});
-						})
-						.catch((err) => {
-							abortWithError(err);
+						// upload was done, send the generated file url to the client
+						return res.status(200).json({
+							url: uploadUrl,
 						});
+					})
+					.catch((err) => {
+						abortWithError(err);
+					});
 				};
 
 				if (!streamWriter || streamWriter.closed === true) {
