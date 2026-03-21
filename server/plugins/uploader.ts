@@ -375,6 +375,7 @@ class Uploader {
 
 							case "quax": {
 								payload.append("files[]", payloadFile);
+								payload.append("expiry", "3");
 
 								const r = await fetch("https://qu.ax/upload", {
 									method: "POST",
