@@ -172,9 +172,7 @@ class Uploader {
 		};
 
 		if (token === `_${service}_`) {
-			const noTokenNeeded = [
-				"catbox"
-			]
+			const noTokenNeeded = [ "catbox", "uguu", "quax" ];
 
 			if (!noTokenNeeded.includes(service)) {
 				return abortWithError(Error("Missing API Key"));
@@ -187,7 +185,6 @@ class Uploader {
 				return abortWithError(Error("Invalid upload token"));
 			}
 		}
-
 
 		// if the request does not contain any body data, bail out
 		if (req.headers["content-length"] && parseInt(req.headers["content-length"]) < 1) {
@@ -254,7 +251,7 @@ class Uploader {
 			"file",
 			(fieldname: string, fileStream: NodeJS.ReadableStream, filename: string) => {
 				uploadUrl = `${randomName}/${encodeURIComponent(filename)}`;
-				originalFilename = filename
+				originalFilename = filename;
 
 				if (Config.values.fileUpload.baseUrl) {
 					uploadUrl = new URL(uploadUrl, Config.values.fileUpload.baseUrl).toString();
@@ -277,8 +274,8 @@ class Uploader {
 			}
 		);
 
-
-		if (service === "new") { // local upload
+		if (service === "new") {
+			// local upload
 			busboyInstance.on("finish", () => {
 				doneCallback();
 
@@ -291,13 +288,14 @@ class Uploader {
 					url: uploadUrl,
 				});
 			});
-		} else { // service upload
+		} else {
+			// service upload
 			busboyInstance.on("finish", () => {
 				const upload = () => {
 					const payload = new FormData();
 					const payloadType = mime.getType(originalFilename) ?? undefined;
 					const payloadFile = new File([new Blob([fs.readFileSync(<string>destPath)])], originalFilename, {
-						type: payloadType
+						type: payloadType,
 					});
 
 					// yes i know this code is shit, but so is the rest of lounge lmao
@@ -312,12 +310,12 @@ class Uploader {
 
 								const r = await fetch(`https://api.imgbb.com/1/upload`, {
 									method: "POST",
-									body: payload
+									body: payload,
 								});
 
 								const json = await r.json();
 
-								if ((r.status < 200 || r.status > 200)) {
+								if (r.status < 200 || r.status > 200) {
 									throw new Error(json.error?.message ?? "Unknown Error");
 								}
 
@@ -338,16 +336,90 @@ class Uploader {
 
 								const r = await fetch("https://litterbox.catbox.moe/resources/internals/api.php", {
 									method: "POST",
-									body: payload
+									body: payload,
 								});
 
 								const url = await r.text();
 
-								if (!url.startsWith("http") || (r.status < 200 || r.status > 200)) {
+								if (!url.startsWith("http") || r.status < 200 || r.status > 200) {
 									throw new Error(url ?? "Unknown Error");
 								}
 
 								uploadUrl = url;
+								break;
+							}
+
+							case "uguu": {
+								payload.append("files[]", payloadFile);
+
+								const r = await fetch("https://uguu.se/upload", {
+									method: "POST",
+									body: payload,
+								});
+
+								const json = await r.json();
+
+								if (r.status < 200 || r.status > 200 || json?.success !== true) {
+									throw new Error(json?.description ?? "Unknown Error");
+								}
+
+								const url = json?.files?.[0]?.url ?? "";
+
+								if (!url.startsWith("http")) {
+									throw new Error(url || "Unknown Error");
+								}
+
+								uploadUrl = url;
+								break;
+							}
+
+							case "quax": {
+								payload.append("files[]", payloadFile);
+								payload.append("expiry", "3");
+
+								const r = await fetch("https://qu.ax/upload", {
+									method: "POST",
+									body: payload,
+								});
+
+								const json = await r.json();
+
+								if (r.status < 200 || r.status > 200 || json?.success !== true) {
+									throw new Error(json?.description ?? "Unknown Error");
+								}
+
+								// json?.files?.[0]?.url is not the url to the raw image
+								const fName = json?.files?.[0]?.file_name
+								
+								// eslint-disable-next-line eqeqeq
+								if (fName == null) {
+									throw new Error("Unknown Error");
+								}
+
+								uploadUrl = `https://qu.ax/x/${fName}.${payloadFile.name.split(".").pop()}`;
+								break;
+							}
+
+							case "ptpimg": {
+								payload.append("format", "json");
+								payload.append("api_key", token);
+								payload.append("file-upload[0]", payloadFile);
+
+								const r = await fetch(`https://ptpimg.me/upload.php`, {
+									method: "POST",
+									headers: {
+										referer: "https://ptpimg.me/index.php",
+									},
+									body: payload,
+								});
+
+								const json = await r.json();
+
+								if (r.status < 200 || r.status > 200) {
+									throw new Error(json?.error?.message ?? "Unknown Error");
+								}
+
+								uploadUrl = `https://ptpimg.me/${json[0].code}.${json[0].ext}`;
 								break;
 							}
 
@@ -367,7 +439,7 @@ class Uploader {
 
 								const r = await fetch(`https://${host}/api/1/upload`, {
 									method: "POST",
-									body: payload
+									body: payload,
 								});
 								const url = await r.text();
 
@@ -383,11 +455,11 @@ class Uploader {
 								throw new Error("Invalid upload service");
 							}
 						}
-					}
+					};
 
 					processUpload()
 					.then(() => {
-						fs.unlink(<string>destPath, () => undefined)
+						fs.unlink(<string>destPath, () => undefined);
 
 						if (!uploadUrl) {
 							return res.status(400).json({error: "Missing file"});
@@ -398,15 +470,15 @@ class Uploader {
 							url: uploadUrl,
 						});
 					})
-					.catch(err => {
-						abortWithError(err)
-					})
-				}
+					.catch((err) => {
+						abortWithError(err);
+					});
+				};
 
 				if (!streamWriter || streamWriter.closed === true) {
-					upload()
+					upload();
 				} else {
-					streamWriter?.once("finish", upload)
+					streamWriter?.once("finish", upload);
 				}
 
 				doneCallback();

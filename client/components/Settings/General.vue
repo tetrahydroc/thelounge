@@ -48,10 +48,14 @@
 						<option value="new">TheLounge (Local)</option>
 						<option value="imagebb">ImageBB</option>
 						<option value="catbox">Catbox</option>
+						<option value="uguu">Uguu</option>
+						<option value="quax">qu.ax</option>
+						<option value="ptpimg">ptpimg</option>
 						<option value="onlyimage">OnlyImage</option>
 						<option value="ptscreens">PTScreens</option>
 					</select>
-					<div v-if="store.state.settings.uploadTo !== 'new' && store.state.settings.uploadTo !== 'catbox'">
+					<p v-if="store.state.settings.uploadTo !== 'new'" class="upload-note">{{uploadTTLMessage}}</p>
+					<div v-if="!['new', 'catbox', 'uguu', 'quax'].includes(store.state.settings.uploadTo)">
 						<label for="uploadToken" class="opt">
 							Upload API Key
 							<span
@@ -156,7 +160,12 @@
 	</div>
 </template>
 
-<style></style>
+<style>
+	p.upload-note {
+		color: var(--body-color-muted);
+		font-style: italic;
+	}
+</style>
 
 <script lang="ts">
 import {computed, defineComponent, onMounted, ref} from "vue";
@@ -206,6 +215,20 @@ export default defineComponent({
 			installPromptEvent = null;
 		};
 
+		const uploadTTLMessage = computed(() => {
+			const threeDays = [ "imagebb", "catbox", "onlyimage", "ptscreens", "quax" ];
+
+			if (threeDays.includes(store.state.settings.uploadTo)) {
+				return "Uploads are removed after 3 Days";
+			} else if (store.state.settings.uploadTo === "uguu") {
+				return "Uploads are removed after 3 Hours";
+			} else if (store.state.settings.uploadTo === "ptpimg") {
+				return "Uploads are kept forever";
+			}
+
+			return "Uploads are kept for an unknown duration";
+		});
+
 		const onForceSyncClick = () => {
 			store.dispatch("settings/syncAll", true).catch((e) => {
 				// eslint-disable-next-line no-console
@@ -238,6 +261,7 @@ export default defineComponent({
 			nativeInstallPrompt,
 			onForceSyncClick,
 			registerProtocol,
+			uploadTTLMessage,
 		};
 	},
 });
