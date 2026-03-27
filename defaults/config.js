@@ -207,6 +207,21 @@ export default {
 	// This value is set to `true` by default.
 	allowFileUploadBackendSelection: true,
 
+	// ### `maskFileHost`
+	//
+	// Allow masking the file host with the `fileUpload.baseUrl`
+	//
+	// When set to `true` the host for uploaded files (non local) will be replaced with the
+	// `fileUpload.baseUrl` This only useful if you are proxying externally hosted files
+	// with a custom URL. You should leave this as `false` unless you know what you are doing.
+	//
+	// Example:
+	//   With `fileUpload.baseUrl` set to `my.custom.url` and using `example.com` file host
+	//   `https://img.example.com/QZNFCc.png` becomes `https://my.custom.url/QZNFCc.png`
+	//
+	// This value is set to `false` by default.
+	maskFileHost: false,
+
 	// ### `transports`
 	//
 	// Set `socket.io` transports.

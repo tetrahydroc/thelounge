@@ -108,6 +108,7 @@ export type ConfigType = {
 	prefetchTimeout: number;
 	fileUpload: FileUpload;
 	allowFileUploadBackendSelection: boolean;
+	maskFileHost: boolean;
 	transports: ("polling" | "websocket")[];
 	leaveMessage: string;
 	defaults: Defaults;

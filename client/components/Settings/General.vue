@@ -45,17 +45,18 @@
 						name="uploadTo"
 						class="input"
 					>
-						<option value="new">TheLounge (Local)</option>
-						<option value="imagebb">ImageBB</option>
-						<option value="catbox">Catbox</option>
-						<option value="uguu">Uguu</option>
-						<option value="quax">qu.ax</option>
-						<option value="ptpimg">ptpimg</option>
-						<option value="onlyimage">OnlyImage</option>
-						<option value="ptscreens">PTScreens</option>
+						<option
+							v-for="fileUploadBackend in fileUploadBackends"
+							:key="fileUploadBackend.id"
+							:value="fileUploadBackend.id"
+						>
+							{{ fileUploadBackend.displayName }}
+						</option>
 					</select>
-					<p v-if="store.state.settings.uploadTo !== 'new'" class="upload-note">{{uploadTTLMessage}}</p>
-					<div v-if="!['new', 'catbox', 'uguu', 'quax'].includes(store.state.settings.uploadTo)">
+					<p v-if="currentUploadBackend?.supportNote" class="upload-note">
+						{{currentUploadBackend?.supportNote}}
+					</p>
+					<div v-if="currentUploadBackend?.requiresToken">
 						<label for="uploadToken" class="opt">
 							Upload API Key
 							<span
@@ -78,6 +79,31 @@
 								/>
 							</RevealPassword>
 						</div>
+					</div>
+					<div v-if="currentUploadBackend.validTtl">
+						<label for="uploadTTL" class="opt">
+							Upload TTL
+							<span
+								class="tooltipped tooltipped-n tooltipped-no-delay"
+								aria-label="How long the upload will exist before it is removed."
+							>
+								<button class="extra-help" />
+							</span>
+						</label>
+						<select
+							id="uploadTTL"
+							:value="store.state.settings.uploadTTL"
+							name="uploadTTL"
+							class="input"
+						>
+							<option
+								v-for="ttl in currentUploadBackend.validTtl"
+								:key="ttl.id"
+								:value="ttl.id"
+							>
+								{{ ttl.displayName }}
+							</option>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -168,10 +194,11 @@
 </style>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, ref} from "vue";
+import {computed, defineComponent, onMounted, onUpdated, ref} from "vue";
 import {useStore} from "../../js/store";
 import {BeforeInstallPromptEvent} from "../../js/types";
 import RevealPassword from "../RevealPassword.vue";
+import {UploadProviders as fileUploadBackends} from "../../../shared/upload-providers"
 
 let installPromptEvent: BeforeInstallPromptEvent | null = null;
 
@@ -215,19 +242,15 @@ export default defineComponent({
 			installPromptEvent = null;
 		};
 
-		const uploadTTLMessage = computed(() => {
-			const threeDays = [ "imagebb", "catbox", "onlyimage", "ptscreens", "quax" ];
-
-			if (threeDays.includes(store.state.settings.uploadTo)) {
-				return "Uploads are removed after 3 Days";
-			} else if (store.state.settings.uploadTo === "uguu") {
-				return "Uploads are removed after 3 Hours";
-			} else if (store.state.settings.uploadTo === "ptpimg") {
-				return "Uploads are kept forever";
-			}
-
-			return "Uploads are kept for an unknown duration";
+		const currentUploadBackend = computed(() => {
+			return fileUploadBackends.find(b => b.id === store.state.settings.uploadTo);
 		});
+
+		onUpdated(() => {
+			if (!currentUploadBackend.value?.validTtl?.find(ttl => ttl.id === store.state.settings.uploadTTL)) {
+				store.state.settings.uploadTTL = currentUploadBackend.value?.validTtl?.find(ttl => ttl.default === true)?.id
+			}
+		})
 
 		const onForceSyncClick = () => {
 			store.dispatch("settings/syncAll", true).catch((e) => {
@@ -261,7 +284,8 @@ export default defineComponent({
 			nativeInstallPrompt,
 			onForceSyncClick,
 			registerProtocol,
-			uploadTTLMessage,
+			fileUploadBackends,
+			currentUploadBackend,
 		};
 	},
 });

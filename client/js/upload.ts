@@ -233,6 +233,8 @@ class Uploader {
 			token = store.state.settings.uploadToken;
 		}
 
+		const ttl = store.state.settings.uploadTTL ?? ""
+
 		this.xhr = new XMLHttpRequest();
 
 		this.xhr.upload.addEventListener(
@@ -273,7 +275,7 @@ class Uploader {
 
 		const formData = new FormData();
 		formData.append("file", file);
-		this.xhr.open("POST", `uploads/${uploadEndpoint}/${token ? token : `_${uploadEndpoint}_`}`);
+		this.xhr.open("POST", `uploads/${uploadEndpoint}/${token ? token : `_${uploadEndpoint}_`}${ttl ? `/${ttl}` : ''}`);
 		this.xhr.send(formData);
 	}
 

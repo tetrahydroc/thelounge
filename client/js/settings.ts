@@ -136,6 +136,9 @@ const defaultConfig = {
 	uploadToken: {
 		default: "",
 	},
+	uploadTTL: {
+		default: "",
+	},
 	userStyles: {
 		default: "",
 		apply(store: TypedStore, value: string) {

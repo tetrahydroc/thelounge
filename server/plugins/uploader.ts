@@ -11,6 +11,7 @@ import contentDisposition from "content-disposition";
 import type {Socket} from "socket.io";
 import {Application, Request, Response} from "express";
 import mime from "mime";
+import {UploadProviders} from "../../shared/upload-providers.js";
 
 // Map of allowed mime types to their respecive default filenames
 // that will be rendered in browser without forcing them to be downloaded
@@ -73,7 +74,7 @@ class Uploader {
 
 	static router(this: void, express: Application) {
 		express.get("/uploads/:name{/:slug}", Uploader.routeGetFile);
-		express.post("/uploads/:service/:token", Uploader.routeUploadFile);
+		express.post("/uploads/:service/:token{/:ttl}", Uploader.routeUploadFile);
 	}
 
 	static async routeGetFile(this: void, req: Request, res: Response) {
@@ -139,8 +140,9 @@ class Uploader {
 		let destPath: fs.PathLike | null;
 		let streamWriter: fs.WriteStream | null;
 
-		const service = req.params.service;
+		const uploadProvider = UploadProviders.find(b => b.id === req.params.service);
 		const token = req.params.token;
+		const ttl = req.params.ttl ?? "";
 
 		const doneCallback = () => {
 			// detach the stream and drain any remaining data
@@ -171,15 +173,15 @@ class Uploader {
 			return res.status(400).json({error: err instanceof Error ? err.message : String(err)});
 		};
 
-		if (token === `_${service}_`) {
-			const noTokenNeeded = [ "catbox", "uguu", "quax" ];
-
-			if (!noTokenNeeded.includes(service)) {
-				return abortWithError(Error("Missing API Key"));
-			}
+		if (!uploadProvider) {
+			return abortWithError(Error("Invalid upload provider"));
 		}
 
-		if (service === "new") {
+		if (uploadProvider.requiresToken && token === `_${uploadProvider.id}_`) {
+			return abortWithError(Error("Missing API Key"));
+		}
+
+		if (uploadProvider.id === "new") {
 			// if the authentication token is incorrect, bail out
 			if (uploadTokens.delete(req.params.token) !== true) {
 				return abortWithError(Error("Invalid upload token"));
@@ -274,7 +276,7 @@ class Uploader {
 			}
 		);
 
-		if (service === "new") {
+		if (uploadProvider.id === "new") {
 			// local upload
 			busboyInstance.on("finish", () => {
 				doneCallback();
@@ -292,174 +294,24 @@ class Uploader {
 			// service upload
 			busboyInstance.on("finish", () => {
 				const upload = () => {
-					const payload = new FormData();
-					const payloadType = mime.getType(originalFilename) ?? undefined;
-					const payloadFile = new File([new Blob([fs.readFileSync(<string>destPath)])], originalFilename, {
-						type: payloadType,
+					const file = new File([new Blob([fs.readFileSync(<string>destPath)])], originalFilename, {
+						type: mime.getType(originalFilename) ?? undefined,
 					});
 
-					// yes i know this code is shit, but so is the rest of lounge lmao
-					const processUpload = async () => {
-						// if you are adding new upload services here, don't forget
-						// to add them to client/components/Settings/General.vue so you can select them
-						switch (service) {
-							case "imagebb": {
-								payload.append("key", token);
-								payload.append("expiration", "259200");
-								payload.append("image", payloadFile);
-
-								const r = await fetch(`https://api.imgbb.com/1/upload`, {
-									method: "POST",
-									body: payload,
-								});
-
-								const json = await r.json();
-
-								if (r.status < 200 || r.status > 200) {
-									throw new Error(json.error?.message ?? "Unknown Error");
-								}
-
-								const url = json.data?.url ?? "";
-
-								if (!url.startsWith("http")) {
-									throw new Error(url ?? "Unknown Error");
-								}
-
-								uploadUrl = url;
-								break;
-							}
-
-							case "catbox": {
-								payload.append("reqtype", "fileupload");
-								payload.append("time", "72h");
-								payload.append("fileToUpload", payloadFile);
-
-								const r = await fetch("https://litterbox.catbox.moe/resources/internals/api.php", {
-									method: "POST",
-									body: payload,
-								});
-
-								const url = await r.text();
-
-								if (!url.startsWith("http") || r.status < 200 || r.status > 200) {
-									throw new Error(url ?? "Unknown Error");
-								}
-
-								uploadUrl = url;
-								break;
-							}
-
-							case "uguu": {
-								payload.append("files[]", payloadFile);
-
-								const r = await fetch("https://uguu.se/upload", {
-									method: "POST",
-									body: payload,
-								});
-
-								const json = await r.json();
-
-								if (r.status < 200 || r.status > 200 || json?.success !== true) {
-									throw new Error(json?.description ?? "Unknown Error");
-								}
-
-								const url = json?.files?.[0]?.url ?? "";
-
-								if (!url.startsWith("http")) {
-									throw new Error(url || "Unknown Error");
-								}
-
-								uploadUrl = url;
-								break;
-							}
-
-							case "quax": {
-								payload.append("files[]", payloadFile);
-								payload.append("expiry", "3");
-
-								const r = await fetch("https://qu.ax/upload", {
-									method: "POST",
-									body: payload,
-								});
-
-								const json = await r.json();
-
-								if (r.status < 200 || r.status > 200 || json?.success !== true) {
-									throw new Error(json?.description ?? "Unknown Error");
-								}
-
-								// json?.files?.[0]?.url is not the url to the raw image
-								const fName = json?.files?.[0]?.file_name
-								
-								// eslint-disable-next-line eqeqeq
-								if (fName == null) {
-									throw new Error("Unknown Error");
-								}
-
-								uploadUrl = `https://qu.ax/x/${fName}.${payloadFile.name.split(".").pop()}`;
-								break;
-							}
-
-							case "ptpimg": {
-								payload.append("format", "json");
-								payload.append("api_key", token);
-								payload.append("file-upload[0]", payloadFile);
-
-								const r = await fetch(`https://ptpimg.me/upload.php`, {
-									method: "POST",
-									headers: {
-										referer: "https://ptpimg.me/index.php",
-									},
-									body: payload,
-								});
-
-								const json = await r.json();
-
-								if (r.status < 200 || r.status > 200) {
-									throw new Error(json?.error?.message ?? "Unknown Error");
-								}
-
-								uploadUrl = `https://ptpimg.me/${json[0].code}.${json[0].ext}`;
-								break;
-							}
-
-							case "onlyimage":
-
-							case "ptscreens": {
-								payload.append("format", "txt");
-								payload.append("key", token);
-								payload.append("expiration", "P3D");
-								payload.append("source", payloadFile);
-
-								let host = "onlyimage.org";
-
-								if (service === "ptscreens") {
-									host = "ptscreens.com";
-								}
-
-								const r = await fetch(`https://${host}/api/1/upload`, {
-									method: "POST",
-									body: payload,
-								});
-								const url = await r.text();
-
-								if (!url.startsWith("http")) {
-									throw new Error(url);
-								}
-
-								uploadUrl = url;
-								break;
-							}
-
-							default: {
-								throw new Error("Invalid upload service");
-							}
-						}
-					};
-
-					processUpload()
-					.then(() => {
+					uploadProvider.upload(file, ttl, token)
+					.then((url) => {
 						fs.unlink(<string>destPath, () => undefined);
+
+						uploadUrl = url;
+
+						// Allow host masking to allow vanity url for external hosted images
+						// eslint-disable-next-line eqeqeq
+						if (Config.values.maskFileHost && Config.values.fileUpload.baseUrl != null) {
+							const oldHost = new URL(url).host;
+							const newHost = new URL(Config.values.fileUpload.baseUrl).host;
+
+							uploadUrl = url.replace(oldHost, newHost);
+						}
 
 						if (!uploadUrl) {
 							return res.status(400).json({error: "Missing file"});

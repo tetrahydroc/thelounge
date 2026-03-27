@@ -17,6 +17,7 @@ type SharedConfigurationBase = {
 	defaultTheme: string;
 	fileUploadMaxFileSize?: number;
 	allowFileUploadBackendSelection?: boolean;
+	maskFileHost?: boolean;
 };
 
 export type ConfigNetDefaults = {

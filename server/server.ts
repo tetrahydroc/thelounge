@@ -965,7 +965,8 @@ function getClientConfiguration(): SharedConfiguration | LockedSharedConfigurati
 		useHexIp: Config.values.useHexIp,
 		prefetch: Config.values.prefetch,
 		fileUploadMaxFileSize: Uploader ? Uploader.getMaxFileSize() : undefined, // TODO can't be undefined?
-		allowFileUploadBackendSelection: Config.values.allowFileUploadBackendSelection ?? true,
+		allowFileUploadBackendSelection: Config.values.allowFileUploadBackendSelection,
+		maskFileHost: Config.values.maskFileHost,
 	};
 
 	const defaultsOverride = {
