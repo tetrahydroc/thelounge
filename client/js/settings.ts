@@ -139,6 +139,9 @@ const defaultConfig = {
 	uploadTTL: {
 		default: "",
 	},
+	uploadURL: {
+		default: "",
+	},
 	userStyles: {
 		default: "",
 		apply(store: TypedStore, value: string) {

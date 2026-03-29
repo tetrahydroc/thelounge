@@ -46,16 +46,38 @@
 						class="input"
 					>
 						<option
-							v-for="fileUploadBackend in fileUploadBackends"
-							:key="fileUploadBackend.id"
-							:value="fileUploadBackend.id"
+							v-for="UploadProvider in UploadProviders"
+							:key="UploadProvider.id"
+							:value="UploadProvider.id"
 						>
-							{{ fileUploadBackend.displayName }}
+							{{ UploadProvider.displayName }}
 						</option>
 					</select>
-					<p v-if="currentUploadBackend?.supportNote" class="upload-note">
-						{{currentUploadBackend?.supportNote}}
-					</p>
+					<div v-if="currentUploadBackend?.supportNote">
+						<p v-for="supportNote in currentUploadBackend?.supportNote?.split('\n')" :key="supportNote" class="upload-note">
+							{{supportNote}}
+						</p>
+					</div>
+					<div v-if="currentUploadBackend?.requiresURL">
+						<label for="uploadURL" class="opt">
+							Upload API URL
+							<span
+								class="tooltipped tooltipped-n tooltipped-no-delay"
+								aria-label="The URL to use to upload to the service."
+							>
+								<button class="extra-help" />
+							</span>
+						</label>
+						<input
+							id="uploadURL"
+							:value="store.state.settings.uploadURL"
+							autocomplete="off"
+							type="text"
+							name="uploadURL"
+							class="input"
+							placeholder="Enter api upload url"
+						/>
+					</div>
 					<div v-if="currentUploadBackend?.requiresToken">
 						<label for="uploadToken" class="opt">
 							Upload API Key
@@ -80,7 +102,7 @@
 							</RevealPassword>
 						</div>
 					</div>
-					<div v-if="currentUploadBackend.validTtl">
+					<div v-if="currentUploadBackend?.validTtl">
 						<label for="uploadTTL" class="opt">
 							Upload TTL
 							<span
@@ -198,7 +220,7 @@ import {computed, defineComponent, onMounted, onUpdated, ref} from "vue";
 import {useStore} from "../../js/store";
 import {BeforeInstallPromptEvent} from "../../js/types";
 import RevealPassword from "../RevealPassword.vue";
-import {UploadProviders as fileUploadBackends} from "../../../shared/upload-providers"
+import {UploadProviders} from "../../../shared/upload-providers";
 
 let installPromptEvent: BeforeInstallPromptEvent | null = null;
 
@@ -243,12 +265,12 @@ export default defineComponent({
 		};
 
 		const currentUploadBackend = computed(() => {
-			return fileUploadBackends.find(b => b.id === store.state.settings.uploadTo);
+			return UploadProviders.find(b => b.id === store.state.settings.uploadTo);
 		});
 
 		onUpdated(() => {
 			if (!currentUploadBackend.value?.validTtl?.find(ttl => ttl.id === store.state.settings.uploadTTL)) {
-				store.state.settings.uploadTTL = currentUploadBackend.value?.validTtl?.find(ttl => ttl.default === true)?.id
+				store.state.settings.uploadTTL = currentUploadBackend.value?.validTtl?.find(ttl => ttl.default === true)?.id ?? ""
 			}
 		})
 
@@ -284,7 +306,7 @@ export default defineComponent({
 			nativeInstallPrompt,
 			onForceSyncClick,
 			registerProtocol,
-			fileUploadBackends,
+			UploadProviders,
 			currentUploadBackend,
 		};
 	},

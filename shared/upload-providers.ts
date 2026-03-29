@@ -1,6 +1,7 @@
-interface UploadProvider {
-	id: string,
-	displayName: string,
+export interface UploadProvider {
+	id: string;
+	displayName: string;
+	requiresURL?: boolean;
 	requiresToken: boolean;
 	validTtl?: UploadTTL[];
 	supportNote?:string;
@@ -374,5 +375,48 @@ export const UploadProviders: UploadProvider[] = [
 
 			return `https://ptpimg.me/${json[0].code}.${json[0].ext}`;
 		},
-	}
+	},
+	{
+		id: "xbackbone",
+		displayName: "XBackBone",
+		requiresURL: true,
+		requiresToken: true,
+		supportNote: "Supported files: Images, Videos, Audio, and Text\nNOTE: You must have 'Hide Media by Default' disabled for your profile",
+		async upload(file: File, ttl: string, url_token?: string) {
+			const [encodedRequestURL, auth] = url_token!.split("_|_");
+			const requestURL = atob(encodedRequestURL)
+
+			if (!requestURL.startsWith("http")) {
+				throw new Error("Invalid Upload URL");
+			}
+
+			if (!auth || (auth.startsWith('_') && auth.endsWith('_'))) {
+				throw new Error("Invalid Upload Token");
+			}
+
+			const payload = new FormData();
+
+			payload.append("token", auth);
+			payload.append("upload", file);
+
+			const response = await fetch(requestURL, {
+				method: "POST",
+				body: payload,
+			});
+
+			const json = await response.json();
+
+			if (!response.ok) {
+				throw new Error("Unknown Error");
+			}
+
+			const url = <string>json.raw_url ?? "";
+
+			if (!url.startsWith("http")) {
+				throw new Error("Unknown Error");
+			}
+
+			return url;
+		},
+	},
 ];
