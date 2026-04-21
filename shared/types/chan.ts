@@ -7,17 +7,32 @@ export type UserGroup = {
 	users: string[];
 };
 
-export type TorrentSiteInfo = {
+
+export type DefaultTorrentSiteInfo = {
+	groupsUrl: string;
+	placeholderAvatar: string;
+	placeholderAvatarUrl: string;
+	profileUrl: string;
+	iconUrl: string;
+	avatarUrl: string;
+}
+
+export type TorrentSite = {
 	disabled?: boolean;
 	abbreviation: string;
 	name: string;
 	host: string;
 	domain: string;
-	channels?: string[]; // optional list of channels this torrent site is relevant to, if not present it's relevant to all channels
-	getAvatarUrl?: (username: string) => string;
-	getIconUrl?: (username: string) => string;
-	getProfileUrl?: (username: string) => string;
-};
+	channels?: string[];
+	groupsUrl?: string;
+	placeholderAvatar?: string;
+	placeholderAvatarUrl?: string;
+	profileUrl?: string;
+	iconUrl?: string;
+	avatarUrl?: string;
+}
+
+export type TorrentSiteInfo = TorrentSite & DefaultTorrentSiteInfo;
 
 export enum ChanType {
 	CHANNEL = "channel",

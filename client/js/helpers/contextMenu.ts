@@ -148,6 +148,19 @@ export function generateChannelContextMenu(
 
 	// Add menu items for queries
 	if (channel.type === ChanType.QUERY) {
+		if (channel.torrentSite && !channel.torrentSite.disabled) {
+			items.push({
+				label: `Tracker Profile`,
+				type: "item",
+				class: "action-open",
+				action() {
+					openInNewTab(channel.torrentSite?.profileUrl + channel.name);
+				},
+			});
+
+			items.push({ type: "divider" });
+		}
+
 		items.push(
 			{
 				label: "User information",
@@ -308,6 +321,9 @@ export function generateUserContextMenu(
 		: {};
 
 	const userContextMenuEntrys = () => {
+
+		const entrys = [] as ContextMenuItem[];
+
 		const defualt = {
 			label: user.nick,
 			type: "item",
@@ -315,12 +331,11 @@ export function generateUserContextMenu(
 			action() {},
 		};
 
-		// if (store.state.settings) // TODO: add a propper check
+		if (!store.state.settings.enhancedContextMenuEnabled) {
+			return [defualt];
+		}
 
-		if (
-			store.state.settings.enhancedContextMenuEnabled &&
-			Boolean(network.channels.find((c) => (c.groups?.length ?? 0) > 0))
-		) {
+		if (Boolean(network.channels.find((c) => (c.groups?.length ?? 0) > 0))) {
 			const customInspect = {
 				label: user.nick,
 				type: "item",
@@ -334,29 +349,12 @@ export function generateUserContextMenu(
 					});
 				},
 			};
-			const trackerProfile = {
-				label: "Tracker Profile",
-				type: "item",
-				class: "action-open",
-				action() {
-					if (channel.type !== ChanType.CHANNEL || !channel.torrentSite) return;
-					openInNewTab(channel.torrentSite?.getProfileUrl ? user.nick : ``); // TODO: better default fallback, this should not happen, but we should at least not open a blank page if it does
-				},
-			};
-			const customTrackerProfile = {
-				label: `Tracker Profile (SP)`,
-				type: "item",
-				class: "action-open",
-				action() {
-					openInNewTab(`https://brr.red/${user.nick}`);
-				},
-			};
 			const userGroup =
 				network.channels
 					.find((c) => c.users.find((u) => u.nick === user.nick))
 					?.groups?.find((g) => g.users.includes(user.nick))?.name ?? "Offline";
 
-			return [
+			entrys.push(
 				{
 					label: userGroup,
 					type: "item",
@@ -367,12 +365,30 @@ export function generateUserContextMenu(
 					type: "divider",
 				},
 				customInspect,
-				trackerProfile,
-				customTrackerProfile,
-			] as ContextMenuItem[];
+			);
+		}
+		else {
+			entrys.push(defualt);
+
+			if (channel.torrentSite && !channel.torrentSite.disabled) {
+				entrys.push({ type: "divider" });
+			}
 		}
 
-		return [defualt];
+		if (channel.torrentSite && !channel.torrentSite.disabled) {
+			const trackerProfile = {
+				label: `Tracker Profile`,
+				type: "item",
+				class: "action-open",
+				action() {
+					openInNewTab(channel.torrentSite?.profileUrl + user.nick); // This is a bit of a hack
+				},
+			};
+
+			entrys.push(trackerProfile);
+		}
+
+		return entrys;
 	};
 
 	// Extra entries for enhanced context menu

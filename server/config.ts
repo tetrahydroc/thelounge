@@ -16,7 +16,9 @@ export type WebIRC = {
 	[key: string]: unknown;
 };
 
-type TorrentSites = TorrentSiteInfo[];
+type TorrentSites = TorrentSite[];
+
+type TorrentSitesInfo = TorrentSiteInfo[];
 
 type Https = {
 	enable: boolean;
@@ -120,7 +122,9 @@ export type ConfigType = {
 	massEventDetection: MassEventDetection;
 	useHexIp: boolean;
 	webirc?: WebIRC;
+	defaultTorrentSiteInfo: DefaultTorrentSiteInfo;
 	torrentSites?: TorrentSites;
+	torrentSitesInfo?: TorrentSitesInfo; // This is the normalized version of torrentSites, where all sites have the default info applied, so that the client doesn't have to do it.
 	identd: Identd;
 	oidentd?: string;
 	ldap: Ldap;
@@ -129,50 +133,45 @@ export type ConfigType = {
 };
 
 import defaultConfig from "../defaults/config.js";
-import {TorrentSiteInfo} from "../shared/types/chan.js";
+import {DefaultTorrentSiteInfo, TorrentSite, TorrentSiteInfo} from "../shared/types/chan.js";
 
 class Config {
 	values = {..._.cloneDeep(defaultConfig), themeColor: ""} as unknown as ConfigType;
 	#homePath = "";
 
-	private normalizeTorrentSite(site: TorrentSiteInfo): TorrentSiteInfo {
-		const sanitizeUsername = (username: string) => encodeURIComponent(username.trim());
-
-		return {
+	private normalizeTorrentSite(site: TorrentSite, defaultSiteInfo: DefaultTorrentSiteInfo): TorrentSiteInfo {
+		const normalized = {
+			...defaultSiteInfo,
 			...site,
-			getProfileUrl:
-				site.getProfileUrl ??
-				((username: string) =>
-					`https://${site.domain}/users/${sanitizeUsername(username)}`),
-			getAvatarUrl:
-				site.getAvatarUrl ??
-				((username: string) =>
-					`https://${site.domain}/authenticated-images/user-avatars/${sanitizeUsername(username)}`),
-			getIconUrl:
-				site.getIconUrl ??
-				((username: string) =>
-					`https://${site.domain}/authenticated-images/user-avatars/${sanitizeUsername(username)}`),
 		};
+
+		normalized.profileUrl = `https://${normalized.domain}${normalized.profileUrl}`;
+		normalized.iconUrl = `https://${normalized.domain}${normalized.iconUrl}`;
+		normalized.avatarUrl = `https://${normalized.domain}${normalized.avatarUrl}`;
+
+		return normalized as TorrentSiteInfo;
 	}
 
-	private normalizeTorrentSites(sites?: TorrentSites): TorrentSites | undefined {
+	private normalizeTorrentSites(sites: TorrentSite[] | undefined, defaultSiteInfo: DefaultTorrentSiteInfo): TorrentSiteInfo[] | undefined {
 		if (!sites) {
 			return undefined;
 		}
 
-		return sites.map((site) => this.normalizeTorrentSite(site));
+		return sites.map(site => this.normalizeTorrentSite(site, defaultSiteInfo));
 	}
 
+
 	getTorrentSiteInfo(host: string, channelName: string) {
-		if (!this.values.torrentSites) {
+		if (!this.values.torrentSitesInfo) {
 			return undefined;
 		}
 
-		for (let site of this.values.torrentSites) {
+		for (const site of this.values.torrentSitesInfo) {
 			if (site.host === host && (!site.channels || site.channels.includes(channelName))) {
 				return site;
 			}
 		}
+
 		return undefined;
 	}
 
@@ -294,7 +293,10 @@ class Config {
 			}
 		}
 
-		this.values.torrentSites = this.normalizeTorrentSites(this.values.torrentSites);
+		this.values.torrentSitesInfo = this.normalizeTorrentSites(
+			this.values.torrentSites,
+			this.values.defaultTorrentSiteInfo
+		);
 
 		if (this.values.fileUpload.baseUrl) {
 			try {
