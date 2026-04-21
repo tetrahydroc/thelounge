@@ -146,6 +146,14 @@
 			</label>
 			<label class="opt">
 				<input
+					:checked="store.state.settings.enhancedUserDisplayEnabled"
+					type="checkbox"
+					name="enhancedUserDisplayEnabled"
+				/>
+				Use enhanced user display when available
+			</label>
+			<label class="opt">
+				<input
 					:checked="store.state.settings.enhancedContextMenuEnabled"
 					type="checkbox"
 					name="enhancedContextMenuEnabled"

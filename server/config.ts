@@ -16,6 +16,8 @@ export type WebIRC = {
 	[key: string]: unknown;
 };
 
+type TorrentSites = [TorrentSiteInfo];
+
 type Https = {
 	enable: boolean;
 	key: string;
@@ -118,6 +120,7 @@ export type ConfigType = {
 	massEventDetection: MassEventDetection;
 	useHexIp: boolean;
 	webirc?: WebIRC;
+	torrentSites?: TorrentSites;
 	identd: Identd;
 	oidentd?: string;
 	ldap: Ldap;
@@ -126,10 +129,24 @@ export type ConfigType = {
 };
 
 import defaultConfig from "../defaults/config.js";
+import {TorrentSiteInfo} from "../shared/types/chan.js";
 
 class Config {
 	values = {..._.cloneDeep(defaultConfig), themeColor: ""} as unknown as ConfigType;
 	#homePath = "";
+
+	getTorrentSiteInfo(host: string, channelName: string) {
+		if (!this.values.torrentSites) {
+			return undefined;
+		}
+
+		for (let site of this.values.torrentSites) {
+			if (site.host === host && (!site.channels || site.channels.includes(channelName))) {
+				return site;
+			}
+		}
+		return undefined;
+	}
 
 	getHomePath() {
 		return this.#homePath;

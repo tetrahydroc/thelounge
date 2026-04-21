@@ -419,6 +419,113 @@ export default {
 	// This value is set to `null` to disable WEBIRC by default.
 	webirc: null,
 
+	// ## Torrent sites support
+	//
+	// Configure torrent sites for specific IRC networks.
+	// Keys are IRC hostnames, values are URL templates where {host} and {channel} will be replaced.
+	// For example:
+	// torrentSites: [
+	//   {
+	//      abbreviation: 'TNB',
+	// 		name: 'ThatNeoByte',
+	// 		host: 'irc.tnb.moe',
+	// 		domain: 'darkpeers.org',
+	// 	},
+	// ]
+	// This value is set to null to disable by default.
+	// TODO: see if this will be enabled by default for some popular torrent sites
+	torrentSites: [
+		{
+			abbreviation: 'TNB',
+			name: 'ThatNeoByte',
+			host: 'irc.tnb.moe',
+			domain: 'darkpeers.org',
+		},
+		{
+			abbreviation: 'ULCX',
+			name: 'Upload.cx',
+			host: 'irc.upload.cx',
+			domain: 'upload.cx',
+		},
+		{
+			abbreviation: 'RFX',
+			name: 'Reelflix',
+			host: 'irc.reelflix.cc',
+			domain: 'reelflix.cc',
+		},
+		{
+			abbreviation: 'SP',
+			name: 'Seedpool',
+			host: 'irc.seedpool.org',
+			domain: 'seedpool.org',
+		},
+		{
+			abbreviation: 'HHD',
+			name: 'HomieHelpdesk',
+			host: 'irc.homiehelpdesk.net',
+			domain: 'homiehelpdesk.net',
+		},
+		{
+			abbreviation: 'DP',
+			name: 'DarkPeers',
+			host: 'irc.p2p-network.net',
+			domain: 'darkpeers.org',
+			channels: ['#darkpeers', '#dphelp', '#dplog', '#dpmoderation', '#dpstaff'],
+		},
+		{
+			abbreviation: 'BLU',
+			name: 'Blutopia',
+			host: 'irc.p2p-network.net',
+			domain: 'blutopia.cc',
+			channels: ['#blutopia'],
+		},
+		{
+			abbreviation: 'LST',
+			name: 'LST',
+			host: 'irc.lst.gg',
+			domain: 'lst.gg',
+		},
+		{
+			abbreviation: 'LUME',
+			name: 'Luminarr',
+			host: 'irc.luminarr.me',
+			domain: 'luminarr.me',
+		},
+		{
+			abbreviation: 'STC',
+			name: 'Skip The Commercials',
+			host: 'irc.skipthecommercials.xyz',
+			domain: 'skipthecommercials.xyz',
+		},
+		{
+			abbreviation: 'RHD',
+			name: 'Rocket HD',
+			host: 'irc.rocket-hd.cc',
+			domain: 'rocket-hd.cc',
+		},
+		{
+			abbreviation: 'A4K',
+			name: 'Aura4K',
+			host: 'irc.aura4k.net',
+			domain: 'aura4k.net',
+		},
+		{
+			disabled: true, // Disable OE+ support, as they require the file extension in the avatar URL
+			abbreviation: 'OE+',
+			name: 'OnlyEncodes+',
+			host: 'irc.onlyencodes.cc',
+			domain: 'onlyencodes.cc',
+		},
+		{
+			disabled: true, // Disable ANT support, as it does not use the username in the avatar URL
+			abbreviation: 'ANT',
+			name: 'Anthelion',
+			host: 'irc.nebulance.io',
+			domain: 'anthelion.me',
+			channels: ['#ant']
+		},
+	],
+
 	// ## identd and oidentd support
 
 	// ### `identd`

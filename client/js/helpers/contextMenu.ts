@@ -315,7 +315,8 @@ export function generateUserContextMenu(
 			action () {},
 		};
 
-		if (store.state.settings.enhancedContextMenuEnabled && Boolean(network.channels.find(c => (c.groups?.length ?? 0) > 0))) {
+		if (store.state.settings.enhancedContextMenuEnabled) {
+			// && Boolean(network.channels.find(c => (c.groups?.length ?? 0) > 0))) {
 			const customInspect = {
 				label: user.nick,
 				type: "item",
@@ -328,6 +329,12 @@ export function generateUserContextMenu(
 						text: `!u ${user.nick}`,
 					});
 				},
+			};
+			const customTracker = {
+				label: channel.torrentSite ? channel.torrentSite.domain : channel.name,
+				type: "item",
+				class: "user",
+				action() {},
 			};
 			const customTrackerProfile = {
 				label: `Tracker Profile`,
@@ -350,7 +357,8 @@ export function generateUserContextMenu(
 					type: "divider",
 				},
 				customInspect,
-				customTrackerProfile
+				customTracker,
+				customTrackerProfile,
 			] as ContextMenuItem[];
 		}
 
