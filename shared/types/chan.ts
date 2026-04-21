@@ -14,9 +14,9 @@ export type TorrentSiteInfo = {
 	host: string;
 	domain: string;
 	channels?: string[]; // optional list of channels this torrent site is relevant to, if not present it's relevant to all channels
-	// getAvatarUrl: (username: string) => string;
-	// getIconUrl: (username: string) => string;
-	// getProfileUrl: (username: string) => string;
+	getAvatarUrl?: (username: string) => string;
+	getIconUrl?: (username: string) => string;
+	getProfileUrl?: (username: string) => string;
 };
 
 export enum ChanType {

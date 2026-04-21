@@ -16,7 +16,7 @@ export type WebIRC = {
 	[key: string]: unknown;
 };
 
-type TorrentSites = [TorrentSiteInfo];
+type TorrentSites = TorrentSiteInfo[];
 
 type Https = {
 	enable: boolean;
@@ -134,6 +134,34 @@ import {TorrentSiteInfo} from "../shared/types/chan.js";
 class Config {
 	values = {..._.cloneDeep(defaultConfig), themeColor: ""} as unknown as ConfigType;
 	#homePath = "";
+
+	private normalizeTorrentSite(site: TorrentSiteInfo): TorrentSiteInfo {
+		const sanitizeUsername = (username: string) => encodeURIComponent(username.trim());
+
+		return {
+			...site,
+			getProfileUrl:
+				site.getProfileUrl ??
+				((username: string) =>
+					`https://${site.domain}/users/${sanitizeUsername(username)}`),
+			getAvatarUrl:
+				site.getAvatarUrl ??
+				((username: string) =>
+					`https://${site.domain}/authenticated-images/user-avatars/${sanitizeUsername(username)}`),
+			getIconUrl:
+				site.getIconUrl ??
+				((username: string) =>
+					`https://${site.domain}/authenticated-images/user-avatars/${sanitizeUsername(username)}`),
+		};
+	}
+
+	private normalizeTorrentSites(sites?: TorrentSites): TorrentSites | undefined {
+		if (!sites) {
+			return undefined;
+		}
+
+		return sites.map((site) => this.normalizeTorrentSite(site));
+	}
 
 	getTorrentSiteInfo(host: string, channelName: string) {
 		if (!this.values.torrentSites) {
@@ -265,6 +293,8 @@ class Config {
 				log.warn("Using default configuration...");
 			}
 		}
+
+		this.values.torrentSites = this.normalizeTorrentSites(this.values.torrentSites);
 
 		if (this.values.fileUpload.baseUrl) {
 			try {
