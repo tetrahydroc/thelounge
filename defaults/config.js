@@ -24,7 +24,7 @@ export default {
 	// For UNIX domain sockets, use `"unix:/absolute/path/to/file.sock"`.
 	//
 	// This value is set to `undefined` by default to listen on all interfaces.
-	host: undefined,
+	host: "0.0.0.0",
 
 	// ### `port`
 	//
