@@ -162,7 +162,7 @@ export const matchers: Matcher[] = [
 		type: "basic",
 		name: "MidnightScene",
 		description: "[nick]: message",
-		matches: [ "MSBridge" ],
+		matches: [ "msbridge" ],
 		regex: /^\[(?<nick>[^:\]]+)\]: (?<content>.*)/,
 		transform (message) {
 			return typedGroups(message.text!.match(this.regex));
