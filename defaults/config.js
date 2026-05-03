@@ -530,6 +530,12 @@ export default {
 			domain: 'aura4k.net',
 		},
 		{
+			abbreviation: 'MNS',
+			name: 'MidnightScene',
+			host: 'irc.midnightscene.cc',
+			domain: 'midnightscene.cc',
+		},
+		{
 			disabled: true, // Disable OE+ support, as they require the file extension in the avatar URL
 			abbreviation: 'OE+',
 			name: 'OnlyEncodes+',
