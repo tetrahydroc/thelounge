@@ -69,7 +69,7 @@
 }
 
 .dm-collapse-icon {
-	font-family: FontAwesome;
+	font-family: "Font Awesome 7 Pro";
 	margin: 0 11px 0 2px;
 	font-size: initial;
 	width: 12px;
@@ -109,7 +109,7 @@
 		bottom: 0;
 		color: rgba(255, 255, 255, 0.349);
 		content: "\f0b0";
-		font-family: FontAwesome;
+		font-family: "Font Awesome 7 Pro";
 		line-height: 35px !important;
 		pointer-events: none;
 		position: absolute;

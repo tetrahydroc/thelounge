@@ -1,0 +1,18594 @@
+@charset "UTF-8";
+
+[x-cloak] {
+	display: none !important
+}
+
+/* purgecss start ignore */
+/*!
+ * Font Awesome Pro 7.3.0 by @fontawesome - https://fontawesome.com
+*/
+
+.fa-solid,
+.fa-regular,
+.fa-brands,
+.fa-classic,
+.fas,
+.far,
+.fab,
+.fal,
+.fat,
+.fad,
+.fadr,
+.fadl,
+.fadt,
+.fass,
+.fasr,
+.fasl,
+.fast,
+.fasds,
+.fasdr,
+.fasdl,
+.fasdt,
+.faslr,
+.faslpr,
+.fawsb,
+.fatl,
+.fans,
+.fands,
+.faes,
+.fajr,
+.fajfr,
+.fajdr,
+.facr,
+.fausb,
+.faudsb,
+.faufsb,
+.fa-semibold,
+.fa-light,
+.fa-thin,
+.fa-duotone,
+.fa-sharp,
+.fa-sharp-duotone,
+.fa-chisel,
+.fa-etch,
+.fa-jelly,
+.fa-jelly-duo,
+.fa-jelly-fill,
+.fa-notdog,
+.fa-notdog-duo,
+.fa-slab,
+.fa-slab-press,
+.fa-thumbprint,
+.fa-utility,
+.fa-utility-duo,
+.fa-utility-fill,
+.fa-whiteboard,
+.fa {
+	--_fa-family: var(--fa-family, var(--fa-style-family, "Font Awesome 7 Pro"));
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	display: var(--fa-display, inline-block);
+	font-family: var(--_fa-family);
+	font-feature-settings: normal;
+	font-style: normal;
+	font-synthesis: none;
+	font-variant: normal;
+	font-weight: var(--fa-style, 900);
+	line-height: 1;
+	text-align: center;
+	text-rendering: auto
+}
+
+:is(.fas,
+	.fass,
+	.far,
+	.fasr,
+	.fal,
+	.fasl,
+	.fat,
+	.fast,
+	.fad,
+	.fadr,
+	.fadl,
+	.fadt,
+	.fasds,
+	.fasdr,
+	.fasdl,
+	.fasdt,
+	.fab,
+	.faslr,
+	.faslpr,
+	.fawsb,
+	.fatl,
+	.fans,
+	.fands,
+	.faes,
+	.fajr,
+	.fajfr,
+	.fajdr,
+	.facr,
+	.fausb,
+	.faudsb,
+	.faufsb,
+	.fa-solid,
+	.fa-semibold,
+	.fa-regular,
+	.fa-light,
+	.fa-thin,
+	.fa-brands,
+	.fa-classic,
+	.fa-duotone,
+	.fa-sharp,
+	.fa-sharp-duotone,
+	.fa-chisel,
+	.fa-etch,
+	.fa-jelly,
+	.fa-jelly-duo,
+	.fa-jelly-fill,
+	.fa-notdog,
+	.fa-notdog-duo,
+	.fa-slab,
+	.fa-slab-press,
+	.fa-thumbprint,
+	.fa-utility,
+	.fa-utility-duo,
+	.fa-utility-fill,
+	.fa-whiteboard,
+	.fa):before {
+	content: var(--fa)/""
+}
+
+@supports not (content: "" /"") {
+
+	:is(.fas,
+		.fass,
+		.far,
+		.fasr,
+		.fal,
+		.fasl,
+		.fat,
+		.fast,
+		.fad,
+		.fadr,
+		.fadl,
+		.fadt,
+		.fasds,
+		.fasdr,
+		.fasdl,
+		.fasdt,
+		.fab,
+		.faslr,
+		.faslpr,
+		.fawsb,
+		.fatl,
+		.fans,
+		.fands,
+		.faes,
+		.fajr,
+		.fajfr,
+		.fajdr,
+		.facr,
+		.fausb,
+		.faudsb,
+		.faufsb,
+		.fa-solid,
+		.fa-semibold,
+		.fa-regular,
+		.fa-light,
+		.fa-thin,
+		.fa-brands,
+		.fa-classic,
+		.fa-duotone,
+		.fa-sharp,
+		.fa-sharp-duotone,
+		.fa-chisel,
+		.fa-etch,
+		.fa-jelly,
+		.fa-jelly-duo,
+		.fa-jelly-fill,
+		.fa-notdog,
+		.fa-notdog-duo,
+		.fa-slab,
+		.fa-slab-press,
+		.fa-thumbprint,
+		.fa-utility,
+		.fa-utility-duo,
+		.fa-utility-fill,
+		.fa-whiteboard,
+		.fa):before {
+		content: var(--fa)
+	}
+}
+
+:is(.fad,
+	.fa-duotone,
+	.fadr,
+	.fadl,
+	.fadt,
+	.fasds,
+	.fa-sharp-duotone,
+	.fasdr,
+	.fasdl,
+	.fasdt,
+	.fatl,
+	.fa-thumbprint,
+	.fands,
+	.fa-notdog-duo,
+	.fajdr,
+	.fa-jelly-duo,
+	.faudsb,
+	.fa-utility-duo):after {
+	content: var(--fa);
+	font-feature-settings: "ss01"
+}
+
+@supports not (content: "" /"") {
+
+	:is(.fad,
+		.fa-duotone,
+		.fadr,
+		.fadl,
+		.fadt,
+		.fasds,
+		.fa-sharp-duotone,
+		.fasdr,
+		.fasdl,
+		.fasdt,
+		.fatl,
+		.fa-thumbprint,
+		.fands,
+		.fa-notdog-duo,
+		.fajdr,
+		.fa-jelly-duo,
+		.faudsb,
+		.fa-utility-duo):after {
+		content: var(--fa)
+	}
+}
+
+.fa-1x {
+	font-size: 1em
+}
+
+.fa-2x {
+	font-size: 2em
+}
+
+.fa-3x {
+	font-size: 3em
+}
+
+.fa-4x {
+	font-size: 4em
+}
+
+.fa-5x {
+	font-size: 5em
+}
+
+.fa-6x {
+	font-size: 6em
+}
+
+.fa-7x {
+	font-size: 7em
+}
+
+.fa-8x {
+	font-size: 8em
+}
+
+.fa-9x {
+	font-size: 9em
+}
+
+.fa-10x {
+	font-size: 10em
+}
+
+.fa-2xs {
+	font-size: .625em;
+	line-height: .1em;
+	vertical-align: .225em
+}
+
+.fa-xs {
+	font-size: .75em;
+	line-height: .0833333333em;
+	vertical-align: .125em
+}
+
+.fa-sm {
+	font-size: .875em;
+	line-height: .0714285714em;
+	vertical-align: .0535714286em
+}
+
+.fa-lg {
+	font-size: 1.25em;
+	line-height: .05em;
+	vertical-align: -.075em
+}
+
+.fa-xl {
+	font-size: 1.5em;
+	line-height: .0416666667em;
+	vertical-align: -.125em
+}
+
+.fa-2xl {
+	font-size: 2em;
+	line-height: .03125em;
+	vertical-align: -.1875em
+}
+
+.fa-width-auto {
+	--fa-width: auto
+}
+
+.fa-fw,
+.fa-width-fixed {
+	--fa-width: 1.25em
+}
+
+.fa-ul {
+	list-style-type: none;
+	margin-inline-start: var(--fa-li-margin, 2.5em);
+	padding-inline-start: 0
+}
+
+.fa-ul>li {
+	position: relative
+}
+
+.fa-li {
+	inset-inline-start: calc(-1 * var(--fa-li-width, 2em));
+	position: absolute;
+	text-align: center;
+	width: var(--fa-li-width, 2em);
+	line-height: inherit
+}
+
+.fa-border {
+	border-color: var(--fa-border-color, #eee);
+	border-radius: var(--fa-border-radius, .1em);
+	border-style: var(--fa-border-style, solid);
+	border-width: var(--fa-border-width, .0625em);
+	box-sizing: var(--fa-border-box-sizing, content-box);
+	padding: var(--fa-border-padding, .1875em .25em)
+}
+
+.fa-pull-left,
+.fa-pull-start {
+	float: inline-start;
+	margin-inline-end: var(--fa-pull-margin, .3em)
+}
+
+.fa-pull-right,
+.fa-pull-end {
+	float: inline-end;
+	margin-inline-start: var(--fa-pull-margin, .3em)
+}
+
+.fa-beat {
+	animation-name: fa-beat;
+	animation-delay: var(--fa-animation-delay, 0s);
+	animation-direction: var(--fa-animation-direction, normal);
+	animation-duration: var(--fa-animation-duration, 1s);
+	animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+	animation-timing-function: var(--fa-animation-timing, ease-in-out)
+}
+
+.fa-bounce {
+	animation-name: fa-bounce;
+	animation-delay: var(--fa-animation-delay, 0s);
+	animation-direction: var(--fa-animation-direction, normal);
+	animation-duration: var(--fa-animation-duration, 1s);
+	animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+	animation-timing-function: var(--fa-animation-timing, cubic-bezier(.28, .84, .42, 1))
+}
+
+.fa-fade {
+	animation-name: fa-fade;
+	animation-delay: var(--fa-animation-delay, 0s);
+	animation-direction: var(--fa-animation-direction, normal);
+	animation-duration: var(--fa-animation-duration, 1s);
+	animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+	animation-timing-function: var(--fa-animation-timing, cubic-bezier(.4, 0, .6, 1))
+}
+
+.fa-beat-fade {
+	animation-name: fa-beat-fade;
+	animation-delay: var(--fa-animation-delay, 0s);
+	animation-direction: var(--fa-animation-direction, normal);
+	animation-duration: var(--fa-animation-duration, 1s);
+	animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+	animation-timing-function: var(--fa-animation-timing, cubic-bezier(.4, 0, .6, 1))
+}
+
+.fa-flip {
+	animation-name: fa-flip;
+	animation-delay: var(--fa-animation-delay, 0s);
+	animation-direction: var(--fa-animation-direction, normal);
+	animation-duration: var(--fa-animation-duration, 1s);
+	animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+	animation-timing-function: var(--fa-animation-timing, ease-in-out)
+}
+
+.fa-shake {
+	animation-name: fa-shake;
+	animation-delay: var(--fa-animation-delay, 0s);
+	animation-direction: var(--fa-animation-direction, normal);
+	animation-duration: var(--fa-animation-duration, 1s);
+	animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+	animation-timing-function: var(--fa-animation-timing, linear)
+}
+
+.fa-spin {
+	animation-name: fa-spin;
+	animation-delay: var(--fa-animation-delay, 0s);
+	animation-direction: var(--fa-animation-direction, normal);
+	animation-duration: var(--fa-animation-duration, 2s);
+	animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+	animation-timing-function: var(--fa-animation-timing, linear)
+}
+
+.fa-spin-reverse {
+	--fa-animation-direction: reverse
+}
+
+.fa-pulse,
+.fa-spin-pulse {
+	animation-name: fa-spin;
+	animation-direction: var(--fa-animation-direction, normal);
+	animation-duration: var(--fa-animation-duration, 1s);
+	animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+	animation-timing-function: var(--fa-animation-timing, steps(8))
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+	.fa-beat,
+	.fa-bounce,
+	.fa-fade,
+	.fa-beat-fade,
+	.fa-flip,
+	.fa-pulse,
+	.fa-shake,
+	.fa-spin,
+	.fa-spin-pulse {
+		animation: none !important;
+		transition: none !important
+	}
+}
+
+@keyframes fa-beat {
+
+	0%,
+	90% {
+		transform: scale(1)
+	}
+
+	45% {
+		transform: scale(var(--fa-beat-scale, 1.25))
+	}
+}
+
+@keyframes fa-bounce {
+	0% {
+		transform: scale(1) translateY(0)
+	}
+
+	10% {
+		transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, .9)) translateY(0)
+	}
+
+	30% {
+		transform: scale(var(--fa-bounce-jump-scale-x, .9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -.5em))
+	}
+
+	50% {
+		transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, .95)) translateY(0)
+	}
+
+	57% {
+		transform: scale(1) translateY(var(--fa-bounce-rebound, -.125em))
+	}
+
+	64% {
+		transform: scale(1) translateY(0)
+	}
+
+	to {
+		transform: scale(1) translateY(0)
+	}
+}
+
+@keyframes fa-fade {
+	50% {
+		opacity: var(--fa-fade-opacity, .4)
+	}
+}
+
+@keyframes fa-beat-fade {
+
+	0%,
+	to {
+		opacity: var(--fa-beat-fade-opacity, .4);
+		transform: scale(1)
+	}
+
+	50% {
+		opacity: 1;
+		transform: scale(var(--fa-beat-fade-scale, 1.125))
+	}
+}
+
+@keyframes fa-flip {
+	50% {
+		transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg))
+	}
+}
+
+@keyframes fa-shake {
+	0% {
+		transform: rotate(-15deg)
+	}
+
+	4% {
+		transform: rotate(15deg)
+	}
+
+	8%,
+	24% {
+		transform: rotate(-18deg)
+	}
+
+	12%,
+	28% {
+		transform: rotate(18deg)
+	}
+
+	16% {
+		transform: rotate(-22deg)
+	}
+
+	20% {
+		transform: rotate(22deg)
+	}
+
+	32% {
+		transform: rotate(-12deg)
+	}
+
+	36% {
+		transform: rotate(12deg)
+	}
+
+	40%,
+	to {
+		transform: rotate(0)
+	}
+}
+
+@keyframes fa-spin {
+	0% {
+		transform: rotate(0)
+	}
+
+	to {
+		transform: rotate(360deg)
+	}
+}
+
+.fa-rotate-90 {
+	transform: rotate(90deg)
+}
+
+.fa-rotate-180 {
+	transform: rotate(180deg)
+}
+
+.fa-rotate-270 {
+	transform: rotate(270deg)
+}
+
+.fa-flip-horizontal {
+	transform: scaleX(-1)
+}
+
+.fa-flip-vertical {
+	transform: scaleY(-1)
+}
+
+.fa-flip-both,
+.fa-flip-horizontal.fa-flip-vertical {
+	transform: scale(-1)
+}
+
+.fa-rotate-by {
+	transform: rotate(var(--fa-rotate-angle, 0))
+}
+
+.fa-stack {
+	display: inline-block;
+	height: 2em;
+	line-height: 2em;
+	position: relative;
+	vertical-align: middle;
+	width: 2.5em
+}
+
+.fa-stack-1x,
+.fa-stack-2x {
+	--fa-width: 100%;
+	inset: 0;
+	position: absolute;
+	text-align: center;
+	width: var(--fa-width);
+	z-index: var(--fa-stack-z-index, auto)
+}
+
+.fa-stack-1x {
+	line-height: inherit
+}
+
+.fa-stack-2x {
+	font-size: 2em
+}
+
+.fa-inverse {
+	color: var(--fa-inverse, #fff)
+}
+
+.fa-0 {
+	--fa: "0"
+}
+
+.fa-1 {
+	--fa: "1"
+}
+
+.fa-2 {
+	--fa: "2"
+}
+
+.fa-3 {
+	--fa: "3"
+}
+
+.fa-4 {
+	--fa: "4"
+}
+
+.fa-5 {
+	--fa: "5"
+}
+
+.fa-6 {
+	--fa: "6"
+}
+
+.fa-7 {
+	--fa: "7"
+}
+
+.fa-8 {
+	--fa: "8"
+}
+
+.fa-9 {
+	--fa: "9"
+}
+
+.fa-exclamation {
+	--fa: "!"
+}
+
+.fa-ditto {
+	--fa: '"'
+}
+
+.fa-hashtag {
+	--fa: "#"
+}
+
+.fa-dollar-sign,
+.fa-dollar,
+.fa-usd {
+	--fa: "$"
+}
+
+.fa-percent,
+.fa-percentage {
+	--fa: "%"
+}
+
+.fa-ampersand {
+	--fa: "&"
+}
+
+.fa-apostrophe {
+	--fa: "'"
+}
+
+.fa-bracket-round,
+.fa-parenthesis {
+	--fa: "("
+}
+
+.fa-bracket-round-right {
+	--fa: ")"
+}
+
+.fa-asterisk {
+	--fa: "*"
+}
+
+.fa-plus,
+.fa-add {
+	--fa: "+"
+}
+
+.fa-comma {
+	--fa: ","
+}
+
+.fa-hyphen {
+	--fa: "-"
+}
+
+.fa-period {
+	--fa: "."
+}
+
+.fa-slash-forward {
+	--fa: "/"
+}
+
+.fa-colon {
+	--fa: ":"
+}
+
+.fa-semicolon {
+	--fa: ";"
+}
+
+.fa-less-than {
+	--fa: "<"
+}
+
+.fa-equals {
+	--fa: "="
+}
+
+.fa-greater-than {
+	--fa: ">"
+}
+
+.fa-question {
+	--fa: "?"
+}
+
+.fa-at {
+	--fa: "@"
+}
+
+.fa-a {
+	--fa: "A"
+}
+
+.fa-b {
+	--fa: "B"
+}
+
+.fa-c {
+	--fa: "C"
+}
+
+.fa-d {
+	--fa: "D"
+}
+
+.fa-e {
+	--fa: "E"
+}
+
+.fa-f {
+	--fa: "F"
+}
+
+.fa-g {
+	--fa: "G"
+}
+
+.fa-h {
+	--fa: "H"
+}
+
+.fa-i {
+	--fa: "I"
+}
+
+.fa-j {
+	--fa: "J"
+}
+
+.fa-k {
+	--fa: "K"
+}
+
+.fa-l {
+	--fa: "L"
+}
+
+.fa-m {
+	--fa: "M"
+}
+
+.fa-n {
+	--fa: "N"
+}
+
+.fa-o {
+	--fa: "O"
+}
+
+.fa-p {
+	--fa: "P"
+}
+
+.fa-q {
+	--fa: "Q"
+}
+
+.fa-r {
+	--fa: "R"
+}
+
+.fa-s {
+	--fa: "S"
+}
+
+.fa-t {
+	--fa: "T"
+}
+
+.fa-u {
+	--fa: "U"
+}
+
+.fa-v {
+	--fa: "V"
+}
+
+.fa-w {
+	--fa: "W"
+}
+
+.fa-x {
+	--fa: "X"
+}
+
+.fa-y {
+	--fa: "Y"
+}
+
+.fa-z {
+	--fa: "Z"
+}
+
+.fa-bracket-square,
+.fa-bracket,
+.fa-bracket-left {
+	--fa: "["
+}
+
+.fa-slash-back {
+	--fa: "\\"
+}
+
+.fa-bracket-square-right {
+	--fa: "]"
+}
+
+.fa-accent-grave {
+	--fa: "`"
+}
+
+.fa-bracket-curly,
+.fa-bracket-curly-left {
+	--fa: "{"
+}
+
+.fa-pipe {
+	--fa: "|"
+}
+
+.fa-bracket-curly-right {
+	--fa: "}"
+}
+
+.fa-tilde {
+	--fa: "~"
+}
+
+.fa-caravan-simple,
+.fa-caravan-alt {
+	--fa: ""
+}
+
+.fa-cat-space {
+	--fa: ""
+}
+
+.fa-coffee-pot {
+	--fa: ""
+}
+
+.fa-comet {
+	--fa: ""
+}
+
+.fa-fan-table {
+	--fa: ""
+}
+
+.fa-faucet {
+	--fa: ""
+}
+
+.fa-faucet-drip {
+	--fa: ""
+}
+
+.fa-galaxy {
+	--fa: ""
+}
+
+.fa-garage {
+	--fa: ""
+}
+
+.fa-garage-car {
+	--fa: ""
+}
+
+.fa-garage-open {
+	--fa: ""
+}
+
+.fa-heat {
+	--fa: ""
+}
+
+.fa-house-chimney-window {
+	--fa: ""
+}
+
+.fa-house-day {
+	--fa: ""
+}
+
+.fa-house-person-leave,
+.fa-house-leave,
+.fa-house-person-depart {
+	--fa: ""
+}
+
+.fa-house-night {
+	--fa: ""
+}
+
+.fa-house-person-return,
+.fa-house-person-arrive,
+.fa-house-return {
+	--fa: ""
+}
+
+.fa-house-signal {
+	--fa: ""
+}
+
+.fa-lamp-desk {
+	--fa: ""
+}
+
+.fa-lamp-floor {
+	--fa: ""
+}
+
+.fa-light-ceiling {
+	--fa: ""
+}
+
+.fa-light-switch {
+	--fa: ""
+}
+
+.fa-light-switch-off {
+	--fa: ""
+}
+
+.fa-light-switch-on {
+	--fa: ""
+}
+
+.fa-microwave {
+	--fa: ""
+}
+
+.fa-outlet {
+	--fa: ""
+}
+
+.fa-oven {
+	--fa: ""
+}
+
+.fa-planet-moon {
+	--fa: ""
+}
+
+.fa-planet-ringed {
+	--fa: ""
+}
+
+.fa-police-box {
+	--fa: ""
+}
+
+.fa-person-to-portal,
+.fa-portal-enter {
+	--fa: ""
+}
+
+.fa-person-from-portal,
+.fa-portal-exit {
+	--fa: ""
+}
+
+.fa-radar {
+	--fa: ""
+}
+
+.fa-raygun {
+	--fa: ""
+}
+
+.fa-refrigerator {
+	--fa: ""
+}
+
+.fa-rocket-launch {
+	--fa: ""
+}
+
+.fa-sensor {
+	--fa: ""
+}
+
+.fa-sensor-triangle-exclamation,
+.fa-sensor-alert {
+	--fa: ""
+}
+
+.fa-sensor-fire {
+	--fa: ""
+}
+
+.fa-sensor-on {
+	--fa: ""
+}
+
+.fa-sensor-cloud,
+.fa-sensor-smoke {
+	--fa: ""
+}
+
+.fa-siren {
+	--fa: ""
+}
+
+.fa-siren-on {
+	--fa: ""
+}
+
+.fa-solar-system {
+	--fa: ""
+}
+
+.fa-circle-sort,
+.fa-sort-circle {
+	--fa: ""
+}
+
+.fa-circle-sort-down,
+.fa-sort-circle-down {
+	--fa: ""
+}
+
+.fa-circle-sort-up,
+.fa-sort-circle-up {
+	--fa: ""
+}
+
+.fa-space-station-moon {
+	--fa: ""
+}
+
+.fa-space-station-moon-construction,
+.fa-space-station-moon-alt {
+	--fa: ""
+}
+
+.fa-sprinkler {
+	--fa: ""
+}
+
+.fa-star-shooting {
+	--fa: ""
+}
+
+.fa-starfighter {
+	--fa: ""
+}
+
+.fa-starfighter-twin-ion-engine,
+.fa-starfighter-alt {
+	--fa: ""
+}
+
+.fa-starship {
+	--fa: ""
+}
+
+.fa-starship-freighter {
+	--fa: ""
+}
+
+.fa-sword-laser {
+	--fa: ""
+}
+
+.fa-sword-laser-alt {
+	--fa: ""
+}
+
+.fa-swords-laser {
+	--fa: ""
+}
+
+.fa-telescope {
+	--fa: ""
+}
+
+.fa-temperature-arrow-down,
+.fa-temperature-down {
+	--fa: ""
+}
+
+.fa-temperature-arrow-up,
+.fa-temperature-up {
+	--fa: ""
+}
+
+.fa-trailer {
+	--fa: ""
+}
+
+.fa-transporter {
+	--fa: ""
+}
+
+.fa-transporter-1 {
+	--fa: ""
+}
+
+.fa-transporter-2 {
+	--fa: ""
+}
+
+.fa-transporter-3 {
+	--fa: ""
+}
+
+.fa-transporter-empty {
+	--fa: ""
+}
+
+.fa-ufo {
+	--fa: ""
+}
+
+.fa-ufo-beam {
+	--fa: ""
+}
+
+.fa-user-alien {
+	--fa: ""
+}
+
+.fa-user-robot {
+	--fa: ""
+}
+
+.fa-user-visor {
+	--fa: ""
+}
+
+.fa-vacuum {
+	--fa: ""
+}
+
+.fa-vacuum-robot {
+	--fa: ""
+}
+
+.fa-window-frame {
+	--fa: ""
+}
+
+.fa-window-frame-open {
+	--fa: ""
+}
+
+.fa-coffin-cross {
+	--fa: ""
+}
+
+.fa-folder-arrow-down,
+.fa-folder-download {
+	--fa: ""
+}
+
+.fa-folder-arrow-up,
+.fa-folder-upload {
+	--fa: ""
+}
+
+.fa-user-unlock {
+	--fa: ""
+}
+
+.fa-bacteria {
+	--fa: ""
+}
+
+.fa-bacterium {
+	--fa: ""
+}
+
+.fa-box-tissue {
+	--fa: ""
+}
+
+.fa-hand-holding-medical {
+	--fa: ""
+}
+
+.fa-hand-sparkles {
+	--fa: ""
+}
+
+.fa-hands-bubbles,
+.fa-hands-wash {
+	--fa: ""
+}
+
+.fa-handshake-slash,
+.fa-handshake-alt-slash,
+.fa-handshake-simple-slash {
+	--fa: ""
+}
+
+.fa-head-side-cough {
+	--fa: ""
+}
+
+.fa-head-side-cough-slash {
+	--fa: ""
+}
+
+.fa-head-side-mask {
+	--fa: ""
+}
+
+.fa-head-side-virus {
+	--fa: ""
+}
+
+.fa-house-chimney-user {
+	--fa: ""
+}
+
+.fa-house-laptop,
+.fa-laptop-house {
+	--fa: ""
+}
+
+.fa-lungs-virus {
+	--fa: ""
+}
+
+.fa-people-arrows,
+.fa-people-arrows-left-right {
+	--fa: ""
+}
+
+.fa-plane-slash {
+	--fa: ""
+}
+
+.fa-pump-medical {
+	--fa: ""
+}
+
+.fa-pump-soap {
+	--fa: ""
+}
+
+.fa-shield-virus {
+	--fa: ""
+}
+
+.fa-sink {
+	--fa: ""
+}
+
+.fa-soap {
+	--fa: ""
+}
+
+.fa-stopwatch-20 {
+	--fa: ""
+}
+
+.fa-shop-slash,
+.fa-store-alt-slash {
+	--fa: ""
+}
+
+.fa-store-slash {
+	--fa: ""
+}
+
+.fa-toilet-paper-slash {
+	--fa: ""
+}
+
+.fa-users-slash {
+	--fa: ""
+}
+
+.fa-virus {
+	--fa: ""
+}
+
+.fa-virus-slash {
+	--fa: ""
+}
+
+.fa-viruses {
+	--fa: ""
+}
+
+.fa-vest {
+	--fa: ""
+}
+
+.fa-vest-patches {
+	--fa: ""
+}
+
+.fa-airplay {
+	--fa: ""
+}
+
+.fa-alt {
+	--fa: ""
+}
+
+.fa-angle {
+	--fa: ""
+}
+
+.fa-angle-90 {
+	--fa: ""
+}
+
+.fa-apple-core {
+	--fa: ""
+}
+
+.fa-arrow-down-from-dotted-line {
+	--fa: ""
+}
+
+.fa-arrow-down-left {
+	--fa: ""
+}
+
+.fa-arrow-down-left-and-arrow-up-right-to-center {
+	--fa: ""
+}
+
+.fa-arrow-down-right {
+	--fa: ""
+}
+
+.fa-arrow-down-to-bracket {
+	--fa: ""
+}
+
+.fa-arrow-down-to-dotted-line {
+	--fa: ""
+}
+
+.fa-arrow-down-to-square {
+	--fa: ""
+}
+
+.fa-arrow-trend-down {
+	--fa: ""
+}
+
+.fa-arrow-trend-up {
+	--fa: ""
+}
+
+.fa-arrow-up-arrow-down,
+.fa-sort-up-down {
+	--fa: ""
+}
+
+.fa-arrow-up-from-bracket {
+	--fa: ""
+}
+
+.fa-arrow-up-from-dotted-line {
+	--fa: ""
+}
+
+.fa-arrow-up-from-square {
+	--fa: ""
+}
+
+.fa-arrow-up-left {
+	--fa: ""
+}
+
+.fa-arrow-up-left-from-circle {
+	--fa: ""
+}
+
+.fa-arrow-up-right {
+	--fa: ""
+}
+
+.fa-arrow-up-right-and-arrow-down-left-from-center {
+	--fa: ""
+}
+
+.fa-arrow-up-to-dotted-line {
+	--fa: ""
+}
+
+.fa-arrows-cross {
+	--fa: ""
+}
+
+.fa-arrows-from-dotted-line {
+	--fa: ""
+}
+
+.fa-arrows-from-line {
+	--fa: ""
+}
+
+.fa-arrows-minimize,
+.fa-compress-arrows {
+	--fa: ""
+}
+
+.fa-arrows-to-dotted-line {
+	--fa: ""
+}
+
+.fa-arrows-to-line {
+	--fa: ""
+}
+
+.fa-audio-description-slash {
+	--fa: ""
+}
+
+.fa-austral-sign {
+	--fa: ""
+}
+
+.fa-avocado {
+	--fa: ""
+}
+
+.fa-award-simple {
+	--fa: ""
+}
+
+.fa-baht-sign {
+	--fa: ""
+}
+
+.fa-bars-filter {
+	--fa: ""
+}
+
+.fa-bars-sort {
+	--fa: ""
+}
+
+.fa-basket-shopping-simple,
+.fa-shopping-basket-alt {
+	--fa: ""
+}
+
+.fa-battery-exclamation {
+	--fa: ""
+}
+
+.fa-battery-low,
+.fa-battery-1 {
+	--fa: ""
+}
+
+.fa-bee {
+	--fa: ""
+}
+
+.fa-beer-mug,
+.fa-beer-foam {
+	--fa: ""
+}
+
+.fa-bitcoin-sign {
+	--fa: ""
+}
+
+.fa-block-quote {
+	--fa: ""
+}
+
+.fa-bolt-auto {
+	--fa: ""
+}
+
+.fa-bolt-lightning {
+	--fa: ""
+}
+
+.fa-bolt-slash {
+	--fa: ""
+}
+
+.fa-book-arrow-right {
+	--fa: ""
+}
+
+.fa-book-arrow-up {
+	--fa: ""
+}
+
+.fa-book-bookmark {
+	--fa: ""
+}
+
+.fa-book-circle-arrow-right {
+	--fa: ""
+}
+
+.fa-book-circle-arrow-up {
+	--fa: ""
+}
+
+.fa-book-copy {
+	--fa: ""
+}
+
+.fa-book-font {
+	--fa: ""
+}
+
+.fa-book-open-cover,
+.fa-book-open-alt {
+	--fa: ""
+}
+
+.fa-book-section,
+.fa-book-law {
+	--fa: ""
+}
+
+.fa-bookmark-slash {
+	--fa: ""
+}
+
+.fa-bowling-ball-pin {
+	--fa: ""
+}
+
+.fa-box-circle-check {
+	--fa: ""
+}
+
+.fa-brackets-round,
+.fa-parentheses {
+	--fa: ""
+}
+
+.fa-brain-circuit {
+	--fa: ""
+}
+
+.fa-brake-warning {
+	--fa: ""
+}
+
+.fa-briefcase-blank {
+	--fa: ""
+}
+
+.fa-brightness {
+	--fa: ""
+}
+
+.fa-brightness-low {
+	--fa: ""
+}
+
+.fa-browsers {
+	--fa: ""
+}
+
+.fa-buildings {
+	--fa: ""
+}
+
+.fa-burger-fries {
+	--fa: ""
+}
+
+.fa-burger-glass {
+	--fa: ""
+}
+
+.fa-calendar-arrow-down,
+.fa-calendar-download {
+	--fa: ""
+}
+
+.fa-calendar-arrow-up,
+.fa-calendar-upload {
+	--fa: ""
+}
+
+.fa-calendar-clock,
+.fa-calendar-time {
+	--fa: ""
+}
+
+.fa-calendar-heart {
+	--fa: ""
+}
+
+.fa-calendar-image {
+	--fa: ""
+}
+
+.fa-calendar-lines,
+.fa-calendar-note {
+	--fa: ""
+}
+
+.fa-calendar-range {
+	--fa: ""
+}
+
+.fa-calendars {
+	--fa: ""
+}
+
+.fa-camera-rotate {
+	--fa: ""
+}
+
+.fa-camera-slash {
+	--fa: ""
+}
+
+.fa-camera-viewfinder,
+.fa-screenshot {
+	--fa: ""
+}
+
+.fa-cart-minus {
+	--fa: ""
+}
+
+.fa-cart-shopping-fast {
+	--fa: ""
+}
+
+.fa-cart-xmark {
+	--fa: ""
+}
+
+.fa-castle {
+	--fa: ""
+}
+
+.fa-cedi-sign {
+	--fa: ""
+}
+
+.fa-chart-bullet {
+	--fa: ""
+}
+
+.fa-chart-candlestick {
+	--fa: ""
+}
+
+.fa-chart-column {
+	--fa: ""
+}
+
+.fa-chart-gantt {
+	--fa: ""
+}
+
+.fa-chart-line-up {
+	--fa: ""
+}
+
+.fa-chart-pyramid {
+	--fa: ""
+}
+
+.fa-chart-radar {
+	--fa: ""
+}
+
+.fa-chart-scatter-3d {
+	--fa: ""
+}
+
+.fa-chart-scatter-bubble {
+	--fa: ""
+}
+
+.fa-chart-tree-map {
+	--fa: ""
+}
+
+.fa-chart-waterfall {
+	--fa: ""
+}
+
+.fa-cherries {
+	--fa: ""
+}
+
+.fa-circle-0 {
+	--fa: ""
+}
+
+.fa-circle-1 {
+	--fa: ""
+}
+
+.fa-circle-2 {
+	--fa: ""
+}
+
+.fa-circle-3 {
+	--fa: ""
+}
+
+.fa-circle-4 {
+	--fa: ""
+}
+
+.fa-circle-5 {
+	--fa: ""
+}
+
+.fa-circle-6 {
+	--fa: ""
+}
+
+.fa-circle-7 {
+	--fa: ""
+}
+
+.fa-circle-8 {
+	--fa: ""
+}
+
+.fa-circle-9 {
+	--fa: ""
+}
+
+.fa-circle-a {
+	--fa: ""
+}
+
+.fa-circle-ampersand {
+	--fa: ""
+}
+
+.fa-circle-arrow-down-left {
+	--fa: ""
+}
+
+.fa-circle-arrow-down-right {
+	--fa: ""
+}
+
+.fa-circle-arrow-up-left {
+	--fa: ""
+}
+
+.fa-circle-arrow-up-right {
+	--fa: ""
+}
+
+.fa-circle-b {
+	--fa: ""
+}
+
+.fa-circle-bolt {
+	--fa: ""
+}
+
+.fa-circle-book-open,
+.fa-book-circle {
+	--fa: ""
+}
+
+.fa-circle-bookmark,
+.fa-bookmark-circle {
+	--fa: ""
+}
+
+.fa-circle-c {
+	--fa: ""
+}
+
+.fa-circle-calendar,
+.fa-calendar-circle {
+	--fa: ""
+}
+
+.fa-circle-camera,
+.fa-camera-circle {
+	--fa: ""
+}
+
+.fa-circle-d {
+	--fa: ""
+}
+
+.fa-circle-dashed {
+	--fa: ""
+}
+
+.fa-circle-divide {
+	--fa: ""
+}
+
+.fa-circle-down-left {
+	--fa: ""
+}
+
+.fa-circle-down-right {
+	--fa: ""
+}
+
+.fa-circle-e {
+	--fa: ""
+}
+
+.fa-circle-ellipsis {
+	--fa: ""
+}
+
+.fa-circle-ellipsis-vertical {
+	--fa: ""
+}
+
+.fa-circle-envelope,
+.fa-envelope-circle {
+	--fa: ""
+}
+
+.fa-circle-exclamation-check {
+	--fa: ""
+}
+
+.fa-circle-f {
+	--fa: ""
+}
+
+.fa-circle-g {
+	--fa: ""
+}
+
+.fa-circle-half {
+	--fa: ""
+}
+
+.fa-circle-i {
+	--fa: ""
+}
+
+.fa-circle-j {
+	--fa: ""
+}
+
+.fa-circle-k {
+	--fa: ""
+}
+
+.fa-circle-l {
+	--fa: ""
+}
+
+.fa-circle-m {
+	--fa: ""
+}
+
+.fa-circle-microphone,
+.fa-microphone-circle {
+	--fa: ""
+}
+
+.fa-circle-microphone-lines,
+.fa-microphone-circle-alt {
+	--fa: ""
+}
+
+.fa-circle-n {
+	--fa: ""
+}
+
+.fa-circle-o {
+	--fa: ""
+}
+
+.fa-circle-p {
+	--fa: ""
+}
+
+.fa-circle-phone,
+.fa-phone-circle {
+	--fa: ""
+}
+
+.fa-circle-phone-flip,
+.fa-phone-circle-alt {
+	--fa: ""
+}
+
+.fa-circle-phone-hangup,
+.fa-phone-circle-down {
+	--fa: ""
+}
+
+.fa-circle-q {
+	--fa: ""
+}
+
+.fa-circle-quarter {
+	--fa: ""
+}
+
+.fa-circle-r {
+	--fa: ""
+}
+
+.fa-circle-s {
+	--fa: ""
+}
+
+.fa-circle-small {
+	--fa: ""
+}
+
+.fa-circle-star,
+.fa-star-circle {
+	--fa: ""
+}
+
+.fa-circle-t {
+	--fa: ""
+}
+
+.fa-circle-three-quarters {
+	--fa: ""
+}
+
+.fa-circle-trash,
+.fa-trash-circle {
+	--fa: ""
+}
+
+.fa-circle-u {
+	--fa: ""
+}
+
+.fa-circle-up-left {
+	--fa: ""
+}
+
+.fa-circle-up-right {
+	--fa: ""
+}
+
+.fa-circle-v {
+	--fa: ""
+}
+
+.fa-circle-video,
+.fa-video-circle {
+	--fa: ""
+}
+
+.fa-circle-w {
+	--fa: ""
+}
+
+.fa-circle-waveform-lines,
+.fa-waveform-circle {
+	--fa: ""
+}
+
+.fa-circle-x {
+	--fa: ""
+}
+
+.fa-circle-y {
+	--fa: ""
+}
+
+.fa-circle-z {
+	--fa: ""
+}
+
+.fa-clapperboard {
+	--fa: ""
+}
+
+.fa-clapperboard-play {
+	--fa: ""
+}
+
+.fa-clipboard-medical {
+	--fa: ""
+}
+
+.fa-clock-desk {
+	--fa: ""
+}
+
+.fa-closed-captioning-slash {
+	--fa: ""
+}
+
+.fa-clothes-hanger {
+	--fa: ""
+}
+
+.fa-cloud-slash {
+	--fa: ""
+}
+
+.fa-cloud-word {
+	--fa: ""
+}
+
+.fa-clover {
+	--fa: ""
+}
+
+.fa-code-compare {
+	--fa: ""
+}
+
+.fa-code-fork {
+	--fa: ""
+}
+
+.fa-code-pull-request {
+	--fa: ""
+}
+
+.fa-code-simple {
+	--fa: ""
+}
+
+.fa-coffee-bean {
+	--fa: ""
+}
+
+.fa-coffee-beans {
+	--fa: ""
+}
+
+.fa-colon-sign {
+	--fa: ""
+}
+
+.fa-command {
+	--fa: ""
+}
+
+.fa-comment-arrow-down {
+	--fa: ""
+}
+
+.fa-comment-arrow-up {
+	--fa: ""
+}
+
+.fa-comment-arrow-up-right {
+	--fa: ""
+}
+
+.fa-comment-captions {
+	--fa: ""
+}
+
+.fa-comment-code {
+	--fa: ""
+}
+
+.fa-comment-image {
+	--fa: ""
+}
+
+.fa-comment-middle {
+	--fa: ""
+}
+
+.fa-comment-middle-top {
+	--fa: ""
+}
+
+.fa-comment-question {
+	--fa: ""
+}
+
+.fa-comment-quote {
+	--fa: ""
+}
+
+.fa-comment-text {
+	--fa: ""
+}
+
+.fa-comments-question {
+	--fa: ""
+}
+
+.fa-comments-question-check {
+	--fa: ""
+}
+
+.fa-conveyor-belt-empty {
+	--fa: ""
+}
+
+.fa-crate-empty {
+	--fa: ""
+}
+
+.fa-cruzeiro-sign {
+	--fa: ""
+}
+
+.fa-delete-right {
+	--fa: ""
+}
+
+.fa-desktop-arrow-down {
+	--fa: ""
+}
+
+.fa-diagram-lean-canvas {
+	--fa: ""
+}
+
+.fa-diagram-nested {
+	--fa: ""
+}
+
+.fa-diagram-sankey {
+	--fa: ""
+}
+
+.fa-diagram-venn {
+	--fa: ""
+}
+
+.fa-dial,
+.fa-dial-med-high {
+	--fa: ""
+}
+
+.fa-dial-high {
+	--fa: ""
+}
+
+.fa-dial-low {
+	--fa: ""
+}
+
+.fa-dial-max {
+	--fa: ""
+}
+
+.fa-dial-med {
+	--fa: ""
+}
+
+.fa-dial-med-low {
+	--fa: ""
+}
+
+.fa-dial-min {
+	--fa: ""
+}
+
+.fa-dial-off {
+	--fa: ""
+}
+
+.fa-display {
+	--fa: ""
+}
+
+.fa-display-arrow-down {
+	--fa: ""
+}
+
+.fa-display-code,
+.fa-desktop-code {
+	--fa: ""
+}
+
+.fa-display-medical,
+.fa-desktop-medical {
+	--fa: ""
+}
+
+.fa-dolphin {
+	--fa: ""
+}
+
+.fa-dong-sign {
+	--fa: ""
+}
+
+.fa-down-left {
+	--fa: ""
+}
+
+.fa-down-right {
+	--fa: ""
+}
+
+.fa-eggplant {
+	--fa: ""
+}
+
+.fa-elevator {
+	--fa: ""
+}
+
+.fa-engine {
+	--fa: ""
+}
+
+.fa-envelope-dot,
+.fa-envelope-badge {
+	--fa: ""
+}
+
+.fa-envelopes {
+	--fa: ""
+}
+
+.fa-escalator {
+	--fa: ""
+}
+
+.fa-eye-dropper-full {
+	--fa: ""
+}
+
+.fa-eye-dropper-half {
+	--fa: ""
+}
+
+.fa-ferris-wheel {
+	--fa: ""
+}
+
+.fa-file-binary {
+	--fa: ""
+}
+
+.fa-file-heart {
+	--fa: ""
+}
+
+.fa-file-plus-minus {
+	--fa: ""
+}
+
+.fa-files {
+	--fa: ""
+}
+
+.fa-film-slash {
+	--fa: ""
+}
+
+.fa-films {
+	--fa: ""
+}
+
+.fa-filter-circle-xmark {
+	--fa: ""
+}
+
+.fa-filter-list {
+	--fa: ""
+}
+
+.fa-filter-slash {
+	--fa: ""
+}
+
+.fa-filters {
+	--fa: ""
+}
+
+.fa-fire-hydrant {
+	--fa: ""
+}
+
+.fa-floppy-disk-circle-arrow-right,
+.fa-save-circle-arrow-right {
+	--fa: ""
+}
+
+.fa-floppy-disk-circle-xmark,
+.fa-floppy-disk-times,
+.fa-save-circle-xmark,
+.fa-save-times {
+	--fa: ""
+}
+
+.fa-floppy-disk-pen {
+	--fa: ""
+}
+
+.fa-floppy-disks {
+	--fa: ""
+}
+
+.fa-florin-sign {
+	--fa: ""
+}
+
+.fa-folder-closed {
+	--fa: ""
+}
+
+.fa-folder-bookmark {
+	--fa: ""
+}
+
+.fa-folder-gear,
+.fa-folder-cog {
+	--fa: ""
+}
+
+.fa-folder-grid {
+	--fa: ""
+}
+
+.fa-folder-heart {
+	--fa: ""
+}
+
+.fa-folder-image {
+	--fa: ""
+}
+
+.fa-folder-magnifying-glass,
+.fa-folder-search {
+	--fa: ""
+}
+
+.fa-folder-medical {
+	--fa: ""
+}
+
+.fa-folder-music {
+	--fa: ""
+}
+
+.fa-folder-user {
+	--fa: ""
+}
+
+.fa-franc-sign {
+	--fa: ""
+}
+
+.fa-gif {
+	--fa: ""
+}
+
+.fa-glass-empty {
+	--fa: ""
+}
+
+.fa-glass-half,
+.fa-glass-half-empty,
+.fa-glass-half-full {
+	--fa: ""
+}
+
+.fa-grate {
+	--fa: ""
+}
+
+.fa-grate-droplet {
+	--fa: ""
+}
+
+.fa-grid,
+.fa-grid-3 {
+	--fa: ""
+}
+
+.fa-grid-2 {
+	--fa: ""
+}
+
+.fa-grid-2-plus {
+	--fa: ""
+}
+
+.fa-grid-4 {
+	--fa: ""
+}
+
+.fa-grid-5 {
+	--fa: ""
+}
+
+.fa-guarani-sign {
+	--fa: ""
+}
+
+.fa-gun {
+	--fa: ""
+}
+
+.fa-gun-slash {
+	--fa: ""
+}
+
+.fa-gun-squirt {
+	--fa: ""
+}
+
+.fa-hand-back-point-down {
+	--fa: ""
+}
+
+.fa-hand-back-point-left {
+	--fa: ""
+}
+
+.fa-hand-back-point-ribbon {
+	--fa: ""
+}
+
+.fa-hand-back-point-right {
+	--fa: ""
+}
+
+.fa-hand-back-point-up {
+	--fa: ""
+}
+
+.fa-hand-fingers-crossed {
+	--fa: ""
+}
+
+.fa-hand-holding-skull {
+	--fa: ""
+}
+
+.fa-hand-love {
+	--fa: ""
+}
+
+.fa-hand-point-ribbon {
+	--fa: ""
+}
+
+.fa-hand-wave {
+	--fa: ""
+}
+
+.fa-hands-clapping {
+	--fa: ""
+}
+
+.fa-hand-horns {
+	--fa: ""
+}
+
+.fa-head-side-heart {
+	--fa: ""
+}
+
+.fa-heart-half {
+	--fa: ""
+}
+
+.fa-heart-half-stroke,
+.fa-heart-half-alt {
+	--fa: ""
+}
+
+.fa-hexagon-divide {
+	--fa: ""
+}
+
+.fa-high-definition,
+.fa-rectangle-hd {
+	--fa: ""
+}
+
+.fa-highlighter-line {
+	--fa: ""
+}
+
+.fa-house-user,
+.fa-home-user {
+	--fa: ""
+}
+
+.fa-house-building {
+	--fa: ""
+}
+
+.fa-house-chimney-heart {
+	--fa: ""
+}
+
+.fa-house-tree {
+	--fa: ""
+}
+
+.fa-house-turret {
+	--fa: ""
+}
+
+.fa-image-landscape,
+.fa-landscape {
+	--fa: ""
+}
+
+.fa-image-polaroid-user {
+	--fa: ""
+}
+
+.fa-image-slash {
+	--fa: ""
+}
+
+.fa-image-user {
+	--fa: ""
+}
+
+.fa-images-user {
+	--fa: ""
+}
+
+.fa-inbox-full {
+	--fa: ""
+}
+
+.fa-inboxes {
+	--fa: ""
+}
+
+.fa-indian-rupee-sign,
+.fa-indian-rupee,
+.fa-inr {
+	--fa: ""
+}
+
+.fa-input-numeric {
+	--fa: ""
+}
+
+.fa-input-pipe {
+	--fa: ""
+}
+
+.fa-input-text {
+	--fa: ""
+}
+
+.fa-keyboard-brightness {
+	--fa: ""
+}
+
+.fa-keyboard-brightness-low {
+	--fa: ""
+}
+
+.fa-keyboard-down {
+	--fa: ""
+}
+
+.fa-keyboard-left {
+	--fa: ""
+}
+
+.fa-kip-sign {
+	--fa: ""
+}
+
+.fa-lamp-street {
+	--fa: ""
+}
+
+.fa-laptop-arrow-down {
+	--fa: ""
+}
+
+.fa-laptop-slash {
+	--fa: ""
+}
+
+.fa-lari-sign {
+	--fa: ""
+}
+
+.fa-lasso-sparkles {
+	--fa: ""
+}
+
+.fa-lightbulb-exclamation-on {
+	--fa: ""
+}
+
+.fa-link-horizontal,
+.fa-chain-horizontal {
+	--fa: ""
+}
+
+.fa-link-horizontal-slash,
+.fa-chain-horizontal-slash {
+	--fa: ""
+}
+
+.fa-link-simple {
+	--fa: ""
+}
+
+.fa-link-simple-slash {
+	--fa: ""
+}
+
+.fa-list-dropdown {
+	--fa: ""
+}
+
+.fa-list-radio {
+	--fa: ""
+}
+
+.fa-list-timeline {
+	--fa: ""
+}
+
+.fa-list-tree {
+	--fa: ""
+}
+
+.fa-litecoin-sign {
+	--fa: ""
+}
+
+.fa-loader {
+	--fa: ""
+}
+
+.fa-manat-sign {
+	--fa: ""
+}
+
+.fa-manhole {
+	--fa: ""
+}
+
+.fa-mask-face {
+	--fa: ""
+}
+
+.fa-memo {
+	--fa: ""
+}
+
+.fa-memo-circle-check {
+	--fa: ""
+}
+
+.fa-memo-pad {
+	--fa: ""
+}
+
+.fa-message-arrow-down,
+.fa-comment-alt-arrow-down {
+	--fa: ""
+}
+
+.fa-message-arrow-up,
+.fa-comment-alt-arrow-up {
+	--fa: ""
+}
+
+.fa-message-arrow-up-right {
+	--fa: ""
+}
+
+.fa-message-captions,
+.fa-comment-alt-captions {
+	--fa: ""
+}
+
+.fa-message-code {
+	--fa: ""
+}
+
+.fa-message-image,
+.fa-comment-alt-image {
+	--fa: ""
+}
+
+.fa-message-middle,
+.fa-comment-middle-alt {
+	--fa: ""
+}
+
+.fa-message-middle-top,
+.fa-comment-middle-top-alt {
+	--fa: ""
+}
+
+.fa-message-question {
+	--fa: ""
+}
+
+.fa-message-quote,
+.fa-comment-alt-quote {
+	--fa: ""
+}
+
+.fa-message-sms {
+	--fa: ""
+}
+
+.fa-message-text,
+.fa-comment-alt-text {
+	--fa: ""
+}
+
+.fa-messages-question {
+	--fa: ""
+}
+
+.fa-meter {
+	--fa: ""
+}
+
+.fa-meter-bolt {
+	--fa: ""
+}
+
+.fa-meter-droplet {
+	--fa: ""
+}
+
+.fa-meter-fire {
+	--fa: ""
+}
+
+.fa-microchip-ai {
+	--fa: ""
+}
+
+.fa-mill-sign {
+	--fa: ""
+}
+
+.fa-mobile-notch,
+.fa-mobile-iphone {
+	--fa: ""
+}
+
+.fa-mobile-signal {
+	--fa: ""
+}
+
+.fa-mobile-signal-out {
+	--fa: ""
+}
+
+.fa-money-bill-simple {
+	--fa: ""
+}
+
+.fa-money-bill-simple-wave {
+	--fa: ""
+}
+
+.fa-money-bills {
+	--fa: ""
+}
+
+.fa-money-bills-simple,
+.fa-money-bills-alt {
+	--fa: ""
+}
+
+.fa-mug-tea-saucer {
+	--fa: ""
+}
+
+.fa-naira-sign {
+	--fa: ""
+}
+
+.fa-nfc {
+	--fa: ""
+}
+
+.fa-nfc-lock {
+	--fa: ""
+}
+
+.fa-nfc-magnifying-glass {
+	--fa: ""
+}
+
+.fa-nfc-pen {
+	--fa: ""
+}
+
+.fa-nfc-signal {
+	--fa: ""
+}
+
+.fa-nfc-slash {
+	--fa: ""
+}
+
+.fa-nfc-trash {
+	--fa: ""
+}
+
+.fa-notdef {
+	--fa: ""
+}
+
+.fa-note {
+	--fa: ""
+}
+
+.fa-note-medical {
+	--fa: ""
+}
+
+.fa-notebook {
+	--fa: ""
+}
+
+.fa-notes {
+	--fa: ""
+}
+
+.fa-octagon-divide {
+	--fa: ""
+}
+
+.fa-octagon-exclamation {
+	--fa: ""
+}
+
+.fa-oil-can-drip {
+	--fa: ""
+}
+
+.fa-paintbrush-pencil {
+	--fa: ""
+}
+
+.fa-pallet-box {
+	--fa: ""
+}
+
+.fa-panorama {
+	--fa: ""
+}
+
+.fa-paper-plane-top,
+.fa-paper-plane-alt,
+.fa-send {
+	--fa: ""
+}
+
+.fa-peach {
+	--fa: ""
+}
+
+.fa-pear {
+	--fa: ""
+}
+
+.fa-pedestal {
+	--fa: ""
+}
+
+.fa-pen-circle {
+	--fa: ""
+}
+
+.fa-pen-clip-slash,
+.fa-pen-alt-slash {
+	--fa: ""
+}
+
+.fa-pen-fancy-slash {
+	--fa: ""
+}
+
+.fa-pen-field {
+	--fa: ""
+}
+
+.fa-pen-line {
+	--fa: ""
+}
+
+.fa-pen-slash {
+	--fa: ""
+}
+
+.fa-pen-swirl {
+	--fa: ""
+}
+
+.fa-pencil-slash {
+	--fa: ""
+}
+
+.fa-people {
+	--fa: ""
+}
+
+.fa-people-dress {
+	--fa: ""
+}
+
+.fa-people-dress-simple {
+	--fa: ""
+}
+
+.fa-people-pants {
+	--fa: ""
+}
+
+.fa-people-pants-simple {
+	--fa: ""
+}
+
+.fa-people-simple {
+	--fa: ""
+}
+
+.fa-person-dress-simple {
+	--fa: ""
+}
+
+.fa-person-pinball {
+	--fa: ""
+}
+
+.fa-person-seat {
+	--fa: ""
+}
+
+.fa-person-seat-reclined {
+	--fa: ""
+}
+
+.fa-person-simple {
+	--fa: ""
+}
+
+.fa-peseta-sign {
+	--fa: ""
+}
+
+.fa-peso-sign {
+	--fa: ""
+}
+
+.fa-phone-arrow-down-left,
+.fa-phone-arrow-down,
+.fa-phone-incoming {
+	--fa: ""
+}
+
+.fa-phone-arrow-up-right,
+.fa-phone-arrow-up,
+.fa-phone-outgoing {
+	--fa: ""
+}
+
+.fa-phone-hangup {
+	--fa: ""
+}
+
+.fa-phone-missed {
+	--fa: ""
+}
+
+.fa-phone-xmark {
+	--fa: ""
+}
+
+.fa-photo-film-music {
+	--fa: ""
+}
+
+.fa-pinball {
+	--fa: ""
+}
+
+.fa-plane-prop {
+	--fa: ""
+}
+
+.fa-plane-tail {
+	--fa: ""
+}
+
+.fa-plane-up {
+	--fa: ""
+}
+
+.fa-plane-up-slash {
+	--fa: ""
+}
+
+.fa-play-pause {
+	--fa: ""
+}
+
+.fa-puzzle-piece-simple,
+.fa-puzzle-piece-alt {
+	--fa: ""
+}
+
+.fa-quotes {
+	--fa: ""
+}
+
+.fa-rectangle-pro,
+.fa-pro {
+	--fa: ""
+}
+
+.fa-rectangle-terminal {
+	--fa: ""
+}
+
+.fa-rectangle-vertical-history {
+	--fa: ""
+}
+
+.fa-reel {
+	--fa: ""
+}
+
+.fa-reply-clock,
+.fa-reply-time {
+	--fa: ""
+}
+
+.fa-restroom-simple {
+	--fa: ""
+}
+
+.fa-rhombus {
+	--fa: ""
+}
+
+.fa-rotate-exclamation {
+	--fa: ""
+}
+
+.fa-rupiah-sign {
+	--fa: ""
+}
+
+.fa-screencast {
+	--fa: ""
+}
+
+.fa-scribble {
+	--fa: ""
+}
+
+.fa-sd-cards {
+	--fa: ""
+}
+
+.fa-seal {
+	--fa: ""
+}
+
+.fa-seal-exclamation {
+	--fa: ""
+}
+
+.fa-seal-question {
+	--fa: ""
+}
+
+.fa-seat-airline {
+	--fa: ""
+}
+
+.fa-shelves-empty {
+	--fa: ""
+}
+
+.fa-shield-exclamation {
+	--fa: ""
+}
+
+.fa-shield-keyhole {
+	--fa: ""
+}
+
+.fa-shield-minus {
+	--fa: ""
+}
+
+.fa-shield-plus {
+	--fa: ""
+}
+
+.fa-shield-slash {
+	--fa: ""
+}
+
+.fa-shield-xmark,
+.fa-shield-times {
+	--fa: ""
+}
+
+.fa-shower-down,
+.fa-shower-alt {
+	--fa: ""
+}
+
+.fa-sidebar {
+	--fa: ""
+}
+
+.fa-sidebar-flip {
+	--fa: ""
+}
+
+.fa-signal-stream-slash {
+	--fa: ""
+}
+
+.fa-sim-cards {
+	--fa: ""
+}
+
+.fa-slider {
+	--fa: ""
+}
+
+.fa-sliders-simple {
+	--fa: ""
+}
+
+.fa-split {
+	--fa: ""
+}
+
+.fa-square-0 {
+	--fa: ""
+}
+
+.fa-square-1 {
+	--fa: ""
+}
+
+.fa-square-2 {
+	--fa: ""
+}
+
+.fa-square-3 {
+	--fa: ""
+}
+
+.fa-square-4 {
+	--fa: ""
+}
+
+.fa-square-5 {
+	--fa: ""
+}
+
+.fa-square-6 {
+	--fa: ""
+}
+
+.fa-square-7 {
+	--fa: ""
+}
+
+.fa-square-8 {
+	--fa: ""
+}
+
+.fa-square-9 {
+	--fa: ""
+}
+
+.fa-square-a {
+	--fa: ""
+}
+
+.fa-square-ampersand {
+	--fa: ""
+}
+
+.fa-square-arrow-down-left {
+	--fa: ""
+}
+
+.fa-square-arrow-down-right {
+	--fa: ""
+}
+
+.fa-square-arrow-up-left {
+	--fa: ""
+}
+
+.fa-square-b {
+	--fa: ""
+}
+
+.fa-square-bolt {
+	--fa: ""
+}
+
+.fa-square-c {
+	--fa: ""
+}
+
+.fa-square-code {
+	--fa: ""
+}
+
+.fa-square-d {
+	--fa: ""
+}
+
+.fa-square-dashed {
+	--fa: ""
+}
+
+.fa-square-divide {
+	--fa: ""
+}
+
+.fa-square-down-left {
+	--fa: ""
+}
+
+.fa-square-down-right {
+	--fa: ""
+}
+
+.fa-square-e {
+	--fa: ""
+}
+
+.fa-square-ellipsis {
+	--fa: ""
+}
+
+.fa-square-ellipsis-vertical {
+	--fa: ""
+}
+
+.fa-square-f {
+	--fa: ""
+}
+
+.fa-square-g {
+	--fa: ""
+}
+
+.fa-square-i {
+	--fa: ""
+}
+
+.fa-square-j {
+	--fa: ""
+}
+
+.fa-square-k {
+	--fa: ""
+}
+
+.fa-square-l {
+	--fa: ""
+}
+
+.fa-square-m {
+	--fa: ""
+}
+
+.fa-square-n {
+	--fa: ""
+}
+
+.fa-square-o {
+	--fa: ""
+}
+
+.fa-square-p {
+	--fa: ""
+}
+
+.fa-square-phone-hangup,
+.fa-phone-square-down {
+	--fa: ""
+}
+
+.fa-square-q {
+	--fa: ""
+}
+
+.fa-square-r {
+	--fa: ""
+}
+
+.fa-square-s {
+	--fa: ""
+}
+
+.fa-square-small {
+	--fa: ""
+}
+
+.fa-square-star {
+	--fa: ""
+}
+
+.fa-square-t {
+	--fa: ""
+}
+
+.fa-square-u {
+	--fa: ""
+}
+
+.fa-square-up-left {
+	--fa: ""
+}
+
+.fa-square-user {
+	--fa: ""
+}
+
+.fa-square-v {
+	--fa: ""
+}
+
+.fa-square-w {
+	--fa: ""
+}
+
+.fa-square-x {
+	--fa: ""
+}
+
+.fa-square-y {
+	--fa: ""
+}
+
+.fa-square-z {
+	--fa: ""
+}
+
+.fa-stairs {
+	--fa: ""
+}
+
+.fa-standard-definition,
+.fa-rectangle-sd {
+	--fa: ""
+}
+
+.fa-star-sharp {
+	--fa: ""
+}
+
+.fa-star-sharp-half {
+	--fa: ""
+}
+
+.fa-star-sharp-half-stroke,
+.fa-star-sharp-half-alt {
+	--fa: ""
+}
+
+.fa-starfighter-twin-ion-engine-advanced,
+.fa-starfighter-alt-advanced {
+	--fa: ""
+}
+
+.fa-sun-bright,
+.fa-sun-alt {
+	--fa: ""
+}
+
+.fa-table-layout {
+	--fa: ""
+}
+
+.fa-table-pivot {
+	--fa: ""
+}
+
+.fa-table-rows,
+.fa-rows {
+	--fa: ""
+}
+
+.fa-table-tree {
+	--fa: ""
+}
+
+.fa-tally-1 {
+	--fa: ""
+}
+
+.fa-tally-2 {
+	--fa: ""
+}
+
+.fa-tally-3 {
+	--fa: ""
+}
+
+.fa-tally-4 {
+	--fa: ""
+}
+
+.fa-taxi-bus {
+	--fa: ""
+}
+
+.fa-temperature-list {
+	--fa: ""
+}
+
+.fa-ticket-airline,
+.fa-ticket-perforated-plane,
+.fa-ticket-plane {
+	--fa: ""
+}
+
+.fa-tickets-airline,
+.fa-tickets-perforated-plane,
+.fa-tickets-plane {
+	--fa: ""
+}
+
+.fa-timeline {
+	--fa: ""
+}
+
+.fa-timeline-arrow {
+	--fa: ""
+}
+
+.fa-timer {
+	--fa: ""
+}
+
+.fa-toilet-paper-under,
+.fa-toilet-paper-blank-under,
+.fa-toilet-paper-reverse,
+.fa-toilet-paper-reverse-alt {
+	--fa: ""
+}
+
+.fa-toilet-paper-under-slash,
+.fa-toilet-paper-reverse-slash {
+	--fa: ""
+}
+
+.fa-tower-control {
+	--fa: ""
+}
+
+.fa-train-subway-tunnel,
+.fa-subway-tunnel {
+	--fa: ""
+}
+
+.fa-transformer-bolt {
+	--fa: ""
+}
+
+.fa-transporter-4 {
+	--fa: ""
+}
+
+.fa-transporter-5 {
+	--fa: ""
+}
+
+.fa-transporter-6 {
+	--fa: ""
+}
+
+.fa-transporter-7 {
+	--fa: ""
+}
+
+.fa-trash-can-check {
+	--fa: ""
+}
+
+.fa-trash-can-clock {
+	--fa: ""
+}
+
+.fa-trash-can-list {
+	--fa: ""
+}
+
+.fa-trash-can-plus {
+	--fa: ""
+}
+
+.fa-trash-can-slash,
+.fa-trash-alt-slash {
+	--fa: ""
+}
+
+.fa-trash-can-xmark {
+	--fa: ""
+}
+
+.fa-trash-check {
+	--fa: ""
+}
+
+.fa-trash-clock {
+	--fa: ""
+}
+
+.fa-trash-list {
+	--fa: ""
+}
+
+.fa-trash-plus {
+	--fa: ""
+}
+
+.fa-trash-slash {
+	--fa: ""
+}
+
+.fa-trash-xmark {
+	--fa: ""
+}
+
+.fa-truck-container-empty {
+	--fa: ""
+}
+
+.fa-truck-flatbed {
+	--fa: ""
+}
+
+.fa-truck-front {
+	--fa: ""
+}
+
+.fa-truck-tow {
+	--fa: ""
+}
+
+.fa-tty-answer,
+.fa-teletype-answer {
+	--fa: ""
+}
+
+.fa-tugrik-sign {
+	--fa: ""
+}
+
+.fa-turkish-lira-sign,
+.fa-try,
+.fa-turkish-lira {
+	--fa: ""
+}
+
+.fa-umbrella-simple,
+.fa-umbrella-alt {
+	--fa: ""
+}
+
+.fa-up-left {
+	--fa: ""
+}
+
+.fa-up-right {
+	--fa: ""
+}
+
+.fa-user-bounty-hunter {
+	--fa: ""
+}
+
+.fa-user-pilot {
+	--fa: ""
+}
+
+.fa-user-pilot-tie {
+	--fa: ""
+}
+
+.fa-user-shakespeare {
+	--fa: ""
+}
+
+.fa-utility-pole {
+	--fa: ""
+}
+
+.fa-utility-pole-double {
+	--fa: ""
+}
+
+.fa-vault {
+	--fa: ""
+}
+
+.fa-video-arrow-down-left {
+	--fa: ""
+}
+
+.fa-video-arrow-up-right {
+	--fa: ""
+}
+
+.fa-wand-magic-sparkles,
+.fa-magic-wand-sparkles {
+	--fa: ""
+}
+
+.fa-watch-apple {
+	--fa: ""
+}
+
+.fa-watch-smart {
+	--fa: ""
+}
+
+.fa-wheat-awn,
+.fa-wheat-alt {
+	--fa: ""
+}
+
+.fa-wheelchair-move,
+.fa-wheelchair-alt {
+	--fa: ""
+}
+
+.fa-wifi-exclamation {
+	--fa: ""
+}
+
+.fa-wrench-simple {
+	--fa: ""
+}
+
+.fa-robot-astromech {
+	--fa: ""
+}
+
+.fa-360-degrees {
+	--fa: ""
+}
+
+.fa-aperture {
+	--fa: ""
+}
+
+.fa-arrow-turn-down-left {
+	--fa: ""
+}
+
+.fa-balloon {
+	--fa: ""
+}
+
+.fa-balloons {
+	--fa: ""
+}
+
+.fa-banana {
+	--fa: ""
+}
+
+.fa-bangladeshi-taka-sign {
+	--fa: ""
+}
+
+.fa-bench-tree {
+	--fa: ""
+}
+
+.fa-blueberries {
+	--fa: ""
+}
+
+.fa-bowl-chopsticks {
+	--fa: ""
+}
+
+.fa-bowl-chopsticks-noodles {
+	--fa: ""
+}
+
+.fa-bowl-rice {
+	--fa: ""
+}
+
+.fa-briefcase-arrow-right {
+	--fa: ""
+}
+
+.fa-citrus {
+	--fa: ""
+}
+
+.fa-citrus-slice {
+	--fa: ""
+}
+
+.fa-coconut {
+	--fa: ""
+}
+
+.fa-display-slash,
+.fa-desktop-slash {
+	--fa: ""
+}
+
+.fa-face-explode,
+.fa-exploding-head {
+	--fa: ""
+}
+
+.fa-face-viewfinder {
+	--fa: ""
+}
+
+.fa-family {
+	--fa: ""
+}
+
+.fa-family-dress {
+	--fa: ""
+}
+
+.fa-family-pants {
+	--fa: ""
+}
+
+.fa-fence {
+	--fa: ""
+}
+
+.fa-fish-bones {
+	--fa: ""
+}
+
+.fa-grapes {
+	--fa: ""
+}
+
+.fa-kiwi-fruit {
+	--fa: ""
+}
+
+.fa-mango {
+	--fa: ""
+}
+
+.fa-melon {
+	--fa: ""
+}
+
+.fa-melon-slice {
+	--fa: ""
+}
+
+.fa-money-from-bracket {
+	--fa: ""
+}
+
+.fa-money-simple-from-bracket {
+	--fa: ""
+}
+
+.fa-olive {
+	--fa: ""
+}
+
+.fa-olive-branch {
+	--fa: ""
+}
+
+.fa-option {
+	--fa: ""
+}
+
+.fa-party-bell {
+	--fa: ""
+}
+
+.fa-party-horn {
+	--fa: ""
+}
+
+.fa-peapod {
+	--fa: ""
+}
+
+.fa-person-pregnant {
+	--fa: ""
+}
+
+.fa-pineapple {
+	--fa: ""
+}
+
+.fa-rectangle-code {
+	--fa: ""
+}
+
+.fa-rectangles-mixed {
+	--fa: ""
+}
+
+.fa-roller-coaster {
+	--fa: ""
+}
+
+.fa-square-quote {
+	--fa: ""
+}
+
+.fa-square-terminal {
+	--fa: ""
+}
+
+.fa-strawberry {
+	--fa: ""
+}
+
+.fa-table-picnic {
+	--fa: ""
+}
+
+.fa-thought-bubble {
+	--fa: ""
+}
+
+.fa-tick {
+	--fa: ""
+}
+
+.fa-tomato {
+	--fa: ""
+}
+
+.fa-turn-down-left {
+	--fa: ""
+}
+
+.fa-user-police {
+	--fa: ""
+}
+
+.fa-user-police-tie {
+	--fa: ""
+}
+
+.fa-watermelon-slice {
+	--fa: ""
+}
+
+.fa-wheat-awn-slash {
+	--fa: ""
+}
+
+.fa-wheat-slash {
+	--fa: ""
+}
+
+.fa-badminton {
+	--fa: ""
+}
+
+.fa-binary {
+	--fa: ""
+}
+
+.fa-binary-circle-check {
+	--fa: ""
+}
+
+.fa-binary-lock {
+	--fa: ""
+}
+
+.fa-binary-slash {
+	--fa: ""
+}
+
+.fa-boot-heeled {
+	--fa: ""
+}
+
+.fa-car-bolt {
+	--fa: ""
+}
+
+.fa-car-circle-bolt {
+	--fa: ""
+}
+
+.fa-car-mirrors {
+	--fa: ""
+}
+
+.fa-car-side-bolt {
+	--fa: ""
+}
+
+.fa-clock-eight {
+	--fa: ""
+}
+
+.fa-clock-eight-thirty {
+	--fa: ""
+}
+
+.fa-clock-eleven {
+	--fa: ""
+}
+
+.fa-clock-eleven-thirty {
+	--fa: ""
+}
+
+.fa-clock-five {
+	--fa: ""
+}
+
+.fa-clock-five-thirty {
+	--fa: ""
+}
+
+.fa-clock-four-thirty {
+	--fa: ""
+}
+
+.fa-clock-nine {
+	--fa: ""
+}
+
+.fa-clock-nine-thirty {
+	--fa: ""
+}
+
+.fa-clock-one {
+	--fa: ""
+}
+
+.fa-clock-one-thirty {
+	--fa: ""
+}
+
+.fa-clock-seven {
+	--fa: ""
+}
+
+.fa-clock-seven-thirty {
+	--fa: ""
+}
+
+.fa-clock-six {
+	--fa: ""
+}
+
+.fa-clock-six-thirty {
+	--fa: ""
+}
+
+.fa-clock-ten {
+	--fa: ""
+}
+
+.fa-clock-ten-thirty {
+	--fa: ""
+}
+
+.fa-clock-three {
+	--fa: ""
+}
+
+.fa-clock-three-thirty {
+	--fa: ""
+}
+
+.fa-clock-twelve {
+	--fa: ""
+}
+
+.fa-clock-twelve-thirty {
+	--fa: ""
+}
+
+.fa-clock-two {
+	--fa: ""
+}
+
+.fa-clock-two-thirty {
+	--fa: ""
+}
+
+.fa-cloud-check {
+	--fa: ""
+}
+
+.fa-cloud-minus {
+	--fa: ""
+}
+
+.fa-cloud-plus {
+	--fa: ""
+}
+
+.fa-cloud-xmark {
+	--fa: ""
+}
+
+.fa-columns-3 {
+	--fa: ""
+}
+
+.fa-crystal-ball {
+	--fa: ""
+}
+
+.fa-cup-straw {
+	--fa: ""
+}
+
+.fa-cup-straw-swoosh {
+	--fa: ""
+}
+
+.fa-distribute-spacing-horizontal {
+	--fa: ""
+}
+
+.fa-distribute-spacing-vertical {
+	--fa: ""
+}
+
+.fa-eyes {
+	--fa: ""
+}
+
+.fa-face-angry-horns {
+	--fa: ""
+}
+
+.fa-face-anguished {
+	--fa: ""
+}
+
+.fa-face-anxious-sweat {
+	--fa: ""
+}
+
+.fa-face-astonished {
+	--fa: ""
+}
+
+.fa-face-confounded {
+	--fa: ""
+}
+
+.fa-face-confused {
+	--fa: ""
+}
+
+.fa-face-cowboy-hat {
+	--fa: ""
+}
+
+.fa-face-disappointed {
+	--fa: ""
+}
+
+.fa-face-disguise {
+	--fa: ""
+}
+
+.fa-face-downcast-sweat {
+	--fa: ""
+}
+
+.fa-face-drooling {
+	--fa: ""
+}
+
+.fa-face-expressionless {
+	--fa: ""
+}
+
+.fa-face-eyes-xmarks {
+	--fa: ""
+}
+
+.fa-face-fearful {
+	--fa: ""
+}
+
+.fa-face-frown-slight {
+	--fa: ""
+}
+
+.fa-face-glasses {
+	--fa: ""
+}
+
+.fa-face-hand-over-mouth {
+	--fa: ""
+}
+
+.fa-face-hand-yawn {
+	--fa: ""
+}
+
+.fa-face-head-bandage {
+	--fa: ""
+}
+
+.fa-face-hushed {
+	--fa: ""
+}
+
+.fa-face-icicles {
+	--fa: ""
+}
+
+.fa-face-kiss-closed-eyes {
+	--fa: ""
+}
+
+.fa-face-lying {
+	--fa: ""
+}
+
+.fa-face-mask {
+	--fa: ""
+}
+
+.fa-face-monocle {
+	--fa: ""
+}
+
+.fa-face-nauseated {
+	--fa: ""
+}
+
+.fa-face-nose-steam {
+	--fa: ""
+}
+
+.fa-face-party {
+	--fa: ""
+}
+
+.fa-face-pensive {
+	--fa: ""
+}
+
+.fa-face-persevering {
+	--fa: ""
+}
+
+.fa-face-pleading {
+	--fa: ""
+}
+
+.fa-face-pouting {
+	--fa: ""
+}
+
+.fa-face-raised-eyebrow {
+	--fa: ""
+}
+
+.fa-face-relieved {
+	--fa: ""
+}
+
+.fa-face-sad-sweat {
+	--fa: ""
+}
+
+.fa-face-scream {
+	--fa: ""
+}
+
+.fa-face-shush {
+	--fa: ""
+}
+
+.fa-face-sleeping {
+	--fa: ""
+}
+
+.fa-face-sleepy {
+	--fa: ""
+}
+
+.fa-face-smile-halo {
+	--fa: ""
+}
+
+.fa-face-smile-hearts {
+	--fa: ""
+}
+
+.fa-face-smile-horns {
+	--fa: ""
+}
+
+.fa-face-smile-relaxed {
+	--fa: ""
+}
+
+.fa-face-smile-tear {
+	--fa: ""
+}
+
+.fa-face-smile-tongue {
+	--fa: ""
+}
+
+.fa-face-smile-upside-down {
+	--fa: ""
+}
+
+.fa-face-smiling-hands {
+	--fa: ""
+}
+
+.fa-face-smirking {
+	--fa: ""
+}
+
+.fa-face-sunglasses {
+	--fa: ""
+}
+
+.fa-face-swear {
+	--fa: ""
+}
+
+.fa-face-thermometer {
+	--fa: ""
+}
+
+.fa-face-thinking {
+	--fa: ""
+}
+
+.fa-face-tissue {
+	--fa: ""
+}
+
+.fa-face-tongue-money {
+	--fa: ""
+}
+
+.fa-face-tongue-sweat {
+	--fa: ""
+}
+
+.fa-face-unamused {
+	--fa: ""
+}
+
+.fa-face-vomit {
+	--fa: ""
+}
+
+.fa-face-weary {
+	--fa: ""
+}
+
+.fa-face-woozy {
+	--fa: ""
+}
+
+.fa-face-worried {
+	--fa: ""
+}
+
+.fa-face-zany {
+	--fa: ""
+}
+
+.fa-face-zipper {
+	--fa: ""
+}
+
+.fa-file-lock {
+	--fa: ""
+}
+
+.fa-file-slash {
+	--fa: ""
+}
+
+.fa-fishing-rod {
+	--fa: ""
+}
+
+.fa-flying-disc {
+	--fa: ""
+}
+
+.fa-gallery-thumbnails {
+	--fa: ""
+}
+
+.fa-goal-net {
+	--fa: ""
+}
+
+.fa-golf-flag-hole {
+	--fa: ""
+}
+
+.fa-grid-dividers {
+	--fa: ""
+}
+
+.fa-hockey-stick-puck {
+	--fa: ""
+}
+
+.fa-house-chimney,
+.fa-home-lg {
+	--fa: ""
+}
+
+.fa-house-chimney-blank {
+	--fa: ""
+}
+
+.fa-house-crack {
+	--fa: ""
+}
+
+.fa-house-medical {
+	--fa: ""
+}
+
+.fa-house-window {
+	--fa: ""
+}
+
+.fa-key-skeleton-left-right {
+	--fa: ""
+}
+
+.fa-lacrosse-stick {
+	--fa: ""
+}
+
+.fa-lacrosse-stick-ball {
+	--fa: ""
+}
+
+.fa-mask-snorkel {
+	--fa: ""
+}
+
+.fa-message-bot {
+	--fa: ""
+}
+
+.fa-moped {
+	--fa: ""
+}
+
+.fa-nesting-dolls {
+	--fa: ""
+}
+
+.fa-objects-align-bottom {
+	--fa: ""
+}
+
+.fa-objects-align-center-horizontal {
+	--fa: ""
+}
+
+.fa-objects-align-center-vertical {
+	--fa: ""
+}
+
+.fa-objects-align-left {
+	--fa: ""
+}
+
+.fa-objects-align-right {
+	--fa: ""
+}
+
+.fa-objects-align-top {
+	--fa: ""
+}
+
+.fa-objects-column {
+	--fa: ""
+}
+
+.fa-paperclip-vertical {
+	--fa: ""
+}
+
+.fa-pinata {
+	--fa: ""
+}
+
+.fa-pipe-smoking {
+	--fa: ""
+}
+
+.fa-pool-8-ball {
+	--fa: ""
+}
+
+.fa-rugby-ball {
+	--fa: ""
+}
+
+.fa-shirt-long-sleeve {
+	--fa: ""
+}
+
+.fa-shirt-running {
+	--fa: ""
+}
+
+.fa-shirt-tank-top {
+	--fa: ""
+}
+
+.fa-signature-lock {
+	--fa: ""
+}
+
+.fa-signature-slash {
+	--fa: ""
+}
+
+.fa-ski-boot {
+	--fa: ""
+}
+
+.fa-ski-boot-ski {
+	--fa: ""
+}
+
+.fa-slot-machine {
+	--fa: ""
+}
+
+.fa-teddy-bear {
+	--fa: ""
+}
+
+.fa-truck-bolt {
+	--fa: ""
+}
+
+.fa-uniform-martial-arts {
+	--fa: ""
+}
+
+.fa-user-chef {
+	--fa: ""
+}
+
+.fa-user-hair-buns {
+	--fa: ""
+}
+
+.fa-arrow-left-long-to-line {
+	--fa: ""
+}
+
+.fa-arrow-right-long-to-line {
+	--fa: ""
+}
+
+.fa-arrow-turn-down-right {
+	--fa: ""
+}
+
+.fa-bagel {
+	--fa: ""
+}
+
+.fa-baguette {
+	--fa: ""
+}
+
+.fa-blanket-fire {
+	--fa: ""
+}
+
+.fa-block-brick,
+.fa-wall-brick {
+	--fa: ""
+}
+
+.fa-block-brick-fire,
+.fa-firewall {
+	--fa: ""
+}
+
+.fa-block-question {
+	--fa: ""
+}
+
+.fa-bowl-scoop,
+.fa-bowl-shaved-ice {
+	--fa: ""
+}
+
+.fa-bowl-scoops {
+	--fa: ""
+}
+
+.fa-bowl-spoon {
+	--fa: ""
+}
+
+.fa-bread-slice-butter {
+	--fa: ""
+}
+
+.fa-broccoli {
+	--fa: ""
+}
+
+.fa-burger-lettuce {
+	--fa: ""
+}
+
+.fa-butter {
+	--fa: ""
+}
+
+.fa-cake-slice,
+.fa-shortcake {
+	--fa: ""
+}
+
+.fa-can-food {
+	--fa: ""
+}
+
+.fa-candy {
+	--fa: ""
+}
+
+.fa-candy-bar,
+.fa-chocolate-bar {
+	--fa: ""
+}
+
+.fa-card-club {
+	--fa: ""
+}
+
+.fa-card-diamond {
+	--fa: ""
+}
+
+.fa-card-heart {
+	--fa: ""
+}
+
+.fa-card-spade {
+	--fa: ""
+}
+
+.fa-cards {
+	--fa: ""
+}
+
+.fa-cart-arrow-up {
+	--fa: ""
+}
+
+.fa-cart-circle-arrow-down {
+	--fa: ""
+}
+
+.fa-cart-circle-arrow-up {
+	--fa: ""
+}
+
+.fa-cart-circle-check {
+	--fa: ""
+}
+
+.fa-cart-circle-exclamation {
+	--fa: ""
+}
+
+.fa-cart-circle-plus {
+	--fa: ""
+}
+
+.fa-cart-circle-xmark {
+	--fa: ""
+}
+
+.fa-cent-sign {
+	--fa: ""
+}
+
+.fa-chestnut {
+	--fa: ""
+}
+
+.fa-chopsticks {
+	--fa: ""
+}
+
+.fa-circle-quarters {
+	--fa: ""
+}
+
+.fa-code-pull-request-closed {
+	--fa: ""
+}
+
+.fa-code-pull-request-draft {
+	--fa: ""
+}
+
+.fa-coin-blank {
+	--fa: ""
+}
+
+.fa-coin-front {
+	--fa: ""
+}
+
+.fa-coin-vertical {
+	--fa: ""
+}
+
+.fa-corner {
+	--fa: ""
+}
+
+.fa-crab {
+	--fa: ""
+}
+
+.fa-soft-serve,
+.fa-creemee {
+	--fa: ""
+}
+
+.fa-cucumber {
+	--fa: ""
+}
+
+.fa-cupcake {
+	--fa: ""
+}
+
+.fa-custard {
+	--fa: ""
+}
+
+.fa-dash,
+.fa-minus-large {
+	--fa: ""
+}
+
+.fa-diamond-exclamation {
+	--fa: ""
+}
+
+.fa-donut,
+.fa-doughnut {
+	--fa: ""
+}
+
+.fa-down-from-dotted-line {
+	--fa: ""
+}
+
+.fa-down-to-dotted-line {
+	--fa: ""
+}
+
+.fa-face-awesome,
+.fa-gave-dandy {
+	--fa: ""
+}
+
+.fa-falafel {
+	--fa: ""
+}
+
+.fa-flatbread {
+	--fa: ""
+}
+
+.fa-flatbread-stuffed {
+	--fa: ""
+}
+
+.fa-fondue-pot {
+	--fa: ""
+}
+
+.fa-garlic {
+	--fa: ""
+}
+
+.fa-grip-dots {
+	--fa: ""
+}
+
+.fa-grip-dots-vertical {
+	--fa: ""
+}
+
+.fa-h5 {
+	--fa: ""
+}
+
+.fa-h6 {
+	--fa: ""
+}
+
+.fa-hammer-crash {
+	--fa: ""
+}
+
+.fa-hashtag-lock {
+	--fa: ""
+}
+
+.fa-hexagon-check {
+	--fa: ""
+}
+
+.fa-hexagon-exclamation {
+	--fa: ""
+}
+
+.fa-honey-pot {
+	--fa: ""
+}
+
+.fa-hose {
+	--fa: ""
+}
+
+.fa-hose-reel {
+	--fa: ""
+}
+
+.fa-hourglass-clock {
+	--fa: ""
+}
+
+.fa-hundred-points,
+.fa-100 {
+	--fa: ""
+}
+
+.fa-leafy-green {
+	--fa: ""
+}
+
+.fa-left-long-to-line {
+	--fa: ""
+}
+
+.fa-light-emergency {
+	--fa: ""
+}
+
+.fa-light-emergency-on {
+	--fa: ""
+}
+
+.fa-lobster {
+	--fa: ""
+}
+
+.fa-lock-a {
+	--fa: ""
+}
+
+.fa-lock-hashtag {
+	--fa: ""
+}
+
+.fa-lollipop,
+.fa-lollypop {
+	--fa: ""
+}
+
+.fa-mushroom {
+	--fa: ""
+}
+
+.fa-octagon-check {
+	--fa: ""
+}
+
+.fa-onion {
+	--fa: ""
+}
+
+.fa-page {
+	--fa: ""
+}
+
+.fa-page-caret-down,
+.fa-file-caret-down {
+	--fa: ""
+}
+
+.fa-page-caret-up,
+.fa-file-caret-up {
+	--fa: ""
+}
+
+.fa-pan-food {
+	--fa: ""
+}
+
+.fa-pan-frying {
+	--fa: ""
+}
+
+.fa-pancakes {
+	--fa: ""
+}
+
+.fa-panel-ews {
+	--fa: ""
+}
+
+.fa-panel-fire {
+	--fa: ""
+}
+
+.fa-peanut {
+	--fa: ""
+}
+
+.fa-peanuts {
+	--fa: ""
+}
+
+.fa-pepper {
+	--fa: ""
+}
+
+.fa-person-to-door {
+	--fa: ""
+}
+
+.fa-phone-intercom {
+	--fa: ""
+}
+
+.fa-pickleball {
+	--fa: ""
+}
+
+.fa-pipe-circle-check {
+	--fa: ""
+}
+
+.fa-pipe-collar {
+	--fa: ""
+}
+
+.fa-pipe-section {
+	--fa: ""
+}
+
+.fa-pipe-valve {
+	--fa: ""
+}
+
+.fa-plate-utensils {
+	--fa: ""
+}
+
+.fa-plus-minus {
+	--fa: ""
+}
+
+.fa-pompebled {
+	--fa: ""
+}
+
+.fa-popsicle {
+	--fa: ""
+}
+
+.fa-pot-food {
+	--fa: ""
+}
+
+.fa-potato {
+	--fa: ""
+}
+
+.fa-pretzel {
+	--fa: ""
+}
+
+.fa-pump {
+	--fa: ""
+}
+
+.fa-puzzle {
+	--fa: ""
+}
+
+.fa-right-long-to-line {
+	--fa: ""
+}
+
+.fa-sailboat {
+	--fa: ""
+}
+
+.fa-salt-shaker {
+	--fa: ""
+}
+
+.fa-section {
+	--fa: ""
+}
+
+.fa-shrimp {
+	--fa: ""
+}
+
+.fa-shutters {
+	--fa: ""
+}
+
+.fa-sportsball {
+	--fa: ""
+}
+
+.fa-sprinkler-ceiling {
+	--fa: ""
+}
+
+.fa-square-a-lock {
+	--fa: ""
+}
+
+.fa-square-quarters {
+	--fa: ""
+}
+
+.fa-square-ring {
+	--fa: ""
+}
+
+.fa-squid {
+	--fa: ""
+}
+
+.fa-tamale {
+	--fa: ""
+}
+
+.fa-tank-water {
+	--fa: ""
+}
+
+.fa-train-track {
+	--fa: ""
+}
+
+.fa-train-tunnel {
+	--fa: ""
+}
+
+.fa-turn-down-right {
+	--fa: ""
+}
+
+.fa-up-from-dotted-line {
+	--fa: ""
+}
+
+.fa-up-to-dotted-line {
+	--fa: ""
+}
+
+.fa-user-doctor-hair {
+	--fa: ""
+}
+
+.fa-user-doctor-hair-long {
+	--fa: ""
+}
+
+.fa-user-hair {
+	--fa: ""
+}
+
+.fa-user-hair-long {
+	--fa: ""
+}
+
+.fa-user-hair-mullet,
+.fa-business-front,
+.fa-party-back,
+.fa-trian-balbot {
+	--fa: ""
+}
+
+.fa-user-nurse-hair {
+	--fa: ""
+}
+
+.fa-user-nurse-hair-long {
+	--fa: ""
+}
+
+.fa-user-tie-hair {
+	--fa: ""
+}
+
+.fa-user-tie-hair-long {
+	--fa: ""
+}
+
+.fa-user-vneck {
+	--fa: ""
+}
+
+.fa-user-vneck-hair {
+	--fa: ""
+}
+
+.fa-user-vneck-hair-long {
+	--fa: ""
+}
+
+.fa-utensils-slash {
+	--fa: ""
+}
+
+.fa-vent-damper {
+	--fa: ""
+}
+
+.fa-waffle {
+	--fa: ""
+}
+
+.fa-00 {
+	--fa: ""
+}
+
+.fa-apartment {
+	--fa: ""
+}
+
+.fa-bird {
+	--fa: ""
+}
+
+.fa-block {
+	--fa: ""
+}
+
+.fa-bowl-soft-serve {
+	--fa: ""
+}
+
+.fa-brazilian-real-sign {
+	--fa: ""
+}
+
+.fa-cabin {
+	--fa: ""
+}
+
+.fa-calendar-circle-exclamation {
+	--fa: ""
+}
+
+.fa-calendar-circle-minus {
+	--fa: ""
+}
+
+.fa-calendar-circle-plus {
+	--fa: ""
+}
+
+.fa-calendar-circle-user {
+	--fa: ""
+}
+
+.fa-calendar-lines-pen {
+	--fa: ""
+}
+
+.fa-chart-simple {
+	--fa: ""
+}
+
+.fa-chart-simple-horizontal {
+	--fa: ""
+}
+
+.fa-diagram-cells {
+	--fa: ""
+}
+
+.fa-diagram-next {
+	--fa: ""
+}
+
+.fa-diagram-predecessor {
+	--fa: ""
+}
+
+.fa-diagram-previous {
+	--fa: ""
+}
+
+.fa-diagram-subtask {
+	--fa: ""
+}
+
+.fa-diagram-successor {
+	--fa: ""
+}
+
+.fa-earth-oceania,
+.fa-globe-oceania {
+	--fa: ""
+}
+
+.fa-face-beam-hand-over-mouth {
+	--fa: ""
+}
+
+.fa-face-clouds {
+	--fa: ""
+}
+
+.fa-face-diagonal-mouth {
+	--fa: ""
+}
+
+.fa-face-dotted {
+	--fa: ""
+}
+
+.fa-face-exhaling {
+	--fa: ""
+}
+
+.fa-face-hand-peeking {
+	--fa: ""
+}
+
+.fa-face-holding-back-tears {
+	--fa: ""
+}
+
+.fa-face-melting {
+	--fa: ""
+}
+
+.fa-face-saluting {
+	--fa: ""
+}
+
+.fa-face-spiral-eyes {
+	--fa: ""
+}
+
+.fa-fort {
+	--fa: ""
+}
+
+.fa-house-blank,
+.fa-home-blank {
+	--fa: ""
+}
+
+.fa-square-kanban {
+	--fa: ""
+}
+
+.fa-square-list {
+	--fa: ""
+}
+
+.fa-sushi,
+.fa-nigiri {
+	--fa: ""
+}
+
+.fa-sushi-roll,
+.fa-maki-roll,
+.fa-makizushi {
+	--fa: ""
+}
+
+.fa-album-circle-plus {
+	--fa: ""
+}
+
+.fa-album-circle-user {
+	--fa: ""
+}
+
+.fa-album-collection-circle-plus {
+	--fa: ""
+}
+
+.fa-album-collection-circle-user {
+	--fa: ""
+}
+
+.fa-bug-slash {
+	--fa: ""
+}
+
+.fa-cloud-exclamation {
+	--fa: ""
+}
+
+.fa-cloud-question {
+	--fa: ""
+}
+
+.fa-file-circle-info {
+	--fa: ""
+}
+
+.fa-file-circle-plus {
+	--fa: ""
+}
+
+.fa-frame {
+	--fa: ""
+}
+
+.fa-gauge-circle-bolt {
+	--fa: ""
+}
+
+.fa-gauge-circle-minus {
+	--fa: ""
+}
+
+.fa-gauge-circle-plus {
+	--fa: ""
+}
+
+.fa-memo-circle-info {
+	--fa: ""
+}
+
+.fa-object-exclude {
+	--fa: ""
+}
+
+.fa-object-intersect {
+	--fa: ""
+}
+
+.fa-object-subtract {
+	--fa: ""
+}
+
+.fa-object-union {
+	--fa: ""
+}
+
+.fa-pen-nib-slash {
+	--fa: ""
+}
+
+.fa-rectangle-history {
+	--fa: ""
+}
+
+.fa-rectangle-history-circle-plus {
+	--fa: ""
+}
+
+.fa-rectangle-history-circle-user {
+	--fa: ""
+}
+
+.fa-shop-lock {
+	--fa: ""
+}
+
+.fa-store-lock {
+	--fa: ""
+}
+
+.fa-user-robot-xmarks {
+	--fa: ""
+}
+
+.fa-virus-covid {
+	--fa: ""
+}
+
+.fa-virus-covid-slash {
+	--fa: ""
+}
+
+.fa-anchor-circle-check {
+	--fa: ""
+}
+
+.fa-anchor-circle-exclamation {
+	--fa: ""
+}
+
+.fa-anchor-circle-xmark {
+	--fa: ""
+}
+
+.fa-anchor-lock {
+	--fa: ""
+}
+
+.fa-arrow-down-to-arc {
+	--fa: ""
+}
+
+.fa-arrow-down-up-across-line {
+	--fa: ""
+}
+
+.fa-arrow-down-up-lock {
+	--fa: ""
+}
+
+.fa-arrow-right-from-arc {
+	--fa: ""
+}
+
+.fa-arrow-right-to-arc {
+	--fa: ""
+}
+
+.fa-arrow-right-to-city {
+	--fa: ""
+}
+
+.fa-arrow-up-from-arc {
+	--fa: ""
+}
+
+.fa-arrow-up-from-ground-water {
+	--fa: ""
+}
+
+.fa-arrow-up-from-water-pump {
+	--fa: ""
+}
+
+.fa-arrow-up-right-dots {
+	--fa: ""
+}
+
+.fa-arrows-down-to-line {
+	--fa: ""
+}
+
+.fa-arrows-down-to-people {
+	--fa: ""
+}
+
+.fa-arrows-left-right-to-line {
+	--fa: ""
+}
+
+.fa-arrows-spin {
+	--fa: ""
+}
+
+.fa-arrows-split-up-and-left {
+	--fa: ""
+}
+
+.fa-arrows-to-circle {
+	--fa: ""
+}
+
+.fa-arrows-to-dot {
+	--fa: ""
+}
+
+.fa-arrows-to-eye {
+	--fa: ""
+}
+
+.fa-arrows-turn-right {
+	--fa: ""
+}
+
+.fa-arrows-turn-to-dots {
+	--fa: ""
+}
+
+.fa-arrows-up-to-line {
+	--fa: ""
+}
+
+.fa-bore-hole {
+	--fa: ""
+}
+
+.fa-bottle-droplet {
+	--fa: ""
+}
+
+.fa-bottle-water {
+	--fa: ""
+}
+
+.fa-bowl-food {
+	--fa: ""
+}
+
+.fa-boxes-packing {
+	--fa: ""
+}
+
+.fa-bridge {
+	--fa: ""
+}
+
+.fa-bridge-circle-check {
+	--fa: ""
+}
+
+.fa-bridge-circle-exclamation {
+	--fa: ""
+}
+
+.fa-bridge-circle-xmark {
+	--fa: ""
+}
+
+.fa-bridge-lock {
+	--fa: ""
+}
+
+.fa-bridge-suspension {
+	--fa: ""
+}
+
+.fa-bridge-water {
+	--fa: ""
+}
+
+.fa-bucket {
+	--fa: ""
+}
+
+.fa-bugs {
+	--fa: ""
+}
+
+.fa-building-circle-arrow-right {
+	--fa: ""
+}
+
+.fa-building-circle-check {
+	--fa: ""
+}
+
+.fa-building-circle-exclamation {
+	--fa: ""
+}
+
+.fa-building-circle-xmark {
+	--fa: ""
+}
+
+.fa-building-flag {
+	--fa: ""
+}
+
+.fa-building-lock {
+	--fa: ""
+}
+
+.fa-building-ngo {
+	--fa: ""
+}
+
+.fa-building-shield {
+	--fa: ""
+}
+
+.fa-building-un {
+	--fa: ""
+}
+
+.fa-building-user {
+	--fa: ""
+}
+
+.fa-building-wheat {
+	--fa: ""
+}
+
+.fa-burst {
+	--fa: ""
+}
+
+.fa-car-on {
+	--fa: ""
+}
+
+.fa-car-tunnel {
+	--fa: ""
+}
+
+.fa-cards-blank {
+	--fa: ""
+}
+
+.fa-child-combatant,
+.fa-child-rifle {
+	--fa: ""
+}
+
+.fa-children {
+	--fa: ""
+}
+
+.fa-circle-nodes {
+	--fa: ""
+}
+
+.fa-clipboard-question {
+	--fa: ""
+}
+
+.fa-cloud-showers-water {
+	--fa: ""
+}
+
+.fa-computer {
+	--fa: ""
+}
+
+.fa-cubes-stacked {
+	--fa: ""
+}
+
+.fa-down-to-bracket {
+	--fa: ""
+}
+
+.fa-envelope-circle-check {
+	--fa: ""
+}
+
+.fa-explosion {
+	--fa: ""
+}
+
+.fa-ferry {
+	--fa: ""
+}
+
+.fa-file-circle-exclamation {
+	--fa: ""
+}
+
+.fa-file-circle-minus {
+	--fa: ""
+}
+
+.fa-file-circle-question {
+	--fa: ""
+}
+
+.fa-file-shield {
+	--fa: ""
+}
+
+.fa-fire-burner {
+	--fa: ""
+}
+
+.fa-fish-fins {
+	--fa: ""
+}
+
+.fa-flask-vial {
+	--fa: ""
+}
+
+.fa-glass-water {
+	--fa: ""
+}
+
+.fa-glass-water-droplet {
+	--fa: ""
+}
+
+.fa-group-arrows-rotate {
+	--fa: ""
+}
+
+.fa-hand-holding-hand {
+	--fa: ""
+}
+
+.fa-handcuffs {
+	--fa: ""
+}
+
+.fa-hands-bound {
+	--fa: ""
+}
+
+.fa-hands-holding-child {
+	--fa: ""
+}
+
+.fa-hands-holding-circle {
+	--fa: ""
+}
+
+.fa-heart-circle-bolt {
+	--fa: ""
+}
+
+.fa-heart-circle-check {
+	--fa: ""
+}
+
+.fa-heart-circle-exclamation {
+	--fa: ""
+}
+
+.fa-heart-circle-minus {
+	--fa: ""
+}
+
+.fa-heart-circle-plus {
+	--fa: ""
+}
+
+.fa-heart-circle-xmark {
+	--fa: ""
+}
+
+.fa-helicopter-symbol {
+	--fa: ""
+}
+
+.fa-helmet-un {
+	--fa: ""
+}
+
+.fa-hexagon-image {
+	--fa: ""
+}
+
+.fa-hexagon-vertical-nft,
+.fa-hexagon-vertical-nft-slanted {
+	--fa: ""
+}
+
+.fa-hill-avalanche {
+	--fa: ""
+}
+
+.fa-hill-rockslide {
+	--fa: ""
+}
+
+.fa-house-circle-check {
+	--fa: ""
+}
+
+.fa-house-circle-exclamation {
+	--fa: ""
+}
+
+.fa-house-circle-xmark {
+	--fa: ""
+}
+
+.fa-house-fire {
+	--fa: ""
+}
+
+.fa-house-flag {
+	--fa: ""
+}
+
+.fa-house-flood-water {
+	--fa: ""
+}
+
+.fa-house-flood-water-circle-arrow-right {
+	--fa: ""
+}
+
+.fa-house-lock {
+	--fa: ""
+}
+
+.fa-house-medical-circle-check {
+	--fa: ""
+}
+
+.fa-house-medical-circle-exclamation {
+	--fa: ""
+}
+
+.fa-house-medical-circle-xmark {
+	--fa: ""
+}
+
+.fa-house-medical-flag {
+	--fa: ""
+}
+
+.fa-house-tsunami {
+	--fa: ""
+}
+
+.fa-jar {
+	--fa: ""
+}
+
+.fa-jar-wheat {
+	--fa: ""
+}
+
+.fa-jet-fighter-up {
+	--fa: ""
+}
+
+.fa-jug-detergent {
+	--fa: ""
+}
+
+.fa-kitchen-set {
+	--fa: ""
+}
+
+.fa-land-mine-on {
+	--fa: ""
+}
+
+.fa-landmark-flag {
+	--fa: ""
+}
+
+.fa-laptop-file {
+	--fa: ""
+}
+
+.fa-lines-leaning {
+	--fa: ""
+}
+
+.fa-location-pin-lock {
+	--fa: ""
+}
+
+.fa-locust {
+	--fa: ""
+}
+
+.fa-magnifying-glass-arrow-right {
+	--fa: ""
+}
+
+.fa-magnifying-glass-chart {
+	--fa: ""
+}
+
+.fa-mars-and-venus-burst {
+	--fa: ""
+}
+
+.fa-mask-ventilator {
+	--fa: ""
+}
+
+.fa-mattress-pillow {
+	--fa: ""
+}
+
+.fa-merge {
+	--fa: ""
+}
+
+.fa-mobile-retro {
+	--fa: ""
+}
+
+.fa-money-bill-transfer {
+	--fa: ""
+}
+
+.fa-money-bill-trend-up {
+	--fa: ""
+}
+
+.fa-money-bill-wheat {
+	--fa: ""
+}
+
+.fa-mosquito {
+	--fa: ""
+}
+
+.fa-mosquito-net {
+	--fa: ""
+}
+
+.fa-mound {
+	--fa: ""
+}
+
+.fa-mountain-city {
+	--fa: ""
+}
+
+.fa-mountain-sun {
+	--fa: ""
+}
+
+.fa-oil-well {
+	--fa: ""
+}
+
+.fa-people-group {
+	--fa: ""
+}
+
+.fa-people-line {
+	--fa: ""
+}
+
+.fa-people-pulling {
+	--fa: ""
+}
+
+.fa-people-robbery {
+	--fa: ""
+}
+
+.fa-people-roof {
+	--fa: ""
+}
+
+.fa-person-arrow-down-to-line {
+	--fa: ""
+}
+
+.fa-person-arrow-up-from-line {
+	--fa: ""
+}
+
+.fa-person-breastfeeding {
+	--fa: ""
+}
+
+.fa-person-burst {
+	--fa: ""
+}
+
+.fa-person-cane {
+	--fa: ""
+}
+
+.fa-person-chalkboard {
+	--fa: ""
+}
+
+.fa-person-circle-check {
+	--fa: ""
+}
+
+.fa-person-circle-exclamation {
+	--fa: ""
+}
+
+.fa-person-circle-minus {
+	--fa: ""
+}
+
+.fa-person-circle-plus {
+	--fa: ""
+}
+
+.fa-person-circle-question {
+	--fa: ""
+}
+
+.fa-person-circle-xmark {
+	--fa: ""
+}
+
+.fa-person-dress-burst {
+	--fa: ""
+}
+
+.fa-person-drowning {
+	--fa: ""
+}
+
+.fa-person-falling {
+	--fa: ""
+}
+
+.fa-person-falling-burst {
+	--fa: ""
+}
+
+.fa-person-half-dress {
+	--fa: ""
+}
+
+.fa-person-harassing {
+	--fa: ""
+}
+
+.fa-person-military-pointing {
+	--fa: ""
+}
+
+.fa-person-military-rifle {
+	--fa: ""
+}
+
+.fa-person-military-to-person {
+	--fa: ""
+}
+
+.fa-person-rays {
+	--fa: ""
+}
+
+.fa-person-rifle {
+	--fa: ""
+}
+
+.fa-person-shelter {
+	--fa: ""
+}
+
+.fa-person-walking-arrow-loop-left {
+	--fa: ""
+}
+
+.fa-person-walking-arrow-right {
+	--fa: ""
+}
+
+.fa-person-walking-dashed-line-arrow-right {
+	--fa: ""
+}
+
+.fa-person-walking-luggage {
+	--fa: ""
+}
+
+.fa-plane-circle-check {
+	--fa: ""
+}
+
+.fa-plane-circle-exclamation {
+	--fa: ""
+}
+
+.fa-plane-circle-xmark {
+	--fa: ""
+}
+
+.fa-plane-lock {
+	--fa: ""
+}
+
+.fa-plate-wheat {
+	--fa: ""
+}
+
+.fa-plug-circle-bolt {
+	--fa: ""
+}
+
+.fa-plug-circle-check {
+	--fa: ""
+}
+
+.fa-plug-circle-exclamation {
+	--fa: ""
+}
+
+.fa-plug-circle-minus {
+	--fa: ""
+}
+
+.fa-plug-circle-plus {
+	--fa: ""
+}
+
+.fa-plug-circle-xmark {
+	--fa: ""
+}
+
+.fa-ranking-star {
+	--fa: ""
+}
+
+.fa-road-barrier {
+	--fa: ""
+}
+
+.fa-road-bridge {
+	--fa: ""
+}
+
+.fa-road-circle-check {
+	--fa: ""
+}
+
+.fa-road-circle-exclamation {
+	--fa: ""
+}
+
+.fa-road-circle-xmark {
+	--fa: ""
+}
+
+.fa-road-lock {
+	--fa: ""
+}
+
+.fa-road-spikes {
+	--fa: ""
+}
+
+.fa-rug {
+	--fa: ""
+}
+
+.fa-sack-xmark {
+	--fa: ""
+}
+
+.fa-school-circle-check {
+	--fa: ""
+}
+
+.fa-school-circle-exclamation {
+	--fa: ""
+}
+
+.fa-school-circle-xmark {
+	--fa: ""
+}
+
+.fa-school-flag {
+	--fa: ""
+}
+
+.fa-school-lock {
+	--fa: ""
+}
+
+.fa-sheet-plastic {
+	--fa: ""
+}
+
+.fa-shield-cat {
+	--fa: ""
+}
+
+.fa-shield-dog {
+	--fa: ""
+}
+
+.fa-shield-heart {
+	--fa: ""
+}
+
+.fa-shield-quartered {
+	--fa: ""
+}
+
+.fa-square-nfi {
+	--fa: ""
+}
+
+.fa-square-person-confined {
+	--fa: ""
+}
+
+.fa-square-virus {
+	--fa: ""
+}
+
+.fa-staff-snake,
+.fa-rod-asclepius,
+.fa-rod-snake,
+.fa-staff-aesculapius {
+	--fa: ""
+}
+
+.fa-sun-plant-wilt {
+	--fa: ""
+}
+
+.fa-tarp {
+	--fa: ""
+}
+
+.fa-tarp-droplet {
+	--fa: ""
+}
+
+.fa-tent {
+	--fa: ""
+}
+
+.fa-tent-arrow-down-to-line {
+	--fa: ""
+}
+
+.fa-tent-arrow-left-right {
+	--fa: ""
+}
+
+.fa-tent-arrow-turn-left {
+	--fa: ""
+}
+
+.fa-tent-arrows-down {
+	--fa: ""
+}
+
+.fa-tents {
+	--fa: ""
+}
+
+.fa-toilet-portable {
+	--fa: ""
+}
+
+.fa-toilets-portable {
+	--fa: ""
+}
+
+.fa-tower-cell {
+	--fa: ""
+}
+
+.fa-tower-observation {
+	--fa: ""
+}
+
+.fa-tree-city {
+	--fa: ""
+}
+
+.fa-trillium {
+	--fa: ""
+}
+
+.fa-trowel {
+	--fa: ""
+}
+
+.fa-trowel-bricks {
+	--fa: ""
+}
+
+.fa-truck-arrow-right {
+	--fa: ""
+}
+
+.fa-truck-droplet {
+	--fa: ""
+}
+
+.fa-truck-field {
+	--fa: ""
+}
+
+.fa-truck-field-un {
+	--fa: ""
+}
+
+.fa-truck-plane {
+	--fa: ""
+}
+
+.fa-up-from-bracket {
+	--fa: ""
+}
+
+.fa-users-between-lines {
+	--fa: ""
+}
+
+.fa-users-line {
+	--fa: ""
+}
+
+.fa-users-rays {
+	--fa: ""
+}
+
+.fa-users-rectangle {
+	--fa: ""
+}
+
+.fa-users-viewfinder {
+	--fa: ""
+}
+
+.fa-vial-circle-check {
+	--fa: ""
+}
+
+.fa-vial-virus {
+	--fa: ""
+}
+
+.fa-wheat-awn-circle-exclamation {
+	--fa: ""
+}
+
+.fa-worm {
+	--fa: ""
+}
+
+.fa-xmarks-lines {
+	--fa: ""
+}
+
+.fa-xmark-large {
+	--fa: ""
+}
+
+.fa-child-dress {
+	--fa: ""
+}
+
+.fa-child-reaching {
+	--fa: ""
+}
+
+.fa-plus-large {
+	--fa: ""
+}
+
+.fa-crosshairs-simple {
+	--fa: ""
+}
+
+.fa-file-circle-check {
+	--fa: ""
+}
+
+.fa-file-circle-xmark {
+	--fa: ""
+}
+
+.fa-gamepad-modern,
+.fa-gamepad-alt {
+	--fa: ""
+}
+
+.fa-grill {
+	--fa: ""
+}
+
+.fa-grill-fire {
+	--fa: ""
+}
+
+.fa-grill-hot {
+	--fa: ""
+}
+
+.fa-lightbulb-cfl {
+	--fa: ""
+}
+
+.fa-lightbulb-cfl-on {
+	--fa: ""
+}
+
+.fa-mouse-field {
+	--fa: ""
+}
+
+.fa-person-through-window {
+	--fa: ""
+}
+
+.fa-plant-wilt {
+	--fa: ""
+}
+
+.fa-ring-diamond {
+	--fa: ""
+}
+
+.fa-stapler {
+	--fa: ""
+}
+
+.fa-toggle-large-off {
+	--fa: ""
+}
+
+.fa-toggle-large-on {
+	--fa: ""
+}
+
+.fa-toilet-paper-check {
+	--fa: ""
+}
+
+.fa-toilet-paper-xmark {
+	--fa: ""
+}
+
+.fa-train-tram {
+	--fa: ""
+}
+
+.fa-buoy {
+	--fa: ""
+}
+
+.fa-buoy-mooring {
+	--fa: ""
+}
+
+.fa-diamond-half {
+	--fa: ""
+}
+
+.fa-diamond-half-stroke {
+	--fa: ""
+}
+
+.fa-game-console-handheld-crank {
+	--fa: ""
+}
+
+.fa-interrobang {
+	--fa: ""
+}
+
+.fa-mailbox-flag-up {
+	--fa: ""
+}
+
+.fa-mustache {
+	--fa: ""
+}
+
+.fa-nose {
+	--fa: ""
+}
+
+.fa-phone-arrow-right {
+	--fa: ""
+}
+
+.fa-pickaxe {
+	--fa: ""
+}
+
+.fa-prescription-bottle-pill {
+	--fa: ""
+}
+
+.fa-snowflake-droplets {
+	--fa: ""
+}
+
+.fa-square-dashed-circle-plus {
+	--fa: ""
+}
+
+.fa-tricycle {
+	--fa: ""
+}
+
+.fa-tricycle-adult {
+	--fa: ""
+}
+
+.fa-user-magnifying-glass {
+	--fa: ""
+}
+
+.fa-comment-heart {
+	--fa: ""
+}
+
+.fa-message-heart {
+	--fa: ""
+}
+
+.fa-pencil-mechanical {
+	--fa: ""
+}
+
+.fa-skeleton-ribs {
+	--fa: ""
+}
+
+.fa-billboard {
+	--fa: ""
+}
+
+.fa-circle-euro {
+	--fa: ""
+}
+
+.fa-circle-sterling {
+	--fa: ""
+}
+
+.fa-circle-yen {
+	--fa: ""
+}
+
+.fa-broom-wide {
+	--fa: ""
+}
+
+.fa-wreath-laurel {
+	--fa: ""
+}
+
+.fa-circle-quarter-stroke {
+	--fa: ""
+}
+
+.fa-circle-three-quarters-stroke {
+	--fa: ""
+}
+
+.fa-webhook {
+	--fa: ""
+}
+
+.fa-sparkle {
+	--fa: ""
+}
+
+.fa-chart-line-up-down {
+	--fa: ""
+}
+
+.fa-chart-mixed-up-circle-currency {
+	--fa: ""
+}
+
+.fa-chart-mixed-up-circle-dollar {
+	--fa: ""
+}
+
+.fa-grid-round {
+	--fa: ""
+}
+
+.fa-grid-round-2 {
+	--fa: ""
+}
+
+.fa-grid-round-2-plus {
+	--fa: ""
+}
+
+.fa-grid-round-4 {
+	--fa: ""
+}
+
+.fa-grid-round-5 {
+	--fa: ""
+}
+
+.fa-arrow-progress {
+	--fa: ""
+}
+
+.fa-right-left-large {
+	--fa: ""
+}
+
+.fa-calendar-users {
+	--fa: ""
+}
+
+.fa-display-chart-up {
+	--fa: ""
+}
+
+.fa-display-chart-up-circle-currency {
+	--fa: ""
+}
+
+.fa-display-chart-up-circle-dollar {
+	--fa: ""
+}
+
+.fa-laptop-binary {
+	--fa: ""
+}
+
+.fa-gear-code {
+	--fa: ""
+}
+
+.fa-gear-complex {
+	--fa: ""
+}
+
+.fa-gear-complex-code {
+	--fa: ""
+}
+
+.fa-file-doc {
+	--fa: ""
+}
+
+.fa-file-zip {
+	--fa: ""
+}
+
+.fa-flask-gear {
+	--fa: ""
+}
+
+.fa-bag-seedling {
+	--fa: ""
+}
+
+.fa-bin-bottles {
+	--fa: ""
+}
+
+.fa-bin-bottles-recycle {
+	--fa: ""
+}
+
+.fa-bin-recycle {
+	--fa: ""
+}
+
+.fa-conveyor-belt-arm {
+	--fa: ""
+}
+
+.fa-jug-bottle {
+	--fa: ""
+}
+
+.fa-lightbulb-gear {
+	--fa: ""
+}
+
+.fa-dinosaur {
+	--fa: ""
+}
+
+.fa-person-running-fast {
+	--fa: ""
+}
+
+.fa-circles-overlap {
+	--fa: ""
+}
+
+.fa-cloud-binary {
+	--fa: ""
+}
+
+.fa-chf-sign {
+	--fa: ""
+}
+
+.fa-user-group-simple {
+	--fa: ""
+}
+
+.fa-chart-pie-simple-circle-currency {
+	--fa: ""
+}
+
+.fa-chart-pie-simple-circle-dollar {
+	--fa: ""
+}
+
+.fa-hat-beach {
+	--fa: ""
+}
+
+.fa-person-dress-fairy {
+	--fa: ""
+}
+
+.fa-person-fairy {
+	--fa: ""
+}
+
+.fa-swap {
+	--fa: ""
+}
+
+.fa-swap-arrows {
+	--fa: ""
+}
+
+.fa-angles-up-down {
+	--fa: ""
+}
+
+.fa-globe-pointer {
+	--fa: ""
+}
+
+.fa-subtitles {
+	--fa: ""
+}
+
+.fa-subtitles-slash {
+	--fa: ""
+}
+
+.fa-head-side-gear {
+	--fa: ""
+}
+
+.fa-lighthouse {
+	--fa: ""
+}
+
+.fa-raccoon {
+	--fa: ""
+}
+
+.fa-arrow-down-from-arc {
+	--fa: ""
+}
+
+.fa-arrow-left-from-arc {
+	--fa: ""
+}
+
+.fa-arrow-left-to-arc {
+	--fa: ""
+}
+
+.fa-arrow-up-to-arc {
+	--fa: ""
+}
+
+.fa-building-magnifying-glass {
+	--fa: ""
+}
+
+.fa-building-memo {
+	--fa: ""
+}
+
+.fa-hammer-brush {
+	--fa: ""
+}
+
+.fa-hand-holding-circle-dollar {
+	--fa: ""
+}
+
+.fa-landmark-magnifying-glass {
+	--fa: ""
+}
+
+.fa-sign-post {
+	--fa: ""
+}
+
+.fa-sign-posts {
+	--fa: ""
+}
+
+.fa-sign-posts-wrench {
+	--fa: ""
+}
+
+.fa-tent-double-peak {
+	--fa: ""
+}
+
+.fa-truck-utensils {
+	--fa: ""
+}
+
+.fa-t-rex {
+	--fa: ""
+}
+
+.fa-spinner-scale {
+	--fa: ""
+}
+
+.fa-bell-ring {
+	--fa: ""
+}
+
+.fa-arrows-rotate-reverse {
+	--fa: ""
+}
+
+.fa-rotate-reverse {
+	--fa: ""
+}
+
+.fa-arrow-turn-left {
+	--fa: ""
+}
+
+.fa-arrow-turn-left-down {
+	--fa: ""
+}
+
+.fa-arrow-turn-left-up {
+	--fa: ""
+}
+
+.fa-arrow-turn-right {
+	--fa: ""
+}
+
+.fa-turn-left {
+	--fa: ""
+}
+
+.fa-turn-left-down {
+	--fa: ""
+}
+
+.fa-turn-left-up {
+	--fa: ""
+}
+
+.fa-turn-right {
+	--fa: ""
+}
+
+.fa-location-arrow-up {
+	--fa: ""
+}
+
+.fa-ticket-perforated {
+	--fa: ""
+}
+
+.fa-tickets-perforated {
+	--fa: ""
+}
+
+.fa-cannon {
+	--fa: ""
+}
+
+.fa-court-sport {
+	--fa: ""
+}
+
+.fa-file-eps {
+	--fa: ""
+}
+
+.fa-file-gif {
+	--fa: ""
+}
+
+.fa-file-jpg {
+	--fa: ""
+}
+
+.fa-file-mov {
+	--fa: ""
+}
+
+.fa-file-mp3 {
+	--fa: ""
+}
+
+.fa-file-mp4 {
+	--fa: ""
+}
+
+.fa-file-ppt {
+	--fa: ""
+}
+
+.fa-file-svg {
+	--fa: ""
+}
+
+.fa-file-vector {
+	--fa: ""
+}
+
+.fa-file-xls {
+	--fa: ""
+}
+
+.fa-folder-check {
+	--fa: ""
+}
+
+.fa-chart-kanban {
+	--fa: ""
+}
+
+.fa-bag-shopping-minus {
+	--fa: ""
+}
+
+.fa-bag-shopping-plus {
+	--fa: ""
+}
+
+.fa-basket-shopping-minus {
+	--fa: ""
+}
+
+.fa-basket-shopping-plus {
+	--fa: ""
+}
+
+.fa-file-xml {
+	--fa: ""
+}
+
+.fa-bulldozer {
+	--fa: ""
+}
+
+.fa-excavator {
+	--fa: ""
+}
+
+.fa-truck-ladder {
+	--fa: ""
+}
+
+.fa-tickets {
+	--fa: ""
+}
+
+.fa-tickets-simple {
+	--fa: ""
+}
+
+.fa-truck-fire {
+	--fa: ""
+}
+
+.fa-wave {
+	--fa: ""
+}
+
+.fa-waves-sine {
+	--fa: ""
+}
+
+.fa-magnifying-glass-arrows-rotate {
+	--fa: ""
+}
+
+.fa-magnifying-glass-music {
+	--fa: ""
+}
+
+.fa-magnifying-glass-play {
+	--fa: ""
+}
+
+.fa-magnifying-glass-waveform {
+	--fa: ""
+}
+
+.fa-music-magnifying-glass {
+	--fa: ""
+}
+
+.fa-reflect-horizontal {
+	--fa: ""
+}
+
+.fa-reflect-vertical {
+	--fa: ""
+}
+
+.fa-file-png {
+	--fa: ""
+}
+
+.fa-arrow-down-from-bracket {
+	--fa: ""
+}
+
+.fa-arrow-left-from-bracket {
+	--fa: ""
+}
+
+.fa-arrow-left-to-bracket {
+	--fa: ""
+}
+
+.fa-arrow-up-to-bracket {
+	--fa: ""
+}
+
+.fa-down-from-bracket {
+	--fa: ""
+}
+
+.fa-left-from-bracket {
+	--fa: ""
+}
+
+.fa-left-to-bracket {
+	--fa: ""
+}
+
+.fa-up-to-bracket {
+	--fa: ""
+}
+
+.fa-reflect-both {
+	--fa: ""
+}
+
+.fa-file-cad {
+	--fa: ""
+}
+
+.fa-bottle-baby {
+	--fa: ""
+}
+
+.fa-table-cells-column-lock {
+	--fa: ""
+}
+
+.fa-table-cells-lock {
+	--fa: ""
+}
+
+.fa-table-cells-row-lock {
+	--fa: ""
+}
+
+.fa-circle-wifi {
+	--fa: ""
+}
+
+.fa-circle-wifi-circle-wifi,
+.fa-circle-wifi-group {
+	--fa: ""
+}
+
+.fa-circle-gf {
+	--fa: ""
+}
+
+.fa-ant {
+	--fa: ""
+}
+
+.fa-caduceus {
+	--fa: ""
+}
+
+.fa-globe-wifi {
+	--fa: ""
+}
+
+.fa-hydra {
+	--fa: ""
+}
+
+.fa-lightbulb-message {
+	--fa: ""
+}
+
+.fa-octopus {
+	--fa: ""
+}
+
+.fa-user-beard-bolt {
+	--fa: ""
+}
+
+.fa-user-hoodie {
+	--fa: ""
+}
+
+.fa-diamonds-4 {
+	--fa: ""
+}
+
+.fa-thumbtack-slash,
+.fa-thumb-tack-slash {
+	--fa: ""
+}
+
+.fa-table-cells-column-unlock {
+	--fa: ""
+}
+
+.fa-table-cells-row-unlock {
+	--fa: ""
+}
+
+.fa-table-cells-unlock {
+	--fa: ""
+}
+
+.fa-chart-diagram {
+	--fa: ""
+}
+
+.fa-comment-nodes {
+	--fa: ""
+}
+
+.fa-file-fragment {
+	--fa: ""
+}
+
+.fa-file-half-dashed {
+	--fa: ""
+}
+
+.fa-hexagon-nodes {
+	--fa: ""
+}
+
+.fa-hexagon-nodes-bolt {
+	--fa: ""
+}
+
+.fa-square-binary {
+	--fa: ""
+}
+
+.fa-carpool,
+.fa-car-people {
+	--fa: ""
+}
+
+.fa-chart-sine {
+	--fa: ""
+}
+
+.fa-chart-fft {
+	--fa: ""
+}
+
+.fa-circles-overlap-3,
+.fa-pronoun {
+	--fa: ""
+}
+
+.fa-bar-progress {
+	--fa: ""
+}
+
+.fa-bar-progress-empty {
+	--fa: ""
+}
+
+.fa-bar-progress-full {
+	--fa: ""
+}
+
+.fa-bar-progress-half {
+	--fa: ""
+}
+
+.fa-bar-progress-quarter {
+	--fa: ""
+}
+
+.fa-bar-progress-three-quarters {
+	--fa: ""
+}
+
+.fa-grid-2-minus {
+	--fa: ""
+}
+
+.fa-grid-round-2-minus {
+	--fa: ""
+}
+
+.fa-table-cells-columns {
+	--fa: ""
+}
+
+.fa-table-cells-header {
+	--fa: ""
+}
+
+.fa-table-cells-header-lock {
+	--fa: ""
+}
+
+.fa-table-cells-header-unlock {
+	--fa: ""
+}
+
+.fa-table-cells-rows {
+	--fa: ""
+}
+
+.fa-circle-equals {
+	--fa: ""
+}
+
+.fa-hexagon-equals {
+	--fa: ""
+}
+
+.fa-octagon-equals {
+	--fa: ""
+}
+
+.fa-rectangle-minus {
+	--fa: ""
+}
+
+.fa-rectangle-plus {
+	--fa: ""
+}
+
+.fa-square-equals {
+	--fa: ""
+}
+
+.fa-arrow-down-long-to-line {
+	--fa: ""
+}
+
+.fa-arrow-left-arrow-right {
+	--fa: ""
+}
+
+.fa-arrow-left-from-dotted-line {
+	--fa: ""
+}
+
+.fa-arrow-left-to-dotted-line {
+	--fa: ""
+}
+
+.fa-arrow-right-from-dotted-line {
+	--fa: ""
+}
+
+.fa-arrow-right-to-dotted-line {
+	--fa: ""
+}
+
+.fa-arrow-up-long-to-line {
+	--fa: ""
+}
+
+.fa-direction-left-right {
+	--fa: ""
+}
+
+.fa-direction-up-down {
+	--fa: ""
+}
+
+.fa-down-long-to-line {
+	--fa: ""
+}
+
+.fa-down-up {
+	--fa: ""
+}
+
+.fa-left-from-dotted-line {
+	--fa: ""
+}
+
+.fa-left-to-dotted-line {
+	--fa: ""
+}
+
+.fa-right-from-dotted-line {
+	--fa: ""
+}
+
+.fa-right-to-dotted-line {
+	--fa: ""
+}
+
+.fa-up-long-to-line {
+	--fa: ""
+}
+
+.fa-barn {
+	--fa: ""
+}
+
+.fa-circle-house {
+	--fa: ""
+}
+
+.fa-garage-empty {
+	--fa: ""
+}
+
+.fa-house-unlock {
+	--fa: ""
+}
+
+.fa-school-unlock {
+	--fa: ""
+}
+
+.fa-stadium {
+	--fa: ""
+}
+
+.fa-tent-circus {
+	--fa: ""
+}
+
+.fa-ball-yarn {
+	--fa: ""
+}
+
+.fa-bra {
+	--fa: ""
+}
+
+.fa-briefs {
+	--fa: ""
+}
+
+.fa-dress {
+	--fa: ""
+}
+
+.fa-jeans {
+	--fa: ""
+}
+
+.fa-jeans-straight {
+	--fa: ""
+}
+
+.fa-panties {
+	--fa: ""
+}
+
+.fa-pants {
+	--fa: ""
+}
+
+.fa-pants-straight {
+	--fa: ""
+}
+
+.fa-shirt-jersey {
+	--fa: ""
+}
+
+.fa-shoe {
+	--fa: ""
+}
+
+.fa-shorts {
+	--fa: ""
+}
+
+.fa-sneaker {
+	--fa: ""
+}
+
+.fa-circle-share-nodes {
+	--fa: ""
+}
+
+.fa-comment-dot {
+	--fa: ""
+}
+
+.fa-comment-waveform {
+	--fa: ""
+}
+
+.fa-envelope-circle-user {
+	--fa: ""
+}
+
+.fa-message-dot {
+	--fa: ""
+}
+
+.fa-message-waveform {
+	--fa: ""
+}
+
+.fa-phone-connection {
+	--fa: ""
+}
+
+.fa-phone-waveform {
+	--fa: ""
+}
+
+.fa-postage-stamp {
+	--fa: ""
+}
+
+.fa-circle-florin {
+	--fa: ""
+}
+
+.fa-circle-ruble {
+	--fa: ""
+}
+
+.fa-square-chf {
+	--fa: ""
+}
+
+.fa-square-lira {
+	--fa: ""
+}
+
+.fa-norwegian-krone-sign {
+	--fa: ""
+}
+
+.fa-circle-renminbi {
+	--fa: ""
+}
+
+.fa-square-peseta {
+	--fa: ""
+}
+
+.fa-circle-brazilian-real {
+	--fa: ""
+}
+
+.fa-circle-won {
+	--fa: ""
+}
+
+.fa-square-cruzeiro {
+	--fa: ""
+}
+
+.fa-circle-currency {
+	--fa: ""
+}
+
+.fa-circle-hryvnia {
+	--fa: ""
+}
+
+.fa-square-cent {
+	--fa: ""
+}
+
+.fa-square-brazilian-real {
+	--fa: ""
+}
+
+.fa-square-bitcoin {
+	--fa: ""
+}
+
+.fa-circle-peruvian-soles {
+	--fa: ""
+}
+
+.fa-circle-litecoin {
+	--fa: ""
+}
+
+.fa-square-indian-rupee {
+	--fa: ""
+}
+
+.fa-circle-lira {
+	--fa: ""
+}
+
+.fa-square-litecoin {
+	--fa: ""
+}
+
+.fa-square-ruble {
+	--fa: ""
+}
+
+.fa-circle-malaysian-ringgit {
+	--fa: ""
+}
+
+.fa-malaysian-ringgit-sign {
+	--fa: ""
+}
+
+.fa-circle-manat {
+	--fa: ""
+}
+
+.fa-circle-colon {
+	--fa: ""
+}
+
+.fa-circle-kip {
+	--fa: ""
+}
+
+.fa-australian-dollar-sign {
+	--fa: ""
+}
+
+.fa-circle-peso {
+	--fa: ""
+}
+
+.fa-circle-polish-zloty {
+	--fa: ""
+}
+
+.fa-circle-bangladeshi-taka {
+	--fa: ""
+}
+
+.fa-circle-mill {
+	--fa: ""
+}
+
+.fa-circle-shekel {
+	--fa: ""
+}
+
+.fa-square-manat {
+	--fa: ""
+}
+
+.fa-peruvian-soles-sign {
+	--fa: ""
+}
+
+.fa-circle-rupiah {
+	--fa: ""
+}
+
+.fa-square-norwegian-krone {
+	--fa: ""
+}
+
+.fa-square-naira {
+	--fa: ""
+}
+
+.fa-square-won {
+	--fa: ""
+}
+
+.fa-square-mill {
+	--fa: ""
+}
+
+.fa-polish-zloty-sign {
+	--fa: ""
+}
+
+.fa-square-currency {
+	--fa: ""
+}
+
+.fa-square-kip {
+	--fa: ""
+}
+
+.fa-square-guarani {
+	--fa: ""
+}
+
+.fa-square-dong {
+	--fa: ""
+}
+
+.fa-square-hryvnia {
+	--fa: ""
+}
+
+.fa-circle-tugrik {
+	--fa: ""
+}
+
+.fa-square-rupiah {
+	--fa: ""
+}
+
+.fa-square-sterling {
+	--fa: ""
+}
+
+.fa-circle-rupee {
+	--fa: ""
+}
+
+.fa-square-rupee {
+	--fa: ""
+}
+
+.fa-square-peruvian-soles {
+	--fa: ""
+}
+
+.fa-square-florin {
+	--fa: ""
+}
+
+.fa-square-australian-dollar {
+	--fa: ""
+}
+
+.fa-square-baht {
+	--fa: ""
+}
+
+.fa-square-peso {
+	--fa: ""
+}
+
+.fa-circle-austral {
+	--fa: ""
+}
+
+.fa-square-swedish-krona {
+	--fa: ""
+}
+
+.fa-circle-lari {
+	--fa: ""
+}
+
+.fa-circleapore-dollar {
+	--fa: ""
+}
+
+.fa-square-turkish-lira {
+	--fa: ""
+}
+
+.fa-danish-krone-sign {
+	--fa: ""
+}
+
+.fa-circle-franc {
+	--fa: ""
+}
+
+.fa-circle-cruzeiro {
+	--fa: ""
+}
+
+.fa-circle-dong {
+	--fa: ""
+}
+
+.fa-square-yen {
+	--fa: ""
+}
+
+.fa-circle-tenge {
+	--fa: ""
+}
+
+.fa-square-austral {
+	--fa: ""
+}
+
+.fa-square-eurozone {
+	--fa: ""
+}
+
+.fa-square-tugrik {
+	--fa: ""
+}
+
+.fa-square-cedi {
+	--fa: ""
+}
+
+.fa-circle-cent {
+	--fa: ""
+}
+
+.fa-currency-sign {
+	--fa: ""
+}
+
+.fa-circle-chf {
+	--fa: ""
+}
+
+.fa-circle-baht {
+	--fa: ""
+}
+
+.fa-signapore-dollar-sign {
+	--fa: ""
+}
+
+.fa-square-franc {
+	--fa: ""
+}
+
+.fa-circle-australian-dollar {
+	--fa: ""
+}
+
+.fa-square-tenge {
+	--fa: ""
+}
+
+.fa-square-euro {
+	--fa: ""
+}
+
+.fa-squareapore-dollar {
+	--fa: ""
+}
+
+.fa-circle-indian-rupee {
+	--fa: ""
+}
+
+.fa-square-shekel {
+	--fa: ""
+}
+
+.fa-square-polish-zloty {
+	--fa: ""
+}
+
+.fa-circle-bitcoin {
+	--fa: ""
+}
+
+.fa-circle-norwegian-krone {
+	--fa: ""
+}
+
+.fa-circle-turkish-lira {
+	--fa: ""
+}
+
+.fa-square-colon {
+	--fa: ""
+}
+
+.fa-circle-guarani {
+	--fa: ""
+}
+
+.fa-renminbi-sign {
+	--fa: ""
+}
+
+.fa-square-renminbi {
+	--fa: ""
+}
+
+.fa-swedish-krona-sign {
+	--fa: ""
+}
+
+.fa-square-lari {
+	--fa: ""
+}
+
+.fa-eurozone-sign {
+	--fa: ""
+}
+
+.fa-circle-peseta {
+	--fa: ""
+}
+
+.fa-circle-cedi {
+	--fa: ""
+}
+
+.fa-circle-swedish-krona {
+	--fa: ""
+}
+
+.fa-square-bangladeshi-taka {
+	--fa: ""
+}
+
+.fa-circle-eurozone {
+	--fa: ""
+}
+
+.fa-circle-danish-krone {
+	--fa: ""
+}
+
+.fa-square-danish-krone {
+	--fa: ""
+}
+
+.fa-square-malaysian-ringgit {
+	--fa: ""
+}
+
+.fa-circle-naira {
+	--fa: ""
+}
+
+.fa-mobile-arrow-down {
+	--fa: ""
+}
+
+.fa-clone-plus {
+	--fa: ""
+}
+
+.fa-paintbrush-fine-slash {
+	--fa: ""
+}
+
+.fa-paintbrush-slash {
+	--fa: ""
+}
+
+.fa-pencil-line {
+	--fa: ""
+}
+
+.fa-slider-circle {
+	--fa: ""
+}
+
+.fa-thumbtack-angle {
+	--fa: ""
+}
+
+.fa-thumbtack-angle-slash {
+	--fa: ""
+}
+
+.fa-book-open-lines {
+	--fa: ""
+}
+
+.fa-book-spine {
+	--fa: ""
+}
+
+.fa-bookmark-plus {
+	--fa: ""
+}
+
+.fa-clipboard-clock {
+	--fa: ""
+}
+
+.fa-clipboard-exclamation {
+	--fa: ""
+}
+
+.fa-file-ban {
+	--fa: ""
+}
+
+.fa-notes-sticky {
+	--fa: ""
+}
+
+.fa-capsule {
+	--fa: ""
+}
+
+.fa-ear-circle-checkmark {
+	--fa: ""
+}
+
+.fa-ear-triangle-exclamation {
+	--fa: ""
+}
+
+.fa-ear-waveform {
+	--fa: ""
+}
+
+.fa-head-side-circuit {
+	--fa: ""
+}
+
+.fa-head-side-speak {
+	--fa: ""
+}
+
+.fa-microphone-signal-meter {
+	--fa: ""
+}
+
+.fa-spine {
+	--fa: ""
+}
+
+.fa-vial-vertical {
+	--fa: ""
+}
+
+.fa-bin {
+	--fa: ""
+}
+
+.fa-seat {
+	--fa: ""
+}
+
+.fa-seats {
+	--fa: ""
+}
+
+.fa-camera-circle-ellipsis {
+	--fa: ""
+}
+
+.fa-camera-clock {
+	--fa: ""
+}
+
+.fa-camera-shutter {
+	--fa: ""
+}
+
+.fa-film-music {
+	--fa: ""
+}
+
+.fa-film-stack {
+	--fa: ""
+}
+
+.fa-image-circle-arrow-down {
+	--fa: ""
+}
+
+.fa-image-circle-check {
+	--fa: ""
+}
+
+.fa-image-circle-plus {
+	--fa: ""
+}
+
+.fa-image-circle-xmark {
+	--fa: ""
+}
+
+.fa-image-music {
+	--fa: ""
+}
+
+.fa-image-stack {
+	--fa: ""
+}
+
+.fa-rectangle-4k {
+	--fa: ""
+}
+
+.fa-rectangle-high-dynamic-range,
+.fa-rectangle-hdr {
+	--fa: ""
+}
+
+.fa-rectangle-video-on-demand {
+	--fa: ""
+}
+
+.fa-user-viewfinder {
+	--fa: ""
+}
+
+.fa-video-down-to-line {
+	--fa: ""
+}
+
+.fa-video-question {
+	--fa: ""
+}
+
+.fa-gas-pump-left {
+	--fa: ""
+}
+
+.fa-gas-pump-right {
+	--fa: ""
+}
+
+.fa-location-arrow-slash {
+	--fa: ""
+}
+
+.fa-airplay-audio {
+	--fa: ""
+}
+
+.fa-headphones-slash {
+	--fa: ""
+}
+
+.fa-microphone-circle-plus {
+	--fa: ""
+}
+
+.fa-microphone-circle-xmark {
+	--fa: ""
+}
+
+.fa-open-captioning {
+	--fa: ""
+}
+
+.fa-play-flip {
+	--fa: ""
+}
+
+.fa-square-microphone {
+	--fa: ""
+}
+
+.fa-trombone {
+	--fa: ""
+}
+
+.fa-person-arms-raised {
+	--fa: ""
+}
+
+.fa-person-basketball {
+	--fa: ""
+}
+
+.fa-person-carry-empty {
+	--fa: ""
+}
+
+.fa-person-golfing {
+	--fa: ""
+}
+
+.fa-person-limbs-wide {
+	--fa: ""
+}
+
+.fa-person-seat-window {
+	--fa: ""
+}
+
+.fa-person-soccer {
+	--fa: ""
+}
+
+.fa-person-swimming-pool {
+	--fa: ""
+}
+
+.fa-person-swimming-water {
+	--fa: ""
+}
+
+.fa-person-water-arms-raised {
+	--fa: ""
+}
+
+.fa-person-waving {
+	--fa: ""
+}
+
+.fa-heart-slash {
+	--fa: ""
+}
+
+.fa-hearts {
+	--fa: ""
+}
+
+.fa-pentagon {
+	--fa: ""
+}
+
+.fa-rectangle-tall {
+	--fa: ""
+}
+
+.fa-square-half {
+	--fa: ""
+}
+
+.fa-square-half-stroke {
+	--fa: ""
+}
+
+.fa-box-arrow-down {
+	--fa: ""
+}
+
+.fa-box-arrow-down-arrow-up {
+	--fa: ""
+}
+
+.fa-box-arrow-down-magnifying-glass {
+	--fa: ""
+}
+
+.fa-box-isometric {
+	--fa: ""
+}
+
+.fa-box-isometric-tape {
+	--fa: ""
+}
+
+.fa-qrcode-read {
+	--fa: ""
+}
+
+.fa-shop-24 {
+	--fa: ""
+}
+
+.fa-store-24 {
+	--fa: ""
+}
+
+.fa-face-shaking {
+	--fa: ""
+}
+
+.fa-face-shaking-horizontal {
+	--fa: ""
+}
+
+.fa-face-shaking-vertical {
+	--fa: ""
+}
+
+.fa-circle-user-circle-check {
+	--fa: ""
+}
+
+.fa-circle-user-circle-exclamation {
+	--fa: ""
+}
+
+.fa-circle-user-circle-minus {
+	--fa: ""
+}
+
+.fa-circle-user-circle-moon {
+	--fa: ""
+}
+
+.fa-circle-user-circle-plus {
+	--fa: ""
+}
+
+.fa-circle-user-circle-question {
+	--fa: ""
+}
+
+.fa-circle-user-circle-user {
+	--fa: ""
+}
+
+.fa-circle-user-circle-xmark {
+	--fa: ""
+}
+
+.fa-circle-user-clock {
+	--fa: ""
+}
+
+.fa-user-beard {
+	--fa: ""
+}
+
+.fa-user-chef-hair-long {
+	--fa: ""
+}
+
+.fa-user-circle-minus {
+	--fa: ""
+}
+
+.fa-user-circle-plus {
+	--fa: ""
+}
+
+.fa-user-dashed {
+	--fa: ""
+}
+
+.fa-user-doctor-hair-mullet {
+	--fa: ""
+}
+
+.fa-user-hat-tie {
+	--fa: ""
+}
+
+.fa-user-hat-tie-magnifying-glass {
+	--fa: ""
+}
+
+.fa-user-key {
+	--fa: ""
+}
+
+.fa-user-message {
+	--fa: ""
+}
+
+.fa-user-microphone {
+	--fa: ""
+}
+
+.fa-user-pilot-hair-long {
+	--fa: ""
+}
+
+.fa-user-pilot-tie-hair-long {
+	--fa: ""
+}
+
+.fa-user-police-hair-long {
+	--fa: ""
+}
+
+.fa-user-police-tie-hair-long {
+	--fa: ""
+}
+
+.fa-user-question {
+	--fa: ""
+}
+
+.fa-user-sith {
+	--fa: ""
+}
+
+.fa-user-tie-hair-mullet {
+	--fa: ""
+}
+
+.fa-user-vneck-hair-mullet {
+	--fa: ""
+}
+
+.fa-plane-flying {
+	--fa: ""
+}
+
+.fa-plane-landing-gear {
+	--fa: ""
+}
+
+.fa-rocket-vertical {
+	--fa: ""
+}
+
+.fa-seat-airline-window {
+	--fa: ""
+}
+
+.fa-shuttle-space-vertical {
+	--fa: ""
+}
+
+.fa-car-key {
+	--fa: ""
+}
+
+.fa-car-siren {
+	--fa: ""
+}
+
+.fa-car-siren-on {
+	--fa: ""
+}
+
+.fa-scooter {
+	--fa: ""
+}
+
+.fa-snowmobile-blank {
+	--fa: ""
+}
+
+.fa-stair-car {
+	--fa: ""
+}
+
+.fa-truck-suv {
+	--fa: ""
+}
+
+.fa-unicycle {
+	--fa: ""
+}
+
+.fa-van {
+	--fa: ""
+}
+
+.fa-moon-star {
+	--fa: ""
+}
+
+.fa-rainbow-half {
+	--fa: ""
+}
+
+.fa-temperature-slash {
+	--fa: ""
+}
+
+.fa-dialpad {
+	--fa: ""
+}
+
+.fa-computer-mouse-button-left {
+	--fa: ""
+}
+
+.fa-computer-mouse-button-right {
+	--fa: ""
+}
+
+.fa-dot {
+	--fa: ""
+}
+
+.fa-folder-arrow-left {
+	--fa: ""
+}
+
+.fa-folder-arrow-right {
+	--fa: ""
+}
+
+.fa-wireless {
+	--fa: ""
+}
+
+.fa-circle-moon {
+	--fa: ""
+}
+
+.fa-person-meditating {
+	--fa: ""
+}
+
+.fa-baseball-bat {
+	--fa: ""
+}
+
+.fa-hockey-stick {
+	--fa: ""
+}
+
+.fa-arrow-u-turn-down-left {
+	--fa: ""
+}
+
+.fa-arrow-u-turn-down-right {
+	--fa: ""
+}
+
+.fa-arrow-u-turn-left-down {
+	--fa: ""
+}
+
+.fa-arrow-u-turn-left-up {
+	--fa: ""
+}
+
+.fa-arrow-u-turn-right-down {
+	--fa: ""
+}
+
+.fa-arrow-u-turn-right-up {
+	--fa: ""
+}
+
+.fa-arrow-u-turn-up-left {
+	--fa: ""
+}
+
+.fa-arrow-u-turn-up-right {
+	--fa: ""
+}
+
+.fa-u-turn-down-left {
+	--fa: ""
+}
+
+.fa-u-turn-down-right {
+	--fa: ""
+}
+
+.fa-u-turn-left-down,
+.fa-u-turn {
+	--fa: ""
+}
+
+.fa-u-turn-left-up {
+	--fa: ""
+}
+
+.fa-u-turn-right-down {
+	--fa: ""
+}
+
+.fa-u-turn-right-up {
+	--fa: ""
+}
+
+.fa-u-turn-up-left {
+	--fa: ""
+}
+
+.fa-u-turn-up-right {
+	--fa: ""
+}
+
+.fa-triple-chevrons-down {
+	--fa: ""
+}
+
+.fa-triple-chevrons-left {
+	--fa: ""
+}
+
+.fa-triple-chevrons-right {
+	--fa: ""
+}
+
+.fa-triple-chevrons-up {
+	--fa: ""
+}
+
+.fa-file-aiff {
+	--fa: ""
+}
+
+.fa-file-odf {
+	--fa: ""
+}
+
+.fa-file-tex {
+	--fa: ""
+}
+
+.fa-file-wav {
+	--fa: ""
+}
+
+.fa-droplet-plus {
+	--fa: ""
+}
+
+.fa-hand-holding-star {
+	--fa: ""
+}
+
+.fa-transmission {
+	--fa: ""
+}
+
+.fa-alarm-minus {
+	--fa: ""
+}
+
+.fa-file-brackets-curly {
+	--fa: ""
+}
+
+.fa-file-midi {
+	--fa: ""
+}
+
+.fa-midi {
+	--fa: ""
+}
+
+.fa-non-binary {
+	--fa: ""
+}
+
+.fa-rectangle-beta {
+	--fa: ""
+}
+
+.fa-shield-user {
+	--fa: ""
+}
+
+.fa-spiral {
+	--fa: ""
+}
+
+.fa-picture-in-picture {
+	--fa: ""
+}
+
+.fa-circle-half-horizontal {
+	--fa: ""
+}
+
+.fa-circle-half-stroke-horizontal {
+	--fa: ""
+}
+
+.fa-square-half-horizontal {
+	--fa: ""
+}
+
+.fa-square-half-stroke-horizontal {
+	--fa: ""
+}
+
+.fa-ship-large {
+	--fa: ""
+}
+
+.fa-butterfly {
+	--fa: ""
+}
+
+.fa-mobile-rotate {
+	--fa: ""
+}
+
+.fa-mobile-rotate-reverse {
+	--fa: ""
+}
+
+.fa-mobile-slash {
+	--fa: ""
+}
+
+.fa-mobile-vibrate {
+	--fa: ""
+}
+
+.fa-mobile-vibrate-slash {
+	--fa: ""
+}
+
+.fa-almost-equal-to {
+	--fa: ""
+}
+
+.fa-sneaker-running {
+	--fa: ""
+}
+
+.fa-horseshoe {
+	--fa: ""
+}
+
+.fa-single-quote-left {
+	--fa: ""
+}
+
+.fa-single-quote-right {
+	--fa: ""
+}
+
+.fa-bus-side {
+	--fa: ""
+}
+
+.fa-bus-stop {
+	--fa: ""
+}
+
+.fa-train-stop {
+	--fa: ""
+}
+
+.fa-septagon,
+.fa-heptagon {
+	--fa: ""
+}
+
+.fa-mailbox-open-empty {
+	--fa: ""
+}
+
+.fa-mailbox-open-letter {
+	--fa: ""
+}
+
+.fa-lychee {
+	--fa: ""
+}
+
+.fa-tank-recovery {
+	--fa: ""
+}
+
+.fa-transducer {
+	--fa: ""
+}
+
+.fa-box-arrow-up {
+	--fa: ""
+}
+
+.fa-box-magnifying-glass {
+	--fa: ""
+}
+
+.fa-envelope-ribbon,
+.fa-envelope-certificate {
+	--fa: ""
+}
+
+.fa-water-temperature,
+.fa-water-temp {
+	--fa: ""
+}
+
+.fa-aeropress {
+	--fa: ""
+}
+
+.fa-caret-large-down {
+	--fa: ""
+}
+
+.fa-caret-large-left {
+	--fa: ""
+}
+
+.fa-caret-large-right {
+	--fa: ""
+}
+
+.fa-caret-large-up {
+	--fa: ""
+}
+
+.fa-chemex {
+	--fa: ""
+}
+
+.fa-hand-shaka {
+	--fa: ""
+}
+
+.fa-kettlebell {
+	--fa: ""
+}
+
+.fa-foot-wing {
+	--fa: ""
+}
+
+.fa-pump-impeller {
+	--fa: ""
+}
+
+.fa-arrow-rotate-left-10 {
+	--fa: ""
+}
+
+.fa-arrow-rotate-right-10 {
+	--fa: ""
+}
+
+.fa-martini-glass-empty,
+.fa-glass-martini {
+	--fa: ""
+}
+
+.fa-music {
+	--fa: ""
+}
+
+.fa-magnifying-glass,
+.fa-search {
+	--fa: ""
+}
+
+.fa-heart {
+	--fa: ""
+}
+
+.fa-star {
+	--fa: ""
+}
+
+.fa-user,
+.fa-user-alt,
+.fa-user-large {
+	--fa: ""
+}
+
+.fa-film,
+.fa-film-alt,
+.fa-film-simple {
+	--fa: ""
+}
+
+.fa-table-cells-large,
+.fa-th-large {
+	--fa: ""
+}
+
+.fa-table-cells,
+.fa-th {
+	--fa: ""
+}
+
+.fa-table-list,
+.fa-th-list {
+	--fa: ""
+}
+
+.fa-check {
+	--fa: ""
+}
+
+.fa-xmark,
+.fa-close,
+.fa-multiply,
+.fa-remove,
+.fa-times {
+	--fa: ""
+}
+
+.fa-magnifying-glass-plus,
+.fa-search-plus {
+	--fa: ""
+}
+
+.fa-magnifying-glass-minus,
+.fa-search-minus {
+	--fa: ""
+}
+
+.fa-power-off {
+	--fa: ""
+}
+
+.fa-signal,
+.fa-signal-5,
+.fa-signal-perfect {
+	--fa: ""
+}
+
+.fa-gear,
+.fa-cog {
+	--fa: ""
+}
+
+.fa-house,
+.fa-home,
+.fa-home-alt,
+.fa-home-lg-alt {
+	--fa: ""
+}
+
+.fa-clock,
+.fa-clock-four {
+	--fa: ""
+}
+
+.fa-road {
+	--fa: ""
+}
+
+.fa-download {
+	--fa: ""
+}
+
+.fa-inbox {
+	--fa: ""
+}
+
+.fa-arrow-rotate-right,
+.fa-arrow-right-rotate,
+.fa-arrow-rotate-forward,
+.fa-redo {
+	--fa: ""
+}
+
+.fa-arrows-rotate,
+.fa-refresh,
+.fa-sync {
+	--fa: ""
+}
+
+.fa-rectangle-list,
+.fa-list-alt {
+	--fa: ""
+}
+
+.fa-lock {
+	--fa: ""
+}
+
+.fa-flag {
+	--fa: ""
+}
+
+.fa-headphones,
+.fa-headphones-alt,
+.fa-headphones-simple {
+	--fa: ""
+}
+
+.fa-volume-off {
+	--fa: ""
+}
+
+.fa-volume-low,
+.fa-volume-down {
+	--fa: ""
+}
+
+.fa-volume-high,
+.fa-volume-up {
+	--fa: ""
+}
+
+.fa-qrcode {
+	--fa: ""
+}
+
+.fa-barcode {
+	--fa: ""
+}
+
+.fa-tag {
+	--fa: ""
+}
+
+.fa-tags {
+	--fa: ""
+}
+
+.fa-book {
+	--fa: ""
+}
+
+.fa-bookmark {
+	--fa: ""
+}
+
+.fa-print {
+	--fa: ""
+}
+
+.fa-camera,
+.fa-camera-alt {
+	--fa: ""
+}
+
+.fa-font {
+	--fa: ""
+}
+
+.fa-bold {
+	--fa: ""
+}
+
+.fa-italic {
+	--fa: ""
+}
+
+.fa-text-height {
+	--fa: ""
+}
+
+.fa-text-width {
+	--fa: ""
+}
+
+.fa-align-left {
+	--fa: ""
+}
+
+.fa-align-center {
+	--fa: ""
+}
+
+.fa-align-right {
+	--fa: ""
+}
+
+.fa-align-justify {
+	--fa: ""
+}
+
+.fa-list,
+.fa-list-squares {
+	--fa: ""
+}
+
+.fa-outdent,
+.fa-dedent {
+	--fa: ""
+}
+
+.fa-indent {
+	--fa: ""
+}
+
+.fa-video,
+.fa-video-camera {
+	--fa: ""
+}
+
+.fa-image {
+	--fa: ""
+}
+
+.fa-location-pin,
+.fa-map-marker {
+	--fa: ""
+}
+
+.fa-circle-half-stroke,
+.fa-adjust {
+	--fa: ""
+}
+
+.fa-droplet,
+.fa-tint {
+	--fa: ""
+}
+
+.fa-pen-to-square,
+.fa-edit {
+	--fa: ""
+}
+
+.fa-arrows-up-down-left-right,
+.fa-arrows {
+	--fa: ""
+}
+
+.fa-backward-step,
+.fa-step-backward {
+	--fa: ""
+}
+
+.fa-backward-fast,
+.fa-fast-backward {
+	--fa: ""
+}
+
+.fa-backward {
+	--fa: ""
+}
+
+.fa-play {
+	--fa: ""
+}
+
+.fa-pause {
+	--fa: ""
+}
+
+.fa-stop {
+	--fa: ""
+}
+
+.fa-forward {
+	--fa: ""
+}
+
+.fa-forward-fast,
+.fa-fast-forward {
+	--fa: ""
+}
+
+.fa-forward-step,
+.fa-step-forward {
+	--fa: ""
+}
+
+.fa-eject {
+	--fa: ""
+}
+
+.fa-chevron-left {
+	--fa: ""
+}
+
+.fa-chevron-right {
+	--fa: ""
+}
+
+.fa-circle-plus,
+.fa-plus-circle {
+	--fa: ""
+}
+
+.fa-circle-minus,
+.fa-minus-circle {
+	--fa: ""
+}
+
+.fa-circle-xmark,
+.fa-times-circle,
+.fa-xmark-circle {
+	--fa: ""
+}
+
+.fa-circle-check,
+.fa-check-circle {
+	--fa: ""
+}
+
+.fa-circle-question,
+.fa-question-circle {
+	--fa: ""
+}
+
+.fa-circle-info,
+.fa-info-circle {
+	--fa: ""
+}
+
+.fa-crosshairs {
+	--fa: ""
+}
+
+.fa-ban,
+.fa-cancel {
+	--fa: ""
+}
+
+.fa-arrow-left {
+	--fa: ""
+}
+
+.fa-arrow-right {
+	--fa: ""
+}
+
+.fa-arrow-up {
+	--fa: ""
+}
+
+.fa-arrow-down {
+	--fa: ""
+}
+
+.fa-share,
+.fa-mail-forward {
+	--fa: ""
+}
+
+.fa-expand {
+	--fa: ""
+}
+
+.fa-compress {
+	--fa: ""
+}
+
+.fa-minus,
+.fa-subtract {
+	--fa: ""
+}
+
+.fa-circle-exclamation,
+.fa-exclamation-circle {
+	--fa: ""
+}
+
+.fa-gift {
+	--fa: ""
+}
+
+.fa-leaf {
+	--fa: ""
+}
+
+.fa-fire {
+	--fa: ""
+}
+
+.fa-eye {
+	--fa: ""
+}
+
+.fa-eye-slash {
+	--fa: ""
+}
+
+.fa-triangle-exclamation,
+.fa-exclamation-triangle,
+.fa-warning {
+	--fa: ""
+}
+
+.fa-plane {
+	--fa: ""
+}
+
+.fa-calendar-days,
+.fa-calendar-alt {
+	--fa: ""
+}
+
+.fa-shuffle,
+.fa-random {
+	--fa: ""
+}
+
+.fa-comment {
+	--fa: ""
+}
+
+.fa-magnet {
+	--fa: ""
+}
+
+.fa-chevron-up {
+	--fa: ""
+}
+
+.fa-chevron-down {
+	--fa: ""
+}
+
+.fa-retweet {
+	--fa: ""
+}
+
+.fa-cart-shopping,
+.fa-shopping-cart {
+	--fa: ""
+}
+
+.fa-folder,
+.fa-folder-blank {
+	--fa: ""
+}
+
+.fa-folder-open {
+	--fa: ""
+}
+
+.fa-arrows-up-down,
+.fa-arrows-v {
+	--fa: ""
+}
+
+.fa-arrows-left-right,
+.fa-arrows-h {
+	--fa: ""
+}
+
+.fa-chart-bar,
+.fa-bar-chart {
+	--fa: ""
+}
+
+.fa-camera-retro {
+	--fa: ""
+}
+
+.fa-key {
+	--fa: ""
+}
+
+.fa-gears,
+.fa-cogs {
+	--fa: ""
+}
+
+.fa-comments {
+	--fa: ""
+}
+
+.fa-star-half {
+	--fa: ""
+}
+
+.fa-arrow-right-from-bracket,
+.fa-sign-out {
+	--fa: ""
+}
+
+.fa-thumbtack,
+.fa-thumb-tack {
+	--fa: ""
+}
+
+.fa-arrow-up-right-from-square,
+.fa-external-link {
+	--fa: ""
+}
+
+.fa-arrow-right-to-bracket,
+.fa-sign-in {
+	--fa: ""
+}
+
+.fa-trophy {
+	--fa: ""
+}
+
+.fa-upload {
+	--fa: ""
+}
+
+.fa-lemon {
+	--fa: ""
+}
+
+.fa-phone {
+	--fa: ""
+}
+
+.fa-square-phone,
+.fa-phone-square {
+	--fa: ""
+}
+
+.fa-unlock {
+	--fa: ""
+}
+
+.fa-credit-card,
+.fa-credit-card-alt {
+	--fa: ""
+}
+
+.fa-rss,
+.fa-feed {
+	--fa: ""
+}
+
+.fa-hard-drive,
+.fa-hdd {
+	--fa: ""
+}
+
+.fa-bullhorn {
+	--fa: ""
+}
+
+.fa-certificate {
+	--fa: ""
+}
+
+.fa-hand-point-right {
+	--fa: ""
+}
+
+.fa-hand-point-left {
+	--fa: ""
+}
+
+.fa-hand-point-up {
+	--fa: ""
+}
+
+.fa-hand-point-down {
+	--fa: ""
+}
+
+.fa-circle-arrow-left,
+.fa-arrow-circle-left {
+	--fa: ""
+}
+
+.fa-circle-arrow-right,
+.fa-arrow-circle-right {
+	--fa: ""
+}
+
+.fa-circle-arrow-up,
+.fa-arrow-circle-up {
+	--fa: ""
+}
+
+.fa-circle-arrow-down,
+.fa-arrow-circle-down {
+	--fa: ""
+}
+
+.fa-globe {
+	--fa: ""
+}
+
+.fa-wrench {
+	--fa: ""
+}
+
+.fa-list-check,
+.fa-tasks {
+	--fa: ""
+}
+
+.fa-filter {
+	--fa: ""
+}
+
+.fa-briefcase {
+	--fa: ""
+}
+
+.fa-up-down-left-right,
+.fa-arrows-alt {
+	--fa: ""
+}
+
+.fa-users {
+	--fa: ""
+}
+
+.fa-link,
+.fa-chain {
+	--fa: ""
+}
+
+.fa-cloud {
+	--fa: ""
+}
+
+.fa-flask {
+	--fa: ""
+}
+
+.fa-scissors,
+.fa-cut {
+	--fa: ""
+}
+
+.fa-copy {
+	--fa: ""
+}
+
+.fa-paperclip {
+	--fa: ""
+}
+
+.fa-floppy-disk,
+.fa-save {
+	--fa: ""
+}
+
+.fa-square {
+	--fa: ""
+}
+
+.fa-bars,
+.fa-navicon {
+	--fa: ""
+}
+
+.fa-list-ul,
+.fa-list-dots {
+	--fa: ""
+}
+
+.fa-list-ol,
+.fa-list-1-2,
+.fa-list-numeric {
+	--fa: ""
+}
+
+.fa-strikethrough {
+	--fa: ""
+}
+
+.fa-underline {
+	--fa: ""
+}
+
+.fa-table {
+	--fa: ""
+}
+
+.fa-wand-magic,
+.fa-magic {
+	--fa: ""
+}
+
+.fa-truck {
+	--fa: ""
+}
+
+.fa-money-bill {
+	--fa: ""
+}
+
+.fa-caret-down {
+	--fa: ""
+}
+
+.fa-caret-up {
+	--fa: ""
+}
+
+.fa-caret-left {
+	--fa: ""
+}
+
+.fa-caret-right {
+	--fa: ""
+}
+
+.fa-table-columns,
+.fa-columns {
+	--fa: ""
+}
+
+.fa-sort,
+.fa-unsorted {
+	--fa: ""
+}
+
+.fa-sort-down,
+.fa-sort-desc {
+	--fa: ""
+}
+
+.fa-sort-up,
+.fa-sort-asc {
+	--fa: ""
+}
+
+.fa-envelope {
+	--fa: ""
+}
+
+.fa-arrow-rotate-left,
+.fa-arrow-left-rotate,
+.fa-arrow-rotate-back,
+.fa-arrow-rotate-backward,
+.fa-undo {
+	--fa: ""
+}
+
+.fa-gavel,
+.fa-legal {
+	--fa: ""
+}
+
+.fa-bolt,
+.fa-zap {
+	--fa: ""
+}
+
+.fa-sitemap {
+	--fa: ""
+}
+
+.fa-umbrella {
+	--fa: ""
+}
+
+.fa-paste,
+.fa-file-clipboard {
+	--fa: ""
+}
+
+.fa-lightbulb {
+	--fa: ""
+}
+
+.fa-arrow-right-arrow-left,
+.fa-exchange {
+	--fa: ""
+}
+
+.fa-cloud-arrow-down,
+.fa-cloud-download,
+.fa-cloud-download-alt {
+	--fa: ""
+}
+
+.fa-cloud-arrow-up,
+.fa-cloud-upload,
+.fa-cloud-upload-alt {
+	--fa: ""
+}
+
+.fa-user-doctor,
+.fa-user-md {
+	--fa: ""
+}
+
+.fa-stethoscope {
+	--fa: ""
+}
+
+.fa-suitcase {
+	--fa: ""
+}
+
+.fa-bell {
+	--fa: ""
+}
+
+.fa-mug-saucer,
+.fa-coffee {
+	--fa: ""
+}
+
+.fa-hospital,
+.fa-hospital-alt,
+.fa-hospital-wide {
+	--fa: ""
+}
+
+.fa-truck-medical,
+.fa-ambulance {
+	--fa: ""
+}
+
+.fa-suitcase-medical,
+.fa-medkit {
+	--fa: ""
+}
+
+.fa-jet-fighter,
+.fa-fighter-jet {
+	--fa: ""
+}
+
+.fa-beer-mug-empty,
+.fa-beer {
+	--fa: ""
+}
+
+.fa-square-h,
+.fa-h-square {
+	--fa: ""
+}
+
+.fa-square-plus,
+.fa-plus-square {
+	--fa: ""
+}
+
+.fa-angles-left,
+.fa-angle-double-left {
+	--fa: ""
+}
+
+.fa-angles-right,
+.fa-angle-double-right {
+	--fa: ""
+}
+
+.fa-angles-up,
+.fa-angle-double-up {
+	--fa: ""
+}
+
+.fa-angles-down,
+.fa-angle-double-down {
+	--fa: ""
+}
+
+.fa-angle-left {
+	--fa: ""
+}
+
+.fa-angle-right {
+	--fa: ""
+}
+
+.fa-angle-up {
+	--fa: ""
+}
+
+.fa-angle-down {
+	--fa: ""
+}
+
+.fa-laptop {
+	--fa: ""
+}
+
+.fa-tablet-button {
+	--fa: ""
+}
+
+.fa-mobile-button {
+	--fa: ""
+}
+
+.fa-quote-left,
+.fa-quote-left-alt {
+	--fa: ""
+}
+
+.fa-quote-right,
+.fa-quote-right-alt {
+	--fa: ""
+}
+
+.fa-spinner {
+	--fa: ""
+}
+
+.fa-circle {
+	--fa: ""
+}
+
+.fa-face-smile,
+.fa-smile {
+	--fa: ""
+}
+
+.fa-face-frown,
+.fa-frown {
+	--fa: ""
+}
+
+.fa-face-meh,
+.fa-meh {
+	--fa: ""
+}
+
+.fa-gamepad {
+	--fa: ""
+}
+
+.fa-keyboard {
+	--fa: ""
+}
+
+.fa-flag-checkered {
+	--fa: ""
+}
+
+.fa-terminal {
+	--fa: ""
+}
+
+.fa-code {
+	--fa: ""
+}
+
+.fa-reply-all,
+.fa-mail-reply-all {
+	--fa: ""
+}
+
+.fa-location-arrow {
+	--fa: ""
+}
+
+.fa-crop {
+	--fa: ""
+}
+
+.fa-code-branch {
+	--fa: ""
+}
+
+.fa-link-slash,
+.fa-chain-broken,
+.fa-chain-slash,
+.fa-unlink {
+	--fa: ""
+}
+
+.fa-info {
+	--fa: ""
+}
+
+.fa-superscript {
+	--fa: ""
+}
+
+.fa-subscript {
+	--fa: ""
+}
+
+.fa-eraser {
+	--fa: ""
+}
+
+.fa-puzzle-piece {
+	--fa: ""
+}
+
+.fa-microphone {
+	--fa: ""
+}
+
+.fa-microphone-slash {
+	--fa: ""
+}
+
+.fa-shield,
+.fa-shield-blank {
+	--fa: ""
+}
+
+.fa-calendar {
+	--fa: ""
+}
+
+.fa-fire-extinguisher {
+	--fa: ""
+}
+
+.fa-rocket {
+	--fa: ""
+}
+
+.fa-circle-chevron-left,
+.fa-chevron-circle-left {
+	--fa: ""
+}
+
+.fa-circle-chevron-right,
+.fa-chevron-circle-right {
+	--fa: ""
+}
+
+.fa-circle-chevron-up,
+.fa-chevron-circle-up {
+	--fa: ""
+}
+
+.fa-circle-chevron-down,
+.fa-chevron-circle-down {
+	--fa: ""
+}
+
+.fa-anchor {
+	--fa: ""
+}
+
+.fa-unlock-keyhole,
+.fa-unlock-alt {
+	--fa: ""
+}
+
+.fa-bullseye {
+	--fa: ""
+}
+
+.fa-ellipsis,
+.fa-ellipsis-h {
+	--fa: ""
+}
+
+.fa-ellipsis-vertical,
+.fa-ellipsis-v {
+	--fa: ""
+}
+
+.fa-square-rss,
+.fa-rss-square {
+	--fa: ""
+}
+
+.fa-circle-play,
+.fa-play-circle {
+	--fa: ""
+}
+
+.fa-ticket {
+	--fa: ""
+}
+
+.fa-square-minus,
+.fa-minus-square {
+	--fa: ""
+}
+
+.fa-arrow-turn-up,
+.fa-level-up {
+	--fa: ""
+}
+
+.fa-arrow-turn-down,
+.fa-level-down {
+	--fa: ""
+}
+
+.fa-square-check,
+.fa-check-square {
+	--fa: ""
+}
+
+.fa-square-pen,
+.fa-pen-square,
+.fa-pencil-square {
+	--fa: ""
+}
+
+.fa-square-arrow-up-right,
+.fa-external-link-square {
+	--fa: ""
+}
+
+.fa-share-from-square,
+.fa-share-square {
+	--fa: ""
+}
+
+.fa-compass {
+	--fa: ""
+}
+
+.fa-square-caret-down,
+.fa-caret-square-down {
+	--fa: ""
+}
+
+.fa-square-caret-up,
+.fa-caret-square-up {
+	--fa: ""
+}
+
+.fa-square-caret-right,
+.fa-caret-square-right {
+	--fa: ""
+}
+
+.fa-euro-sign,
+.fa-eur,
+.fa-euro {
+	--fa: ""
+}
+
+.fa-sterling-sign,
+.fa-gbp,
+.fa-pound-sign {
+	--fa: ""
+}
+
+.fa-rupee-sign,
+.fa-rupee {
+	--fa: ""
+}
+
+.fa-yen-sign,
+.fa-cny,
+.fa-jpy,
+.fa-rmb,
+.fa-yen {
+	--fa: ""
+}
+
+.fa-ruble-sign,
+.fa-rouble,
+.fa-rub,
+.fa-ruble {
+	--fa: ""
+}
+
+.fa-won-sign,
+.fa-krw,
+.fa-won {
+	--fa: ""
+}
+
+.fa-file {
+	--fa: ""
+}
+
+.fa-file-lines,
+.fa-file-alt,
+.fa-file-text {
+	--fa: ""
+}
+
+.fa-arrow-down-a-z,
+.fa-sort-alpha-asc,
+.fa-sort-alpha-down {
+	--fa: ""
+}
+
+.fa-arrow-up-a-z,
+.fa-sort-alpha-up {
+	--fa: ""
+}
+
+.fa-arrow-down-wide-short,
+.fa-sort-amount-asc,
+.fa-sort-amount-down {
+	--fa: ""
+}
+
+.fa-arrow-up-wide-short,
+.fa-sort-amount-up {
+	--fa: ""
+}
+
+.fa-arrow-down-1-9,
+.fa-sort-numeric-asc,
+.fa-sort-numeric-down {
+	--fa: ""
+}
+
+.fa-arrow-up-1-9,
+.fa-sort-numeric-up {
+	--fa: ""
+}
+
+.fa-thumbs-up {
+	--fa: ""
+}
+
+.fa-thumbs-down {
+	--fa: ""
+}
+
+.fa-arrow-down-long,
+.fa-long-arrow-down {
+	--fa: ""
+}
+
+.fa-arrow-up-long,
+.fa-long-arrow-up {
+	--fa: ""
+}
+
+.fa-arrow-left-long,
+.fa-long-arrow-left {
+	--fa: ""
+}
+
+.fa-arrow-right-long,
+.fa-long-arrow-right {
+	--fa: ""
+}
+
+.fa-person-dress,
+.fa-female {
+	--fa: ""
+}
+
+.fa-person,
+.fa-male {
+	--fa: ""
+}
+
+.fa-sun {
+	--fa: ""
+}
+
+.fa-moon {
+	--fa: ""
+}
+
+.fa-box-archive,
+.fa-archive {
+	--fa: ""
+}
+
+.fa-bug {
+	--fa: ""
+}
+
+.fa-square-caret-left,
+.fa-caret-square-left {
+	--fa: ""
+}
+
+.fa-circle-dot,
+.fa-dot-circle {
+	--fa: ""
+}
+
+.fa-wheelchair {
+	--fa: ""
+}
+
+.fa-lira-sign {
+	--fa: ""
+}
+
+.fa-shuttle-space,
+.fa-space-shuttle {
+	--fa: ""
+}
+
+.fa-square-envelope,
+.fa-envelope-square {
+	--fa: ""
+}
+
+.fa-building-columns,
+.fa-bank,
+.fa-institution,
+.fa-museum,
+.fa-university {
+	--fa: ""
+}
+
+.fa-graduation-cap,
+.fa-mortar-board {
+	--fa: ""
+}
+
+.fa-language {
+	--fa: ""
+}
+
+.fa-fax {
+	--fa: ""
+}
+
+.fa-building {
+	--fa: ""
+}
+
+.fa-child {
+	--fa: ""
+}
+
+.fa-paw {
+	--fa: ""
+}
+
+.fa-cube {
+	--fa: ""
+}
+
+.fa-cubes {
+	--fa: ""
+}
+
+.fa-recycle {
+	--fa: ""
+}
+
+.fa-car,
+.fa-automobile {
+	--fa: ""
+}
+
+.fa-taxi,
+.fa-cab {
+	--fa: ""
+}
+
+.fa-tree {
+	--fa: ""
+}
+
+.fa-database {
+	--fa: ""
+}
+
+.fa-file-pdf {
+	--fa: ""
+}
+
+.fa-file-word {
+	--fa: ""
+}
+
+.fa-file-excel {
+	--fa: ""
+}
+
+.fa-file-powerpoint {
+	--fa: ""
+}
+
+.fa-file-image {
+	--fa: ""
+}
+
+.fa-file-zipper,
+.fa-file-archive {
+	--fa: ""
+}
+
+.fa-file-audio {
+	--fa: ""
+}
+
+.fa-file-video {
+	--fa: ""
+}
+
+.fa-file-code {
+	--fa: ""
+}
+
+.fa-life-ring {
+	--fa: ""
+}
+
+.fa-circle-notch {
+	--fa: ""
+}
+
+.fa-paper-plane {
+	--fa: ""
+}
+
+.fa-clock-rotate-left,
+.fa-history {
+	--fa: ""
+}
+
+.fa-heading,
+.fa-header {
+	--fa: ""
+}
+
+.fa-paragraph {
+	--fa: ""
+}
+
+.fa-sliders,
+.fa-sliders-h {
+	--fa: ""
+}
+
+.fa-share-nodes,
+.fa-share-alt {
+	--fa: ""
+}
+
+.fa-square-share-nodes,
+.fa-share-alt-square {
+	--fa: ""
+}
+
+.fa-bomb {
+	--fa: ""
+}
+
+.fa-futbol,
+.fa-futbol-ball,
+.fa-soccer-ball {
+	--fa: ""
+}
+
+.fa-tty,
+.fa-teletype {
+	--fa: ""
+}
+
+.fa-binoculars {
+	--fa: ""
+}
+
+.fa-plug {
+	--fa: ""
+}
+
+.fa-newspaper {
+	--fa: ""
+}
+
+.fa-wifi,
+.fa-wifi-3,
+.fa-wifi-strong {
+	--fa: ""
+}
+
+.fa-calculator {
+	--fa: ""
+}
+
+.fa-bell-slash {
+	--fa: ""
+}
+
+.fa-trash {
+	--fa: ""
+}
+
+.fa-copyright {
+	--fa: ""
+}
+
+.fa-eye-dropper,
+.fa-eye-dropper-empty,
+.fa-eyedropper {
+	--fa: ""
+}
+
+.fa-paintbrush,
+.fa-paint-brush {
+	--fa: ""
+}
+
+.fa-cake-candles,
+.fa-birthday-cake,
+.fa-cake {
+	--fa: ""
+}
+
+.fa-chart-area,
+.fa-area-chart {
+	--fa: ""
+}
+
+.fa-chart-pie,
+.fa-pie-chart {
+	--fa: ""
+}
+
+.fa-chart-line,
+.fa-line-chart {
+	--fa: ""
+}
+
+.fa-toggle-off {
+	--fa: ""
+}
+
+.fa-toggle-on {
+	--fa: ""
+}
+
+.fa-bicycle {
+	--fa: ""
+}
+
+.fa-bus {
+	--fa: ""
+}
+
+.fa-closed-captioning {
+	--fa: ""
+}
+
+.fa-shekel-sign,
+.fa-ils,
+.fa-shekel,
+.fa-sheqel,
+.fa-sheqel-sign {
+	--fa: ""
+}
+
+.fa-cart-plus {
+	--fa: ""
+}
+
+.fa-cart-arrow-down {
+	--fa: ""
+}
+
+.fa-diamond {
+	--fa: ""
+}
+
+.fa-ship {
+	--fa: ""
+}
+
+.fa-user-secret {
+	--fa: ""
+}
+
+.fa-motorcycle {
+	--fa: ""
+}
+
+.fa-street-view {
+	--fa: ""
+}
+
+.fa-heart-pulse,
+.fa-heartbeat {
+	--fa: ""
+}
+
+.fa-venus {
+	--fa: ""
+}
+
+.fa-mars {
+	--fa: ""
+}
+
+.fa-mercury {
+	--fa: ""
+}
+
+.fa-mars-and-venus {
+	--fa: ""
+}
+
+.fa-transgender,
+.fa-transgender-alt {
+	--fa: ""
+}
+
+.fa-venus-double {
+	--fa: ""
+}
+
+.fa-mars-double {
+	--fa: ""
+}
+
+.fa-venus-mars {
+	--fa: ""
+}
+
+.fa-mars-stroke {
+	--fa: ""
+}
+
+.fa-mars-stroke-up,
+.fa-mars-stroke-v {
+	--fa: ""
+}
+
+.fa-mars-stroke-right,
+.fa-mars-stroke-h {
+	--fa: ""
+}
+
+.fa-neuter {
+	--fa: ""
+}
+
+.fa-genderless {
+	--fa: ""
+}
+
+.fa-server {
+	--fa: ""
+}
+
+.fa-user-plus {
+	--fa: ""
+}
+
+.fa-user-xmark,
+.fa-user-times {
+	--fa: ""
+}
+
+.fa-bed {
+	--fa: ""
+}
+
+.fa-train {
+	--fa: ""
+}
+
+.fa-train-subway,
+.fa-subway {
+	--fa: ""
+}
+
+.fa-battery-full,
+.fa-battery,
+.fa-battery-5 {
+	--fa: ""
+}
+
+.fa-battery-three-quarters,
+.fa-battery-4 {
+	--fa: ""
+}
+
+.fa-battery-half,
+.fa-battery-3 {
+	--fa: ""
+}
+
+.fa-battery-quarter,
+.fa-battery-2 {
+	--fa: ""
+}
+
+.fa-battery-empty,
+.fa-battery-0 {
+	--fa: ""
+}
+
+.fa-arrow-pointer,
+.fa-mouse-pointer {
+	--fa: ""
+}
+
+.fa-i-cursor {
+	--fa: ""
+}
+
+.fa-object-group {
+	--fa: ""
+}
+
+.fa-object-ungroup {
+	--fa: ""
+}
+
+.fa-note-sticky,
+.fa-sticky-note {
+	--fa: ""
+}
+
+.fa-clone {
+	--fa: ""
+}
+
+.fa-scale-balanced,
+.fa-balance-scale {
+	--fa: ""
+}
+
+.fa-hourglass-start,
+.fa-hourglass-1 {
+	--fa: ""
+}
+
+.fa-hourglass-half,
+.fa-hourglass-2 {
+	--fa: ""
+}
+
+.fa-hourglass-end,
+.fa-hourglass-3 {
+	--fa: ""
+}
+
+.fa-hourglass,
+.fa-hourglass-empty {
+	--fa: ""
+}
+
+.fa-hand-back-fist,
+.fa-hand-rock {
+	--fa: ""
+}
+
+.fa-hand,
+.fa-hand-paper {
+	--fa: ""
+}
+
+.fa-hand-scissors {
+	--fa: ""
+}
+
+.fa-hand-lizard {
+	--fa: ""
+}
+
+.fa-hand-spock {
+	--fa: ""
+}
+
+.fa-hand-pointer {
+	--fa: ""
+}
+
+.fa-hand-peace {
+	--fa: ""
+}
+
+.fa-trademark {
+	--fa: ""
+}
+
+.fa-registered {
+	--fa: ""
+}
+
+.fa-tv,
+.fa-television,
+.fa-tv-alt {
+	--fa: ""
+}
+
+.fa-calendar-plus {
+	--fa: ""
+}
+
+.fa-calendar-minus {
+	--fa: ""
+}
+
+.fa-calendar-xmark,
+.fa-calendar-times {
+	--fa: ""
+}
+
+.fa-calendar-check {
+	--fa: ""
+}
+
+.fa-industry {
+	--fa: ""
+}
+
+.fa-map-pin {
+	--fa: ""
+}
+
+.fa-signs-post,
+.fa-map-signs {
+	--fa: ""
+}
+
+.fa-map {
+	--fa: ""
+}
+
+.fa-message,
+.fa-comment-alt {
+	--fa: ""
+}
+
+.fa-circle-pause,
+.fa-pause-circle {
+	--fa: ""
+}
+
+.fa-circle-stop,
+.fa-stop-circle {
+	--fa: ""
+}
+
+.fa-bag-shopping,
+.fa-shopping-bag {
+	--fa: ""
+}
+
+.fa-basket-shopping,
+.fa-shopping-basket {
+	--fa: ""
+}
+
+.fa-universal-access {
+	--fa: ""
+}
+
+.fa-person-walking-with-cane,
+.fa-blind {
+	--fa: ""
+}
+
+.fa-audio-description {
+	--fa: ""
+}
+
+.fa-phone-volume,
+.fa-volume-control-phone {
+	--fa: ""
+}
+
+.fa-braille {
+	--fa: ""
+}
+
+.fa-ear-listen,
+.fa-assistive-listening-systems {
+	--fa: ""
+}
+
+.fa-hands-asl-interpreting,
+.fa-american-sign-language-interpreting,
+.fa-asl-interpreting,
+.fa-hands-american-sign-language-interpreting {
+	--fa: ""
+}
+
+.fa-ear-deaf,
+.fa-deaf,
+.fa-deafness,
+.fa-hard-of-hearing {
+	--fa: ""
+}
+
+.fa-hands,
+.fa-sign-language,
+.fa-signing {
+	--fa: ""
+}
+
+.fa-eye-low-vision,
+.fa-low-vision {
+	--fa: ""
+}
+
+.fa-handshake,
+.fa-handshake-alt,
+.fa-handshake-simple {
+	--fa: ""
+}
+
+.fa-envelope-open {
+	--fa: ""
+}
+
+.fa-address-book,
+.fa-contact-book {
+	--fa: ""
+}
+
+.fa-address-card,
+.fa-contact-card,
+.fa-vcard {
+	--fa: ""
+}
+
+.fa-circle-user,
+.fa-user-circle {
+	--fa: ""
+}
+
+.fa-id-badge {
+	--fa: ""
+}
+
+.fa-id-card,
+.fa-drivers-license {
+	--fa: ""
+}
+
+.fa-temperature-full,
+.fa-temperature-4,
+.fa-thermometer-4,
+.fa-thermometer-full {
+	--fa: ""
+}
+
+.fa-temperature-three-quarters,
+.fa-temperature-3,
+.fa-thermometer-3,
+.fa-thermometer-three-quarters {
+	--fa: ""
+}
+
+.fa-temperature-half,
+.fa-temperature-2,
+.fa-thermometer-2,
+.fa-thermometer-half {
+	--fa: ""
+}
+
+.fa-temperature-quarter,
+.fa-temperature-1,
+.fa-thermometer-1,
+.fa-thermometer-quarter {
+	--fa: ""
+}
+
+.fa-temperature-empty,
+.fa-temperature-0,
+.fa-thermometer-0,
+.fa-thermometer-empty {
+	--fa: ""
+}
+
+.fa-shower {
+	--fa: ""
+}
+
+.fa-bath,
+.fa-bathtub {
+	--fa: ""
+}
+
+.fa-podcast {
+	--fa: ""
+}
+
+.fa-window-maximize {
+	--fa: ""
+}
+
+.fa-window-minimize {
+	--fa: ""
+}
+
+.fa-window-restore {
+	--fa: ""
+}
+
+.fa-square-xmark,
+.fa-times-square,
+.fa-xmark-square {
+	--fa: ""
+}
+
+.fa-microchip {
+	--fa: ""
+}
+
+.fa-snowflake {
+	--fa: ""
+}
+
+.fa-watch {
+	--fa: ""
+}
+
+.fa-volume-slash {
+	--fa: ""
+}
+
+.fa-fork,
+.fa-utensil-fork {
+	--fa: ""
+}
+
+.fa-knife,
+.fa-utensil-knife {
+	--fa: ""
+}
+
+.fa-spoon,
+.fa-utensil-spoon {
+	--fa: ""
+}
+
+.fa-fork-knife,
+.fa-utensils-alt {
+	--fa: ""
+}
+
+.fa-utensils,
+.fa-cutlery {
+	--fa: ""
+}
+
+.fa-circle-dollar,
+.fa-dollar-circle,
+.fa-usd-circle {
+	--fa: ""
+}
+
+.fa-square-dollar,
+.fa-dollar-square,
+.fa-usd-square {
+	--fa: ""
+}
+
+.fa-rotate-left,
+.fa-rotate-back,
+.fa-rotate-backward,
+.fa-undo-alt {
+	--fa: ""
+}
+
+.fa-trophy-star,
+.fa-trophy-alt {
+	--fa: ""
+}
+
+.fa-triangle {
+	--fa: ""
+}
+
+.fa-trash-can,
+.fa-trash-alt {
+	--fa: ""
+}
+
+.fa-hexagon-xmark,
+.fa-times-hexagon,
+.fa-xmark-hexagon {
+	--fa: ""
+}
+
+.fa-octagon-xmark,
+.fa-times-octagon,
+.fa-xmark-octagon {
+	--fa: ""
+}
+
+.fa-rotate,
+.fa-sync-alt {
+	--fa: ""
+}
+
+.fa-stopwatch {
+	--fa: ""
+}
+
+.fa-star-exclamation {
+	--fa: ""
+}
+
+.fa-spade {
+	--fa: ""
+}
+
+.fa-right-from-bracket,
+.fa-sign-out-alt {
+	--fa: ""
+}
+
+.fa-right-to-bracket,
+.fa-sign-in-alt {
+	--fa: ""
+}
+
+.fa-shield-check {
+	--fa: ""
+}
+
+.fa-scrubber {
+	--fa: ""
+}
+
+.fa-rotate-right,
+.fa-redo-alt,
+.fa-rotate-forward {
+	--fa: ""
+}
+
+.fa-rectangle,
+.fa-rectangle-landscape {
+	--fa: ""
+}
+
+.fa-rectangle-vertical,
+.fa-rectangle-portrait {
+	--fa: ""
+}
+
+.fa-rectangle-wide {
+	--fa: ""
+}
+
+.fa-square-question,
+.fa-question-square {
+	--fa: ""
+}
+
+.fa-poo {
+	--fa: ""
+}
+
+.fa-hexagon-plus,
+.fa-plus-hexagon {
+	--fa: ""
+}
+
+.fa-octagon-plus,
+.fa-plus-octagon {
+	--fa: ""
+}
+
+.fa-images {
+	--fa: ""
+}
+
+.fa-pencil,
+.fa-pencil-alt {
+	--fa: ""
+}
+
+.fa-pen {
+	--fa: ""
+}
+
+.fa-pen-clip,
+.fa-pen-alt {
+	--fa: ""
+}
+
+.fa-octagon {
+	--fa: ""
+}
+
+.fa-hexagon-minus,
+.fa-minus-hexagon {
+	--fa: ""
+}
+
+.fa-octagon-minus,
+.fa-minus-octagon {
+	--fa: ""
+}
+
+.fa-down-long,
+.fa-long-arrow-alt-down {
+	--fa: ""
+}
+
+.fa-left-long,
+.fa-long-arrow-alt-left {
+	--fa: ""
+}
+
+.fa-right-long,
+.fa-long-arrow-alt-right {
+	--fa: ""
+}
+
+.fa-up-long,
+.fa-long-arrow-alt-up {
+	--fa: ""
+}
+
+.fa-lock-keyhole,
+.fa-lock-alt {
+	--fa: ""
+}
+
+.fa-jack-o-lantern {
+	--fa: ""
+}
+
+.fa-square-info,
+.fa-info-square {
+	--fa: ""
+}
+
+.fa-inbox-in,
+.fa-inbox-arrow-down {
+	--fa: ""
+}
+
+.fa-inbox-out,
+.fa-inbox-arrow-up {
+	--fa: ""
+}
+
+.fa-hexagon {
+	--fa: ""
+}
+
+.fa-h1 {
+	--fa: ""
+}
+
+.fa-h2 {
+	--fa: ""
+}
+
+.fa-h3 {
+	--fa: ""
+}
+
+.fa-file-check {
+	--fa: ""
+}
+
+.fa-file-xmark,
+.fa-file-times {
+	--fa: ""
+}
+
+.fa-file-minus {
+	--fa: ""
+}
+
+.fa-file-plus {
+	--fa: ""
+}
+
+.fa-file-exclamation {
+	--fa: ""
+}
+
+.fa-file-pen,
+.fa-file-edit {
+	--fa: ""
+}
+
+.fa-arrows-maximize,
+.fa-expand-arrows {
+	--fa: ""
+}
+
+.fa-maximize,
+.fa-expand-arrows-alt {
+	--fa: ""
+}
+
+.fa-expand-wide {
+	--fa: ""
+}
+
+.fa-square-exclamation,
+.fa-exclamation-square {
+	--fa: ""
+}
+
+.fa-chevrons-down,
+.fa-chevron-double-down {
+	--fa: ""
+}
+
+.fa-chevrons-left,
+.fa-chevron-double-left {
+	--fa: ""
+}
+
+.fa-chevrons-right,
+.fa-chevron-double-right {
+	--fa: ""
+}
+
+.fa-chevrons-up,
+.fa-chevron-double-up {
+	--fa: ""
+}
+
+.fa-compress-wide {
+	--fa: ""
+}
+
+.fa-club {
+	--fa: ""
+}
+
+.fa-clipboard {
+	--fa: ""
+}
+
+.fa-square-chevron-down,
+.fa-chevron-square-down {
+	--fa: ""
+}
+
+.fa-square-chevron-left,
+.fa-chevron-square-left {
+	--fa: ""
+}
+
+.fa-square-chevron-right,
+.fa-chevron-square-right {
+	--fa: ""
+}
+
+.fa-square-chevron-up,
+.fa-chevron-square-up {
+	--fa: ""
+}
+
+.fa-circle-caret-down,
+.fa-caret-circle-down {
+	--fa: ""
+}
+
+.fa-circle-caret-left,
+.fa-caret-circle-left {
+	--fa: ""
+}
+
+.fa-circle-caret-right,
+.fa-caret-circle-right {
+	--fa: ""
+}
+
+.fa-circle-caret-up,
+.fa-caret-circle-up {
+	--fa: ""
+}
+
+.fa-calendar-pen,
+.fa-calendar-edit {
+	--fa: ""
+}
+
+.fa-calendar-exclamation {
+	--fa: ""
+}
+
+.fa-badge {
+	--fa: ""
+}
+
+.fa-badge-check {
+	--fa: ""
+}
+
+.fa-left-right,
+.fa-arrows-alt-h {
+	--fa: ""
+}
+
+.fa-up-down,
+.fa-arrows-alt-v {
+	--fa: ""
+}
+
+.fa-square-arrow-down,
+.fa-arrow-square-down {
+	--fa: ""
+}
+
+.fa-square-arrow-left,
+.fa-arrow-square-left {
+	--fa: ""
+}
+
+.fa-square-arrow-right,
+.fa-arrow-square-right {
+	--fa: ""
+}
+
+.fa-square-arrow-up,
+.fa-arrow-square-up {
+	--fa: ""
+}
+
+.fa-arrow-down-to-line,
+.fa-arrow-to-bottom {
+	--fa: ""
+}
+
+.fa-arrow-left-to-line,
+.fa-arrow-to-left {
+	--fa: ""
+}
+
+.fa-arrow-right-to-line,
+.fa-arrow-to-right {
+	--fa: ""
+}
+
+.fa-arrow-up-to-line,
+.fa-arrow-to-top {
+	--fa: ""
+}
+
+.fa-arrow-up-from-line,
+.fa-arrow-from-bottom {
+	--fa: ""
+}
+
+.fa-arrow-right-from-line,
+.fa-arrow-from-left {
+	--fa: ""
+}
+
+.fa-arrow-left-from-line,
+.fa-arrow-from-right {
+	--fa: ""
+}
+
+.fa-arrow-down-from-line,
+.fa-arrow-from-top {
+	--fa: ""
+}
+
+.fa-up-from-line,
+.fa-arrow-alt-from-bottom {
+	--fa: ""
+}
+
+.fa-right-from-line,
+.fa-arrow-alt-from-left {
+	--fa: ""
+}
+
+.fa-left-from-line,
+.fa-arrow-alt-from-right {
+	--fa: ""
+}
+
+.fa-down-from-line,
+.fa-arrow-alt-from-top {
+	--fa: ""
+}
+
+.fa-down-to-line,
+.fa-arrow-alt-to-bottom {
+	--fa: ""
+}
+
+.fa-left-to-line,
+.fa-arrow-alt-to-left {
+	--fa: ""
+}
+
+.fa-right-to-line,
+.fa-arrow-alt-to-right {
+	--fa: ""
+}
+
+.fa-up-to-line,
+.fa-arrow-alt-to-top {
+	--fa: ""
+}
+
+.fa-alarm-clock {
+	--fa: ""
+}
+
+.fa-square-down,
+.fa-arrow-alt-square-down {
+	--fa: ""
+}
+
+.fa-square-left,
+.fa-arrow-alt-square-left {
+	--fa: ""
+}
+
+.fa-square-right,
+.fa-arrow-alt-square-right {
+	--fa: ""
+}
+
+.fa-square-up,
+.fa-arrow-alt-square-up {
+	--fa: ""
+}
+
+.fa-down,
+.fa-arrow-alt-down {
+	--fa: ""
+}
+
+.fa-left,
+.fa-arrow-alt-left {
+	--fa: ""
+}
+
+.fa-right,
+.fa-arrow-alt-right {
+	--fa: ""
+}
+
+.fa-up,
+.fa-arrow-alt-up {
+	--fa: ""
+}
+
+.fa-circle-down,
+.fa-arrow-alt-circle-down {
+	--fa: ""
+}
+
+.fa-circle-left,
+.fa-arrow-alt-circle-left {
+	--fa: ""
+}
+
+.fa-circle-right,
+.fa-arrow-alt-circle-right {
+	--fa: ""
+}
+
+.fa-circle-up,
+.fa-arrow-alt-circle-up {
+	--fa: ""
+}
+
+.fa-up-right-from-square,
+.fa-external-link-alt {
+	--fa: ""
+}
+
+.fa-square-up-right,
+.fa-external-link-square-alt {
+	--fa: ""
+}
+
+.fa-arrows-retweet,
+.fa-retweet-alt {
+	--fa: ""
+}
+
+.fa-right-left,
+.fa-exchange-alt {
+	--fa: ""
+}
+
+.fa-repeat {
+	--fa: ""
+}
+
+.fa-arrows-repeat,
+.fa-repeat-alt {
+	--fa: ""
+}
+
+.fa-repeat-1 {
+	--fa: ""
+}
+
+.fa-arrows-repeat-1,
+.fa-repeat-1-alt {
+	--fa: ""
+}
+
+.fa-share-all {
+	--fa: ""
+}
+
+.fa-battery-bolt {
+	--fa: ""
+}
+
+.fa-battery-slash {
+	--fa: ""
+}
+
+.fa-browser {
+	--fa: ""
+}
+
+.fa-code-commit {
+	--fa: ""
+}
+
+.fa-code-merge {
+	--fa: ""
+}
+
+.fa-credit-card-blank {
+	--fa: ""
+}
+
+.fa-credit-card-front {
+	--fa: ""
+}
+
+.fa-desktop,
+.fa-desktop-alt {
+	--fa: ""
+}
+
+.fa-ellipsis-stroke,
+.fa-ellipsis-h-alt {
+	--fa: ""
+}
+
+.fa-ellipsis-stroke-vertical,
+.fa-ellipsis-v-alt {
+	--fa: ""
+}
+
+.fa-gem {
+	--fa: ""
+}
+
+.fa-industry-windows,
+.fa-industry-alt {
+	--fa: ""
+}
+
+.fa-turn-down,
+.fa-level-down-alt {
+	--fa: ""
+}
+
+.fa-turn-up,
+.fa-level-up-alt {
+	--fa: ""
+}
+
+.fa-lock-open {
+	--fa: ""
+}
+
+.fa-lock-keyhole-open,
+.fa-lock-open-alt {
+	--fa: ""
+}
+
+.fa-location-dot,
+.fa-map-marker-alt {
+	--fa: ""
+}
+
+.fa-microphone-lines,
+.fa-microphone-alt {
+	--fa: ""
+}
+
+.fa-mobile-screen-button,
+.fa-mobile-alt {
+	--fa: ""
+}
+
+.fa-mobile,
+.fa-mobile-android,
+.fa-mobile-phone {
+	--fa: ""
+}
+
+.fa-mobile-screen,
+.fa-mobile-android-alt {
+	--fa: ""
+}
+
+.fa-money-bill-1,
+.fa-money-bill-alt {
+	--fa: ""
+}
+
+.fa-phone-slash {
+	--fa: ""
+}
+
+.fa-plane-engines,
+.fa-plane-alt {
+	--fa: ""
+}
+
+.fa-image-portrait,
+.fa-portrait {
+	--fa: ""
+}
+
+.fa-reply,
+.fa-mail-reply {
+	--fa: ""
+}
+
+.fa-shield-halved,
+.fa-shield-alt {
+	--fa: ""
+}
+
+.fa-square-sliders,
+.fa-sliders-h-square {
+	--fa: ""
+}
+
+.fa-sliders-up,
+.fa-sliders-v {
+	--fa: ""
+}
+
+.fa-square-sliders-vertical,
+.fa-sliders-v-square {
+	--fa: ""
+}
+
+.fa-spinner-third {
+	--fa: ""
+}
+
+.fa-tablet-screen-button,
+.fa-tablet-alt {
+	--fa: ""
+}
+
+.fa-tablet,
+.fa-tablet-android {
+	--fa: ""
+}
+
+.fa-tablet-screen,
+.fa-tablet-android-alt {
+	--fa: ""
+}
+
+.fa-ticket-simple,
+.fa-ticket-alt {
+	--fa: ""
+}
+
+.fa-tree-deciduous,
+.fa-tree-alt {
+	--fa: ""
+}
+
+.fa-tv-retro {
+	--fa: ""
+}
+
+.fa-window {
+	--fa: ""
+}
+
+.fa-window-flip,
+.fa-window-alt {
+	--fa: ""
+}
+
+.fa-rectangle-xmark,
+.fa-rectangle-times,
+.fa-times-rectangle,
+.fa-window-close {
+	--fa: ""
+}
+
+.fa-down-left-and-up-right-to-center,
+.fa-compress-alt {
+	--fa: ""
+}
+
+.fa-up-right-and-down-left-from-center,
+.fa-expand-alt {
+	--fa: ""
+}
+
+.fa-baseball-bat-ball {
+	--fa: ""
+}
+
+.fa-baseball,
+.fa-baseball-ball {
+	--fa: ""
+}
+
+.fa-basketball,
+.fa-basketball-ball {
+	--fa: ""
+}
+
+.fa-basketball-hoop {
+	--fa: ""
+}
+
+.fa-bowling-ball {
+	--fa: ""
+}
+
+.fa-bowling-pins {
+	--fa: ""
+}
+
+.fa-boxing-glove,
+.fa-glove-boxing {
+	--fa: ""
+}
+
+.fa-chess {
+	--fa: ""
+}
+
+.fa-chess-bishop {
+	--fa: ""
+}
+
+.fa-chess-bishop-piece,
+.fa-chess-bishop-alt {
+	--fa: ""
+}
+
+.fa-chess-board {
+	--fa: ""
+}
+
+.fa-chess-clock {
+	--fa: ""
+}
+
+.fa-chess-clock-flip,
+.fa-chess-clock-alt {
+	--fa: ""
+}
+
+.fa-chess-king {
+	--fa: ""
+}
+
+.fa-chess-king-piece,
+.fa-chess-king-alt {
+	--fa: ""
+}
+
+.fa-chess-knight {
+	--fa: ""
+}
+
+.fa-chess-knight-piece,
+.fa-chess-knight-alt {
+	--fa: ""
+}
+
+.fa-chess-pawn {
+	--fa: ""
+}
+
+.fa-chess-pawn-piece,
+.fa-chess-pawn-alt {
+	--fa: ""
+}
+
+.fa-chess-queen {
+	--fa: ""
+}
+
+.fa-chess-queen-piece,
+.fa-chess-queen-alt {
+	--fa: ""
+}
+
+.fa-chess-rook {
+	--fa: ""
+}
+
+.fa-chess-rook-piece,
+.fa-chess-rook-alt {
+	--fa: ""
+}
+
+.fa-cricket-bat-ball,
+.fa-cricket {
+	--fa: ""
+}
+
+.fa-curling-stone,
+.fa-curling {
+	--fa: ""
+}
+
+.fa-dumbbell {
+	--fa: ""
+}
+
+.fa-field-hockey-stick-ball,
+.fa-field-hockey {
+	--fa: ""
+}
+
+.fa-football,
+.fa-football-ball {
+	--fa: ""
+}
+
+.fa-football-helmet {
+	--fa: ""
+}
+
+.fa-golf-ball-tee,
+.fa-golf-ball {
+	--fa: ""
+}
+
+.fa-golf-club {
+	--fa: ""
+}
+
+.fa-hockey-puck {
+	--fa: ""
+}
+
+.fa-hockey-sticks {
+	--fa: ""
+}
+
+.fa-luchador-mask,
+.fa-luchador,
+.fa-mask-luchador {
+	--fa: ""
+}
+
+.fa-flag-pennant,
+.fa-pennant {
+	--fa: ""
+}
+
+.fa-broom-ball,
+.fa-quidditch,
+.fa-quidditch-broom-ball {
+	--fa: ""
+}
+
+.fa-racquet {
+	--fa: ""
+}
+
+.fa-shuttlecock {
+	--fa: ""
+}
+
+.fa-square-full {
+	--fa: ""
+}
+
+.fa-table-tennis-paddle-ball,
+.fa-ping-pong-paddle-ball,
+.fa-table-tennis {
+	--fa: ""
+}
+
+.fa-tennis-ball {
+	--fa: ""
+}
+
+.fa-volleyball,
+.fa-volleyball-ball {
+	--fa: ""
+}
+
+.fa-whistle {
+	--fa: ""
+}
+
+.fa-hand-dots,
+.fa-allergies {
+	--fa: ""
+}
+
+.fa-bandage,
+.fa-band-aid {
+	--fa: ""
+}
+
+.fa-rectangle-barcode,
+.fa-barcode-alt {
+	--fa: ""
+}
+
+.fa-barcode-read {
+	--fa: ""
+}
+
+.fa-barcode-scan {
+	--fa: ""
+}
+
+.fa-box {
+	--fa: ""
+}
+
+.fa-box-check {
+	--fa: ""
+}
+
+.fa-boxes-stacked,
+.fa-boxes,
+.fa-boxes-alt {
+	--fa: ""
+}
+
+.fa-briefcase-medical {
+	--fa: ""
+}
+
+.fa-fire-flame-simple,
+.fa-burn {
+	--fa: ""
+}
+
+.fa-capsules {
+	--fa: ""
+}
+
+.fa-clipboard-check {
+	--fa: ""
+}
+
+.fa-clipboard-list {
+	--fa: ""
+}
+
+.fa-conveyor-belt {
+	--fa: ""
+}
+
+.fa-conveyor-belt-boxes,
+.fa-conveyor-belt-alt {
+	--fa: ""
+}
+
+.fa-person-dots-from-line,
+.fa-diagnoses {
+	--fa: ""
+}
+
+.fa-dna {
+	--fa: ""
+}
+
+.fa-dolly,
+.fa-dolly-box {
+	--fa: ""
+}
+
+.fa-dolly-empty {
+	--fa: ""
+}
+
+.fa-cart-flatbed,
+.fa-dolly-flatbed {
+	--fa: ""
+}
+
+.fa-cart-flatbed-boxes,
+.fa-dolly-flatbed-alt {
+	--fa: ""
+}
+
+.fa-cart-flatbed-empty,
+.fa-dolly-flatbed-empty {
+	--fa: ""
+}
+
+.fa-file-medical {
+	--fa: ""
+}
+
+.fa-file-waveform,
+.fa-file-medical-alt {
+	--fa: ""
+}
+
+.fa-kit-medical,
+.fa-first-aid {
+	--fa: ""
+}
+
+.fa-forklift {
+	--fa: ""
+}
+
+.fa-hand-holding-box {
+	--fa: ""
+}
+
+.fa-hands-holding-diamond,
+.fa-hand-receiving {
+	--fa: ""
+}
+
+.fa-circle-h,
+.fa-hospital-symbol {
+	--fa: ""
+}
+
+.fa-id-card-clip,
+.fa-id-card-alt {
+	--fa: ""
+}
+
+.fa-shelves,
+.fa-inventory {
+	--fa: ""
+}
+
+.fa-notes-medical {
+	--fa: ""
+}
+
+.fa-pallet {
+	--fa: ""
+}
+
+.fa-pallet-boxes,
+.fa-palette-boxes,
+.fa-pallet-alt {
+	--fa: ""
+}
+
+.fa-pills {
+	--fa: ""
+}
+
+.fa-prescription-bottle {
+	--fa: ""
+}
+
+.fa-prescription-bottle-medical,
+.fa-prescription-bottle-alt {
+	--fa: ""
+}
+
+.fa-bed-pulse,
+.fa-procedures {
+	--fa: ""
+}
+
+.fa-scanner-gun,
+.fa-scanner {
+	--fa: ""
+}
+
+.fa-scanner-keyboard {
+	--fa: ""
+}
+
+.fa-scanner-touchscreen {
+	--fa: ""
+}
+
+.fa-truck-fast,
+.fa-shipping-fast {
+	--fa: ""
+}
+
+.fa-truck-clock,
+.fa-shipping-timed {
+	--fa: ""
+}
+
+.fa-smoking {
+	--fa: ""
+}
+
+.fa-syringe {
+	--fa: ""
+}
+
+.fa-tablet-rugged {
+	--fa: ""
+}
+
+.fa-tablets {
+	--fa: ""
+}
+
+.fa-thermometer {
+	--fa: ""
+}
+
+.fa-vial {
+	--fa: ""
+}
+
+.fa-vials {
+	--fa: ""
+}
+
+.fa-warehouse {
+	--fa: ""
+}
+
+.fa-warehouse-full,
+.fa-warehouse-alt {
+	--fa: ""
+}
+
+.fa-weight-scale,
+.fa-weight {
+	--fa: ""
+}
+
+.fa-x-ray {
+	--fa: ""
+}
+
+.fa-blanket {
+	--fa: ""
+}
+
+.fa-book-heart {
+	--fa: ""
+}
+
+.fa-box-taped,
+.fa-box-alt {
+	--fa: ""
+}
+
+.fa-square-fragile,
+.fa-box-fragile,
+.fa-square-wine-glass-crack {
+	--fa: ""
+}
+
+.fa-box-open-full,
+.fa-box-full {
+	--fa: ""
+}
+
+.fa-box-heart {
+	--fa: ""
+}
+
+.fa-box-open {
+	--fa: ""
+}
+
+.fa-square-this-way-up,
+.fa-box-up {
+	--fa: ""
+}
+
+.fa-box-dollar,
+.fa-box-usd {
+	--fa: ""
+}
+
+.fa-message-check,
+.fa-comment-alt-check {
+	--fa: ""
+}
+
+.fa-message-dots,
+.fa-comment-alt-dots,
+.fa-messaging {
+	--fa: ""
+}
+
+.fa-message-pen,
+.fa-comment-alt-edit,
+.fa-message-edit {
+	--fa: ""
+}
+
+.fa-message-exclamation,
+.fa-comment-alt-exclamation {
+	--fa: ""
+}
+
+.fa-message-lines,
+.fa-comment-alt-lines {
+	--fa: ""
+}
+
+.fa-message-minus,
+.fa-comment-alt-minus {
+	--fa: ""
+}
+
+.fa-message-plus,
+.fa-comment-alt-plus {
+	--fa: ""
+}
+
+.fa-message-slash,
+.fa-comment-alt-slash {
+	--fa: ""
+}
+
+.fa-message-smile,
+.fa-comment-alt-smile {
+	--fa: ""
+}
+
+.fa-message-xmark,
+.fa-comment-alt-times,
+.fa-message-times {
+	--fa: ""
+}
+
+.fa-comment-check {
+	--fa: ""
+}
+
+.fa-comment-dots,
+.fa-commenting {
+	--fa: ""
+}
+
+.fa-comment-pen,
+.fa-comment-edit {
+	--fa: ""
+}
+
+.fa-comment-exclamation {
+	--fa: ""
+}
+
+.fa-comment-lines {
+	--fa: ""
+}
+
+.fa-comment-minus {
+	--fa: ""
+}
+
+.fa-comment-plus {
+	--fa: ""
+}
+
+.fa-comment-slash {
+	--fa: ""
+}
+
+.fa-comment-smile {
+	--fa: ""
+}
+
+.fa-comment-xmark,
+.fa-comment-times {
+	--fa: ""
+}
+
+.fa-messages,
+.fa-comments-alt {
+	--fa: ""
+}
+
+.fa-container-storage {
+	--fa: ""
+}
+
+.fa-couch {
+	--fa: ""
+}
+
+.fa-circle-dollar-to-slot,
+.fa-donate {
+	--fa: ""
+}
+
+.fa-dove {
+	--fa: ""
+}
+
+.fa-wine-glass-crack,
+.fa-fragile {
+	--fa: ""
+}
+
+.fa-hand-heart {
+	--fa: ""
+}
+
+.fa-hand-holding {
+	--fa: ""
+}
+
+.fa-hand-holding-heart {
+	--fa: ""
+}
+
+.fa-hand-holding-seedling {
+	--fa: ""
+}
+
+.fa-hand-holding-dollar,
+.fa-hand-holding-usd {
+	--fa: ""
+}
+
+.fa-hand-holding-droplet,
+.fa-hand-holding-water {
+	--fa: ""
+}
+
+.fa-hands-holding {
+	--fa: ""
+}
+
+.fa-hands-holding-heart,
+.fa-hands-heart {
+	--fa: ""
+}
+
+.fa-handshake-angle,
+.fa-hands-helping {
+	--fa: ""
+}
+
+.fa-hands-holding-dollar,
+.fa-hands-usd {
+	--fa: ""
+}
+
+.fa-circle-heart,
+.fa-heart-circle {
+	--fa: ""
+}
+
+.fa-square-heart,
+.fa-heart-square {
+	--fa: ""
+}
+
+.fa-house-heart,
+.fa-home-heart {
+	--fa: ""
+}
+
+.fa-lamp {
+	--fa: ""
+}
+
+.fa-leaf-heart {
+	--fa: ""
+}
+
+.fa-loveseat,
+.fa-couch-small {
+	--fa: ""
+}
+
+.fa-parachute-box {
+	--fa: ""
+}
+
+.fa-people-carry-box,
+.fa-people-carry {
+	--fa: ""
+}
+
+.fa-person-carry-box,
+.fa-person-carry {
+	--fa: ""
+}
+
+.fa-person-dolly {
+	--fa: ""
+}
+
+.fa-person-dolly-empty {
+	--fa: ""
+}
+
+.fa-phone-plus {
+	--fa: ""
+}
+
+.fa-piggy-bank {
+	--fa: ""
+}
+
+.fa-ramp-loading {
+	--fa: ""
+}
+
+.fa-ribbon {
+	--fa: ""
+}
+
+.fa-route {
+	--fa: ""
+}
+
+.fa-seedling,
+.fa-sprout {
+	--fa: ""
+}
+
+.fa-sign-hanging,
+.fa-sign {
+	--fa: ""
+}
+
+.fa-face-smile-wink,
+.fa-smile-wink {
+	--fa: ""
+}
+
+.fa-tape {
+	--fa: ""
+}
+
+.fa-truck-container {
+	--fa: ""
+}
+
+.fa-truck-ramp-couch,
+.fa-truck-couch {
+	--fa: ""
+}
+
+.fa-truck-ramp-box,
+.fa-truck-loading {
+	--fa: ""
+}
+
+.fa-truck-moving {
+	--fa: ""
+}
+
+.fa-truck-ramp {
+	--fa: ""
+}
+
+.fa-video-plus {
+	--fa: ""
+}
+
+.fa-video-slash {
+	--fa: ""
+}
+
+.fa-wine-glass {
+	--fa: ""
+}
+
+.fa-user-astronaut {
+	--fa: ""
+}
+
+.fa-user-check {
+	--fa: ""
+}
+
+.fa-user-clock {
+	--fa: ""
+}
+
+.fa-user-gear,
+.fa-user-cog {
+	--fa: ""
+}
+
+.fa-user-pen,
+.fa-user-edit {
+	--fa: ""
+}
+
+.fa-user-group,
+.fa-user-friends {
+	--fa: ""
+}
+
+.fa-user-graduate {
+	--fa: ""
+}
+
+.fa-user-lock {
+	--fa: ""
+}
+
+.fa-user-minus {
+	--fa: ""
+}
+
+.fa-user-ninja {
+	--fa: ""
+}
+
+.fa-user-shield {
+	--fa: ""
+}
+
+.fa-user-slash,
+.fa-user-alt-slash,
+.fa-user-large-slash {
+	--fa: ""
+}
+
+.fa-user-tag {
+	--fa: ""
+}
+
+.fa-user-tie {
+	--fa: ""
+}
+
+.fa-users-gear,
+.fa-users-cog {
+	--fa: ""
+}
+
+.fa-scale-unbalanced,
+.fa-balance-scale-left {
+	--fa: ""
+}
+
+.fa-scale-unbalanced-flip,
+.fa-balance-scale-right {
+	--fa: ""
+}
+
+.fa-blender {
+	--fa: ""
+}
+
+.fa-book-open {
+	--fa: ""
+}
+
+.fa-tower-broadcast,
+.fa-broadcast-tower {
+	--fa: ""
+}
+
+.fa-broom {
+	--fa: ""
+}
+
+.fa-chalkboard,
+.fa-blackboard {
+	--fa: ""
+}
+
+.fa-chalkboard-user,
+.fa-chalkboard-teacher {
+	--fa: ""
+}
+
+.fa-church {
+	--fa: ""
+}
+
+.fa-coins {
+	--fa: ""
+}
+
+.fa-compact-disc {
+	--fa: ""
+}
+
+.fa-crow {
+	--fa: ""
+}
+
+.fa-crown {
+	--fa: ""
+}
+
+.fa-dice {
+	--fa: ""
+}
+
+.fa-dice-five {
+	--fa: ""
+}
+
+.fa-dice-four {
+	--fa: ""
+}
+
+.fa-dice-one {
+	--fa: ""
+}
+
+.fa-dice-six {
+	--fa: ""
+}
+
+.fa-dice-three {
+	--fa: ""
+}
+
+.fa-dice-two {
+	--fa: ""
+}
+
+.fa-divide {
+	--fa: ""
+}
+
+.fa-door-closed {
+	--fa: ""
+}
+
+.fa-door-open {
+	--fa: ""
+}
+
+.fa-feather {
+	--fa: ""
+}
+
+.fa-frog {
+	--fa: ""
+}
+
+.fa-gas-pump {
+	--fa: ""
+}
+
+.fa-glasses {
+	--fa: ""
+}
+
+.fa-greater-than-equal {
+	--fa: ""
+}
+
+.fa-helicopter {
+	--fa: ""
+}
+
+.fa-infinity {
+	--fa: ""
+}
+
+.fa-kiwi-bird {
+	--fa: ""
+}
+
+.fa-less-than-equal {
+	--fa: ""
+}
+
+.fa-memory {
+	--fa: ""
+}
+
+.fa-microphone-lines-slash,
+.fa-microphone-alt-slash {
+	--fa: ""
+}
+
+.fa-money-bill-wave {
+	--fa: ""
+}
+
+.fa-money-bill-1-wave,
+.fa-money-bill-wave-alt {
+	--fa: ""
+}
+
+.fa-money-check {
+	--fa: ""
+}
+
+.fa-money-check-dollar,
+.fa-money-check-alt {
+	--fa: ""
+}
+
+.fa-not-equal {
+	--fa: ""
+}
+
+.fa-palette {
+	--fa: ""
+}
+
+.fa-square-parking,
+.fa-parking {
+	--fa: ""
+}
+
+.fa-diagram-project,
+.fa-project-diagram {
+	--fa: ""
+}
+
+.fa-receipt {
+	--fa: ""
+}
+
+.fa-robot {
+	--fa: ""
+}
+
+.fa-ruler {
+	--fa: ""
+}
+
+.fa-ruler-combined {
+	--fa: ""
+}
+
+.fa-ruler-horizontal {
+	--fa: ""
+}
+
+.fa-ruler-vertical {
+	--fa: ""
+}
+
+.fa-school {
+	--fa: ""
+}
+
+.fa-screwdriver {
+	--fa: ""
+}
+
+.fa-shoe-prints {
+	--fa: ""
+}
+
+.fa-skull {
+	--fa: ""
+}
+
+.fa-ban-smoking,
+.fa-smoking-ban {
+	--fa: ""
+}
+
+.fa-store {
+	--fa: ""
+}
+
+.fa-shop,
+.fa-store-alt {
+	--fa: ""
+}
+
+.fa-bars-staggered,
+.fa-reorder,
+.fa-stream {
+	--fa: ""
+}
+
+.fa-stroopwafel {
+	--fa: ""
+}
+
+.fa-toolbox {
+	--fa: ""
+}
+
+.fa-shirt,
+.fa-t-shirt,
+.fa-tshirt {
+	--fa: ""
+}
+
+.fa-person-walking,
+.fa-walking {
+	--fa: ""
+}
+
+.fa-wallet {
+	--fa: ""
+}
+
+.fa-face-angry,
+.fa-angry {
+	--fa: ""
+}
+
+.fa-archway {
+	--fa: ""
+}
+
+.fa-book-atlas,
+.fa-atlas {
+	--fa: ""
+}
+
+.fa-award {
+	--fa: ""
+}
+
+.fa-delete-left,
+.fa-backspace {
+	--fa: ""
+}
+
+.fa-bezier-curve {
+	--fa: ""
+}
+
+.fa-bong {
+	--fa: ""
+}
+
+.fa-brush {
+	--fa: ""
+}
+
+.fa-bus-simple,
+.fa-bus-alt {
+	--fa: ""
+}
+
+.fa-cannabis {
+	--fa: ""
+}
+
+.fa-check-double {
+	--fa: ""
+}
+
+.fa-martini-glass-citrus,
+.fa-cocktail {
+	--fa: ""
+}
+
+.fa-bell-concierge,
+.fa-concierge-bell {
+	--fa: ""
+}
+
+.fa-cookie {
+	--fa: ""
+}
+
+.fa-cookie-bite {
+	--fa: ""
+}
+
+.fa-crop-simple,
+.fa-crop-alt {
+	--fa: ""
+}
+
+.fa-tachograph-digital,
+.fa-digital-tachograph {
+	--fa: ""
+}
+
+.fa-face-dizzy,
+.fa-dizzy {
+	--fa: ""
+}
+
+.fa-compass-drafting,
+.fa-drafting-compass {
+	--fa: ""
+}
+
+.fa-drum {
+	--fa: ""
+}
+
+.fa-drum-steelpan {
+	--fa: ""
+}
+
+.fa-feather-pointed,
+.fa-feather-alt {
+	--fa: ""
+}
+
+.fa-file-contract {
+	--fa: ""
+}
+
+.fa-file-arrow-down,
+.fa-file-download {
+	--fa: ""
+}
+
+.fa-file-export,
+.fa-arrow-right-from-file {
+	--fa: ""
+}
+
+.fa-file-import,
+.fa-arrow-right-to-file {
+	--fa: ""
+}
+
+.fa-file-invoice {
+	--fa: ""
+}
+
+.fa-file-invoice-dollar {
+	--fa: ""
+}
+
+.fa-file-prescription {
+	--fa: ""
+}
+
+.fa-file-signature {
+	--fa: ""
+}
+
+.fa-file-arrow-up,
+.fa-file-upload {
+	--fa: ""
+}
+
+.fa-fill {
+	--fa: ""
+}
+
+.fa-fill-drip {
+	--fa: ""
+}
+
+.fa-fingerprint {
+	--fa: ""
+}
+
+.fa-fish {
+	--fa: ""
+}
+
+.fa-face-flushed,
+.fa-flushed {
+	--fa: ""
+}
+
+.fa-face-frown-open,
+.fa-frown-open {
+	--fa: ""
+}
+
+.fa-martini-glass,
+.fa-glass-martini-alt {
+	--fa: ""
+}
+
+.fa-earth-africa,
+.fa-globe-africa {
+	--fa: ""
+}
+
+.fa-earth-americas,
+.fa-earth,
+.fa-earth-america,
+.fa-globe-americas {
+	--fa: ""
+}
+
+.fa-earth-asia,
+.fa-globe-asia {
+	--fa: ""
+}
+
+.fa-face-grimace,
+.fa-grimace {
+	--fa: ""
+}
+
+.fa-face-grin,
+.fa-grin {
+	--fa: ""
+}
+
+.fa-face-grin-wide,
+.fa-grin-alt {
+	--fa: ""
+}
+
+.fa-face-grin-beam,
+.fa-grin-beam {
+	--fa: ""
+}
+
+.fa-face-grin-beam-sweat,
+.fa-grin-beam-sweat {
+	--fa: ""
+}
+
+.fa-face-grin-hearts,
+.fa-grin-hearts {
+	--fa: ""
+}
+
+.fa-face-grin-squint,
+.fa-grin-squint {
+	--fa: ""
+}
+
+.fa-face-grin-squint-tears,
+.fa-grin-squint-tears {
+	--fa: ""
+}
+
+.fa-face-grin-stars,
+.fa-grin-stars {
+	--fa: ""
+}
+
+.fa-face-grin-tears,
+.fa-grin-tears {
+	--fa: ""
+}
+
+.fa-face-grin-tongue,
+.fa-grin-tongue {
+	--fa: ""
+}
+
+.fa-face-grin-tongue-squint,
+.fa-grin-tongue-squint {
+	--fa: ""
+}
+
+.fa-face-grin-tongue-wink,
+.fa-grin-tongue-wink {
+	--fa: ""
+}
+
+.fa-face-grin-wink,
+.fa-grin-wink {
+	--fa: ""
+}
+
+.fa-grip,
+.fa-grid-horizontal,
+.fa-grip-horizontal {
+	--fa: ""
+}
+
+.fa-grip-vertical,
+.fa-grid-vertical {
+	--fa: ""
+}
+
+.fa-headset {
+	--fa: ""
+}
+
+.fa-highlighter {
+	--fa: ""
+}
+
+.fa-hot-tub-person,
+.fa-hot-tub {
+	--fa: ""
+}
+
+.fa-hotel {
+	--fa: ""
+}
+
+.fa-joint {
+	--fa: ""
+}
+
+.fa-face-kiss,
+.fa-kiss {
+	--fa: ""
+}
+
+.fa-face-kiss-beam,
+.fa-kiss-beam {
+	--fa: ""
+}
+
+.fa-face-kiss-wink-heart,
+.fa-kiss-wink-heart {
+	--fa: ""
+}
+
+.fa-face-laugh,
+.fa-laugh {
+	--fa: ""
+}
+
+.fa-face-laugh-beam,
+.fa-laugh-beam {
+	--fa: ""
+}
+
+.fa-face-laugh-squint,
+.fa-laugh-squint {
+	--fa: ""
+}
+
+.fa-face-laugh-wink,
+.fa-laugh-wink {
+	--fa: ""
+}
+
+.fa-cart-flatbed-suitcase,
+.fa-luggage-cart {
+	--fa: ""
+}
+
+.fa-map-location,
+.fa-map-marked {
+	--fa: ""
+}
+
+.fa-map-location-dot,
+.fa-map-marked-alt {
+	--fa: ""
+}
+
+.fa-marker {
+	--fa: ""
+}
+
+.fa-medal {
+	--fa: ""
+}
+
+.fa-face-meh-blank,
+.fa-meh-blank {
+	--fa: ""
+}
+
+.fa-face-rolling-eyes,
+.fa-meh-rolling-eyes {
+	--fa: ""
+}
+
+.fa-monument {
+	--fa: ""
+}
+
+.fa-mortar-pestle {
+	--fa: ""
+}
+
+.fa-paintbrush-fine,
+.fa-paint-brush-alt,
+.fa-paint-brush-fine,
+.fa-paintbrush-alt {
+	--fa: ""
+}
+
+.fa-paint-roller {
+	--fa: ""
+}
+
+.fa-passport {
+	--fa: ""
+}
+
+.fa-pen-fancy {
+	--fa: ""
+}
+
+.fa-pen-nib {
+	--fa: ""
+}
+
+.fa-pen-ruler,
+.fa-pencil-ruler {
+	--fa: ""
+}
+
+.fa-plane-arrival {
+	--fa: ""
+}
+
+.fa-plane-departure {
+	--fa: ""
+}
+
+.fa-prescription {
+	--fa: ""
+}
+
+.fa-face-sad-cry,
+.fa-sad-cry {
+	--fa: ""
+}
+
+.fa-face-sad-tear,
+.fa-sad-tear {
+	--fa: ""
+}
+
+.fa-van-shuttle,
+.fa-shuttle-van {
+	--fa: ""
+}
+
+.fa-signature {
+	--fa: ""
+}
+
+.fa-face-smile-beam,
+.fa-smile-beam {
+	--fa: ""
+}
+
+.fa-face-smile-plus,
+.fa-smile-plus {
+	--fa: ""
+}
+
+.fa-solar-panel {
+	--fa: ""
+}
+
+.fa-spa {
+	--fa: ""
+}
+
+.fa-splotch {
+	--fa: ""
+}
+
+.fa-spray-can {
+	--fa: ""
+}
+
+.fa-stamp {
+	--fa: ""
+}
+
+.fa-star-half-stroke,
+.fa-star-half-alt {
+	--fa: ""
+}
+
+.fa-suitcase-rolling {
+	--fa: ""
+}
+
+.fa-face-surprise,
+.fa-surprise {
+	--fa: ""
+}
+
+.fa-swatchbook {
+	--fa: ""
+}
+
+.fa-person-swimming,
+.fa-swimmer {
+	--fa: ""
+}
+
+.fa-water-ladder,
+.fa-ladder-water,
+.fa-swimming-pool {
+	--fa: ""
+}
+
+.fa-droplet-slash,
+.fa-tint-slash {
+	--fa: ""
+}
+
+.fa-face-tired,
+.fa-tired {
+	--fa: ""
+}
+
+.fa-tooth {
+	--fa: ""
+}
+
+.fa-umbrella-beach {
+	--fa: ""
+}
+
+.fa-weight-hanging {
+	--fa: ""
+}
+
+.fa-wine-glass-empty,
+.fa-wine-glass-alt {
+	--fa: ""
+}
+
+.fa-spray-can-sparkles,
+.fa-air-freshener {
+	--fa: ""
+}
+
+.fa-apple-whole,
+.fa-apple-alt {
+	--fa: ""
+}
+
+.fa-atom {
+	--fa: ""
+}
+
+.fa-atom-simple,
+.fa-atom-alt {
+	--fa: ""
+}
+
+.fa-backpack {
+	--fa: ""
+}
+
+.fa-bell-school {
+	--fa: ""
+}
+
+.fa-bell-school-slash {
+	--fa: ""
+}
+
+.fa-bone {
+	--fa: ""
+}
+
+.fa-bone-break {
+	--fa: ""
+}
+
+.fa-book-blank,
+.fa-book-alt {
+	--fa: ""
+}
+
+.fa-book-open-reader,
+.fa-book-reader {
+	--fa: ""
+}
+
+.fa-books {
+	--fa: ""
+}
+
+.fa-brain {
+	--fa: ""
+}
+
+.fa-bus-school {
+	--fa: ""
+}
+
+.fa-car-rear,
+.fa-car-alt {
+	--fa: ""
+}
+
+.fa-car-battery,
+.fa-battery-car {
+	--fa: ""
+}
+
+.fa-car-bump {
+	--fa: ""
+}
+
+.fa-car-burst,
+.fa-car-crash {
+	--fa: ""
+}
+
+.fa-car-garage {
+	--fa: ""
+}
+
+.fa-car-wrench,
+.fa-car-mechanic {
+	--fa: ""
+}
+
+.fa-car-side {
+	--fa: ""
+}
+
+.fa-car-tilt {
+	--fa: ""
+}
+
+.fa-car-wash {
+	--fa: ""
+}
+
+.fa-charging-station {
+	--fa: ""
+}
+
+.fa-clipboard-prescription {
+	--fa: ""
+}
+
+.fa-compass-slash {
+	--fa: ""
+}
+
+.fa-diploma,
+.fa-scroll-ribbon {
+	--fa: ""
+}
+
+.fa-diamond-turn-right,
+.fa-directions {
+	--fa: ""
+}
+
+.fa-do-not-enter {
+	--fa: ""
+}
+
+.fa-draw-circle,
+.fa-vector-circle {
+	--fa: ""
+}
+
+.fa-draw-polygon,
+.fa-vector-polygon {
+	--fa: ""
+}
+
+.fa-draw-square,
+.fa-vector-square {
+	--fa: ""
+}
+
+.fa-ear {
+	--fa: ""
+}
+
+.fa-engine-warning,
+.fa-engine-exclamation {
+	--fa: ""
+}
+
+.fa-file-certificate,
+.fa-file-award {
+	--fa: ""
+}
+
+.fa-gas-pump-slash {
+	--fa: ""
+}
+
+.fa-glasses-round,
+.fa-glasses-alt {
+	--fa: ""
+}
+
+.fa-globe-stand {
+	--fa: ""
+}
+
+.fa-wave-pulse,
+.fa-heart-rate {
+	--fa: ""
+}
+
+.fa-inhaler {
+	--fa: ""
+}
+
+.fa-kidneys {
+	--fa: ""
+}
+
+.fa-laptop-code {
+	--fa: ""
+}
+
+.fa-layer-group {
+	--fa: ""
+}
+
+.fa-layer-minus,
+.fa-layer-group-minus {
+	--fa: ""
+}
+
+.fa-layer-plus,
+.fa-layer-group-plus {
+	--fa: ""
+}
+
+.fa-lips {
+	--fa: ""
+}
+
+.fa-location-crosshairs,
+.fa-location {
+	--fa: ""
+}
+
+.fa-circle-location-arrow,
+.fa-location-circle {
+	--fa: ""
+}
+
+.fa-location-crosshairs-slash,
+.fa-location-slash {
+	--fa: ""
+}
+
+.fa-lungs {
+	--fa: ""
+}
+
+.fa-location-dot-slash,
+.fa-map-marker-alt-slash {
+	--fa: ""
+}
+
+.fa-location-check,
+.fa-map-marker-check {
+	--fa: ""
+}
+
+.fa-location-pen,
+.fa-map-marker-edit {
+	--fa: ""
+}
+
+.fa-location-exclamation,
+.fa-map-marker-exclamation {
+	--fa: ""
+}
+
+.fa-location-minus,
+.fa-map-marker-minus {
+	--fa: ""
+}
+
+.fa-location-plus,
+.fa-map-marker-plus {
+	--fa: ""
+}
+
+.fa-location-question,
+.fa-map-marker-question {
+	--fa: ""
+}
+
+.fa-location-pin-slash,
+.fa-map-marker-slash {
+	--fa: ""
+}
+
+.fa-location-smile,
+.fa-map-marker-smile {
+	--fa: ""
+}
+
+.fa-location-xmark,
+.fa-map-marker-times,
+.fa-map-marker-xmark {
+	--fa: ""
+}
+
+.fa-microscope {
+	--fa: ""
+}
+
+.fa-monitor-waveform,
+.fa-monitor-heart-rate {
+	--fa: ""
+}
+
+.fa-oil-can {
+	--fa: ""
+}
+
+.fa-oil-temperature,
+.fa-oil-temp {
+	--fa: ""
+}
+
+.fa-circle-parking,
+.fa-parking-circle {
+	--fa: ""
+}
+
+.fa-ban-parking,
+.fa-parking-circle-slash {
+	--fa: ""
+}
+
+.fa-square-parking-slash,
+.fa-parking-slash {
+	--fa: ""
+}
+
+.fa-pen-paintbrush,
+.fa-pencil-paintbrush {
+	--fa: ""
+}
+
+.fa-poop {
+	--fa: ""
+}
+
+.fa-route-highway {
+	--fa: ""
+}
+
+.fa-route-interstate {
+	--fa: ""
+}
+
+.fa-ruler-triangle {
+	--fa: ""
+}
+
+.fa-scalpel {
+	--fa: ""
+}
+
+.fa-scalpel-line-dashed,
+.fa-scalpel-path {
+	--fa: ""
+}
+
+.fa-shapes,
+.fa-triangle-circle-square {
+	--fa: ""
+}
+
+.fa-skeleton {
+	--fa: ""
+}
+
+.fa-star-of-life {
+	--fa: ""
+}
+
+.fa-steering-wheel {
+	--fa: ""
+}
+
+.fa-stomach {
+	--fa: ""
+}
+
+.fa-gauge,
+.fa-dashboard,
+.fa-gauge-med,
+.fa-tachometer-alt-average {
+	--fa: ""
+}
+
+.fa-gauge-high,
+.fa-tachometer-alt,
+.fa-tachometer-alt-fast {
+	--fa: ""
+}
+
+.fa-gauge-max,
+.fa-tachometer-alt-fastest {
+	--fa: ""
+}
+
+.fa-gauge-low,
+.fa-tachometer-alt-slow {
+	--fa: ""
+}
+
+.fa-gauge-min,
+.fa-tachometer-alt-slowest {
+	--fa: ""
+}
+
+.fa-gauge-simple,
+.fa-gauge-simple-med,
+.fa-tachometer-average {
+	--fa: ""
+}
+
+.fa-gauge-simple-high,
+.fa-tachometer,
+.fa-tachometer-fast {
+	--fa: ""
+}
+
+.fa-gauge-simple-max,
+.fa-tachometer-fastest {
+	--fa: ""
+}
+
+.fa-gauge-simple-low,
+.fa-tachometer-slow {
+	--fa: ""
+}
+
+.fa-gauge-simple-min,
+.fa-tachometer-slowest {
+	--fa: ""
+}
+
+.fa-teeth {
+	--fa: ""
+}
+
+.fa-teeth-open {
+	--fa: ""
+}
+
+.fa-masks-theater,
+.fa-theater-masks {
+	--fa: ""
+}
+
+.fa-tire {
+	--fa: ""
+}
+
+.fa-tire-flat {
+	--fa: ""
+}
+
+.fa-tire-pressure-warning {
+	--fa: ""
+}
+
+.fa-tire-rugged {
+	--fa: ""
+}
+
+.fa-toothbrush {
+	--fa: ""
+}
+
+.fa-traffic-cone {
+	--fa: ""
+}
+
+.fa-traffic-light {
+	--fa: ""
+}
+
+.fa-traffic-light-go {
+	--fa: ""
+}
+
+.fa-traffic-light-slow {
+	--fa: ""
+}
+
+.fa-traffic-light-stop {
+	--fa: ""
+}
+
+.fa-truck-monster {
+	--fa: ""
+}
+
+.fa-truck-pickup {
+	--fa: ""
+}
+
+.fa-screen-users,
+.fa-users-class {
+	--fa: ""
+}
+
+.fa-watch-fitness {
+	--fa: ""
+}
+
+.fa-abacus {
+	--fa: ""
+}
+
+.fa-rectangle-ad,
+.fa-ad {
+	--fa: ""
+}
+
+.fa-chart-mixed,
+.fa-analytics {
+	--fa: ""
+}
+
+.fa-ankh {
+	--fa: ""
+}
+
+.fa-badge-dollar {
+	--fa: ""
+}
+
+.fa-badge-percent {
+	--fa: ""
+}
+
+.fa-book-bible,
+.fa-bible {
+	--fa: ""
+}
+
+.fa-bullseye-arrow {
+	--fa: ""
+}
+
+.fa-bullseye-pointer {
+	--fa: ""
+}
+
+.fa-business-time,
+.fa-briefcase-clock {
+	--fa: ""
+}
+
+.fa-cabinet-filing {
+	--fa: ""
+}
+
+.fa-calculator-simple,
+.fa-calculator-alt {
+	--fa: ""
+}
+
+.fa-chart-line-down {
+	--fa: ""
+}
+
+.fa-chart-pie-simple,
+.fa-chart-pie-alt {
+	--fa: ""
+}
+
+.fa-city {
+	--fa: ""
+}
+
+.fa-message-dollar,
+.fa-comment-alt-dollar {
+	--fa: ""
+}
+
+.fa-comment-dollar {
+	--fa: ""
+}
+
+.fa-messages-dollar,
+.fa-comments-alt-dollar {
+	--fa: ""
+}
+
+.fa-comments-dollar {
+	--fa: ""
+}
+
+.fa-cross {
+	--fa: ""
+}
+
+.fa-dharmachakra {
+	--fa: ""
+}
+
+.fa-empty-set {
+	--fa: ""
+}
+
+.fa-envelope-open-dollar {
+	--fa: ""
+}
+
+.fa-envelope-open-text {
+	--fa: ""
+}
+
+.fa-file-chart-column,
+.fa-file-chart-line {
+	--fa: ""
+}
+
+.fa-file-chart-pie {
+	--fa: ""
+}
+
+.fa-file-spreadsheet {
+	--fa: ""
+}
+
+.fa-file-user {
+	--fa: ""
+}
+
+.fa-folder-minus {
+	--fa: ""
+}
+
+.fa-folder-plus {
+	--fa: ""
+}
+
+.fa-folder-xmark,
+.fa-folder-times {
+	--fa: ""
+}
+
+.fa-folders {
+	--fa: ""
+}
+
+.fa-function {
+	--fa: ""
+}
+
+.fa-filter-circle-dollar,
+.fa-funnel-dollar {
+	--fa: ""
+}
+
+.fa-gift-card {
+	--fa: ""
+}
+
+.fa-gopuram {
+	--fa: ""
+}
+
+.fa-hamsa {
+	--fa: ""
+}
+
+.fa-bahai,
+.fa-haykal {
+	--fa: ""
+}
+
+.fa-integral {
+	--fa: ""
+}
+
+.fa-intersection {
+	--fa: ""
+}
+
+.fa-jedi {
+	--fa: ""
+}
+
+.fa-book-journal-whills,
+.fa-journal-whills {
+	--fa: ""
+}
+
+.fa-kaaba {
+	--fa: ""
+}
+
+.fa-keynote {
+	--fa: ""
+}
+
+.fa-khanda {
+	--fa: ""
+}
+
+.fa-lambda {
+	--fa: ""
+}
+
+.fa-landmark {
+	--fa: ""
+}
+
+.fa-lightbulb-dollar {
+	--fa: ""
+}
+
+.fa-lightbulb-exclamation {
+	--fa: ""
+}
+
+.fa-lightbulb-on {
+	--fa: ""
+}
+
+.fa-lightbulb-slash {
+	--fa: ""
+}
+
+.fa-envelopes-bulk,
+.fa-mail-bulk {
+	--fa: ""
+}
+
+.fa-megaphone {
+	--fa: ""
+}
+
+.fa-menorah {
+	--fa: ""
+}
+
+.fa-brain-arrow-curved-right,
+.fa-mind-share {
+	--fa: ""
+}
+
+.fa-mosque {
+	--fa: ""
+}
+
+.fa-om {
+	--fa: ""
+}
+
+.fa-omega {
+	--fa: ""
+}
+
+.fa-spaghetti-monster-flying,
+.fa-pastafarianism {
+	--fa: ""
+}
+
+.fa-peace {
+	--fa: ""
+}
+
+.fa-phone-office {
+	--fa: ""
+}
+
+.fa-pi {
+	--fa: ""
+}
+
+.fa-place-of-worship {
+	--fa: ""
+}
+
+.fa-podium {
+	--fa: ""
+}
+
+.fa-square-poll-vertical,
+.fa-poll {
+	--fa: ""
+}
+
+.fa-square-poll-horizontal,
+.fa-poll-h {
+	--fa: ""
+}
+
+.fa-person-praying,
+.fa-pray {
+	--fa: ""
+}
+
+.fa-hands-praying,
+.fa-praying-hands {
+	--fa: ""
+}
+
+.fa-presentation-screen,
+.fa-presentation {
+	--fa: ""
+}
+
+.fa-print-slash {
+	--fa: ""
+}
+
+.fa-book-quran,
+.fa-quran {
+	--fa: ""
+}
+
+.fa-magnifying-glass-dollar,
+.fa-search-dollar {
+	--fa: ""
+}
+
+.fa-magnifying-glass-location,
+.fa-search-location {
+	--fa: ""
+}
+
+.fa-shredder {
+	--fa: ""
+}
+
+.fa-sigma {
+	--fa: ""
+}
+
+.fa-signal-weak,
+.fa-signal-1 {
+	--fa: ""
+}
+
+.fa-signal-fair,
+.fa-signal-2 {
+	--fa: ""
+}
+
+.fa-signal-good,
+.fa-signal-3 {
+	--fa: ""
+}
+
+.fa-signal-strong,
+.fa-signal-4 {
+	--fa: ""
+}
+
+.fa-signal-bars,
+.fa-signal-alt,
+.fa-signal-alt-4,
+.fa-signal-bars-strong {
+	--fa: ""
+}
+
+.fa-signal-bars-weak,
+.fa-signal-alt-1 {
+	--fa: ""
+}
+
+.fa-signal-bars-fair,
+.fa-signal-alt-2 {
+	--fa: ""
+}
+
+.fa-signal-bars-good,
+.fa-signal-alt-3 {
+	--fa: ""
+}
+
+.fa-signal-bars-slash,
+.fa-signal-alt-slash {
+	--fa: ""
+}
+
+.fa-signal-slash {
+	--fa: ""
+}
+
+.fa-socks {
+	--fa: ""
+}
+
+.fa-square-root {
+	--fa: ""
+}
+
+.fa-square-root-variable,
+.fa-square-root-alt {
+	--fa: ""
+}
+
+.fa-star-and-crescent {
+	--fa: ""
+}
+
+.fa-star-of-david {
+	--fa: ""
+}
+
+.fa-synagogue {
+	--fa: ""
+}
+
+.fa-tally,
+.fa-tally-5 {
+	--fa: ""
+}
+
+.fa-theta {
+	--fa: ""
+}
+
+.fa-scroll-torah,
+.fa-torah {
+	--fa: ""
+}
+
+.fa-torii-gate {
+	--fa: ""
+}
+
+.fa-union {
+	--fa: ""
+}
+
+.fa-chart-user,
+.fa-user-chart {
+	--fa: ""
+}
+
+.fa-user-crown {
+	--fa: ""
+}
+
+.fa-user-group-crown,
+.fa-users-crown {
+	--fa: ""
+}
+
+.fa-value-absolute {
+	--fa: ""
+}
+
+.fa-vihara {
+	--fa: ""
+}
+
+.fa-volume,
+.fa-volume-medium {
+	--fa: ""
+}
+
+.fa-volume-xmark,
+.fa-volume-mute,
+.fa-volume-times {
+	--fa: ""
+}
+
+.fa-wifi-weak,
+.fa-wifi-1 {
+	--fa: ""
+}
+
+.fa-wifi-fair,
+.fa-wifi-2 {
+	--fa: ""
+}
+
+.fa-wifi-slash {
+	--fa: ""
+}
+
+.fa-yin-yang {
+	--fa: ""
+}
+
+.fa-acorn {
+	--fa: ""
+}
+
+.fa-alicorn {
+	--fa: ""
+}
+
+.fa-crate-apple,
+.fa-apple-crate {
+	--fa: ""
+}
+
+.fa-axe {
+	--fa: ""
+}
+
+.fa-axe-battle {
+	--fa: ""
+}
+
+.fa-badger-honey {
+	--fa: ""
+}
+
+.fa-bat {
+	--fa: ""
+}
+
+.fa-blender-phone {
+	--fa: ""
+}
+
+.fa-book-skull,
+.fa-book-dead {
+	--fa: ""
+}
+
+.fa-book-sparkles,
+.fa-book-spells {
+	--fa: ""
+}
+
+.fa-bow-arrow {
+	--fa: ""
+}
+
+.fa-campfire {
+	--fa: ""
+}
+
+.fa-campground {
+	--fa: ""
+}
+
+.fa-candle-holder {
+	--fa: ""
+}
+
+.fa-candy-corn {
+	--fa: ""
+}
+
+.fa-cat {
+	--fa: ""
+}
+
+.fa-cauldron {
+	--fa: ""
+}
+
+.fa-chair {
+	--fa: ""
+}
+
+.fa-chair-office {
+	--fa: ""
+}
+
+.fa-claw-marks {
+	--fa: ""
+}
+
+.fa-cloud-moon {
+	--fa: ""
+}
+
+.fa-cloud-sun {
+	--fa: ""
+}
+
+.fa-cup-togo,
+.fa-coffee-togo {
+	--fa: ""
+}
+
+.fa-coffin {
+	--fa: ""
+}
+
+.fa-corn {
+	--fa: ""
+}
+
+.fa-cow {
+	--fa: ""
+}
+
+.fa-dagger {
+	--fa: ""
+}
+
+.fa-dice-d10 {
+	--fa: ""
+}
+
+.fa-dice-d12 {
+	--fa: ""
+}
+
+.fa-dice-d20 {
+	--fa: ""
+}
+
+.fa-dice-d4 {
+	--fa: ""
+}
+
+.fa-dice-d6 {
+	--fa: ""
+}
+
+.fa-dice-d8 {
+	--fa: ""
+}
+
+.fa-dog {
+	--fa: ""
+}
+
+.fa-dog-leashed {
+	--fa: ""
+}
+
+.fa-dragon {
+	--fa: ""
+}
+
+.fa-drumstick {
+	--fa: ""
+}
+
+.fa-drumstick-bite {
+	--fa: ""
+}
+
+.fa-duck {
+	--fa: ""
+}
+
+.fa-dungeon {
+	--fa: ""
+}
+
+.fa-elephant {
+	--fa: ""
+}
+
+.fa-eye-evil {
+	--fa: ""
+}
+
+.fa-file-csv {
+	--fa: ""
+}
+
+.fa-hand-fist,
+.fa-fist-raised {
+	--fa: ""
+}
+
+.fa-fire-flame,
+.fa-flame {
+	--fa: ""
+}
+
+.fa-flask-round-poison,
+.fa-flask-poison {
+	--fa: ""
+}
+
+.fa-flask-round-potion,
+.fa-flask-potion {
+	--fa: ""
+}
+
+.fa-ghost {
+	--fa: ""
+}
+
+.fa-hammer {
+	--fa: ""
+}
+
+.fa-hammer-war {
+	--fa: ""
+}
+
+.fa-hand-holding-magic {
+	--fa: ""
+}
+
+.fa-hanukiah {
+	--fa: ""
+}
+
+.fa-hat-witch {
+	--fa: ""
+}
+
+.fa-hat-wizard {
+	--fa: ""
+}
+
+.fa-head-side {
+	--fa: ""
+}
+
+.fa-head-side-goggles,
+.fa-head-vr {
+	--fa: ""
+}
+
+.fa-helmet-battle {
+	--fa: ""
+}
+
+.fa-person-hiking,
+.fa-hiking {
+	--fa: ""
+}
+
+.fa-hippo {
+	--fa: ""
+}
+
+.fa-hockey-mask {
+	--fa: ""
+}
+
+.fa-hood-cloak {
+	--fa: ""
+}
+
+.fa-horse {
+	--fa: ""
+}
+
+.fa-house-chimney-crack,
+.fa-house-damage {
+	--fa: ""
+}
+
+.fa-hryvnia-sign,
+.fa-hryvnia {
+	--fa: ""
+}
+
+.fa-key-skeleton {
+	--fa: ""
+}
+
+.fa-kite {
+	--fa: ""
+}
+
+.fa-knife-kitchen {
+	--fa: ""
+}
+
+.fa-leaf-maple {
+	--fa: ""
+}
+
+.fa-leaf-oak {
+	--fa: ""
+}
+
+.fa-mace {
+	--fa: ""
+}
+
+.fa-mandolin {
+	--fa: ""
+}
+
+.fa-mask {
+	--fa: ""
+}
+
+.fa-monkey {
+	--fa: ""
+}
+
+.fa-mountain {
+	--fa: ""
+}
+
+.fa-mountains {
+	--fa: ""
+}
+
+.fa-narwhal {
+	--fa: ""
+}
+
+.fa-network-wired {
+	--fa: ""
+}
+
+.fa-otter {
+	--fa: ""
+}
+
+.fa-paw-simple,
+.fa-paw-alt {
+	--fa: ""
+}
+
+.fa-paw-claws {
+	--fa: ""
+}
+
+.fa-pegasus {
+	--fa: ""
+}
+
+.fa-pie {
+	--fa: ""
+}
+
+.fa-pig {
+	--fa: ""
+}
+
+.fa-pumpkin {
+	--fa: ""
+}
+
+.fa-rabbit {
+	--fa: ""
+}
+
+.fa-rabbit-running,
+.fa-rabbit-fast {
+	--fa: ""
+}
+
+.fa-ram {
+	--fa: ""
+}
+
+.fa-ring {
+	--fa: ""
+}
+
+.fa-person-running,
+.fa-running {
+	--fa: ""
+}
+
+.fa-scarecrow {
+	--fa: ""
+}
+
+.fa-scroll {
+	--fa: ""
+}
+
+.fa-scroll-old {
+	--fa: ""
+}
+
+.fa-scythe {
+	--fa: ""
+}
+
+.fa-sheep {
+	--fa: ""
+}
+
+.fa-shield-cross {
+	--fa: ""
+}
+
+.fa-shovel {
+	--fa: ""
+}
+
+.fa-skull-crossbones {
+	--fa: ""
+}
+
+.fa-slash {
+	--fa: ""
+}
+
+.fa-snake {
+	--fa: ""
+}
+
+.fa-spider {
+	--fa: ""
+}
+
+.fa-spider-black-widow {
+	--fa: ""
+}
+
+.fa-spider-web {
+	--fa: ""
+}
+
+.fa-squirrel {
+	--fa: ""
+}
+
+.fa-staff {
+	--fa: ""
+}
+
+.fa-sword {
+	--fa: ""
+}
+
+.fa-swords {
+	--fa: ""
+}
+
+.fa-toilet-paper,
+.fa-toilet-paper-alt,
+.fa-toilet-paper-blank {
+	--fa: ""
+}
+
+.fa-tombstone {
+	--fa: ""
+}
+
+.fa-tombstone-blank,
+.fa-tombstone-alt {
+	--fa: ""
+}
+
+.fa-tractor {
+	--fa: ""
+}
+
+.fa-treasure-chest {
+	--fa: ""
+}
+
+.fa-trees {
+	--fa: ""
+}
+
+.fa-turkey {
+	--fa: ""
+}
+
+.fa-turtle {
+	--fa: ""
+}
+
+.fa-unicorn {
+	--fa: ""
+}
+
+.fa-user-injured {
+	--fa: ""
+}
+
+.fa-vr-cardboard {
+	--fa: ""
+}
+
+.fa-wand {
+	--fa: ""
+}
+
+.fa-wand-sparkles {
+	--fa: ""
+}
+
+.fa-whale {
+	--fa: ""
+}
+
+.fa-wheat {
+	--fa: ""
+}
+
+.fa-wind {
+	--fa: ""
+}
+
+.fa-wine-bottle {
+	--fa: ""
+}
+
+.fa-ballot {
+	--fa: ""
+}
+
+.fa-ballot-check {
+	--fa: ""
+}
+
+.fa-booth-curtain {
+	--fa: ""
+}
+
+.fa-box-ballot {
+	--fa: ""
+}
+
+.fa-calendar-star {
+	--fa: ""
+}
+
+.fa-clipboard-list-check {
+	--fa: ""
+}
+
+.fa-cloud-drizzle {
+	--fa: ""
+}
+
+.fa-cloud-hail {
+	--fa: ""
+}
+
+.fa-cloud-hail-mixed {
+	--fa: ""
+}
+
+.fa-cloud-meatball {
+	--fa: ""
+}
+
+.fa-cloud-moon-rain {
+	--fa: ""
+}
+
+.fa-cloud-rain {
+	--fa: ""
+}
+
+.fa-cloud-rainbow {
+	--fa: ""
+}
+
+.fa-cloud-showers {
+	--fa: ""
+}
+
+.fa-cloud-showers-heavy {
+	--fa: ""
+}
+
+.fa-cloud-sleet {
+	--fa: ""
+}
+
+.fa-cloud-snow {
+	--fa: ""
+}
+
+.fa-cloud-sun-rain {
+	--fa: ""
+}
+
+.fa-clouds {
+	--fa: ""
+}
+
+.fa-clouds-moon {
+	--fa: ""
+}
+
+.fa-clouds-sun {
+	--fa: ""
+}
+
+.fa-democrat {
+	--fa: ""
+}
+
+.fa-droplet-degree,
+.fa-dewpoint {
+	--fa: ""
+}
+
+.fa-eclipse {
+	--fa: ""
+}
+
+.fa-moon-over-sun,
+.fa-eclipse-alt {
+	--fa: ""
+}
+
+.fa-fire-smoke {
+	--fa: ""
+}
+
+.fa-flag-swallowtail,
+.fa-flag-alt {
+	--fa: ""
+}
+
+.fa-flag-usa {
+	--fa: ""
+}
+
+.fa-cloud-fog,
+.fa-fog {
+	--fa: ""
+}
+
+.fa-house-water,
+.fa-house-flood {
+	--fa: ""
+}
+
+.fa-droplet-percent,
+.fa-humidity {
+	--fa: ""
+}
+
+.fa-hurricane {
+	--fa: ""
+}
+
+.fa-landmark-dome,
+.fa-landmark-alt {
+	--fa: ""
+}
+
+.fa-meteor {
+	--fa: ""
+}
+
+.fa-moon-cloud {
+	--fa: ""
+}
+
+.fa-moon-stars {
+	--fa: ""
+}
+
+.fa-person-booth {
+	--fa: ""
+}
+
+.fa-person-sign {
+	--fa: ""
+}
+
+.fa-podium-star {
+	--fa: ""
+}
+
+.fa-poll-people {
+	--fa: ""
+}
+
+.fa-poo-storm,
+.fa-poo-bolt {
+	--fa: ""
+}
+
+.fa-rainbow {
+	--fa: ""
+}
+
+.fa-raindrops {
+	--fa: ""
+}
+
+.fa-republican {
+	--fa: ""
+}
+
+.fa-smog {
+	--fa: ""
+}
+
+.fa-smoke {
+	--fa: ""
+}
+
+.fa-snow-blowing {
+	--fa: ""
+}
+
+.fa-stars {
+	--fa: ""
+}
+
+.fa-sun-cloud {
+	--fa: ""
+}
+
+.fa-sun-dust {
+	--fa: ""
+}
+
+.fa-sun-haze {
+	--fa: ""
+}
+
+.fa-sunrise {
+	--fa: ""
+}
+
+.fa-sunset {
+	--fa: ""
+}
+
+.fa-temperature-snow,
+.fa-temperature-frigid {
+	--fa: ""
+}
+
+.fa-temperature-high {
+	--fa: ""
+}
+
+.fa-temperature-sun,
+.fa-temperature-hot {
+	--fa: ""
+}
+
+.fa-temperature-low {
+	--fa: ""
+}
+
+.fa-cloud-bolt,
+.fa-thunderstorm {
+	--fa: ""
+}
+
+.fa-cloud-bolt-moon,
+.fa-thunderstorm-moon {
+	--fa: ""
+}
+
+.fa-cloud-bolt-sun,
+.fa-thunderstorm-sun {
+	--fa: ""
+}
+
+.fa-tornado {
+	--fa: ""
+}
+
+.fa-volcano {
+	--fa: ""
+}
+
+.fa-xmark-to-slot,
+.fa-times-to-slot,
+.fa-vote-nay {
+	--fa: ""
+}
+
+.fa-check-to-slot,
+.fa-vote-yea {
+	--fa: ""
+}
+
+.fa-water {
+	--fa: ""
+}
+
+.fa-water-arrow-down,
+.fa-water-lower {
+	--fa: ""
+}
+
+.fa-water-arrow-up,
+.fa-water-rise {
+	--fa: ""
+}
+
+.fa-wind-warning,
+.fa-wind-circle-exclamation {
+	--fa: ""
+}
+
+.fa-windsock {
+	--fa: ""
+}
+
+.fa-angel {
+	--fa: ""
+}
+
+.fa-baby {
+	--fa: ""
+}
+
+.fa-baby-carriage,
+.fa-carriage-baby {
+	--fa: ""
+}
+
+.fa-ball-pile {
+	--fa: ""
+}
+
+.fa-bells {
+	--fa: ""
+}
+
+.fa-biohazard {
+	--fa: ""
+}
+
+.fa-blog {
+	--fa: ""
+}
+
+.fa-boot {
+	--fa: ""
+}
+
+.fa-calendar-day {
+	--fa: ""
+}
+
+.fa-calendar-week {
+	--fa: ""
+}
+
+.fa-candy-cane {
+	--fa: ""
+}
+
+.fa-carrot {
+	--fa: ""
+}
+
+.fa-cash-register {
+	--fa: ""
+}
+
+.fa-chart-network {
+	--fa: ""
+}
+
+.fa-chimney {
+	--fa: ""
+}
+
+.fa-minimize,
+.fa-compress-arrows-alt {
+	--fa: ""
+}
+
+.fa-deer {
+	--fa: ""
+}
+
+.fa-deer-rudolph {
+	--fa: ""
+}
+
+.fa-dreidel {
+	--fa: ""
+}
+
+.fa-dumpster {
+	--fa: ""
+}
+
+.fa-dumpster-fire {
+	--fa: ""
+}
+
+.fa-ear-muffs {
+	--fa: ""
+}
+
+.fa-ethernet {
+	--fa: ""
+}
+
+.fa-fireplace {
+	--fa: ""
+}
+
+.fa-snowman-head,
+.fa-frosty-head {
+	--fa: ""
+}
+
+.fa-gifts {
+	--fa: ""
+}
+
+.fa-gingerbread-man {
+	--fa: ""
+}
+
+.fa-champagne-glass,
+.fa-glass-champagne {
+	--fa: ""
+}
+
+.fa-champagne-glasses,
+.fa-glass-cheers {
+	--fa: ""
+}
+
+.fa-whiskey-glass,
+.fa-glass-whiskey {
+	--fa: ""
+}
+
+.fa-whiskey-glass-ice,
+.fa-glass-whiskey-rocks {
+	--fa: ""
+}
+
+.fa-earth-europe,
+.fa-globe-europe {
+	--fa: ""
+}
+
+.fa-globe-snow {
+	--fa: ""
+}
+
+.fa-grip-lines {
+	--fa: ""
+}
+
+.fa-grip-lines-vertical {
+	--fa: ""
+}
+
+.fa-guitar {
+	--fa: ""
+}
+
+.fa-hat-santa {
+	--fa: ""
+}
+
+.fa-hat-winter {
+	--fa: ""
+}
+
+.fa-heart-crack,
+.fa-heart-broken {
+	--fa: ""
+}
+
+.fa-holly-berry {
+	--fa: ""
+}
+
+.fa-horse-head {
+	--fa: ""
+}
+
+.fa-ice-skate {
+	--fa: ""
+}
+
+.fa-icicles {
+	--fa: ""
+}
+
+.fa-igloo {
+	--fa: ""
+}
+
+.fa-lights-holiday {
+	--fa: ""
+}
+
+.fa-mistletoe {
+	--fa: ""
+}
+
+.fa-mitten {
+	--fa: ""
+}
+
+.fa-mug-hot {
+	--fa: ""
+}
+
+.fa-mug-marshmallows {
+	--fa: ""
+}
+
+.fa-ornament {
+	--fa: ""
+}
+
+.fa-radiation {
+	--fa: ""
+}
+
+.fa-circle-radiation,
+.fa-radiation-alt {
+	--fa: ""
+}
+
+.fa-restroom {
+	--fa: ""
+}
+
+.fa-rv {
+	--fa: ""
+}
+
+.fa-satellite {
+	--fa: ""
+}
+
+.fa-satellite-dish {
+	--fa: ""
+}
+
+.fa-scarf {
+	--fa: ""
+}
+
+.fa-sd-card {
+	--fa: ""
+}
+
+.fa-shovel-snow {
+	--fa: ""
+}
+
+.fa-sim-card {
+	--fa: ""
+}
+
+.fa-person-skating,
+.fa-skating {
+	--fa: ""
+}
+
+.fa-person-ski-jumping,
+.fa-ski-jump {
+	--fa: ""
+}
+
+.fa-person-ski-lift,
+.fa-ski-lift {
+	--fa: ""
+}
+
+.fa-person-skiing,
+.fa-skiing {
+	--fa: ""
+}
+
+.fa-person-skiing-nordic,
+.fa-skiing-nordic {
+	--fa: ""
+}
+
+.fa-person-sledding,
+.fa-sledding {
+	--fa: ""
+}
+
+.fa-sleigh {
+	--fa: ""
+}
+
+.fa-comment-sms,
+.fa-sms {
+	--fa: ""
+}
+
+.fa-person-snowboarding,
+.fa-snowboarding {
+	--fa: ""
+}
+
+.fa-snowflakes {
+	--fa: ""
+}
+
+.fa-snowman {
+	--fa: ""
+}
+
+.fa-person-snowmobiling,
+.fa-snowmobile {
+	--fa: ""
+}
+
+.fa-snowplow {
+	--fa: ""
+}
+
+.fa-star-christmas {
+	--fa: ""
+}
+
+.fa-stocking {
+	--fa: ""
+}
+
+.fa-tenge-sign,
+.fa-tenge {
+	--fa: ""
+}
+
+.fa-toilet {
+	--fa: ""
+}
+
+.fa-screwdriver-wrench,
+.fa-tools {
+	--fa: ""
+}
+
+.fa-cable-car,
+.fa-tram {
+	--fa: ""
+}
+
+.fa-tree-christmas {
+	--fa: ""
+}
+
+.fa-tree-decorated {
+	--fa: ""
+}
+
+.fa-tree-large {
+	--fa: ""
+}
+
+.fa-truck-plow {
+	--fa: ""
+}
+
+.fa-wreath {
+	--fa: ""
+}
+
+.fa-fire-flame-curved,
+.fa-fire-alt {
+	--fa: ""
+}
+
+.fa-bacon {
+	--fa: ""
+}
+
+.fa-book-medical {
+	--fa: ""
+}
+
+.fa-book-user {
+	--fa: ""
+}
+
+.fa-books-medical {
+	--fa: ""
+}
+
+.fa-brackets-square,
+.fa-brackets {
+	--fa: ""
+}
+
+.fa-brackets-curly {
+	--fa: ""
+}
+
+.fa-bread-loaf {
+	--fa: ""
+}
+
+.fa-bread-slice {
+	--fa: ""
+}
+
+.fa-burrito {
+	--fa: ""
+}
+
+.fa-chart-scatter {
+	--fa: ""
+}
+
+.fa-cheese {
+	--fa: ""
+}
+
+.fa-cheese-swiss {
+	--fa: ""
+}
+
+.fa-burger-cheese,
+.fa-cheeseburger {
+	--fa: ""
+}
+
+.fa-house-chimney-medical,
+.fa-clinic-medical {
+	--fa: ""
+}
+
+.fa-clipboard-user {
+	--fa: ""
+}
+
+.fa-message-medical,
+.fa-comment-alt-medical {
+	--fa: ""
+}
+
+.fa-comment-medical {
+	--fa: ""
+}
+
+.fa-croissant {
+	--fa: ""
+}
+
+.fa-crutch {
+	--fa: ""
+}
+
+.fa-crutches {
+	--fa: ""
+}
+
+.fa-ban-bug,
+.fa-debug {
+	--fa: ""
+}
+
+.fa-disease {
+	--fa: ""
+}
+
+.fa-egg {
+	--fa: ""
+}
+
+.fa-egg-fried {
+	--fa: ""
+}
+
+.fa-files-medical {
+	--fa: ""
+}
+
+.fa-fish-cooked {
+	--fa: ""
+}
+
+.fa-flower {
+	--fa: ""
+}
+
+.fa-flower-daffodil {
+	--fa: ""
+}
+
+.fa-flower-tulip {
+	--fa: ""
+}
+
+.fa-folder-tree {
+	--fa: ""
+}
+
+.fa-french-fries {
+	--fa: ""
+}
+
+.fa-glass {
+	--fa: ""
+}
+
+.fa-burger,
+.fa-hamburger {
+	--fa: ""
+}
+
+.fa-hand-middle-finger {
+	--fa: ""
+}
+
+.fa-helmet-safety,
+.fa-hard-hat,
+.fa-hat-hard {
+	--fa: ""
+}
+
+.fa-head-side-brain {
+	--fa: ""
+}
+
+.fa-head-side-medical {
+	--fa: ""
+}
+
+.fa-hospital-user {
+	--fa: ""
+}
+
+.fa-hospitals {
+	--fa: ""
+}
+
+.fa-hotdog {
+	--fa: ""
+}
+
+.fa-ice-cream {
+	--fa: ""
+}
+
+.fa-island-tropical,
+.fa-island-tree-palm {
+	--fa: ""
+}
+
+.fa-laptop-medical {
+	--fa: ""
+}
+
+.fa-mailbox {
+	--fa: ""
+}
+
+.fa-meat {
+	--fa: ""
+}
+
+.fa-pager {
+	--fa: ""
+}
+
+.fa-pepper-hot {
+	--fa: ""
+}
+
+.fa-pizza {
+	--fa: ""
+}
+
+.fa-pizza-slice {
+	--fa: ""
+}
+
+.fa-popcorn {
+	--fa: ""
+}
+
+.fa-print-magnifying-glass,
+.fa-print-search {
+	--fa: ""
+}
+
+.fa-rings-wedding {
+	--fa: ""
+}
+
+.fa-sack {
+	--fa: ""
+}
+
+.fa-sack-dollar {
+	--fa: ""
+}
+
+.fa-salad,
+.fa-bowl-salad {
+	--fa: ""
+}
+
+.fa-sandwich {
+	--fa: ""
+}
+
+.fa-sausage {
+	--fa: ""
+}
+
+.fa-shish-kebab {
+	--fa: ""
+}
+
+.fa-sickle {
+	--fa: ""
+}
+
+.fa-bowl-hot,
+.fa-soup {
+	--fa: ""
+}
+
+.fa-steak {
+	--fa: ""
+}
+
+.fa-stretcher {
+	--fa: ""
+}
+
+.fa-taco {
+	--fa: ""
+}
+
+.fa-book-tanakh,
+.fa-tanakh {
+	--fa: ""
+}
+
+.fa-bars-progress,
+.fa-tasks-alt {
+	--fa: ""
+}
+
+.fa-trash-arrow-up,
+.fa-trash-restore {
+	--fa: ""
+}
+
+.fa-trash-can-arrow-up,
+.fa-trash-restore-alt {
+	--fa: ""
+}
+
+.fa-tree-palm {
+	--fa: ""
+}
+
+.fa-user-helmet-safety,
+.fa-user-construction,
+.fa-user-hard-hat {
+	--fa: ""
+}
+
+.fa-user-headset {
+	--fa: ""
+}
+
+.fa-user-doctor-message,
+.fa-user-md-chat {
+	--fa: ""
+}
+
+.fa-user-nurse {
+	--fa: ""
+}
+
+.fa-users-medical {
+	--fa: ""
+}
+
+.fa-walker {
+	--fa: ""
+}
+
+.fa-camera-web,
+.fa-webcam {
+	--fa: ""
+}
+
+.fa-camera-web-slash,
+.fa-webcam-slash {
+	--fa: ""
+}
+
+.fa-wave-square {
+	--fa: ""
+}
+
+.fa-alarm-exclamation {
+	--fa: ""
+}
+
+.fa-alarm-plus {
+	--fa: ""
+}
+
+.fa-alarm-snooze {
+	--fa: ""
+}
+
+.fa-align-slash {
+	--fa: ""
+}
+
+.fa-bags-shopping {
+	--fa: ""
+}
+
+.fa-bell-exclamation {
+	--fa: ""
+}
+
+.fa-bell-plus {
+	--fa: ""
+}
+
+.fa-person-biking,
+.fa-biking {
+	--fa: ""
+}
+
+.fa-person-biking-mountain,
+.fa-biking-mountain {
+	--fa: ""
+}
+
+.fa-border-all {
+	--fa: ""
+}
+
+.fa-border-bottom {
+	--fa: ""
+}
+
+.fa-border-inner {
+	--fa: ""
+}
+
+.fa-border-left {
+	--fa: ""
+}
+
+.fa-border-none {
+	--fa: ""
+}
+
+.fa-border-outer {
+	--fa: ""
+}
+
+.fa-border-right {
+	--fa: ""
+}
+
+.fa-border-top-left,
+.fa-border-style {
+	--fa: ""
+}
+
+.fa-border-bottom-right,
+.fa-border-style-alt {
+	--fa: ""
+}
+
+.fa-border-top {
+	--fa: ""
+}
+
+.fa-bring-forward {
+	--fa: ""
+}
+
+.fa-bring-front {
+	--fa: ""
+}
+
+.fa-burger-soda {
+	--fa: ""
+}
+
+.fa-car-building {
+	--fa: ""
+}
+
+.fa-car-bus {
+	--fa: ""
+}
+
+.fa-cars {
+	--fa: ""
+}
+
+.fa-coin {
+	--fa: ""
+}
+
+.fa-triangle-person-digging,
+.fa-construction {
+	--fa: ""
+}
+
+.fa-person-digging,
+.fa-digging {
+	--fa: ""
+}
+
+.fa-drone {
+	--fa: ""
+}
+
+.fa-drone-front,
+.fa-drone-alt {
+	--fa: ""
+}
+
+.fa-dryer {
+	--fa: ""
+}
+
+.fa-dryer-heat,
+.fa-dryer-alt {
+	--fa: ""
+}
+
+.fa-fan {
+	--fa: ""
+}
+
+.fa-farm,
+.fa-barn-silo {
+	--fa: ""
+}
+
+.fa-file-magnifying-glass,
+.fa-file-search {
+	--fa: ""
+}
+
+.fa-font-case {
+	--fa: ""
+}
+
+.fa-game-board {
+	--fa: ""
+}
+
+.fa-game-board-simple,
+.fa-game-board-alt {
+	--fa: ""
+}
+
+.fa-glass-citrus {
+	--fa: ""
+}
+
+.fa-h4 {
+	--fa: ""
+}
+
+.fa-hat-chef {
+	--fa: ""
+}
+
+.fa-horizontal-rule {
+	--fa: ""
+}
+
+.fa-icons,
+.fa-heart-music-camera-bolt {
+	--fa: ""
+}
+
+.fa-symbols,
+.fa-icons-alt {
+	--fa: ""
+}
+
+.fa-kerning {
+	--fa: ""
+}
+
+.fa-line-columns {
+	--fa: ""
+}
+
+.fa-line-height {
+	--fa: ""
+}
+
+.fa-money-check-pen,
+.fa-money-check-edit {
+	--fa: ""
+}
+
+.fa-money-check-dollar-pen,
+.fa-money-check-edit-alt {
+	--fa: ""
+}
+
+.fa-mug {
+	--fa: ""
+}
+
+.fa-mug-tea {
+	--fa: ""
+}
+
+.fa-overline {
+	--fa: ""
+}
+
+.fa-file-dashed-line,
+.fa-page-break {
+	--fa: ""
+}
+
+.fa-paragraph-left,
+.fa-paragraph-rtl {
+	--fa: ""
+}
+
+.fa-phone-flip,
+.fa-phone-alt {
+	--fa: ""
+}
+
+.fa-laptop-mobile,
+.fa-phone-laptop {
+	--fa: ""
+}
+
+.fa-square-phone-flip,
+.fa-phone-square-alt {
+	--fa: ""
+}
+
+.fa-photo-film,
+.fa-photo-video {
+	--fa: ""
+}
+
+.fa-text-slash,
+.fa-remove-format {
+	--fa: ""
+}
+
+.fa-send-back {
+	--fa: ""
+}
+
+.fa-send-backward {
+	--fa: ""
+}
+
+.fa-snooze,
+.fa-zzz {
+	--fa: ""
+}
+
+.fa-arrow-down-z-a,
+.fa-sort-alpha-desc,
+.fa-sort-alpha-down-alt {
+	--fa: ""
+}
+
+.fa-arrow-up-z-a,
+.fa-sort-alpha-up-alt {
+	--fa: ""
+}
+
+.fa-arrow-down-arrow-up,
+.fa-sort-alt {
+	--fa: ""
+}
+
+.fa-arrow-down-short-wide,
+.fa-sort-amount-desc,
+.fa-sort-amount-down-alt {
+	--fa: ""
+}
+
+.fa-arrow-up-short-wide,
+.fa-sort-amount-up-alt {
+	--fa: ""
+}
+
+.fa-arrow-down-9-1,
+.fa-sort-numeric-desc,
+.fa-sort-numeric-down-alt {
+	--fa: ""
+}
+
+.fa-arrow-up-9-1,
+.fa-sort-numeric-up-alt {
+	--fa: ""
+}
+
+.fa-arrow-down-triangle-square,
+.fa-sort-shapes-down {
+	--fa: ""
+}
+
+.fa-arrow-down-square-triangle,
+.fa-sort-shapes-down-alt {
+	--fa: ""
+}
+
+.fa-arrow-up-triangle-square,
+.fa-sort-shapes-up {
+	--fa: ""
+}
+
+.fa-arrow-up-square-triangle,
+.fa-sort-shapes-up-alt {
+	--fa: ""
+}
+
+.fa-arrow-down-big-small,
+.fa-sort-size-down {
+	--fa: ""
+}
+
+.fa-arrow-down-small-big,
+.fa-sort-size-down-alt {
+	--fa: ""
+}
+
+.fa-arrow-up-big-small,
+.fa-sort-size-up {
+	--fa: ""
+}
+
+.fa-arrow-up-small-big,
+.fa-sort-size-up-alt {
+	--fa: ""
+}
+
+.fa-sparkles {
+	--fa: ""
+}
+
+.fa-spell-check {
+	--fa: ""
+}
+
+.fa-sunglasses {
+	--fa: ""
+}
+
+.fa-text {
+	--fa: ""
+}
+
+.fa-text-size {
+	--fa: ""
+}
+
+.fa-trash-undo,
+.fa-trash-arrow-turn-left {
+	--fa: ""
+}
+
+.fa-trash-can-undo,
+.fa-trash-can-arrow-turn-left,
+.fa-trash-undo-alt {
+	--fa: ""
+}
+
+.fa-voicemail {
+	--fa: ""
+}
+
+.fa-washing-machine,
+.fa-washer {
+	--fa: ""
+}
+
+.fa-wave-sine {
+	--fa: ""
+}
+
+.fa-wave-triangle {
+	--fa: ""
+}
+
+.fa-wind-turbine {
+	--fa: ""
+}
+
+.fa-border-center-h {
+	--fa: ""
+}
+
+.fa-border-center-v {
+	--fa: ""
+}
+
+.fa-album {
+	--fa: ""
+}
+
+.fa-album-collection {
+	--fa: ""
+}
+
+.fa-amp-guitar {
+	--fa: ""
+}
+
+.fa-badge-sheriff {
+	--fa: ""
+}
+
+.fa-banjo {
+	--fa: ""
+}
+
+.fa-cassette-betamax,
+.fa-betamax {
+	--fa: ""
+}
+
+.fa-boombox {
+	--fa: ""
+}
+
+.fa-cactus {
+	--fa: ""
+}
+
+.fa-camcorder,
+.fa-video-handheld {
+	--fa: ""
+}
+
+.fa-camera-movie {
+	--fa: ""
+}
+
+.fa-camera-polaroid {
+	--fa: ""
+}
+
+.fa-cassette-tape {
+	--fa: ""
+}
+
+.fa-camera-cctv,
+.fa-cctv {
+	--fa: ""
+}
+
+.fa-clarinet {
+	--fa: ""
+}
+
+.fa-cloud-music {
+	--fa: ""
+}
+
+.fa-message-music,
+.fa-comment-alt-music {
+	--fa: ""
+}
+
+.fa-comment-music {
+	--fa: ""
+}
+
+.fa-computer-classic {
+	--fa: ""
+}
+
+.fa-computer-speaker {
+	--fa: ""
+}
+
+.fa-cowbell {
+	--fa: ""
+}
+
+.fa-cowbell-circle-plus,
+.fa-cowbell-more {
+	--fa: ""
+}
+
+.fa-disc-drive {
+	--fa: ""
+}
+
+.fa-file-music {
+	--fa: ""
+}
+
+.fa-film-canister,
+.fa-film-cannister {
+	--fa: ""
+}
+
+.fa-flashlight {
+	--fa: ""
+}
+
+.fa-flute {
+	--fa: ""
+}
+
+.fa-flux-capacitor {
+	--fa: ""
+}
+
+.fa-game-console-handheld {
+	--fa: ""
+}
+
+.fa-gramophone {
+	--fa: ""
+}
+
+.fa-guitar-electric {
+	--fa: ""
+}
+
+.fa-guitars {
+	--fa: ""
+}
+
+.fa-hat-cowboy {
+	--fa: ""
+}
+
+.fa-hat-cowboy-side {
+	--fa: ""
+}
+
+.fa-head-side-headphones {
+	--fa: ""
+}
+
+.fa-horse-saddle {
+	--fa: ""
+}
+
+.fa-image-polaroid {
+	--fa: ""
+}
+
+.fa-joystick {
+	--fa: ""
+}
+
+.fa-jug {
+	--fa: ""
+}
+
+.fa-kazoo {
+	--fa: ""
+}
+
+.fa-lasso {
+	--fa: ""
+}
+
+.fa-list-music {
+	--fa: ""
+}
+
+.fa-microphone-stand {
+	--fa: ""
+}
+
+.fa-computer-mouse,
+.fa-mouse {
+	--fa: ""
+}
+
+.fa-computer-mouse-scrollwheel,
+.fa-mouse-alt {
+	--fa: ""
+}
+
+.fa-mp3-player {
+	--fa: ""
+}
+
+.fa-music-note,
+.fa-music-alt {
+	--fa: ""
+}
+
+.fa-music-note-slash,
+.fa-music-alt-slash {
+	--fa: ""
+}
+
+.fa-music-slash {
+	--fa: ""
+}
+
+.fa-phone-rotary {
+	--fa: ""
+}
+
+.fa-piano {
+	--fa: ""
+}
+
+.fa-piano-keyboard {
+	--fa: ""
+}
+
+.fa-projector {
+	--fa: ""
+}
+
+.fa-radio {
+	--fa: ""
+}
+
+.fa-radio-tuner,
+.fa-radio-alt {
+	--fa: ""
+}
+
+.fa-record-vinyl {
+	--fa: ""
+}
+
+.fa-router {
+	--fa: ""
+}
+
+.fa-saxophone-fire,
+.fa-sax-hot {
+	--fa: ""
+}
+
+.fa-saxophone {
+	--fa: ""
+}
+
+.fa-signal-stream {
+	--fa: ""
+}
+
+.fa-skull-cow {
+	--fa: ""
+}
+
+.fa-speaker {
+	--fa: ""
+}
+
+.fa-speakers {
+	--fa: ""
+}
+
+.fa-triangle-instrument,
+.fa-triangle-music {
+	--fa: ""
+}
+
+.fa-trumpet {
+	--fa: ""
+}
+
+.fa-turntable {
+	--fa: ""
+}
+
+.fa-tv-music {
+	--fa: ""
+}
+
+.fa-typewriter {
+	--fa: ""
+}
+
+.fa-usb-drive {
+	--fa: ""
+}
+
+.fa-user-cowboy {
+	--fa: ""
+}
+
+.fa-user-music {
+	--fa: ""
+}
+
+.fa-cassette-vhs,
+.fa-vhs {
+	--fa: ""
+}
+
+.fa-violin {
+	--fa: ""
+}
+
+.fa-wagon-covered {
+	--fa: ""
+}
+
+.fa-walkie-talkie {
+	--fa: ""
+}
+
+.fa-watch-calculator {
+	--fa: ""
+}
+
+.fa-waveform {
+	--fa: ""
+}
+
+.fa-waveform-lines,
+.fa-waveform-path {
+	--fa: ""
+}
+
+.fa-scanner-image {
+	--fa: ""
+}
+
+.fa-air-conditioner {
+	--fa: ""
+}
+
+.fa-alien {
+	--fa: ""
+}
+
+.fa-alien-8bit,
+.fa-alien-monster {
+	--fa: ""
+}
+
+.fa-bed-front,
+.fa-bed-alt {
+	--fa: ""
+}
+
+.fa-bed-bunk {
+	--fa: ""
+}
+
+.fa-bed-empty {
+	--fa: ""
+}
+
+.fa-bell-on {
+	--fa: ""
+}
+
+.fa-blinds {
+	--fa: ""
+}
+
+.fa-blinds-open {
+	--fa: ""
+}
+
+.fa-blinds-raised {
+	--fa: ""
+}
+
+.fa-camera-security,
+.fa-camera-home {
+	--fa: ""
+}
+
+.fa-caravan {
+	--fa: ""
+}
+
+:root,
+:host {
+	--fa-family-brands: "Font Awesome 7 Brands";
+	--fa-font-brands: normal 400 1em/1 var(--fa-family-brands)
+}
+
+@font-face {
+	font-family: "Font Awesome 7 Brands";
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url(https://luminarr.me/build/assets/fa-brands-400-lzda1r4M.woff2)
+}
+
+.fab,
+.fa-brands,
+.fa-classic.fa-brands {
+	--fa-family: var(--fa-family-brands);
+	--fa-style: 400
+}
+
+.fa-firefox-browser {
+	--fa: ""
+}
+
+.fa-ideal {
+	--fa: ""
+}
+
+.fa-microblog {
+	--fa: ""
+}
+
+.fa-square-pied-piper,
+.fa-pied-piper-square {
+	--fa: ""
+}
+
+.fa-unity {
+	--fa: ""
+}
+
+.fa-dailymotion {
+	--fa: ""
+}
+
+.fa-square-instagram,
+.fa-instagram-square {
+	--fa: ""
+}
+
+.fa-mixer {
+	--fa: ""
+}
+
+.fa-shopify {
+	--fa: ""
+}
+
+.fa-deezer {
+	--fa: ""
+}
+
+.fa-edge-legacy {
+	--fa: ""
+}
+
+.fa-google-pay {
+	--fa: ""
+}
+
+.fa-rust {
+	--fa: ""
+}
+
+.fa-tiktok {
+	--fa: ""
+}
+
+.fa-unsplash {
+	--fa: ""
+}
+
+.fa-cloudflare {
+	--fa: ""
+}
+
+.fa-guilded {
+	--fa: ""
+}
+
+.fa-hive {
+	--fa: ""
+}
+
+.fa-42-group,
+.fa-innosoft {
+	--fa: ""
+}
+
+.fa-instalod {
+	--fa: ""
+}
+
+.fa-octopus-deploy {
+	--fa: ""
+}
+
+.fa-perbyte {
+	--fa: ""
+}
+
+.fa-uncharted {
+	--fa: ""
+}
+
+.fa-watchman-monitoring {
+	--fa: ""
+}
+
+.fa-wodu {
+	--fa: ""
+}
+
+.fa-wirsindhandwerk,
+.fa-wsh {
+	--fa: ""
+}
+
+.fa-bots {
+	--fa: ""
+}
+
+.fa-cmplid {
+	--fa: ""
+}
+
+.fa-bilibili {
+	--fa: ""
+}
+
+.fa-golang {
+	--fa: ""
+}
+
+.fa-pix {
+	--fa: ""
+}
+
+.fa-sitrox {
+	--fa: ""
+}
+
+.fa-hashnode {
+	--fa: ""
+}
+
+.fa-meta {
+	--fa: ""
+}
+
+.fa-padlet {
+	--fa: ""
+}
+
+.fa-nfc-directional {
+	--fa: ""
+}
+
+.fa-nfc-symbol {
+	--fa: ""
+}
+
+.fa-screenpal {
+	--fa: ""
+}
+
+.fa-space-awesome {
+	--fa: ""
+}
+
+.fa-square-font-awesome {
+	--fa: ""
+}
+
+.fa-square-gitlab,
+.fa-gitlab-square {
+	--fa: ""
+}
+
+.fa-odysee {
+	--fa: ""
+}
+
+.fa-stubber {
+	--fa: ""
+}
+
+.fa-debian {
+	--fa: ""
+}
+
+.fa-shoelace {
+	--fa: ""
+}
+
+.fa-threads {
+	--fa: ""
+}
+
+.fa-square-threads {
+	--fa: ""
+}
+
+.fa-square-x-twitter {
+	--fa: ""
+}
+
+.fa-x-twitter {
+	--fa: ""
+}
+
+.fa-opensuse {
+	--fa: ""
+}
+
+.fa-letterboxd {
+	--fa: ""
+}
+
+.fa-square-letterboxd {
+	--fa: ""
+}
+
+.fa-mintbit {
+	--fa: ""
+}
+
+.fa-google-scholar {
+	--fa: ""
+}
+
+.fa-brave {
+	--fa: ""
+}
+
+.fa-brave-reverse {
+	--fa: ""
+}
+
+.fa-pixiv {
+	--fa: ""
+}
+
+.fa-upwork {
+	--fa: ""
+}
+
+.fa-webflow {
+	--fa: ""
+}
+
+.fa-signal-messenger {
+	--fa: ""
+}
+
+.fa-bluesky {
+	--fa: ""
+}
+
+.fa-jxl {
+	--fa: ""
+}
+
+.fa-square-upwork {
+	--fa: ""
+}
+
+.fa-web-awesome {
+	--fa: ""
+}
+
+.fa-square-web-awesome {
+	--fa: ""
+}
+
+.fa-square-web-awesome-stroke {
+	--fa: ""
+}
+
+.fa-dart-lang {
+	--fa: ""
+}
+
+.fa-flutter {
+	--fa: ""
+}
+
+.fa-files-pinwheel {
+	--fa: ""
+}
+
+.fa-css {
+	--fa: ""
+}
+
+.fa-square-bluesky {
+	--fa: ""
+}
+
+.fa-openai {
+	--fa: ""
+}
+
+.fa-square-linkedin {
+	--fa: ""
+}
+
+.fa-cash-app {
+	--fa: ""
+}
+
+.fa-disqus {
+	--fa: ""
+}
+
+.fa-eleventy,
+.fa-11ty {
+	--fa: ""
+}
+
+.fa-kakao-talk {
+	--fa: ""
+}
+
+.fa-linktree {
+	--fa: ""
+}
+
+.fa-notion {
+	--fa: ""
+}
+
+.fa-pandora {
+	--fa: ""
+}
+
+.fa-pixelfed {
+	--fa: ""
+}
+
+.fa-tidal {
+	--fa: ""
+}
+
+.fa-vsco {
+	--fa: ""
+}
+
+.fa-w3c {
+	--fa: ""
+}
+
+.fa-lumon {
+	--fa: ""
+}
+
+.fa-lumon-drop {
+	--fa: ""
+}
+
+.fa-square-figma {
+	--fa: ""
+}
+
+.fa-tex {
+	--fa: ""
+}
+
+.fa-duolingo {
+	--fa: ""
+}
+
+.fa-supportnow {
+	--fa: ""
+}
+
+.fa-tor-browser {
+	--fa: ""
+}
+
+.fa-square-twitter,
+.fa-twitter-square {
+	--fa: ""
+}
+
+.fa-square-facebook,
+.fa-facebook-square {
+	--fa: ""
+}
+
+.fa-linkedin {
+	--fa: ""
+}
+
+.fa-square-github,
+.fa-github-square {
+	--fa: ""
+}
+
+.fa-twitter {
+	--fa: ""
+}
+
+.fa-facebook {
+	--fa: ""
+}
+
+.fa-github {
+	--fa: ""
+}
+
+.fa-pinterest {
+	--fa: ""
+}
+
+.fa-square-pinterest,
+.fa-pinterest-square {
+	--fa: ""
+}
+
+.fa-square-google-plus,
+.fa-google-plus-square {
+	--fa: ""
+}
+
+.fa-google-plus-g {
+	--fa: ""
+}
+
+.fa-linkedin-in {
+	--fa: ""
+}
+
+.fa-github-alt {
+	--fa: ""
+}
+
+.fa-maxcdn {
+	--fa: ""
+}
+
+.fa-html5 {
+	--fa: ""
+}
+
+.fa-css3 {
+	--fa: ""
+}
+
+.fa-btc {
+	--fa: ""
+}
+
+.fa-youtube {
+	--fa: ""
+}
+
+.fa-xing {
+	--fa: ""
+}
+
+.fa-square-xing,
+.fa-xing-square {
+	--fa: ""
+}
+
+.fa-dropbox {
+	--fa: ""
+}
+
+.fa-stack-overflow {
+	--fa: ""
+}
+
+.fa-instagram {
+	--fa: ""
+}
+
+.fa-flickr {
+	--fa: ""
+}
+
+.fa-adn {
+	--fa: ""
+}
+
+.fa-bitbucket {
+	--fa: ""
+}
+
+.fa-tumblr {
+	--fa: ""
+}
+
+.fa-square-tumblr,
+.fa-tumblr-square {
+	--fa: ""
+}
+
+.fa-apple {
+	--fa: ""
+}
+
+.fa-windows {
+	--fa: ""
+}
+
+.fa-android {
+	--fa: ""
+}
+
+.fa-linux {
+	--fa: ""
+}
+
+.fa-dribbble {
+	--fa: ""
+}
+
+.fa-skype {
+	--fa: ""
+}
+
+.fa-foursquare {
+	--fa: ""
+}
+
+.fa-trello {
+	--fa: ""
+}
+
+.fa-gratipay {
+	--fa: ""
+}
+
+.fa-vk {
+	--fa: ""
+}
+
+.fa-weibo {
+	--fa: ""
+}
+
+.fa-renren {
+	--fa: ""
+}
+
+.fa-pagelines {
+	--fa: ""
+}
+
+.fa-stack-exchange {
+	--fa: ""
+}
+
+.fa-square-vimeo,
+.fa-vimeo-square {
+	--fa: ""
+}
+
+.fa-slack,
+.fa-slack-hash {
+	--fa: ""
+}
+
+.fa-wordpress {
+	--fa: ""
+}
+
+.fa-openid {
+	--fa: ""
+}
+
+.fa-yahoo {
+	--fa: ""
+}
+
+.fa-google {
+	--fa: ""
+}
+
+.fa-reddit {
+	--fa: ""
+}
+
+.fa-square-reddit,
+.fa-reddit-square {
+	--fa: ""
+}
+
+.fa-stumbleupon-circle {
+	--fa: ""
+}
+
+.fa-stumbleupon {
+	--fa: ""
+}
+
+.fa-delicious {
+	--fa: ""
+}
+
+.fa-digg {
+	--fa: ""
+}
+
+.fa-pied-piper-pp {
+	--fa: ""
+}
+
+.fa-pied-piper-alt {
+	--fa: ""
+}
+
+.fa-drupal {
+	--fa: ""
+}
+
+.fa-joomla {
+	--fa: ""
+}
+
+.fa-behance {
+	--fa: ""
+}
+
+.fa-square-behance,
+.fa-behance-square {
+	--fa: ""
+}
+
+.fa-steam {
+	--fa: ""
+}
+
+.fa-square-steam,
+.fa-steam-square {
+	--fa: ""
+}
+
+.fa-spotify {
+	--fa: ""
+}
+
+.fa-deviantart {
+	--fa: ""
+}
+
+.fa-soundcloud {
+	--fa: ""
+}
+
+.fa-vine {
+	--fa: ""
+}
+
+.fa-codepen {
+	--fa: ""
+}
+
+.fa-jsfiddle {
+	--fa: ""
+}
+
+.fa-rebel {
+	--fa: ""
+}
+
+.fa-empire {
+	--fa: ""
+}
+
+.fa-square-git,
+.fa-git-square {
+	--fa: ""
+}
+
+.fa-git {
+	--fa: ""
+}
+
+.fa-hacker-news {
+	--fa: ""
+}
+
+.fa-tencent-weibo {
+	--fa: ""
+}
+
+.fa-qq {
+	--fa: ""
+}
+
+.fa-weixin {
+	--fa: ""
+}
+
+.fa-slideshare {
+	--fa: ""
+}
+
+.fa-twitch {
+	--fa: ""
+}
+
+.fa-yelp {
+	--fa: ""
+}
+
+.fa-paypal {
+	--fa: ""
+}
+
+.fa-google-wallet {
+	--fa: ""
+}
+
+.fa-cc-visa {
+	--fa: ""
+}
+
+.fa-cc-mastercard {
+	--fa: ""
+}
+
+.fa-cc-discover {
+	--fa: ""
+}
+
+.fa-cc-amex {
+	--fa: ""
+}
+
+.fa-cc-paypal {
+	--fa: ""
+}
+
+.fa-cc-stripe {
+	--fa: ""
+}
+
+.fa-lastfm {
+	--fa: ""
+}
+
+.fa-square-lastfm,
+.fa-lastfm-square {
+	--fa: ""
+}
+
+.fa-ioxhost {
+	--fa: ""
+}
+
+.fa-angellist {
+	--fa: ""
+}
+
+.fa-buysellads {
+	--fa: ""
+}
+
+.fa-connectdevelop {
+	--fa: ""
+}
+
+.fa-dashcube {
+	--fa: ""
+}
+
+.fa-forumbee {
+	--fa: ""
+}
+
+.fa-leanpub {
+	--fa: ""
+}
+
+.fa-sellsy {
+	--fa: ""
+}
+
+.fa-shirtsinbulk {
+	--fa: ""
+}
+
+.fa-simplybuilt {
+	--fa: ""
+}
+
+.fa-skyatlas {
+	--fa: ""
+}
+
+.fa-pinterest-p {
+	--fa: ""
+}
+
+.fa-whatsapp {
+	--fa: ""
+}
+
+.fa-viacoin {
+	--fa: ""
+}
+
+.fa-medium,
+.fa-medium-m {
+	--fa: ""
+}
+
+.fa-y-combinator {
+	--fa: ""
+}
+
+.fa-optin-monster {
+	--fa: ""
+}
+
+.fa-opencart {
+	--fa: ""
+}
+
+.fa-expeditedssl {
+	--fa: ""
+}
+
+.fa-cc-jcb {
+	--fa: ""
+}
+
+.fa-cc-diners-club {
+	--fa: ""
+}
+
+.fa-creative-commons {
+	--fa: ""
+}
+
+.fa-gg {
+	--fa: ""
+}
+
+.fa-gg-circle {
+	--fa: ""
+}
+
+.fa-odnoklassniki {
+	--fa: ""
+}
+
+.fa-square-odnoklassniki,
+.fa-odnoklassniki-square {
+	--fa: ""
+}
+
+.fa-get-pocket {
+	--fa: ""
+}
+
+.fa-wikipedia-w {
+	--fa: ""
+}
+
+.fa-safari {
+	--fa: ""
+}
+
+.fa-chrome {
+	--fa: ""
+}
+
+.fa-firefox {
+	--fa: ""
+}
+
+.fa-opera {
+	--fa: ""
+}
+
+.fa-internet-explorer {
+	--fa: ""
+}
+
+.fa-contao {
+	--fa: ""
+}
+
+.fa-500px {
+	--fa: ""
+}
+
+.fa-amazon {
+	--fa: ""
+}
+
+.fa-houzz {
+	--fa: ""
+}
+
+.fa-vimeo-v {
+	--fa: ""
+}
+
+.fa-black-tie {
+	--fa: ""
+}
+
+.fa-fonticons {
+	--fa: ""
+}
+
+.fa-reddit-alien {
+	--fa: ""
+}
+
+.fa-edge {
+	--fa: ""
+}
+
+.fa-codiepie {
+	--fa: ""
+}
+
+.fa-modx {
+	--fa: ""
+}
+
+.fa-fort-awesome {
+	--fa: ""
+}
+
+.fa-usb {
+	--fa: ""
+}
+
+.fa-product-hunt {
+	--fa: ""
+}
+
+.fa-mixcloud {
+	--fa: ""
+}
+
+.fa-scribd {
+	--fa: ""
+}
+
+.fa-bluetooth {
+	--fa: ""
+}
+
+.fa-bluetooth-b {
+	--fa: ""
+}
+
+.fa-gitlab {
+	--fa: ""
+}
+
+.fa-wpbeginner {
+	--fa: ""
+}
+
+.fa-wpforms {
+	--fa: ""
+}
+
+.fa-envira {
+	--fa: ""
+}
+
+.fa-glide {
+	--fa: ""
+}
+
+.fa-glide-g {
+	--fa: ""
+}
+
+.fa-viadeo {
+	--fa: ""
+}
+
+.fa-square-viadeo,
+.fa-viadeo-square {
+	--fa: ""
+}
+
+.fa-snapchat,
+.fa-snapchat-ghost {
+	--fa: ""
+}
+
+.fa-square-snapchat,
+.fa-snapchat-square {
+	--fa: ""
+}
+
+.fa-pied-piper {
+	--fa: ""
+}
+
+.fa-first-order {
+	--fa: ""
+}
+
+.fa-yoast {
+	--fa: ""
+}
+
+.fa-themeisle {
+	--fa: ""
+}
+
+.fa-google-plus {
+	--fa: ""
+}
+
+.fa-font-awesome,
+.fa-font-awesome-flag,
+.fa-font-awesome-logo-full {
+	--fa: ""
+}
+
+.fa-linode {
+	--fa: ""
+}
+
+.fa-quora {
+	--fa: ""
+}
+
+.fa-free-code-camp {
+	--fa: ""
+}
+
+.fa-telegram,
+.fa-telegram-plane {
+	--fa: ""
+}
+
+.fa-bandcamp {
+	--fa: ""
+}
+
+.fa-grav {
+	--fa: ""
+}
+
+.fa-etsy {
+	--fa: ""
+}
+
+.fa-imdb {
+	--fa: ""
+}
+
+.fa-ravelry {
+	--fa: ""
+}
+
+.fa-sellcast {
+	--fa: ""
+}
+
+.fa-superpowers {
+	--fa: ""
+}
+
+.fa-wpexplorer {
+	--fa: ""
+}
+
+.fa-meetup {
+	--fa: ""
+}
+
+.fa-square-font-awesome-stroke,
+.fa-font-awesome-alt {
+	--fa: ""
+}
+
+.fa-accessible-icon {
+	--fa: ""
+}
+
+.fa-accusoft {
+	--fa: ""
+}
+
+.fa-adversal {
+	--fa: ""
+}
+
+.fa-affiliatetheme {
+	--fa: ""
+}
+
+.fa-algolia {
+	--fa: ""
+}
+
+.fa-amilia {
+	--fa: ""
+}
+
+.fa-angrycreative {
+	--fa: ""
+}
+
+.fa-app-store {
+	--fa: ""
+}
+
+.fa-app-store-ios {
+	--fa: ""
+}
+
+.fa-apper {
+	--fa: ""
+}
+
+.fa-asymmetrik {
+	--fa: ""
+}
+
+.fa-audible {
+	--fa: ""
+}
+
+.fa-avianex {
+	--fa: ""
+}
+
+.fa-aws {
+	--fa: ""
+}
+
+.fa-bimobject {
+	--fa: ""
+}
+
+.fa-bitcoin {
+	--fa: ""
+}
+
+.fa-bity {
+	--fa: ""
+}
+
+.fa-blackberry {
+	--fa: ""
+}
+
+.fa-blogger {
+	--fa: ""
+}
+
+.fa-blogger-b {
+	--fa: ""
+}
+
+.fa-buromobelexperte {
+	--fa: ""
+}
+
+.fa-centercode {
+	--fa: ""
+}
+
+.fa-cloudscale {
+	--fa: ""
+}
+
+.fa-cloudsmith {
+	--fa: ""
+}
+
+.fa-cloudversify {
+	--fa: ""
+}
+
+.fa-cpanel {
+	--fa: ""
+}
+
+.fa-css3-alt {
+	--fa: ""
+}
+
+.fa-cuttlefish {
+	--fa: ""
+}
+
+.fa-d-and-d {
+	--fa: ""
+}
+
+.fa-deploydog {
+	--fa: ""
+}
+
+.fa-deskpro {
+	--fa: ""
+}
+
+.fa-digital-ocean {
+	--fa: ""
+}
+
+.fa-discord {
+	--fa: ""
+}
+
+.fa-discourse {
+	--fa: ""
+}
+
+.fa-dochub {
+	--fa: ""
+}
+
+.fa-docker {
+	--fa: ""
+}
+
+.fa-draft2digital {
+	--fa: ""
+}
+
+.fa-square-dribbble,
+.fa-dribbble-square {
+	--fa: ""
+}
+
+.fa-dyalog {
+	--fa: ""
+}
+
+.fa-earlybirds {
+	--fa: ""
+}
+
+.fa-erlang {
+	--fa: ""
+}
+
+.fa-facebook-f {
+	--fa: ""
+}
+
+.fa-facebook-messenger {
+	--fa: ""
+}
+
+.fa-firstdraft {
+	--fa: ""
+}
+
+.fa-fonticons-fi {
+	--fa: ""
+}
+
+.fa-fort-awesome-alt {
+	--fa: ""
+}
+
+.fa-freebsd {
+	--fa: ""
+}
+
+.fa-gitkraken {
+	--fa: ""
+}
+
+.fa-gofore {
+	--fa: ""
+}
+
+.fa-goodreads {
+	--fa: ""
+}
+
+.fa-goodreads-g {
+	--fa: ""
+}
+
+.fa-google-drive {
+	--fa: ""
+}
+
+.fa-google-play {
+	--fa: ""
+}
+
+.fa-gripfire {
+	--fa: ""
+}
+
+.fa-grunt {
+	--fa: ""
+}
+
+.fa-gulp {
+	--fa: ""
+}
+
+.fa-square-hacker-news,
+.fa-hacker-news-square {
+	--fa: ""
+}
+
+.fa-hire-a-helper {
+	--fa: ""
+}
+
+.fa-hotjar {
+	--fa: ""
+}
+
+.fa-hubspot {
+	--fa: ""
+}
+
+.fa-itunes {
+	--fa: ""
+}
+
+.fa-itunes-note {
+	--fa: ""
+}
+
+.fa-jenkins {
+	--fa: ""
+}
+
+.fa-joget {
+	--fa: ""
+}
+
+.fa-js {
+	--fa: ""
+}
+
+.fa-square-js,
+.fa-js-square {
+	--fa: ""
+}
+
+.fa-keycdn {
+	--fa: ""
+}
+
+.fa-kickstarter,
+.fa-square-kickstarter {
+	--fa: ""
+}
+
+.fa-kickstarter-k {
+	--fa: ""
+}
+
+.fa-laravel {
+	--fa: ""
+}
+
+.fa-line {
+	--fa: ""
+}
+
+.fa-lyft {
+	--fa: ""
+}
+
+.fa-magento {
+	--fa: ""
+}
+
+.fa-medapps {
+	--fa: ""
+}
+
+.fa-medrt {
+	--fa: ""
+}
+
+.fa-microsoft {
+	--fa: ""
+}
+
+.fa-mix {
+	--fa: ""
+}
+
+.fa-mizuni {
+	--fa: ""
+}
+
+.fa-monero {
+	--fa: ""
+}
+
+.fa-napster {
+	--fa: ""
+}
+
+.fa-node-js {
+	--fa: ""
+}
+
+.fa-npm {
+	--fa: ""
+}
+
+.fa-ns8 {
+	--fa: ""
+}
+
+.fa-nutritionix {
+	--fa: ""
+}
+
+.fa-page4 {
+	--fa: ""
+}
+
+.fa-palfed {
+	--fa: ""
+}
+
+.fa-patreon {
+	--fa: ""
+}
+
+.fa-periscope {
+	--fa: ""
+}
+
+.fa-phabricator {
+	--fa: ""
+}
+
+.fa-phoenix-framework {
+	--fa: ""
+}
+
+.fa-playstation {
+	--fa: ""
+}
+
+.fa-pushed {
+	--fa: ""
+}
+
+.fa-python {
+	--fa: ""
+}
+
+.fa-red-river {
+	--fa: ""
+}
+
+.fa-wpressr,
+.fa-rendact {
+	--fa: ""
+}
+
+.fa-replyd {
+	--fa: ""
+}
+
+.fa-resolving {
+	--fa: ""
+}
+
+.fa-rocketchat {
+	--fa: ""
+}
+
+.fa-rockrms {
+	--fa: ""
+}
+
+.fa-schlix {
+	--fa: ""
+}
+
+.fa-searchengin {
+	--fa: ""
+}
+
+.fa-servicestack {
+	--fa: ""
+}
+
+.fa-sistrix {
+	--fa: ""
+}
+
+.fa-speakap {
+	--fa: ""
+}
+
+.fa-staylinked {
+	--fa: ""
+}
+
+.fa-steam-symbol {
+	--fa: ""
+}
+
+.fa-sticker-mule {
+	--fa: ""
+}
+
+.fa-studiovinari {
+	--fa: ""
+}
+
+.fa-supple {
+	--fa: ""
+}
+
+.fa-uber {
+	--fa: ""
+}
+
+.fa-uikit {
+	--fa: ""
+}
+
+.fa-uniregistry {
+	--fa: ""
+}
+
+.fa-untappd {
+	--fa: ""
+}
+
+.fa-ussunnah {
+	--fa: ""
+}
+
+.fa-vaadin {
+	--fa: ""
+}
+
+.fa-viber {
+	--fa: ""
+}
+
+.fa-vimeo {
+	--fa: ""
+}
+
+.fa-vnv {
+	--fa: ""
+}
+
+.fa-square-whatsapp,
+.fa-whatsapp-square {
+	--fa: ""
+}
+
+.fa-whmcs {
+	--fa: ""
+}
+
+.fa-wordpress-simple {
+	--fa: ""
+}
+
+.fa-xbox {
+	--fa: ""
+}
+
+.fa-yandex {
+	--fa: ""
+}
+
+.fa-yandex-international {
+	--fa: ""
+}
+
+.fa-apple-pay {
+	--fa: ""
+}
+
+.fa-cc-apple-pay {
+	--fa: ""
+}
+
+.fa-fly {
+	--fa: ""
+}
+
+.fa-node {
+	--fa: ""
+}
+
+.fa-osi {
+	--fa: ""
+}
+
+.fa-react {
+	--fa: ""
+}
+
+.fa-autoprefixer {
+	--fa: ""
+}
+
+.fa-less {
+	--fa: ""
+}
+
+.fa-sass {
+	--fa: ""
+}
+
+.fa-vuejs {
+	--fa: ""
+}
+
+.fa-angular {
+	--fa: ""
+}
+
+.fa-aviato {
+	--fa: ""
+}
+
+.fa-ember {
+	--fa: ""
+}
+
+.fa-gitter {
+	--fa: ""
+}
+
+.fa-hooli {
+	--fa: ""
+}
+
+.fa-strava {
+	--fa: ""
+}
+
+.fa-stripe {
+	--fa: ""
+}
+
+.fa-stripe-s {
+	--fa: ""
+}
+
+.fa-typo3 {
+	--fa: ""
+}
+
+.fa-amazon-pay {
+	--fa: ""
+}
+
+.fa-cc-amazon-pay {
+	--fa: ""
+}
+
+.fa-ethereum {
+	--fa: ""
+}
+
+.fa-korvue {
+	--fa: ""
+}
+
+.fa-elementor {
+	--fa: ""
+}
+
+.fa-square-youtube,
+.fa-youtube-square {
+	--fa: ""
+}
+
+.fa-flipboard {
+	--fa: ""
+}
+
+.fa-hips {
+	--fa: ""
+}
+
+.fa-php {
+	--fa: ""
+}
+
+.fa-quinscape {
+	--fa: ""
+}
+
+.fa-readme {
+	--fa: ""
+}
+
+.fa-java {
+	--fa: ""
+}
+
+.fa-pied-piper-hat {
+	--fa: ""
+}
+
+.fa-creative-commons-by {
+	--fa: ""
+}
+
+.fa-creative-commons-nc {
+	--fa: ""
+}
+
+.fa-creative-commons-nc-eu {
+	--fa: ""
+}
+
+.fa-creative-commons-nc-jp {
+	--fa: ""
+}
+
+.fa-creative-commons-nd {
+	--fa: ""
+}
+
+.fa-creative-commons-pd {
+	--fa: ""
+}
+
+.fa-creative-commons-pd-alt {
+	--fa: ""
+}
+
+.fa-creative-commons-remix {
+	--fa: ""
+}
+
+.fa-creative-commons-sa {
+	--fa: ""
+}
+
+.fa-creative-commons-sampling {
+	--fa: ""
+}
+
+.fa-creative-commons-sampling-plus {
+	--fa: ""
+}
+
+.fa-creative-commons-share {
+	--fa: ""
+}
+
+.fa-creative-commons-zero {
+	--fa: ""
+}
+
+.fa-ebay {
+	--fa: ""
+}
+
+.fa-keybase {
+	--fa: ""
+}
+
+.fa-mastodon {
+	--fa: ""
+}
+
+.fa-r-project {
+	--fa: ""
+}
+
+.fa-researchgate {
+	--fa: ""
+}
+
+.fa-teamspeak {
+	--fa: ""
+}
+
+.fa-first-order-alt {
+	--fa: ""
+}
+
+.fa-fulcrum {
+	--fa: ""
+}
+
+.fa-galactic-republic {
+	--fa: ""
+}
+
+.fa-galactic-senate {
+	--fa: ""
+}
+
+.fa-jedi-order {
+	--fa: ""
+}
+
+.fa-mandalorian {
+	--fa: ""
+}
+
+.fa-old-republic {
+	--fa: ""
+}
+
+.fa-phoenix-squadron {
+	--fa: ""
+}
+
+.fa-sith {
+	--fa: ""
+}
+
+.fa-trade-federation {
+	--fa: ""
+}
+
+.fa-wolf-pack-battalion {
+	--fa: ""
+}
+
+.fa-hornbill {
+	--fa: ""
+}
+
+.fa-mailchimp {
+	--fa: ""
+}
+
+.fa-megaport {
+	--fa: ""
+}
+
+.fa-nimblr {
+	--fa: ""
+}
+
+.fa-rev {
+	--fa: ""
+}
+
+.fa-shopware {
+	--fa: ""
+}
+
+.fa-squarespace {
+	--fa: ""
+}
+
+.fa-themeco {
+	--fa: ""
+}
+
+.fa-weebly {
+	--fa: ""
+}
+
+.fa-wix {
+	--fa: ""
+}
+
+.fa-ello {
+	--fa: ""
+}
+
+.fa-hackerrank {
+	--fa: ""
+}
+
+.fa-kaggle {
+	--fa: ""
+}
+
+.fa-markdown {
+	--fa: ""
+}
+
+.fa-neos {
+	--fa: ""
+}
+
+.fa-zhihu {
+	--fa: ""
+}
+
+.fa-alipay {
+	--fa: ""
+}
+
+.fa-the-red-yeti {
+	--fa: ""
+}
+
+.fa-critical-role {
+	--fa: ""
+}
+
+.fa-d-and-d-beyond {
+	--fa: ""
+}
+
+.fa-dev {
+	--fa: ""
+}
+
+.fa-fantasy-flight-games {
+	--fa: ""
+}
+
+.fa-wizards-of-the-coast {
+	--fa: ""
+}
+
+.fa-think-peaks {
+	--fa: ""
+}
+
+.fa-reacteurope {
+	--fa: ""
+}
+
+.fa-artstation {
+	--fa: ""
+}
+
+.fa-atlassian {
+	--fa: ""
+}
+
+.fa-canadian-maple-leaf {
+	--fa: ""
+}
+
+.fa-centos {
+	--fa: ""
+}
+
+.fa-confluence {
+	--fa: ""
+}
+
+.fa-dhl {
+	--fa: ""
+}
+
+.fa-diaspora {
+	--fa: ""
+}
+
+.fa-fedex {
+	--fa: ""
+}
+
+.fa-fedora {
+	--fa: ""
+}
+
+.fa-figma {
+	--fa: ""
+}
+
+.fa-intercom {
+	--fa: ""
+}
+
+.fa-invision {
+	--fa: ""
+}
+
+.fa-jira {
+	--fa: ""
+}
+
+.fa-mendeley {
+	--fa: ""
+}
+
+.fa-raspberry-pi {
+	--fa: ""
+}
+
+.fa-redhat {
+	--fa: ""
+}
+
+.fa-sketch {
+	--fa: ""
+}
+
+.fa-sourcetree {
+	--fa: ""
+}
+
+.fa-suse {
+	--fa: ""
+}
+
+.fa-ubuntu {
+	--fa: ""
+}
+
+.fa-ups {
+	--fa: ""
+}
+
+.fa-usps {
+	--fa: ""
+}
+
+.fa-yarn {
+	--fa: ""
+}
+
+.fa-airbnb {
+	--fa: ""
+}
+
+.fa-battle-net {
+	--fa: ""
+}
+
+.fa-bootstrap {
+	--fa: ""
+}
+
+.fa-buffer {
+	--fa: ""
+}
+
+.fa-chromecast {
+	--fa: ""
+}
+
+.fa-evernote {
+	--fa: ""
+}
+
+.fa-itch-io {
+	--fa: ""
+}
+
+.fa-salesforce {
+	--fa: ""
+}
+
+.fa-speaker-deck {
+	--fa: ""
+}
+
+.fa-symfony {
+	--fa: ""
+}
+
+.fa-waze {
+	--fa: ""
+}
+
+.fa-yammer {
+	--fa: ""
+}
+
+.fa-git-alt {
+	--fa: ""
+}
+
+.fa-stackpath {
+	--fa: ""
+}
+
+.fa-cotton-bureau {
+	--fa: ""
+}
+
+.fa-buy-n-large {
+	--fa: ""
+}
+
+.fa-mdb {
+	--fa: ""
+}
+
+.fa-orcid {
+	--fa: ""
+}
+
+.fa-swift {
+	--fa: ""
+}
+
+.fa-umbraco {
+	--fa: ""
+}
+
+:host,
+:root {
+	--fa-font-light: normal 300 1em/1 "Font Awesome 7 Pro"
+}
+
+@font-face {
+	font-family: "Font Awesome 7 Pro";
+	font-style: normal;
+	font-weight: 300;
+	font-display: block;
+	src: url("../fonts/font-awesome/fa-light-300.woff2") format("woff2")
+}
+
+.fa-light,
+.fal {
+	font-weight: 300
+}
+
+:host,
+:root {
+	--fa-font-regular: normal 400 1em/1 "Font Awesome 7 Pro"
+}
+
+@font-face {
+	font-family: "Font Awesome 7 Pro";
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url("../fonts/font-awesome/fa-regular-400.woff2") format("woff2")
+}
+
+.fa-regular,
+.far {
+	font-weight: 400
+}
+
+:host,
+:root {
+	--fa-font-solid: normal 900 1em/1 "Font Awesome 7 Pro"
+}
+
+@font-face {
+	font-family: "Font Awesome 7 Pro";
+	font-style: normal;
+	font-weight: 900;
+	font-display: block;
+	src: url("../fonts/font-awesome/fa-solid-900.woff2") format("woff2")
+}
+
+.fa-solid,
+.fas {
+	font-weight: 900
+}
+
+:host,
+:root {
+	--fa-style-family-classic: "Font Awesome 7 Pro";
+	--fa-font-thin: normal 100 1em/1 "Font Awesome 7 Pro"
+}
+
+@font-face {
+	font-family: "Font Awesome 7 Pro";
+	font-style: normal;
+	font-weight: 100;
+	font-display: block;
+	src: url("../fonts/font-awesome/fa-thin-100.woff2") format("woff2")
+}
+
+.fa-thin,
+.fat {
+	font-weight: 100
+}
+
+/* purgecss end ignore */

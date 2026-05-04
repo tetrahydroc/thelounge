@@ -1,6 +1,7 @@
 @import url("../../node_modules/normalize.css/normalize.css");
-@import url("fontawesome6.css");
-@import url("fontawesome.css");
+@import url("fontawesome7.css");
+/* @import url("fontawesome6.css"); */
+/* @import url("fontawesome.css"); */
 @import url("../../node_modules/primer-tooltips/build/build.css");
 
 :root {
@@ -354,7 +355,7 @@ p {
 .jump-to-input::before,
 .password-container .reveal-password span,
 #sidebar .collapse-network-icon::before {
-	font: normal normal normal 14px/1 FontAwesome;
+	font: normal normal 900 14px/1 "Font Awesome 7 Pro";
 	font-size: inherit;
 	/* Can't have font-size inherit on line above, so need to override */
 	-webkit-font-smoothing: antialiased;
@@ -518,7 +519,9 @@ p {
 
 .context-menu-item.context-menu-group-bot,
 .custom-group-header.group-header-bot {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 215, 0);
 	}
 
@@ -529,7 +532,9 @@ p {
 
 .context-menu-item.context-menu-group-sysop,
 .custom-group-header.group-header-sysop {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 0, 0);
 	}
 
@@ -540,7 +545,9 @@ p {
 
 .context-menu-item.context-menu-group-administrator,
 .custom-group-header.group-header-administrator {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(242, 59, 22);
 	}
 
@@ -551,7 +558,9 @@ p {
 
 .context-menu-item.context-menu-group-moderator,
 .custom-group-header.group-header-moderator {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(201, 26, 26);
 	}
 
@@ -562,7 +571,9 @@ p {
 
 .context-menu-item.context-menu-group-fls,
 .custom-group-header.group-header-fls {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 211, 156);
 	}
 
@@ -573,7 +584,9 @@ p {
 
 .context-menu-item.context-menu-group-editor,
 .custom-group-header.group-header-editor {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(21, 176, 151);
 	}
 
@@ -584,7 +597,9 @@ p {
 
 .context-menu-item.context-menu-group-internal,
 .custom-group-header.group-header-internal {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 77, 77);
 	}
 
@@ -595,7 +610,9 @@ p {
 
 .context-menu-item.context-menu-group-uploader,
 .custom-group-header.group-header-uploader {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(46, 204, 113);
 	}
 
@@ -606,7 +623,9 @@ p {
 
 .context-menu-item.context-menu-group-external,
 .custom-group-header.group-header-external {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(0, 153, 255);
 	}
 
@@ -617,7 +636,9 @@ p {
 
 .context-menu-item.context-menu-group-specialpool,
 .custom-group-header.group-header-specialpool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 215, 0);
 	}
 
@@ -628,7 +649,9 @@ p {
 
 .context-menu-item.context-menu-group-foundingpool,
 .custom-group-header.group-header-foundingpool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 132, 9);
 	}
 
@@ -639,7 +662,9 @@ p {
 
 .context-menu-item.context-menu-group-godpool,
 .custom-group-header.group-header-godpool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(212, 172, 13);
 	}
 
@@ -650,7 +675,9 @@ p {
 
 .context-menu-item.context-menu-group-megapool,
 .custom-group-header.group-header-megapool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(224, 138, 78);
 	}
 
@@ -661,7 +688,9 @@ p {
 
 .context-menu-item.context-menu-group-propool,
 .custom-group-header.group-header-propool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 215, 0);
 	}
 
@@ -672,7 +701,9 @@ p {
 
 .context-menu-item.context-menu-group-uberpool,
 .custom-group-header.group-header-uberpool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 255, 128);
 	}
 
@@ -683,7 +714,9 @@ p {
 
 .context-menu-item.context-menu-group-superpool,
 .custom-group-header.group-header-superpool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 132, 9);
 	}
 
@@ -694,7 +727,9 @@ p {
 
 .context-menu-item.context-menu-group-powerpool,
 .custom-group-header.group-header-powerpool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(17, 85, 204);
 	}
 
@@ -705,7 +740,9 @@ p {
 
 .context-menu-item.context-menu-group-pool,
 .custom-group-header.group-header-pool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(99, 230, 190);
 	}
 
@@ -716,7 +753,9 @@ p {
 
 .context-menu-item.context-menu-group-user,
 .custom-group-header.group-header-user {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(114, 137, 218);
 	}
 
@@ -727,7 +766,9 @@ p {
 
 .context-menu-item.context-menu-group-kiddiepool,
 .custom-group-header.group-header-kiddiepool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(48, 47, 145);
 	}
 
@@ -738,7 +779,9 @@ p {
 
 .context-menu-item.context-menu-group-validating,
 .custom-group-header.group-header-validating {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(149, 165, 166);
 	}
 
@@ -749,7 +792,9 @@ p {
 
 .context-menu-item.context-menu-group-cesspool,
 .custom-group-header.group-header-cesspool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(150, 75, 0);
 	}
 
@@ -760,7 +805,9 @@ p {
 
 .context-menu-item.context-menu-group-idlepool,
 .custom-group-header.group-header-idlepool {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(87, 87, 87);
 	}
 
@@ -771,7 +818,9 @@ p {
 
 .context-menu-item.context-menu-group-guest,
 .custom-group-header.group-header-guest {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(87, 87, 87);
 	}
 
@@ -782,7 +831,9 @@ p {
 
 .context-menu-item.context-menu-group-leech,
 .custom-group-header.group-header-leech {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(150, 40, 27);
 	}
 
@@ -793,7 +844,9 @@ p {
 
 .context-menu-item.context-menu-group-banned,
 .custom-group-header.group-header-banned {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(255, 0, 0);
 	}
 
@@ -804,7 +857,9 @@ p {
 
 .context-menu-item.context-menu-group-disabled,
 .custom-group-header.group-header-disabled {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(141, 98, 98);
 	}
 
@@ -815,7 +870,9 @@ p {
 
 .context-menu-item.context-menu-group-pruned,
 .custom-group-header.group-header-pruned {
-	&, &:hover {
+
+	&,
+	&:hover {
 		color: rgb(141, 98, 98);
 	}
 
