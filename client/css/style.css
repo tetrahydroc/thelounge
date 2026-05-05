@@ -1,7 +1,5 @@
 @import url("../../node_modules/normalize.css/normalize.css");
 @import url("fontawesome7.css");
-/* @import url("fontawesome6.css"); */
-/* @import url("fontawesome.css"); */
 @import url("../../node_modules/primer-tooltips/build/build.css");
 
 :root {
@@ -355,7 +353,7 @@ p {
 .jump-to-input::before,
 .password-container .reveal-password span,
 #sidebar .collapse-network-icon::before {
-	font: normal normal 900 14px/1 "Font Awesome 7 Pro";
+	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
 	/* Can't have font-size inherit on line above, so need to override */
 	-webkit-font-smoothing: antialiased;
