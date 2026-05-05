@@ -5,7 +5,7 @@ import {switchToChannel} from "../router";
 import {TypedStore} from "../store";
 import useCloseChannel from "../hooks/use-close-channel";
 import {ChanType} from "../../../shared/types/chan";
-import { openInNewTab } from "./openInNewTab";
+import {openInNewTab} from "./openInNewTab";
 
 type BaseContextMenuItem = {
 	label: string;
@@ -148,6 +148,19 @@ export function generateChannelContextMenu(
 
 	// Add menu items for queries
 	if (channel.type === ChanType.QUERY) {
+		if (channel.torrentSite && !channel.torrentSite.disabled) {
+			items.push({
+				label: `Tracker Profile`,
+				type: "item",
+				class: "action-open",
+				action() {
+					openInNewTab(channel.torrentSite?.profileUrl + channel.name);
+				},
+			});
+
+			items.push({ type: "divider" });
+		}
+
 		items.push(
 			{
 				label: "User information",
@@ -308,20 +321,27 @@ export function generateUserContextMenu(
 		: {};
 
 	const userContextMenuEntrys = () => {
+
+		const entrys = [] as ContextMenuItem[];
+
 		const defualt = {
 			label: user.nick,
 			type: "item",
 			class: "user",
-			action () {},
+			action() {},
 		};
 
-		if (store.state.settings.enhancedContextMenuEnabled && Boolean(network.channels.find(c => (c.groups?.length ?? 0) > 0))) {
+		if (!store.state.settings.enhancedContextMenuEnabled) {
+			return [defualt];
+		}
+
+		if (Boolean(network.channels.find((c) => (c.groups?.length ?? 0) > 0))) {
 			const customInspect = {
 				label: user.nick,
 				type: "item",
 				class: "user",
-				action (){
-					if (channel.type !== ChanType.CHANNEL) return
+				action() {
+					if (channel.type !== ChanType.CHANNEL) return;
 
 					socket.emit("input", {
 						target: channel.id,
@@ -329,33 +349,47 @@ export function generateUserContextMenu(
 					});
 				},
 			};
-			const customTrackerProfile = {
-				label: `Tracker Profile`,
-				type: "item",
-				class: "action-open",
-				action (){
-					openInNewTab(`https://brr.red/${user.nick}`);
-				},
-			};
-			const userGroup = network.channels.find(c => c.users.find(u => u.nick === user.nick))?.groups?.find(g => g.users.includes(user.nick))?.name ?? 'Offline';
+			const userGroup =
+				network.channels
+					.find((c) => c.users.find((u) => u.nick === user.nick))
+					?.groups?.find((g) => g.users.includes(user.nick))?.name ?? "Offline";
 
-			return [
+			entrys.push(
 				{
 					label: userGroup,
 					type: "item",
 					class: `group-${userGroup.toLowerCase()}`,
-					action () {},
+					action() {},
 				},
 				{
 					type: "divider",
 				},
 				customInspect,
-				customTrackerProfile
-			] as ContextMenuItem[];
+			);
+		}
+		else {
+			entrys.push(defualt);
+
+			if (channel.torrentSite && !channel.torrentSite.disabled) {
+				entrys.push({ type: "divider" });
+			}
 		}
 
-		return [ defualt ];
-	}
+		if (channel.torrentSite && !channel.torrentSite.disabled) {
+			const trackerProfile = {
+				label: `Tracker Profile`,
+				type: "item",
+				class: "action-open",
+				action() {
+					openInNewTab(channel.torrentSite?.profileUrl + user.nick); // This is a bit of a hack
+				},
+			};
+
+			entrys.push(trackerProfile);
+		}
+
+		return entrys;
+	};
 
 	// Extra entries for enhanced context menu
 	const additionalContextMenuEntrys = () => {
@@ -406,7 +440,7 @@ export function generateUserContextMenu(
 			label: "User information",
 			type: "item",
 			class: "action-whois",
-			action ()  {
+			action() {
 				const chan = network.channels.find((c) => c.name === user.nick);
 
 				if (chan) {

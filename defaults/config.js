@@ -24,7 +24,7 @@ export default {
 	// For UNIX domain sockets, use `"unix:/absolute/path/to/file.sock"`.
 	//
 	// This value is set to `undefined` by default to listen on all interfaces.
-	host: undefined,
+	host: "0.0.0.0",
 
 	// ### `port`
 	//
@@ -418,6 +418,148 @@ export default {
 	//
 	// This value is set to `null` to disable WEBIRC by default.
 	webirc: null,
+
+	// ## Torrent sites default configuration
+	//
+
+	defaultTorrentSiteInfo: {
+		profileUrl: `/users/`,
+	},
+
+	// ## Torrent sites support
+	//
+	// Configure torrent sites for specific IRC networks.
+	// Keys are IRC hostnames, values are URL templates where {host} and {channel} will be replaced.
+	// For example:
+	// torrentSites: [
+	//   {
+	//      abbreviation: 'TNB',
+	// 		name: 'ThatNeoByte',
+	// 		host: 'irc.tnb.moe',
+	// 		domain: 'tnb.moe',
+	// 	},
+	// ]
+	// This value is set to null to disable by default.
+	// TODO: see if this will be enabled by default for some popular torrent sites
+	torrentSites: [
+		{
+			abbreviation: 'ULCX',
+			name: 'Upload.cx',
+			host: 'irc.upload.cx',
+			domain: 'upload.cx',
+			channels: ["#Announce", "#ULCX", "#Support"]
+		},
+		{
+			abbreviation: 'RFX',
+			name: 'Reelflix',
+			host: 'irc.reelflix.cc',
+			domain: 'reelflix.cc',
+		},
+		{
+			abbreviation: 'SP',
+			name: 'Seedpool',
+			host: 'irc.seedpool.org',
+			domain: 'seedpool.org',
+		},
+		{
+			abbreviation: 'HHD',
+			name: 'HomieHelpdesk',
+			host: 'irc.homiehelpdesk.net',
+			domain: 'homiehelpdesk.net',
+		},
+		{
+			abbreviation: 'DP',
+			name: 'DarkPeers',
+			host: 'irc.p2p-network.net',
+			domain: 'darkpeers.org',
+			channels: ['#darkpeers', '#dphelp', '#dplog', '#dpmoderation', '#dpstaff'],
+		},
+		{
+			abbreviation: 'BLU',
+			name: 'Blutopia',
+			host: 'irc.p2p-network.net',
+			domain: 'blutopia.cc',
+			channels: ['#blutopia'],
+		},
+		{
+			abbreviation: 'RAS',
+			name: 'Rastastugan',
+			host: 'irc.rizon.net',
+			domain: 'rastastugan.org',
+			channels: ['#rastastugan'],
+		},
+		{
+			abbreviation: 'LST',
+			name: 'LST',
+			host: 'irc.lst.gg',
+			domain: 'lst.gg',
+		},
+		{
+			abbreviation: 'LUME',
+			name: 'Luminarr',
+			host: 'irc.luminarr.me',
+			domain: 'luminarr.me',
+		},
+		{
+			abbreviation: 'STC',
+			name: 'Skip The Commercials',
+			host: 'irc.skipthecommercials.xyz',
+			domain: 'skipthecommercials.xyz',
+		},
+		{
+			abbreviation: 'RHD',
+			name: 'Rocket HD',
+			host: 'irc.rocket-hd.cc',
+			domain: 'rocket-hd.cc',
+		},
+		{
+			abbreviation: 'A4K',
+			name: 'Aura4K',
+			host: 'irc.aura4k.net',
+			domain: 'aura4k.net',
+		},
+		{
+			abbreviation: 'MNS',
+			name: 'MidnightScene',
+			host: 'irc.midnightscene.cc',
+			domain: 'midnightscene.cc',
+		},
+		{
+			abbreviation: 'OE+',
+			name: 'OnlyEncodes+',
+			host: 'irc.onlyencodes.cc',
+			domain: 'onlyencodes.cc',
+		},
+		{
+			abbreviation: 'IHD',
+			name: 'InfinityHD',
+			host: 'irc.infinityhd.net',
+			domain: 'infinityhd.net',
+		},
+		{
+			disabled: true, // Disable ANT support, as it does not use the username for the profile URL
+			abbreviation: 'ANT',
+			name: 'Anthelion',
+			host: 'irc.nebulance.io',
+			domain: 'anthelion.me',
+			channels: ['#ant', '#ant-announce', '#ant-help', '#ant-disabled', '#ant-invites', '#ant-shout',]
+		},
+		{
+			disabled: true, // Disable RED support, as it does not use the username for the profile URL
+			abbreviation: 'RED',
+			name: 'Redacted',
+			host: 'irc.scratch-network.net',
+			domain: 'redacted.sh',
+			channels: ['#redacted', '#red-PU', '#red-lounge', '#unfiltered', '#red-TM', '#red-dev', '#red-etm', '#red-ptm', '#red-metadata']
+		},
+		{
+			disabled: true, // Disable MAM support, as it does not use the username for the profile URL
+			abbreviation: 'MAM',
+			name: 'MyAnonamouse',
+			host: 'irc.myanonamouse.net',
+			domain: 'myanonamouse.net',
+		}
+	],
 
 	// ## identd and oidentd support
 

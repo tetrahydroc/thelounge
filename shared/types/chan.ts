@@ -7,6 +7,23 @@ export type UserGroup = {
 	users: string[];
 };
 
+
+export type DefaultTorrentSiteInfo = {
+	profileUrl: string;
+}
+
+export type TorrentSite = {
+	disabled?: boolean;
+	abbreviation: string;
+	name: string;
+	host: string;
+	domain: string;
+	channels?: string[];
+	profileUrl?: string;
+}
+
+export type TorrentSiteInfo = TorrentSite & DefaultTorrentSiteInfo;
+
 export enum ChanType {
 	CHANNEL = "channel",
 	LOBBY = "lobby",
@@ -46,4 +63,5 @@ export type SharedChan = {
 	closed?: boolean;
 	num_users?: number;
 	groups?: UserGroup[];
+	torrentSite?: TorrentSiteInfo;
 };

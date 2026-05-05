@@ -353,7 +353,7 @@ p {
 .jump-to-input::before,
 .password-container .reveal-password span,
 #sidebar .collapse-network-icon::before {
-	font: normal normal normal 14px/1 FontAwesome;
+	font: normal normal 900 14px/1 "Font Awesome 7 Pro";
 	font-size: inherit;
 	/* Can't have font-size inherit on line above, so need to override */
 	-webkit-font-smoothing: antialiased;

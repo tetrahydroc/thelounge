@@ -184,6 +184,9 @@ const defaultConfig = {
 	enhancedUserListEnabled: {
 		default: true,
 	},
+	enhancedUserDisplayEnabled: {
+		default: true,
+	},
 	enhancedContextMenuEnabled: {
 		default: true,
 	},
@@ -193,7 +196,7 @@ const defaultConfig = {
 	},
 	enableRainbowHotkey: {
 		default: true,
-	}
+	},
 };
 
 export const config = normalizeConfig(defaultConfig);
