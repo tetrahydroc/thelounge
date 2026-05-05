@@ -146,8 +146,6 @@ class Config {
 		};
 
 		normalized.profileUrl = `https://${normalized.domain}${normalized.profileUrl}`;
-		normalized.iconUrl = `https://${normalized.domain}${normalized.iconUrl}`;
-		normalized.avatarUrl = `https://${normalized.domain}${normalized.avatarUrl}`;
 
 		return normalized as TorrentSiteInfo;
 	}

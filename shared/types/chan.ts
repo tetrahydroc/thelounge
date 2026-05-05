@@ -9,12 +9,7 @@ export type UserGroup = {
 
 
 export type DefaultTorrentSiteInfo = {
-	groupsUrl: string;
-	placeholderAvatar: string;
-	placeholderAvatarUrl: string;
 	profileUrl: string;
-	iconUrl: string;
-	avatarUrl: string;
 }
 
 export type TorrentSite = {
@@ -24,12 +19,7 @@ export type TorrentSite = {
 	host: string;
 	domain: string;
 	channels?: string[];
-	groupsUrl?: string;
-	placeholderAvatar?: string;
-	placeholderAvatarUrl?: string;
 	profileUrl?: string;
-	iconUrl?: string;
-	avatarUrl?: string;
 }
 
 export type TorrentSiteInfo = TorrentSite & DefaultTorrentSiteInfo;

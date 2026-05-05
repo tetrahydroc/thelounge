@@ -423,12 +423,7 @@ export default {
 	//
 
 	defaultTorrentSiteInfo: {
-		groupsUrl: '/stats/groups',
-		placeholderAvatar: 'data:image/gif;base64,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',
-		placeholderAvatarUrl: `/img/profile.png`,
 		profileUrl: `/users/`,
-		avatarUrl: `/authenticated-images/user-avatars/`,
-		iconUrl: `/authenticated-images/user-icons/`,
 	},
 
 	// ## Torrent sites support
@@ -441,18 +436,12 @@ export default {
 	//      abbreviation: 'TNB',
 	// 		name: 'ThatNeoByte',
 	// 		host: 'irc.tnb.moe',
-	// 		domain: 'darkpeers.org',
+	// 		domain: 'tnb.moe',
 	// 	},
 	// ]
 	// This value is set to null to disable by default.
 	// TODO: see if this will be enabled by default for some popular torrent sites
 	torrentSites: [
-		{
-			abbreviation: 'TNB',
-			name: 'ThatNeoByte',
-			host: 'irc.tnb.moe',
-			domain: 'darkpeers.org',
-		},
 		{
 			abbreviation: 'ULCX',
 			name: 'Upload.cx',
@@ -536,19 +525,39 @@ export default {
 			domain: 'midnightscene.cc',
 		},
 		{
-			disabled: true, // Disable OE+ support, as they require the file extension in the avatar URL
 			abbreviation: 'OE+',
 			name: 'OnlyEncodes+',
 			host: 'irc.onlyencodes.cc',
 			domain: 'onlyencodes.cc',
 		},
 		{
-			disabled: true, // Disable ANT support, as it does not use the username in the avatar URL
+			abbreviation: 'IHD',
+			name: 'InfinityHD',
+			host: 'irc.infinityhd.net',
+			domain: 'infinityhd.net',
+		},
+		{
+			disabled: true, // Disable ANT support, as it does not use the username for the profile URL
 			abbreviation: 'ANT',
 			name: 'Anthelion',
 			host: 'irc.nebulance.io',
 			domain: 'anthelion.me',
 			channels: ['#ant', '#ant-announce', '#ant-help', '#ant-disabled', '#ant-invites', '#ant-shout',]
+		},
+		{
+			disabled: true, // Disable RED support, as it does not use the username for the profile URL
+			abbreviation: 'RED',
+			name: 'Redacted',
+			host: 'irc.scratch-network.net',
+			domain: 'redacted.sh',
+			channels: ['#redacted', '#red-PU', '#red-lounge', '#unfiltered', '#red-TM', '#red-dev', '#red-etm', '#red-ptm', '#red-metadata']
+		},
+		{
+			disabled: true, // Disable MAM support, as it does not use the username for the profile URL
+			abbreviation: 'MAM',
+			name: 'MyAnonamouse',
+			host: 'irc.myanonamouse.net',
+			domain: 'myanonamouse.net',
 		}
 	],
 
