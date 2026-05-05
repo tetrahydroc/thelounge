@@ -48,7 +48,7 @@ export const matchers: Matcher[] = [
 		type: "basic",
 		name: "DarkPeers",
 		description: "[nick] message",
-		matches: [ "darkpeers" ],
+		matches: [ "darkpeers", "dp" ],
 		regex: /^\[(?<nick>[^:\]]+)\] (?<content>.*)/,
 		transform (message) {
 			return typedGroups(message.text!.match(this.regex));
