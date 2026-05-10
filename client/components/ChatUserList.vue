@@ -107,7 +107,7 @@
 
 	&::before {
 		font-weight: 900;
-		font-family: "Font Awesome 6 Pro";
+		font-family: "Font Awesome 7 Pro";
 		display: var(--fa-display, inline-block);
 		font-style: normal;
 		font-variant: normal;
