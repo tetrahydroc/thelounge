@@ -95,15 +95,73 @@
 					:channel="channel"
 				/>
 			</span>
+			<span class="actions">
+				<span v-if="canReply" class="reply-action">
+					<button
+						type="button"
+						class="reply-button"
+						aria-label="Reply to message"
+						title="Reply to message"
+						@click="replyToMessage"
+					>
+						<span aria-hidden="true">
+							<i class="fas fa-reply" style="width: 35px;color: gray;"></i>
+						</span>
+					</button>
+				</span>
+						<i v-for="(action, id) in messageActions" :key="id" :class="['msg-action', action.class]" @click="action.callback(prettyMessage)"></i>
+			</span>
 		</template>
 	</div>
 </template>
+
+<style scoped>
+#chat .msg .actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	margin-left: auto;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.15s ease;
+}
+
+#chat .msg:hover .actions,
+#chat .msg:focus-within .actions,
+#chat .msg.is-focused .actions {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+#chat .msg .reply-action {
+	display: inline-flex;
+	align-items: center;
+}
+
+#chat .msg .reply-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	line-height: 1;
+	background: transparent;
+	border: 0;
+	color: inherit;
+}
+
+#chat .msg .reply-button:hover,
+#chat .msg .reply-button:focus {
+	color: inherit;
+	opacity: 1;
+}
+</style>
 
 <script lang="ts">
 import {computed, defineComponent, PropType} from "vue";
 import dayjs from "dayjs";
 
 import constants from "../js/constants";
+import eventbus from "../js/eventbus";
 import localetime from "../js/helpers/localetime";
 import Username from "./Username.vue";
 import LinkPreview from "./LinkPreview.vue";
@@ -175,6 +233,29 @@ export default defineComponent({
 			return shoutboxParser(props.message);
 		});
 
+		const canReply = computed(() => {
+			return Boolean(prettyMessage.value.from?.nick && props.message.text);
+		});
+
+		const messageActions = computed(() => {
+			return (
+				prettyMessage.value as ClientMessage & {
+					actions?: Array<{class: string; callback: (message: ClientMessage) => void}>;
+				}
+			).actions || [];
+		});
+
+		const replyToMessage = () => {
+			const nick = prettyMessage.value.from?.nick;
+			const content = prettyMessage.value.text;
+
+			if (!nick || !content) {
+				return;
+			}
+
+			eventbus.emit("message:reply", `\x02${nick}\x02: \x0314,99"\x1D${content}\x1D"\x03`);
+		};
+
 		return {
 			timeFormat,
 			prettyMessage,
@@ -182,6 +263,9 @@ export default defineComponent({
 			messageTimeLocale,
 			messageComponent,
 			isAction,
+			canReply,
+			messageActions,
+			replyToMessage,
 		};
 	},
 });

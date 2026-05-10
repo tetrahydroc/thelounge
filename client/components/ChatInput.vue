@@ -209,6 +209,25 @@ export default defineComponent({
 			uploadInput.value?.click();
 		};
 
+		const onReplyMessage = (replyText: string) => {
+			const nextMessage = `${props.channel.pendingMessage}${replyText}`;
+
+			props.channel.pendingMessage = nextMessage;
+			props.channel.inputHistoryPosition = 0;
+
+			if (!input.value) {
+				return;
+			}
+
+			input.value.click();
+			input.value.focus();
+			input.value.value = nextMessage;
+			setInputSize();
+
+			const cursorPosition = nextMessage.length;
+			input.value.setSelectionRange(cursorPosition, cursorPosition);
+		};
+
 		const blurInput = () => {
 			input.value?.blur();
 		};
@@ -245,6 +264,7 @@ export default defineComponent({
 
 		onMounted(() => {
 			eventbus.on("escapekey", blurInput);
+			eventbus.on("message:reply", onReplyMessage);
 
 			if (store.state.settings.autocomplete) {
 				if (!input.value) {
@@ -357,6 +377,7 @@ export default defineComponent({
 
 		onUnmounted(() => {
 			eventbus.off("escapekey", blurInput);
+			eventbus.off("message:reply", onReplyMessage);
 
 			if (autocompletionRef.value) {
 				autocompletionRef.value.destroy();
