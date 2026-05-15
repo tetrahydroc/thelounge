@@ -105,11 +105,11 @@
 						@click="replyToMessage"
 					>
 						<span aria-hidden="true">
-							<i class="fas fa-reply" style="width: 35px;color: gray;"></i>
+							<i class="fas fa-reply" style="width: 35px;"></i>
 						</span>
 					</button>
 				</span>
-						<i v-for="(action, id) in messageActions" :key="id" :class="['msg-action', action.class]" @click="action.callback(prettyMessage)"></i>
+				<i v-for="(action, id) in messageActions" :key="id" :class="['msg-action', action.class]" @click="action.callback(prettyMessage)"></i>
 			</span>
 		</template>
 	</div>
@@ -124,6 +124,11 @@
 	opacity: 0;
 	pointer-events: none;
 	transition: opacity 0.15s ease;
+	position: absolute;
+	height: 25px;
+	z-index: 1;
+	top: -5px;
+	right: 5px;
 }
 
 #chat .msg:hover .actions,
@@ -151,7 +156,7 @@
 
 #chat .msg .reply-button:hover,
 #chat .msg .reply-button:focus {
-	color: inherit;
+	color: var(--button-color);
 	opacity: 1;
 }
 </style>
