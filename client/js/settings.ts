@@ -193,6 +193,9 @@ const defaultConfig = {
 	},
 	enableRainbowHotkey: {
 		default: true,
+	},
+	enableReplyToMessage: {
+		default: true,
 	}
 };
 

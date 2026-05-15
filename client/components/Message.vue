@@ -239,6 +239,10 @@ export default defineComponent({
 		});
 
 		const canReply = computed(() => {
+			if (store.state.settings.enableReplyToMessage === false) {
+				return false;
+			}
+
 			return Boolean(prettyMessage.value.from?.nick && props.message.text);
 		});
 
