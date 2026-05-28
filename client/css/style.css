@@ -1,5 +1,11 @@
 @import url("../../node_modules/normalize.css/normalize.css");
 @import url("fontawesome7.css");
+@import url("../../node_modules/@phosphor-icons/web/src/thin/style.css");
+@import url("../../node_modules/@phosphor-icons/web/src/light/style.css");
+@import url("../../node_modules/@phosphor-icons/web/src/regular/style.css");
+@import url("../../node_modules/@phosphor-icons/web/src/bold/style.css");
+@import url("../../node_modules/@phosphor-icons/web/src/fill/style.css");
+@import url("../../node_modules/@phosphor-icons/web/src/duotone/style.css");
 @import url("../../node_modules/primer-tooltips/build/build.css");
 
 :root {
