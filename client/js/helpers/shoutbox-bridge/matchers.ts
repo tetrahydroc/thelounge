@@ -178,6 +178,16 @@ export const matchers: Matcher[] = [
 			return typedGroups(message.text!.match(this.regex));
 		}
 	},
+	{
+		type: "basic",
+		name: "Zenith",
+		description: "[nick]: message",
+		matches: [ "zenith" ],
+		regex: /^\[(?<nick>[^:\]]+)\]: (?<content>.*)/,
+		transform (message) {
+			return typedGroups(message.text!.match(this.regex));
+		}
+	},
 ];
 
 /**
