@@ -88,6 +88,7 @@
     "@babel/plugin-transform-runtime": "7.28.5",
     "@babel/preset-env": "7.28.5",
     "@fortawesome/fontawesome-free": "5.15.4",
+    "@phosphor-icons/web": "2.1.2",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
     "@stylistic/stylelint-plugin": "^4.0.0",
     "@textcomplete/core": "0.1.13",
