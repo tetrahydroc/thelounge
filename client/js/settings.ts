@@ -139,6 +139,9 @@ const defaultConfig = {
 	uploadTTL: {
 		default: "",
 	},
+	uploadTTLCustom: {
+		default: "",
+	},
 	uploadURL: {
 		default: "",
 	},

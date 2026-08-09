@@ -242,7 +242,12 @@ class Uploader {
 			}
 		}
 
-		const ttl = store.state.settings.uploadTTL ?? "";
+		// The "custom" TTL option has no fixed duration of its own; substitute
+		// the user-entered seconds value the server should actually use.
+		const ttl =
+			store.state.settings.uploadTTL === "custom"
+				? store.state.settings.uploadTTLCustom ?? ""
+				: store.state.settings.uploadTTL ?? "";
 
 		this.xhr = new XMLHttpRequest();
 

@@ -126,6 +126,28 @@
 								{{ ttl.displayName }}
 							</option>
 						</select>
+						<div v-if="store.state.settings.uploadTTL === 'custom'">
+							<label for="uploadTTLCustom" class="opt">
+								Custom Upload TTL (seconds)
+								<span
+									class="tooltipped tooltipped-n tooltipped-no-delay"
+									aria-label="How long the upload will exist before it is removed, in seconds."
+								>
+									<button class="extra-help" />
+								</span>
+							</label>
+							<input
+								id="uploadTTLCustom"
+								:value="store.state.settings.uploadTTLCustom"
+								type="number"
+								min="1"
+								step="1"
+								autocomplete="off"
+								name="uploadTTLCustom"
+								class="input"
+								placeholder="e.g. 3600 for 1 hour"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

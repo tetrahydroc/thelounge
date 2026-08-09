@@ -346,17 +346,25 @@ class Uploader {
 		return req.pipe(busboyInstance);
 	}
 
-	// Records an expiry timestamp for a locally stored upload, if a valid TTL was requested
+	// Records an expiry timestamp for a locally stored upload, if a valid TTL was requested.
+	// Predefined TTL entries carry their duration in seconds. The "custom" option has no
+	// fixed duration of its own - the client sends the user-entered seconds value in its
+	// place, which won't match any entry's id.
 	static writeExpiry(this: void, filePath: string, uploadProvider: UploadProvider, ttl: string) {
 		const ttlEntry = uploadProvider.validTtl?.find((t) => t.id === ttl);
+		let ttlSeconds: number;
 
-		if (!ttlEntry || ttlEntry.value === "-") {
-			return;
+		if (ttlEntry) {
+			if (ttlEntry.value === "-" || ttlEntry.id === "custom") {
+				return;
+			}
+
+			ttlSeconds = parseInt(ttlEntry.value, 10);
+		} else {
+			ttlSeconds = parseInt(ttl, 10);
 		}
 
-		const ttlSeconds = parseInt(ttlEntry.value, 10);
-
-		if (Number.isNaN(ttlSeconds)) {
+		if (Number.isNaN(ttlSeconds) || ttlSeconds <= 0) {
 			return;
 		}
 
