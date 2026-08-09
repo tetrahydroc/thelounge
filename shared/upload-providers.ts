@@ -20,6 +20,49 @@ export const UploadProviders: UploadProvider[] = [
 		id: "new",
 		displayName: "TheLounge (Local)",
 		requiresToken: false,
+		validTtl: [
+			{
+				id: "never",
+				displayName: "Never",
+				value: "-",
+				default: true,
+			},
+			{
+				id: "1day",
+				displayName: "1 Day",
+				value: "86400",
+			},
+			{
+				id: "2days",
+				displayName: "2 Days",
+				value: "172800",
+			},
+			{
+				id: "3days",
+				displayName: "3 Days",
+				value: "259200",
+			},
+			{
+				id: "4days",
+				displayName: "4 Days",
+				value: "345600",
+			},
+			{
+				id: "5days",
+				displayName: "5 Days",
+				value: "432000",
+			},
+			{
+				id: "6days",
+				displayName: "6 Days",
+				value: "518400",
+			},
+			{
+				id: "7days",
+				displayName: "7 Days",
+				value: "604800",
+			},
+		],
 		upload () { return Promise.resolve("dummy") },
 	},
 	{

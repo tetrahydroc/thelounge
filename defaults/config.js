@@ -176,9 +176,11 @@ export default {
 	//
 	// Allow uploading files to the server hosting The Lounge.
 	//
-	// Files are stored in the `${THELOUNGE_HOME}/uploads` folder, do not expire,
-	// and are not removed by The Lounge. This may cause issues depending on your
-	// hardware, for example in terms of disk usage.
+	// Files are stored in the `${THELOUNGE_HOME}/uploads` folder. By default they
+	// do not expire and are not removed by The Lounge, which may cause issues
+	// depending on your hardware, for example in terms of disk usage. Users can
+	// opt into auto-deletion (1-7 days) for the local upload backend from their
+	// client settings; a background sweep removes expired files hourly.
 	//
 	// The available keys for the `fileUpload` object are:
 	//
