@@ -414,10 +414,20 @@ class Uploader {
 					continue;
 				}
 
-				fs.rm(filePath, {force: true}, () => undefined);
-				fs.rm(expiryPath, {force: true}, () => {
-					log.info(`Removed expired upload: ${filePath}`);
-				});
+				fs.rmSync(filePath, {force: true});
+				fs.rmSync(expiryPath, {force: true});
+
+				log.info(`Removed expired upload: ${filePath}`);
+			}
+
+			// Remove the containing folder if it's now empty (also cleans up
+			// any other empty upload folders found along the way)
+			try {
+				if (fs.readdirSync(dirPath).length === 0) {
+					fs.rmdirSync(dirPath);
+				}
+			} catch {
+				// not empty, or already removed - ignore
 			}
 		}
 	}
