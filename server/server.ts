@@ -106,6 +106,7 @@ export default async function (
 
 	if (Config.values.fileUpload.enable) {
 		Uploader.router(app);
+		Uploader.startExpiryCleanup();
 	}
 
 	// This route serves *installed themes only*. Local themes are served directly

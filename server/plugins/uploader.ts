@@ -11,7 +11,7 @@ import contentDisposition from "content-disposition";
 import type {Socket} from "socket.io";
 import {Application, Request, Response} from "express";
 import mime from "mime";
-import {UploadProviders} from "../../shared/upload-providers.js";
+import {UploadProviders, UploadProvider} from "../../shared/upload-providers.js";
 
 // Map of allowed mime types to their respecive default filenames
 // that will be rendered in browser without forcing them to be downloaded
@@ -37,6 +37,9 @@ const inlineContentDispositionTypes = {
 };
 
 const uploadTokens = new Map();
+
+const EXPIRY_SUFFIX = ".expires";
+const CLEANUP_INTERVAL = 60 * 60 * 1000; // 1 hour
 
 class Uploader {
 	constructor(socket: Socket) {
@@ -285,6 +288,8 @@ class Uploader {
 					return res.status(400).json({error: "Missing file"});
 				}
 
+				Uploader.writeExpiry(<string>destPath, uploadProvider, ttl);
+
 				// upload was done, send the generated file url to the client
 				res.status(200).json({
 					url: uploadUrl,
@@ -339,6 +344,106 @@ class Uploader {
 
 		// pipe request body to busboy for processing
 		return req.pipe(busboyInstance);
+	}
+
+	// Records an expiry timestamp for a locally stored upload, if a valid TTL was requested.
+	// Predefined TTL entries carry their duration in seconds. The "custom" option has no
+	// fixed duration of its own - the client sends the user-entered seconds value in its
+	// place, which won't match any entry's id.
+	static writeExpiry(this: void, filePath: string, uploadProvider: UploadProvider, ttl: string) {
+		const ttlEntry = uploadProvider.validTtl?.find((t) => t.id === ttl);
+		let ttlSeconds: number;
+
+		if (ttlEntry) {
+			if (ttlEntry.value === "-" || ttlEntry.id === "custom") {
+				return;
+			}
+
+			ttlSeconds = parseInt(ttlEntry.value, 10);
+		} else {
+			ttlSeconds = parseInt(ttl, 10);
+		}
+
+		if (Number.isNaN(ttlSeconds) || ttlSeconds <= 0) {
+			return;
+		}
+
+		const expiresAt = Date.now() + ttlSeconds * 1000;
+
+		try {
+			fs.writeFileSync(`${filePath}${EXPIRY_SUFFIX}`, String(expiresAt));
+		} catch (err: unknown) {
+			log.warn(
+				`Failed to write expiry metadata for ${filePath}: ${err instanceof Error ? err.message : String(err)}`
+			);
+		}
+	}
+
+	// Scans the upload folder for expired local uploads and removes them
+	static pruneExpiredUploads(this: void) {
+		const uploadPath = Config.getFileUploadPath();
+		let subDirs: string[];
+
+		try {
+			subDirs = fs.readdirSync(uploadPath);
+		} catch {
+			return;
+		}
+
+		const now = Date.now();
+
+		for (const subDir of subDirs) {
+			const dirPath = path.join(uploadPath, subDir);
+			let entries: string[];
+
+			try {
+				entries = fs.readdirSync(dirPath);
+			} catch {
+				continue;
+			}
+
+			for (const entry of entries) {
+				if (!entry.endsWith(EXPIRY_SUFFIX)) {
+					continue;
+				}
+
+				const expiryPath = path.join(dirPath, entry);
+				const filePath = expiryPath.slice(0, -EXPIRY_SUFFIX.length);
+
+				let expiresAt: number;
+
+				try {
+					expiresAt = parseInt(fs.readFileSync(expiryPath, "utf8"), 10);
+				} catch {
+					continue;
+				}
+
+				if (Number.isNaN(expiresAt) || expiresAt > now) {
+					continue;
+				}
+
+				fs.rmSync(filePath, {force: true});
+				fs.rmSync(expiryPath, {force: true});
+
+				log.info(`Removed expired upload: ${filePath}`);
+			}
+
+			// Remove the containing folder if it's now empty (also cleans up
+			// any other empty upload folders found along the way)
+			try {
+				if (fs.readdirSync(dirPath).length === 0) {
+					fs.rmdirSync(dirPath);
+				}
+			} catch {
+				// not empty, or already removed - ignore
+			}
+		}
+	}
+
+	// Starts the periodic sweep that removes local uploads past their TTL
+	static startExpiryCleanup(this: void) {
+		Uploader.pruneExpiredUploads();
+		setInterval(Uploader.pruneExpiredUploads, CLEANUP_INTERVAL).unref();
 	}
 
 	static getMaxFileSize() {
