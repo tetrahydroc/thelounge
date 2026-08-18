@@ -548,7 +548,7 @@ class Network {
 			serverOptions: this.serverOptions,
 			status: this.getNetworkStatus(),
 			channels: this.channels.map((channel) =>
-				channel.getFilteredClone(lastActiveChannel, lastMessage)
+				channel.getFilteredClone(lastActiveChannel, lastMessage, this.host)
 			),
 		};
 	}

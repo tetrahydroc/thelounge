@@ -8,7 +8,13 @@ import Client from "../client.js";
 import Network from "./network.js";
 import Prefix from "./prefix.js";
 import {MessageType, SharedMsg} from "../../shared/types/msg.js";
-import {ChanType, SpecialChanType, ChanState, UserGroup} from "../../shared/types/chan.js";
+import {
+	ChanType,
+	SpecialChanType,
+	ChanState,
+	UserGroup,
+	TorrentSiteInfo,
+} from "../../shared/types/chan.js";
 import {SharedNetworkChan} from "../../shared/types/network.js";
 
 export type ChanConfig = {
@@ -41,6 +47,7 @@ class Chan {
 	closed?: boolean;
 	num_users?: number;
 	groups?: UserGroup[];
+	torrentSite?: TorrentSiteInfo;
 
 	constructor(attr?: Partial<Chan>) {
 		_.defaults(this, attr, {
@@ -57,6 +64,7 @@ class Chan {
 			users: new Map(),
 			muted: false,
 			pinned: false,
+			torrentSite: undefined,
 		});
 	}
 
@@ -190,9 +198,15 @@ class Chan {
 	 */
 	getFilteredClone(
 		lastActiveChannel?: number | boolean,
-		lastMessage?: number
+		lastMessage?: number,
+		host?: string
 	): SharedNetworkChan {
 		let msgs: SharedMsg[];
+
+		let computedTorrentSite = this.torrentSite;
+		if (host && Config.values.torrentSites) {
+			computedTorrentSite = Config.getTorrentSiteInfo(host, this.name);
+		}
 
 		// If client is reconnecting, only send new messages that client has not seen yet
 		if (lastMessage && lastMessage > -1) {
@@ -227,6 +241,7 @@ class Chan {
 			closed: this.closed,
 			num_users: this.num_users,
 			groups: this.groups,
+			torrentSite: computedTorrentSite,
 		};
 		// TODO: funny array mutation below might need to be reproduced
 		// static optionalProperties = ["userAway", "special", "data", "closed", "num_users"];
@@ -309,7 +324,10 @@ class Chan {
 					this.firstUnread = messages[messages.length - 1].id;
 				}
 
-				const enhancedSearch = Boolean(client.config.clientSettings.searchEnabled && client.config.clientSettings.enableEnhancedSearch)
+				const enhancedSearch = Boolean(
+					client.config.clientSettings.searchEnabled &&
+					client.config.clientSettings.enableEnhancedSearch
+				);
 
 				// if enhancedSearchEnabled = true send all loaded messages to the client
 				// otherwise only send 100
