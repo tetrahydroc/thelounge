@@ -209,7 +209,15 @@ class Client {
 			let delay = this.manager.clients.length * 500;
 			this.networks.forEach((network) => {
 				setTimeout(() => {
-					network.channels.forEach((channel) => channel.loadMessages(this, network));
+					// Only eager-load history for the channel the client will
+					// actually land on (or this network's lobby, if none of
+					// its channels is the last active one). Every other
+					// channel's history loads lazily on first Client.open()
+					// instead of all being pulled into memory up front.
+					const activeChannel =
+						network.channels.find((channel) => channel.id === this.lastActiveChannel) ||
+						network.getLobby();
+					activeChannel.loadMessages(this, network);
 
 					if (!network.userDisconnected && network.irc) {
 						network.irc.connect();
@@ -601,6 +609,7 @@ class Client {
 			// re-sending the same tail batch, the client would dedupe it away,
 			// and the "Show older messages" button would vanish.
 			let index: number;
+
 			if (typeof beforeTime === "number") {
 				// Binary search for the first in-memory message whose time is
 				// >= beforeTime. Everything before that index is strictly older
@@ -632,6 +641,7 @@ class Client {
 			index = chan.messages.length;
 		} else {
 			index = chan.messages.findIndex((val) => val.id === data.lastId);
+
 			if (index === -1) {
 				// Requested id is no longer in memory (chunked out); fall back
 				// to the tail rather than returning nothing.
@@ -693,7 +703,10 @@ class Client {
 						target.network.uuid,
 						chan.name,
 						anchor,
-						maxBatchSize
+						maxBatchSize,
+						(maxId) => {
+							this.idMsg = Math.max(this.idMsg, maxId + 1);
+						}
 					);
 
 					if (chunk.length > 0) {
@@ -796,7 +809,10 @@ class Client {
 				network.uuid,
 				chan.name,
 				data.time,
-				200
+				200,
+				(maxId) => {
+					this.idMsg = Math.max(this.idMsg, maxId + 1);
+				}
 			);
 
 			return {
@@ -836,6 +852,13 @@ class Client {
 			targetNetChan.chan.firstUnread =
 				targetNetChan.chan.messages[targetNetChan.chan.messages.length - 1].id;
 		}
+
+		// History for this channel may not have been loaded yet (only the
+		// last-active channel per network is eager-loaded at connect - see
+		// Client.connect()). This is a no-op if it's already loaded/loading.
+		// firstUnread for messages that arrive via this load is set inside
+		// loadMessages() itself once they land.
+		targetNetChan.chan.loadMessages(this, targetNetChan.network);
 
 		attachedClient.openChannel = targetNetChan.chan.id;
 		this.lastActiveChannel = targetNetChan.chan.id;

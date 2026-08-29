@@ -7,6 +7,10 @@ export type SharedPrefixObject = {
 
 export type SharedNetworkChan = SharedChan & {
 	totalMessages: number;
+	// Whether the server has loaded this channel's history into memory yet
+	// (channels aren't all eager-loaded at connect anymore - a channel the
+	// client hasn't opened yet may still have unloaded history in storage).
+	historyLoaded: boolean;
 };
 
 export type SharedPrefix = {

@@ -34,7 +34,7 @@
 				</div>
 
 				<MessageCondensed
-					v-if="message.type === 'condensed'"
+					v-if="message.type === 'condensed' && message.messages.length > 1"
 					:key="message.messages[0].id"
 					:network="network"
 					:keep-scroll-position="keepScrollPosition"
@@ -46,7 +46,7 @@
 					:key="message.id"
 					:channel="channel"
 					:network="network"
-					:message="message"
+					:message="message.type === 'condensed' ? message.messages[0] : message"
 					:keep-scroll-position="keepScrollPosition"
 					:is-previous-source="isPreviousSource(message, id)"
 					:focused="message.id === focused"
@@ -58,8 +58,6 @@
 </template>
 
 <script lang="ts">
-import {condensedTypes} from "../../shared/irc";
-import {ChanType} from "../../shared/types/chan";
 import {MessageType, SharedMsg} from "../../shared/types/msg";
 import eventbus from "../js/eventbus";
 import clipboard from "../js/clipboard";
@@ -68,7 +66,6 @@ import Message from "./Message.vue";
 import MessageCondensed from "./MessageCondensed.vue";
 import DateMarker from "./DateMarker.vue";
 import {
-	computed,
 	defineComponent,
 	nextTick,
 	onBeforeUnmount,
@@ -81,13 +78,7 @@ import {
 } from "vue";
 import {useStore} from "../js/store";
 import {ClientChan, ClientMessage, ClientNetwork, ClientLinkPreview} from "../js/types";
-
-type CondensedMessageContainer = {
-	type: "condensed";
-	time: Date;
-	messages: ClientMessage[];
-	id?: number;
-};
+import {useCondensedMessages, CondensedEntry} from "../js/hooks/use-condensed-messages";
 
 // TODO; move into component
 let unreadMarkerShown = false;
@@ -184,76 +175,27 @@ export default defineComponent({
 			console.error("Error in new IntersectionObserver", e);
 		});
 
-		const condensedMessages = computed(() => {
-			if (props.channel.type !== ChanType.CHANNEL && props.channel.type !== ChanType.QUERY) {
-				return props.channel.messages;
-			}
+		// Maintains the condensed (status-message-folding) view
+		// incrementally instead of rebuilding it from scratch on every
+		// incoming message - see use-condensed-messages.ts.
+		const {
+			condensed: condensedMessages,
+			rebuildAll: rebuildCondensed,
+			appendOne: appendCondensed,
+			prependChunk: prependCondensed,
+		} = useCondensedMessages(
+			() => props.channel,
+			() => store.state.settings.statusMessages
+		);
 
-			// If actions are hidden, just return a message list with them excluded
-			if (store.state.settings.statusMessages === "hidden") {
-				return props.channel.messages.filter(
-					(message) => !condensedTypes.has(message.type || "")
-				);
-			}
+		// Manually tracked (not reactive) - lets the messages-length watcher
+		// below classify what kind of change happened (prepend vs append vs
+		// a shrink) without needing a second watcher and its ordering.
+		let prevFirstId: number | null =
+			props.channel.messages.length > 0 ? props.channel.messages[0].id : null;
 
-			// If actions are not condensed, just return raw message list
-			if (store.state.settings.statusMessages !== "condensed") {
-				return props.channel.messages;
-			}
-
-			let lastCondensedContainer: CondensedMessageContainer | null = null;
-
-			const condensed: (ClientMessage | CondensedMessageContainer)[] = [];
-
-			for (const message of props.channel.messages) {
-				// If this message is not condensable, or its an action affecting our user,
-				// then just append the message to container and be done with it
-				if (message.self || message.highlight || !condensedTypes.has(message.type || "")) {
-					lastCondensedContainer = null;
-
-					condensed.push(message);
-
-					continue;
-				}
-
-				if (!lastCondensedContainer) {
-					lastCondensedContainer = {
-						time: message.time,
-						type: "condensed",
-						messages: [],
-					};
-
-					condensed.push(lastCondensedContainer);
-				}
-
-				lastCondensedContainer.messages.push(message);
-
-				// Set id of the condensed container to last message id,
-				// which is required for the unread marker to work correctly
-				lastCondensedContainer.id = message.id;
-
-				// If this message is the unread boundary, create a split condensed container
-				if (message.id === props.channel.firstUnread) {
-					lastCondensedContainer = null;
-				}
-			}
-
-			return condensed.map((message) => {
-				// Skip condensing single messages, it doesn't save any
-				// space but makes useful information harder to see
-				if (message.type === "condensed" && message.messages.length === 1) {
-					return message.messages[0];
-				}
-
-				return message;
-			});
-		});
-
-		const shouldDisplayDateMarker = (
-			message: SharedMsg | CondensedMessageContainer,
-			id: number
-		) => {
-			const previousMessage = condensedMessages.value[id - 1];
+		const shouldDisplayDateMarker = (message: SharedMsg | CondensedEntry, id: number) => {
+			const previousMessage = condensedMessages[id - 1];
 
 			if (!previousMessage) {
 				return true;
@@ -278,8 +220,8 @@ export default defineComponent({
 			return false;
 		};
 
-		const isPreviousSource = (currentMessage: ClientMessage, id: number) => {
-			const previousMessage = condensedMessages.value[id - 1];
+		const isPreviousSource = (currentMessage: CondensedEntry, id: number) => {
+			const previousMessage = condensedMessages[id - 1];
 			return (
 				previousMessage &&
 				currentMessage.type === MessageType.MESSAGE &&
@@ -386,6 +328,13 @@ export default defineComponent({
 			() => {
 				props.channel.scrolledToBottom = true;
 
+				// Switching channels swaps in a whole different messages
+				// array - rebuild the condensed view for it outright rather
+				// than trying to classify this as a prepend/append.
+				rebuildCondensed();
+				prevFirstId =
+					props.channel.messages.length > 0 ? props.channel.messages[0].id : null;
+
 				// Re-add the intersection observer to trigger the check again on channel switch
 				// Otherwise if last channel had the button visible, switching to a new channel won't trigger the history
 				if (historyObserver.value && loadMoreButton.value) {
@@ -395,13 +344,49 @@ export default defineComponent({
 			}
 		);
 
+		// Replaces a `deep: true` watch over the whole messages array (which
+		// deep-traverses every message's object graph on every single
+		// incoming message - expensive, and the actual cause of most
+		// chat-while-scrolling lag under default settings). A shallow watch
+		// on `.length` plus comparing the first message's id is enough to
+		// tell a tail-append from a head-prepend from a shrink (client-side
+		// history trimming), and drives the condensed view incrementally.
 		watch(
-			() => props.channel.messages,
-			async () => {
+			() => props.channel.messages.length,
+			async (newLen, oldLen) => {
+				const messages = props.channel.messages;
+				const newFirstId = messages.length > 0 ? messages[0].id : null;
+				const isPrepend =
+					oldLen !== undefined &&
+					newLen > oldLen &&
+					prevFirstId !== null &&
+					newFirstId !== prevFirstId;
+				const isAppend = oldLen !== undefined && newLen > oldLen && !isPrepend;
+
+				if (isAppend) {
+					const addedCount = newLen - (oldLen ?? 0);
+
+					if (addedCount === 1) {
+						appendCondensed(messages[messages.length - 1]);
+					} else if (addedCount > 0 && addedCount <= 20) {
+						for (let i = messages.length - addedCount; i < messages.length; i++) {
+							appendCondensed(messages[i]);
+						}
+					} else {
+						rebuildCondensed();
+					}
+				} else if (isPrepend) {
+					prependCondensed(newLen - (oldLen ?? 0));
+				} else {
+					// Shrink (client-side trim once over the message cap in
+					// msg.ts) or anything else ambiguous - safe, infrequent
+					// fallback.
+					rebuildCondensed();
+				}
+
+				prevFirstId = newFirstId;
+
 				await keepScrollPosition();
-			},
-			{
-				deep: true,
 			}
 		);
 

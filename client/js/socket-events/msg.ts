@@ -2,6 +2,7 @@ import socket from "../socket";
 import {cleanIrcMessage} from "../../../shared/irc";
 import {store} from "../store";
 import {switchToChannel} from "../router";
+import {markMsgRaw} from "../chan";
 import {ClientChan, NetChan, ClientMessage} from "../types";
 import {SharedMsg, MessageType} from "../../../shared/types/msg";
 import {ChanType} from "../../../shared/types/chan";
@@ -66,7 +67,7 @@ socket.on("msg", function (data) {
 		}
 	}
 
-	channel.messages.push(data.msg);
+	channel.messages.push(markMsgRaw(data.msg));
 
 	if (data.msg.self) {
 		channel.firstUnread = data.msg.id;

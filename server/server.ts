@@ -237,6 +237,9 @@ export default async function (
 					serveClient: false,
 					transports: Config.values.transports,
 					pingTimeout: 60000,
+					perMessageDeflate: {
+						threshold: 1024, // skip compressing tiny/frequent payloads
+					},
 				});
 
 				sockets.on("connect", (socket) => {

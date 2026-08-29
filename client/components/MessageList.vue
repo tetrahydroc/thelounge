@@ -32,7 +32,7 @@
 				</div>
 
 				<MessageCondensed
-					v-if="message.type === 'condensed'"
+					v-if="message.type === 'condensed' && message.messages.length > 1"
 					:network="network"
 					:keep-scroll-position="keepScrollPosition"
 					:messages="message.messages"
@@ -42,7 +42,7 @@
 					v-else
 					:channel="channel"
 					:network="network"
-					:message="message"
+					:message="message.type === 'condensed' ? message.messages[0] : message"
 					:keep-scroll-position="keepScrollPosition"
 					:is-previous-source="isPreviousSource(message, idx)"
 					:is-focused="isMessageFocused(message)"
@@ -54,8 +54,6 @@
 </template>
 
 <script lang="ts">
-import {condensedTypes} from "../../shared/irc";
-import {ChanType} from "../../shared/types/chan";
 import {MessageType, SharedMsg} from "../../shared/types/msg";
 import eventbus from "../js/eventbus";
 import clipboard from "../js/clipboard";
@@ -77,13 +75,7 @@ import {
 } from "vue";
 import {useStore} from "../js/store";
 import {ClientChan, ClientMessage, ClientNetwork, ClientLinkPreview} from "../js/types";
-
-type CondensedMessageContainer = {
-	type: "condensed";
-	time: Date;
-	messages: ClientMessage[];
-	id?: number;
-};
+import {useCondensedMessages, CondensedMessageContainer} from "../js/hooks/use-condensed-messages";
 
 // TODO: move into component
 let unreadMarkerShown = false;
@@ -127,62 +119,29 @@ export default defineComponent({
 		// Threshold for triggering window shifts (in pixels from edge)
 		const SCROLL_THRESHOLD = 200;
 
-		// Build condensed message list (all messages, before windowing)
-		const allCondensedMessages = computed(() => {
-			if (props.channel.type !== ChanType.CHANNEL && props.channel.type !== ChanType.QUERY) {
-				return props.channel.messages;
-			}
+		// Maintains the condensed (status-message-folding) view
+		// incrementally instead of rebuilding it from scratch on every
+		// incoming message - see use-condensed-messages.ts.
+		const {
+			condensed,
+			rebuildAll: rebuildCondensed,
+			appendOne: appendCondensed,
+			prependChunk: prependCondensed,
+		} = useCondensedMessages(
+			() => props.channel,
+			() => store.state.settings.statusMessages
+		);
 
-			if (store.state.settings.statusMessages === "hidden") {
-				return props.channel.messages.filter(
-					(message) => !condensedTypes.has(message.type || "")
-				);
-			}
-
-			if (store.state.settings.statusMessages !== "condensed") {
-				return props.channel.messages;
-			}
-
-			let lastCondensedContainer: CondensedMessageContainer | null = null;
-			const condensed: (ClientMessage | CondensedMessageContainer)[] = [];
-
-			for (const message of props.channel.messages) {
-				if (message.self || message.highlight || !condensedTypes.has(message.type || "")) {
-					lastCondensedContainer = null;
-					condensed.push(message);
-					continue;
-				}
-
-				if (!lastCondensedContainer) {
-					lastCondensedContainer = {
-						time: message.time,
-						type: "condensed",
-						messages: [],
-					};
-					condensed.push(lastCondensedContainer);
-				}
-
-				lastCondensedContainer.messages.push(message);
-				lastCondensedContainer.id = message.id;
-
-				if (message.id === props.channel.firstUnread) {
-					lastCondensedContainer = null;
-				}
-			}
-
-			return condensed.map((message) => {
-				if (message.type === "condensed" && message.messages.length === 1) {
-					return message.messages[0];
-				}
-
-				return message;
-			});
-		});
+		// Manually tracked (not reactive) - lets the messages-length watcher
+		// below classify what kind of change happened (prepend vs append vs
+		// a shrink) without needing a second watcher and its ordering.
+		let prevFirstId: number | null =
+			props.channel.messages.length > 0 ? props.channel.messages[0].id : null;
 
 		// Windowed messages for rendering - show MAX_RENDERED_MESSAGES from windowStartIndex
 		// This does NOT depend on scrolledToBottom to avoid reactivity issues
 		const displayedMessages = computed(() => {
-			const all = allCondensedMessages.value;
+			const all = condensed;
 			const total = all.length;
 
 			if (total <= MAX_RENDERED_MESSAGES) {
@@ -201,7 +160,7 @@ export default defineComponent({
 
 		// Check if we're showing the latest messages
 		const isAtEnd = computed(() => {
-			const total = allCondensedMessages.value.length;
+			const total = condensed.length;
 			return total <= MAX_RENDERED_MESSAGES ||
 				windowStartIndex.value >= total - MAX_RENDERED_MESSAGES;
 		});
@@ -272,7 +231,7 @@ export default defineComponent({
 
 		// Jump to the absolute bottom (latest messages) and mark as at bottom
 		const jumpToBottom = async () => {
-			const total = allCondensedMessages.value.length;
+			const total = condensed.length;
 			windowStartIndex.value = Math.max(0, total - MAX_RENDERED_MESSAGES);
 			props.channel.scrolledToBottom = true;
 			isAdjustingWindow.value = true;
@@ -384,7 +343,7 @@ export default defineComponent({
 			isAdjustingWindow.value = true;
 			const anchor = captureAnchor(el);
 
-			const total = allCondensedMessages.value.length;
+			const total = condensed.length;
 			const maxStart = Math.max(0, total - MAX_RENDERED_MESSAGES);
 
 			if (windowStartIndex.value >= maxStart) {
@@ -448,7 +407,7 @@ export default defineComponent({
 		// Center the render window on the given index, then scroll the target
 		// message (or the nearest one at that index) into view and highlight it.
 		const performScrollTo = async (targetIndex: number) => {
-			const all = allCondensedMessages.value;
+			const all = condensed;
 
 			if (all.length > MAX_RENDERED_MESSAGES) {
 				const halfWindow = Math.floor(MAX_RENDERED_MESSAGES / 2);
@@ -554,10 +513,10 @@ export default defineComponent({
 			props.channel.scrolledToBottom = false;
 			isAdjustingWindow.value = true;
 
-			let targetIndex = findIndexById(allCondensedMessages.value, msgId);
+			let targetIndex = findIndexById(condensed, msgId);
 
 			if (targetIndex === -1 && fallbackTime) {
-				targetIndex = findIndexByTime(allCondensedMessages.value, fallbackTime);
+				targetIndex = findIndexByTime(condensed, fallbackTime);
 			}
 
 			// Not in memory: ask the database for the region around this
@@ -568,18 +527,18 @@ export default defineComponent({
 
 				if (props.channel.messages.length !== before) {
 					await nextTick();
-					targetIndex = findIndexById(allCondensedMessages.value, msgId);
+					targetIndex = findIndexById(condensed, msgId);
 				}
 
 				if (targetIndex === -1) {
-					targetIndex = findIndexByTime(allCondensedMessages.value, fallbackTime);
+					targetIndex = findIndexByTime(condensed, fallbackTime);
 				}
 			}
 
 			if (targetIndex === -1) {
 				// Best effort: highlight the oldest loaded message, which is the
 				// message closest in time to a target we could not load.
-				const all = allCondensedMessages.value;
+				const all = condensed;
 
 				if (all.length > 0 && fallbackTime) {
 					let nearest = 0;
@@ -613,7 +572,7 @@ export default defineComponent({
 			props.channel.scrolledToBottom = false;
 			isAdjustingWindow.value = true;
 
-			let targetIndex = findIndexByTime(allCondensedMessages.value, timestamp);
+			let targetIndex = findIndexByTime(condensed, timestamp);
 
 			// Not in memory: fetch the region of history around this time.
 			if (targetIndex === -1) {
@@ -622,13 +581,13 @@ export default defineComponent({
 
 				if (props.channel.messages.length !== before) {
 					await nextTick();
-					targetIndex = findIndexByTime(allCondensedMessages.value, timestamp);
+					targetIndex = findIndexByTime(condensed, timestamp);
 				}
 			}
 
 			if (targetIndex === -1) {
 				// Best effort: highlight the nearest loaded message in time.
-				const all = allCondensedMessages.value;
+				const all = condensed;
 
 				if (all.length === 0) {
 					isAdjustingWindow.value = false;
@@ -753,7 +712,10 @@ export default defineComponent({
 			return false;
 		};
 
-		const isPreviousSource = (currentMessage: ClientMessage, idx: number) => {
+		const isPreviousSource = (
+			currentMessage: ClientMessage | CondensedMessageContainer,
+			idx: number
+		) => {
 			const previousMessage = displayedMessages.value[idx - 1];
 			return (
 				previousMessage &&
@@ -823,7 +785,7 @@ export default defineComponent({
 			} else {
 				// Default: scroll to bottom
 				props.channel.scrolledToBottom = true;
-				windowStartIndex.value = Math.max(0, allCondensedMessages.value.length - MAX_RENDERED_MESSAGES);
+				windowStartIndex.value = Math.max(0, condensed.length - MAX_RENDERED_MESSAGES);
 				await nextTick();
 				scrollToBottom();
 			}
@@ -853,7 +815,15 @@ export default defineComponent({
 				props.channel.scrolledToBottom = true;
 				focusedMsgId.value = null;
 				focusedMsgTime.value = null;
-				windowStartIndex.value = Math.max(0, allCondensedMessages.value.length - MAX_RENDERED_MESSAGES);
+
+				// Switching channels swaps in a whole different messages
+				// array - rebuild the condensed view for it outright rather
+				// than trying to classify this as a prepend/append.
+				rebuildCondensed();
+				prevFirstId =
+					props.channel.messages.length > 0 ? props.channel.messages[0].id : null;
+
+				windowStartIndex.value = Math.max(0, condensed.length - MAX_RENDERED_MESSAGES);
 				await nextTick();
 				scrollToBottom();
 
@@ -864,79 +834,105 @@ export default defineComponent({
 			}
 		);
 
-		// Track the first message ID to detect when history is loaded
-		const firstMessageId = computed(() => {
-			const msgs = props.channel.messages;
-			return msgs.length > 0 ? msgs[0].id : null;
-		});
-
-		// When history is loaded (messages prepended), adjust window to maintain position
-		watch(
-			firstMessageId,
-			async (newFirstId, oldFirstId) => {
-				if (oldFirstId === null || newFirstId === null) return;
-				if (newFirstId === oldFirstId) return;
-
-				// A history chunk was prepended (`more` or `messages:around`).
-				// Remap the render window so the region the user was reading
-				// stays exactly where it was. If we were at the top of the
-				// loaded history, keep the window at 0 so the freshly loaded
-				// chunk is visible.
-				const el = chat.value;
-				if (!el) return;
-
-				isAdjustingWindow.value = true;
-				const oldScrollTop = el.scrollTop;
-				const oldScrollHeight = el.scrollHeight;
-				const oldStart = windowStartIndex.value;
-				const wasAtStart = oldStart === 0;
-
-				await nextTick();
-
-				if (!wasAtStart) {
-					// How many condensed entries were prepended: the old first
-					// message (identified by its stable id) now sits at that
-					// index in the re-ordered list.
-					const prepended = findIndexById(allCondensedMessages.value, oldFirstId);
-
-					if (prepended > 0) {
-						// Shift the window start by the number of prepended
-						// entries so the same messages remain rendered.
-						const maxStart = Math.max(0, allCondensedMessages.value.length - MAX_RENDERED_MESSAGES);
-						windowStartIndex.value = Math.min(maxStart, oldStart + prepended);
-
-						await nextTick();
-					}
-				}
-
-				// Restore scroll position. For a prepend, everything the user
-				// was looking at moved down by exactly the height of the new
-				// rows, so a scroll-height delta is pixel-accurate.
-				const heightDiff = el.scrollHeight - oldScrollHeight;
-				isScrolling.value = true;
-				el.scrollTop = oldScrollTop + heightDiff;
-
-				setTimeout(() => {
-					isScrolling.value = false;
-					isAdjustingWindow.value = false;
-				}, 50);
-			}
-		);
-
-		// New messages at the end - stay at bottom if we were at bottom
+		// Single watcher classifying every channel.messages change as a
+		// tail-append, a head-prepend, or a shrink/other (client-side
+		// trimming, history clear), and updating the condensed view
+		// incrementally rather than rebuilding it from scratch each time -
+		// replaces what used to be two separate watchers (one on a
+		// `firstMessageId` computed, one on `.length`) that both implicitly
+		// relied on `allCondensedMessages` auto-recomputing on its own.
 		watch(
 			() => props.channel.messages.length,
 			async (newLen, oldLen) => {
-				if (props.channel.scrolledToBottom) {
+				const messages = props.channel.messages;
+				const newFirstId = messages.length > 0 ? messages[0].id : null;
+				const oldFirstId = prevFirstId;
+				const isPrepend =
+					oldLen !== undefined &&
+					newLen > oldLen &&
+					oldFirstId !== null &&
+					newFirstId !== oldFirstId;
+				const isAppend = oldLen !== undefined && newLen > oldLen && !isPrepend;
+
+				if (isPrepend) {
+					prependCondensed(newLen - (oldLen ?? 0));
+				} else if (isAppend) {
+					const addedCount = newLen - (oldLen ?? 0);
+
+					if (addedCount === 1) {
+						appendCondensed(messages[messages.length - 1]);
+					} else if (addedCount > 0 && addedCount <= 20) {
+						for (let i = messages.length - addedCount; i < messages.length; i++) {
+							appendCondensed(messages[i]);
+						}
+					} else {
+						rebuildCondensed();
+					}
+				} else {
+					// Shrink (client-side trim once over the message cap in
+					// msg.ts) or anything else ambiguous - safe, infrequent
+					// fallback.
+					rebuildCondensed();
+				}
+
+				prevFirstId = newFirstId;
+
+				if (isPrepend) {
+					// A history chunk was prepended (`more`, `messages:around`,
+					// or a lazy history load). Remap the render window so the
+					// region the user was reading stays exactly where it was.
+					// If we were at the top of the loaded history, keep the
+					// window at 0 so the freshly loaded chunk is visible.
+					const el = chat.value;
+
+					if (!el) return;
+
+					isAdjustingWindow.value = true;
+					const oldScrollTop = el.scrollTop;
+					const oldScrollHeight = el.scrollHeight;
+					const oldStart = windowStartIndex.value;
+					const wasAtStart = oldStart === 0;
+
+					await nextTick();
+
+					if (!wasAtStart && oldFirstId !== null) {
+						// How many condensed entries were prepended: the old
+						// first message (identified by its stable id) now
+						// sits at that index in the re-ordered list.
+						const prepended = findIndexById(condensed, oldFirstId);
+
+						if (prepended > 0) {
+							// Shift the window start by the number of
+							// prepended entries so the same messages remain
+							// rendered.
+							const maxStart = Math.max(0, condensed.length - MAX_RENDERED_MESSAGES);
+							windowStartIndex.value = Math.min(maxStart, oldStart + prepended);
+
+							await nextTick();
+						}
+					}
+
+					// Restore scroll position. For a prepend, everything the
+					// user was looking at moved down by exactly the height
+					// of the new rows, so a scroll-height delta is
+					// pixel-accurate.
+					const heightDiff = el.scrollHeight - oldScrollHeight;
+					isScrolling.value = true;
+					el.scrollTop = oldScrollTop + heightDiff;
+
+					setTimeout(() => {
+						isScrolling.value = false;
+						isAdjustingWindow.value = false;
+					}, 50);
+				} else if (isAppend && props.channel.scrolledToBottom) {
 					// Keep window at the end when new messages come in
-					const total = allCondensedMessages.value.length;
+					const total = condensed.length;
 					windowStartIndex.value = Math.max(0, total - MAX_RENDERED_MESSAGES);
 					await nextTick();
 					scrollToBottom();
-				} else if (oldLen !== undefined && newLen > oldLen) {
-					// Messages were added (likely at the end) but we're not at bottom
-					// Don't change window or scroll - user is reading history
 				}
+				// else: messages were added but we're not at bottom (reading
+				// history), or this was a shrink - don't change window/scroll.
 			}
 		);
 

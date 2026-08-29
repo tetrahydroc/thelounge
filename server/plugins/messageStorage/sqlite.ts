@@ -511,7 +511,7 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 	async getMessages(
 		network: Network,
 		channel: Channel,
-		nextID: () => number
+		ensureIdAbove: (maxId: number) => void
 	): Promise<Message[]> {
 		await this.initDone.promise;
 
@@ -560,10 +560,7 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		});
 
 		// Ensure client.idMsg is higher than any loaded message ID
-		// by calling nextID until it surpasses maxId
-		while (nextID() <= maxId) {
-			// Keep incrementing until we're past the max
-		}
+		ensureIdAbove(maxId);
 
 		return messages;
 	}
@@ -730,13 +727,17 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		networkUuid: string,
 		channelName: string,
 		beforeTime: number,
-		limit: number
+		limit: number,
+		ensureIdAbove: (maxId: number) => void
 	): Promise<Message[]> {
 		await this.initDone.promise;
 
 		if (!this.isEnabled) {
 			return [];
 		}
+
+		// Flush any pending batched writes before reading
+		await this.flushBatch();
 
 		// "time <= ?" (not "<") so rows sharing the anchor's exact millisecond
 		// are still returned: they dedupe away by id on both sides, but
@@ -750,7 +751,9 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 			limit
 		);
 
-		return rows.reverse().map((row): Message => {
+		let maxId = 0;
+
+		const messages = rows.reverse().map((row): Message => {
 			const r = row as Record<string, unknown>;
 			const msg = JSON.parse(r.msg as string);
 			msg.time = r.time;
@@ -761,8 +764,19 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 				msg.id = r.id as number;
 			}
 
+			if (msg.id > maxId) {
+				maxId = msg.id;
+			}
+
 			return new Msg(msg);
 		});
+
+		// These rows can be for a channel that has never been loaded into
+		// memory yet (lazy per-channel load), so client.idMsg may not have
+		// seen these ids at all - bump it the same way getMessages() does.
+		ensureIdAbove(maxId);
+
+		return messages;
 	}
 
 	/**
@@ -773,13 +787,17 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		networkUuid: string,
 		channelName: string,
 		targetTime: number,
-		limit: number = 200
+		limit: number = 200,
+		ensureIdAbove: (maxId: number) => void
 	): Promise<Message[]> {
 		await this.initDone.promise;
 
 		if (!this.isEnabled) {
 			return [];
 		}
+
+		// Flush any pending batched writes before reading
+		await this.flushBatch();
 
 		const halfLimit = Math.floor(limit / 2);
 
@@ -804,7 +822,9 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		// Combine: before (reversed) + after
 		const allRows = [...beforeRows.reverse(), ...afterRows];
 
-		return allRows.map((row): Message => {
+		let maxId = 0;
+
+		const messages = allRows.map((row): Message => {
 			const r = row as Record<string, unknown>;
 			const msg = JSON.parse(r.msg as string);
 			msg.time = r.time;
@@ -815,8 +835,16 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 				msg.id = r.id as number;
 			}
 
+			if (msg.id > maxId) {
+				maxId = msg.id;
+			}
+
 			return new Msg(msg);
 		});
+
+		ensureIdAbove(maxId);
+
+		return messages;
 	}
 
 	/**

@@ -2,6 +2,7 @@ import {nextTick} from "vue";
 
 import socket from "../socket";
 import {store} from "../store";
+import {markMsgsRaw} from "../chan";
 import {MessageType} from "../../../shared/types/msg";
 
 socket.on("more", async (data) => {
@@ -29,7 +30,7 @@ socket.on("more", async (data) => {
 	// already holds (the client buffer may be longer than the server's
 	// in-memory tail, so server-side dedupe is not enough on its own)
 	const known = new Set<number>(channel.messages.map((m) => m.id));
-	channel.messages.unshift(...data.messages.filter((m) => !known.has(m.id)));
+	channel.messages.unshift(...markMsgsRaw(data.messages.filter((m) => !known.has(m.id))));
 
 	await nextTick();
 	channel.historyLoading = false;

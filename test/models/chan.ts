@@ -206,11 +206,16 @@ describe("Chan", function () {
 				"messages",
 				"muted",
 				"totalMessages",
+				// Whether the server has loaded this channel's history into
+				// memory yet - see Client.open()/Chan.loadMessages().
+				"historyLoaded",
 				"name",
 				"state",
 				"topic",
 				"type",
 				"unread",
+				"pinned",
+				"groups",
 				// the following are there in special cases, need to fix the types
 				"num_users",
 				"special",

@@ -34,6 +34,10 @@ class Chan {
 	type!: ChanType;
 	state!: ChanState;
 	pinned!: boolean;
+	// Whether loadMessages() has run (or is in flight) for this channel this
+	// session. Channels aren't all eager-loaded at connect anymore - this
+	// guards the lazy per-channel load triggered from Client.open().
+	historyLoaded!: boolean;
 
 	userAway?: boolean;
 	special?: SpecialChanType;
@@ -57,6 +61,7 @@ class Chan {
 			users: new Map(),
 			muted: false,
 			pinned: false,
+			historyLoaded: false,
 		});
 	}
 
@@ -211,6 +216,7 @@ class Chan {
 			id: this.id,
 			messages: msgs,
 			totalMessages: this.messages.length,
+			historyLoaded: this.historyLoaded,
 			name: this.name,
 			key: this.key,
 			topic: this.topic,
@@ -270,6 +276,14 @@ class Chan {
 	}
 
 	loadMessages(client: Client, network: Network) {
+		// Loading is triggered both eagerly (last-active channel at connect)
+		// and lazily (on first `open()` of any other channel) - this guard
+		// makes both call sites idempotent so rapid channel switching can't
+		// kick off duplicate DB reads for the same channel.
+		if (this.historyLoaded) {
+			return;
+		}
+
 		if (!this.isLoggable()) {
 			return;
 		}
@@ -283,6 +297,8 @@ class Chan {
 		}
 
 		if (!client.messageProvider) {
+			this.historyLoaded = true;
+
 			if (network.irc.network.cap.isEnabled("znc.in/playback")) {
 				// if we do have a message provider we might be able to only fetch partial history,
 				// so delay the cap in this case.
@@ -292,8 +308,15 @@ class Chan {
 			return;
 		}
 
+		// Set before the fetch resolves (not after) so a second call that
+		// arrives while this one is still in flight is a no-op instead of
+		// firing a second DB read.
+		this.historyLoaded = true;
+
 		client.messageProvider
-			.getMessages(network, this, () => client.idMsg++)
+			.getMessages(network, this, (maxId) => {
+				client.idMsg = Math.max(client.idMsg, maxId + 1);
+			})
 			.then((messages) => {
 				if (messages.length === 0) {
 					if (network.irc!.network.cap.isEnabled("znc.in/playback")) {
@@ -325,9 +348,11 @@ class Chan {
 					requestZncPlayback(this, network, from);
 				}
 			})
-			.catch((err: Error) =>
-				log.error(`Failed to load messages for ${client.name}: ${err.toString()}`)
-			);
+			.catch((err: Error) => {
+				// Allow a later open()/connect() to retry the load.
+				this.historyLoaded = false;
+				log.error(`Failed to load messages for ${client.name}: ${err.toString()}`);
+			});
 	}
 
 	isLoggable() {
