@@ -538,7 +538,7 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 
 		// Select id from SQLite to use as the canonical message ID
 		const rows = await this.serialize_fetchall(
-			"SELECT id, msg, type, time FROM messages WHERE network = ? AND channel = ? ORDER BY time DESC LIMIT ?",
+			"SELECT id, msg, type, time FROM messages WHERE network = ? AND channel = ? ORDER BY time DESC, id DESC LIMIT ?",
 			network.uuid,
 			channel.name.toLowerCase(),
 			limit
@@ -656,7 +656,7 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 
 		const maxResults = 100;
 
-		select += " ORDER BY time DESC LIMIT ? OFFSET ? ";
+		select += " ORDER BY time DESC, id DESC LIMIT ? OFFSET ? ";
 		params.push(maxResults);
 		params.push(query.offset);
 
@@ -716,7 +716,7 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		await this.flushBatch();
 
 		const rows = await this.serialize_fetchall(
-			"SELECT msg, type, time FROM messages WHERE network = ? AND channel = ? ORDER BY time DESC LIMIT ?",
+			"SELECT msg, type, time FROM messages WHERE network = ? AND channel = ? ORDER BY time DESC, id DESC LIMIT ?",
 			networkUuid,
 			channelName.toLowerCase(),
 			limit
@@ -755,7 +755,7 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		// skipping them would leave a permanent same-timestamp gap in the
 		// client's loaded region (the anchor only ever moves older).
 		const rows = await this.serialize_fetchall(
-			"SELECT id, msg, type, time FROM messages WHERE network = ? AND channel = ? AND time <= ? ORDER BY time DESC LIMIT ?",
+			"SELECT id, msg, type, time FROM messages WHERE network = ? AND channel = ? AND time <= ? ORDER BY time DESC, id DESC LIMIT ?",
 			networkUuid,
 			channelName.toLowerCase(),
 			beforeTime,
@@ -812,9 +812,16 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 
 		const halfLimit = Math.floor(limit / 2);
 
-		// Get messages before the target time
+		// Get messages before the target time. The `id DESC` tie-break
+		// matters here specifically: a busy channel can land several
+		// messages in the same millisecond, and without it SQLite breaks
+		// ties in whatever order it pleases - which need not match the
+		// target's actual position among its same-timestamp neighbors,
+		// making a jump-to-message land next to the target rather than on
+		// it. Ordering ties by id (insertion order) keeps this consistent
+		// with how the client's own in-memory array is ordered.
 		const beforeRows = await this.serialize_fetchall(
-			"SELECT id, msg, type, time FROM messages WHERE network = ? AND channel = ? AND time <= ? ORDER BY time DESC LIMIT ?",
+			"SELECT id, msg, type, time FROM messages WHERE network = ? AND channel = ? AND time <= ? ORDER BY time DESC, id DESC LIMIT ?",
 			networkUuid,
 			channelName.toLowerCase(),
 			targetTime,
@@ -823,7 +830,7 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 
 		// Get messages after the target time
 		const afterRows = await this.serialize_fetchall(
-			"SELECT id, msg, type, time FROM messages WHERE network = ? AND channel = ? AND time > ? ORDER BY time ASC LIMIT ?",
+			"SELECT id, msg, type, time FROM messages WHERE network = ? AND channel = ? AND time > ? ORDER BY time ASC, id ASC LIMIT ?",
 			networkUuid,
 			channelName.toLowerCase(),
 			targetTime,
