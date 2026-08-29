@@ -789,11 +789,11 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		targetTime: number,
 		limit: number = 200,
 		ensureIdAbove: (maxId: number) => void
-	): Promise<Message[]> {
+	): Promise<{messages: Message[]; hasMoreBefore: boolean}> {
 		await this.initDone.promise;
 
 		if (!this.isEnabled) {
-			return [];
+			return {messages: [], hasMoreBefore: false};
 		}
 
 		// Flush any pending batched writes before reading
@@ -844,7 +844,17 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 
 		ensureIdAbove(maxId);
 
-		return messages;
+		// beforeRows filling its limit means the "time <= ?" query had more
+		// rows to give than we asked for - i.e. there's more history before
+		// the target regardless of how many (if any) rows came back after
+		// it. A combined before+after row count can't tell these apart: a
+		// target with abundant history before it but little/none after
+		// (e.g. a fairly recent message) would otherwise be misreported as
+		// "no more history", silently breaking "Show older messages" and
+		// the scroll-triggered auto-load after jumping to a search result.
+		const hasMoreBefore = beforeRows.length >= halfLimit;
+
+		return {messages, hasMoreBefore};
 	}
 
 	/**

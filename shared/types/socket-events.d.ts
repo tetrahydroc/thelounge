@@ -81,7 +81,7 @@ interface ServerToClientEvents {
 
 	more: EventHandler<{chan: number; messages: SharedMsg[]; totalMessages: number; hasMore?: boolean}>;
 
-	"messages:around": EventHandler<{chan: number; messages: SharedMsg[]}>;
+	"messages:around": EventHandler<{chan: number; messages: SharedMsg[]; hasMoreBefore: boolean}>;
 
 	"msg:preview": EventHandler<{id: number; chan: number; preview: LinkPreview}>;
 	"msg:special": EventHandler<{chan: number; data?: unknown}>;

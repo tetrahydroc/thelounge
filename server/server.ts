@@ -539,6 +539,7 @@ function initializeClient(
 			socket.emit("messages:around", {
 				chan: result ? result.chan : data.target,
 				messages: result ? result.messages : [],
+				hasMoreBefore: result ? result.hasMoreBefore : false,
 			});
 		}
 	});

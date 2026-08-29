@@ -805,7 +805,7 @@ class Client {
 		}
 
 		try {
-			const messages = await this.messageProvider.getMessagesAround(
+			const {messages, hasMoreBefore} = await this.messageProvider.getMessagesAround(
 				network.uuid,
 				chan.name,
 				data.time,
@@ -818,6 +818,7 @@ class Client {
 			return {
 				chan: chan.id,
 				messages: messages,
+				hasMoreBefore,
 			};
 		} catch (err) {
 			log.error("Failed to get messages around time:", String(err));

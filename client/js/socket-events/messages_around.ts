@@ -25,8 +25,12 @@ socket.on("messages:around", async (data) => {
 		channel.messages.unshift(...markMsgsRaw(fresh));
 	}
 
-	// A full chunk arrived means the channel has older history available too
-	channel.moreHistoryAvailable = data.messages.length >= 200;
+	// Directional: whether there's more history *before* the target, not
+	// just whether the combined before+after chunk was large. A target with
+	// abundant history before it but little/none after (e.g. a fairly
+	// recent message) would otherwise be misreported as "no more history",
+	// silently breaking "Show older messages" / scroll-triggered auto-load.
+	channel.moreHistoryAvailable = data.hasMoreBefore;
 	channel.historyLoading = false;
 
 	await nextTick();
