@@ -108,6 +108,7 @@ export default [
 			"public/**",
 			"test/public/**",
 			"coverage/**",
+			"vendor/**",
 			"webpack.config.mjs",
 			"*.min.js",
 		],

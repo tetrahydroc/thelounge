@@ -575,7 +575,7 @@ class Client {
 		);
 	}
 
-	more(data) {
+	async more(data: {target: number; lastId: number; condensed: boolean; beforeTime?: number}) {
 		const target = this.find(data.target);
 
 		if (!target) {
@@ -584,7 +584,6 @@ class Client {
 
 		const chan = target.chan;
 		let messages: Msg[] = [];
-		let index = 0;
 
 		const enhancedSearch = Boolean(this.config.clientSettings.searchEnabled && this.config.clientSettings.enableEnhancedSearch)
 
@@ -593,11 +592,51 @@ class Client {
 		const batchSize = enhancedSearch ? 1000 : 100;
 		const maxBatchSize =  enhancedSearch ? 10000 : 1000;
 
-		// If client requests -1, send last batch of messages
-		if (data.lastId < 0) {
+		const beforeTime = data.beforeTime;
+
+			// The client anchors on the timestamp of its oldest loaded message
+			// (`beforeTime`). If given, we page back from *that* point instead of
+			// the buffer tail — this is what makes scroll-up work after a jump or
+			// an around-chunk fetch: without the anchor the server would keep
+			// re-sending the same tail batch, the client would dedupe it away,
+			// and the "Show older messages" button would vanish.
+			let index: number;
+			if (typeof beforeTime === "number") {
+				// Binary search for the first in-memory message whose time is
+				// >= beforeTime. Everything before that index is strictly older
+				// than the anchor and therefore qualifies for the next page.
+				let lo = 0;
+				let hi = chan.messages.length;
+
+				while (lo < hi) {
+					const mid = (lo + hi) >> 1;
+
+					if (new Date(chan.messages[mid].time).getTime() < beforeTime) {
+						lo = mid + 1;
+					} else {
+						hi = mid;
+					}
+				}
+
+				index = lo;
+
+				if (index === chan.messages.length) {
+					// The client's anchor is at (or beyond) the head of our
+					// in-memory buffer: we hold nothing older than it. Serve the
+					// page straight from the database (see the fallback below),
+					// anchored at the client's own oldest message.
+					index = 0;
+				}
+			} else if (data.lastId < 0) {
+			// Legacy/first load: send the last batch of in-memory messages
 			index = chan.messages.length;
 		} else {
 			index = chan.messages.findIndex((val) => val.id === data.lastId);
+			if (index === -1) {
+				// Requested id is no longer in memory (chunked out); fall back
+				// to the tail rather than returning nothing.
+				index = chan.messages.length;
+			}
 		}
 
 		// If requested id is not found, an empty array will be sent
@@ -629,10 +668,76 @@ class Client {
 			messages = chan.messages.slice(startIndex, index);
 		}
 
+		// A full in-memory batch means older messages are available (either
+		// still in memory or further back in the database), so the client can
+		// keep paging.
+		let hasMore = messages.length >= batchSize;
+
+		if (!hasMore) {
+			// The in-memory region ran out (or the anchor is beyond our
+			// buffer head). Fetch the next chunk directly from the message
+			// storage database — skip-to-chunk, no pagination walk.
+			//
+			// The anchor is the client's own oldest message. With
+			// getMessagesBefore's "time <= ?" that row itself is included
+			// and deduped away by id, so the response is exactly "the rows
+			// older than everything the client already holds". If the
+			// fetch comes back short, we have reached the oldest stored
+			// message and hasMore flips to false.
+			if (this.messageProvider?.canProvideMessages()) {
+				try {
+					const anchor =
+						typeof beforeTime === "number" ? beforeTime : Date.now();
+
+					const chunk = await this.messageProvider.getMessagesBefore(
+						target.network.uuid,
+						chan.name,
+						anchor,
+						maxBatchSize
+					);
+
+					if (chunk.length > 0) {
+						// The client dedupes by id on receipt, but the
+						// response still has to be a single ascending run:
+						// `more.ts` unshifts it as a block, so anything out
+						// of order would scramble the visible log. Drop
+						// rows the client already has (anchor row, overlap
+						// with the in-memory slice above), keep the rest in
+						// time order, oldest first.
+						const known = new Set<number>(chan.messages.map((m) => m.id));
+
+						const fresh = chunk.filter((m) => !known.has(m.id));
+
+						fresh.sort(
+							(a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+						);
+
+						messages = [...messages, ...fresh];
+
+						// A full raw fetch means the database holds more
+						// history. Require actual fresh rows as well, so a
+						// chunk fully covered by memory cannot loop forever
+						// reporting hasMore with nothing new.
+						hasMore = chunk.length >= maxBatchSize && fresh.length > 0;
+
+						if (fresh.length > 0) {
+							// Keep the buffer in sync with the DB chunk so
+							// subsequent "more" requests can be served from
+							// memory (or skip cleanly past it) again.
+							chan.messages.unshift(...fresh);
+						}
+					}
+				} catch (err) {
+					log.error(`Failed to load history chunk from storage: ${String(err)}`);
+				}
+			}
+		}
+
 		return {
 			chan: chan.id,
 			messages: messages,
 			totalMessages: chan.messages.length,
+			hasMore: hasMore,
 		};
 	}
 

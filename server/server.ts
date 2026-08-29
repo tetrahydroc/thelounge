@@ -516,9 +516,9 @@ function initializeClient(
 		}
 	});
 
-	socket.on("more", (data) => {
+	socket.on("more", async (data) => {
 		if (_.isPlainObject(data)) {
-			const history = client.more(data);
+			const history = await client.more(data);
 
 			if (history !== null) {
 				socket.emit("more", history);
@@ -531,9 +531,12 @@ function initializeClient(
 		if (_.isPlainObject(data)) {
 			const result = await client.getMessagesAround(data);
 
-			if (result !== null) {
-				socket.emit("messages:around", result);
-			}
+			// Always respond so the client's pending jump resolves quickly,
+			// even when there is no message storage provider (empty messages)
+			socket.emit("messages:around", {
+				chan: result ? result.chan : data.target,
+				messages: result ? result.messages : [],
+			});
 		}
 	});
 

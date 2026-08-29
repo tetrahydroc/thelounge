@@ -21,8 +21,15 @@ socket.on("more", async (data) => {
 			.slice(0, 100 - channel.inputHistory.length)
 	);
 	channel.moreHistoryAvailable =
-		data.totalMessages > channel.messages.length + data.messages.length;
-	channel.messages.unshift(...data.messages);
+		data.hasMore !== undefined
+			? data.hasMore
+			: data.totalMessages > channel.messages.length + data.messages.length;
+
+	// Dedupe by id: database-backed chunks can overlap messages the client
+	// already holds (the client buffer may be longer than the server's
+	// in-memory tail, so server-side dedupe is not enough on its own)
+	const known = new Set<number>(channel.messages.map((m) => m.id));
+	channel.messages.unshift(...data.messages.filter((m) => !known.has(m.id)));
 
 	await nextTick();
 	channel.historyLoading = false;

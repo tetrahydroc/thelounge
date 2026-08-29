@@ -14,7 +14,7 @@ import {SearchQuery, SearchResponse} from "../../../shared/types/storage.js";
 type Migration = {version: number; stmts: string[]};
 type Rollback = {version: number; rollback_forbidden?: boolean; stmts: string[]};
 
-export const currentSchemaVersion = 1703322560448; // use `new Date().getTime()`
+export const currentSchemaVersion = 1785000000000; // use `new Date().getTime()`
 
 // Desired schema, adapt to the newest version and add migrations to the array below
 const schema = [
@@ -34,6 +34,7 @@ const schema = [
 	"CREATE INDEX network_channel ON messages (network, channel)",
 	"CREATE INDEX time ON messages (time)",
 	"CREATE INDEX msg_type_idx on messages (type)", // needed for efficient storageCleaner queries
+	"CREATE INDEX network_channel_time ON messages (network, channel, time)", // needed for efficient chunked history queries
 ];
 
 // the migrations will be executed in an exclusive transaction as a whole
@@ -71,6 +72,12 @@ export const migrations: Migration[] = [
 		version: 1703322560448,
 		stmts: ["CREATE INDEX msg_type_idx on messages (type)"],
 	},
+	{
+		// Composite index so "give me N messages in this channel before/around
+		// timestamp T" is an index scan instead of a per-channel full scan.
+		version: 1785000000000,
+		stmts: ["CREATE INDEX network_channel_time ON messages (network, channel, time)"],
+	},
 ];
 
 // down migrations need to restore the state of the prior version.
@@ -87,6 +94,10 @@ export const rollbacks: Rollback[] = [
 	{
 		version: 1703322560448,
 		stmts: ["drop INDEX msg_type_idx"],
+	},
+	{
+		version: 1785000000000,
+		stmts: ["DROP INDEX network_channel_time"],
 	},
 ];
 
@@ -727,8 +738,12 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 			return [];
 		}
 
+		// "time <= ?" (not "<") so rows sharing the anchor's exact millisecond
+		// are still returned: they dedupe away by id on both sides, but
+		// skipping them would leave a permanent same-timestamp gap in the
+		// client's loaded region (the anchor only ever moves older).
 		const rows = await this.serialize_fetchall(
-			"SELECT msg, type, time FROM messages WHERE network = ? AND channel = ? AND time < ? ORDER BY time DESC LIMIT ?",
+			"SELECT id, msg, type, time FROM messages WHERE network = ? AND channel = ? AND time <= ? ORDER BY time DESC LIMIT ?",
 			networkUuid,
 			channelName.toLowerCase(),
 			beforeTime,
@@ -740,6 +755,12 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 			const msg = JSON.parse(r.msg as string);
 			msg.time = r.time;
 			msg.type = r.type;
+
+			// Use stored ID from JSON if available, fall back to SQLite row ID
+			if (typeof msg.id !== "number") {
+				msg.id = r.id as number;
+			}
+
 			return new Msg(msg);
 		});
 	}

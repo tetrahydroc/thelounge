@@ -2374,6 +2374,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@phosphor-icons/web@npm:2.1.2":
+  version: 2.1.2
+  resolution: "@phosphor-icons/web@npm:2.1.2"
+  checksum: 10c0/2da148aca2c97f51b632216aac7949e5d2ca8e4d573133dad9d0b47efb4b05512d844ef470a1fe9bfaf15c89f492586c1a39b1890516667664195d7d646ae410
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -6666,9 +6673,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"irc-framework@https://github.com/cmd430/irc-framework":
+"irc-framework@file:vendor/irc-framework::locator=thelounge%40workspace%3A.":
   version: 4.14.0
-  resolution: "irc-framework@https://github.com/cmd430/irc-framework.git#commit=337c650b67b6b0e1dac6895addec59ece0084938"
+  resolution: "irc-framework@file:vendor/irc-framework#vendor/irc-framework::hash=7b7f90&locator=thelounge%40workspace%3A."
   dependencies:
     buffer: "npm:^6.0.3"
     core-js: "npm:^3.38.1"
@@ -6682,7 +6689,7 @@ __metadata:
     socks: "npm:^2.8.3"
     stream-browserify: "npm:^3.0.0"
     util: "npm:^0.12.5"
-  checksum: 10c0/f3d19a39cd2da57353a2030c3bf7d5fbf8c8ce6432550d666aecf49896879c1707290b8355ef66d63d659932b1b861621eb0cfd0e28294e88f93476c26c9c1dc
+  checksum: 10c0/f362f6baf9ed4e352cdd0bfff713e48310dcd524f6377bd3d224ba0fe1ace9427638df60a4e49e6dbea02e1d93b8adcd31642e14cc5e3373c458464e1498ffc7
   languageName: node
   linkType: hard
 
@@ -10892,6 +10899,7 @@ __metadata:
     "@fastify/busboy": "npm:3.2.0"
     "@fortawesome/fontawesome-free": "npm:5.15.4"
     "@istanbuljs/nyc-config-typescript": "npm:1.0.2"
+    "@phosphor-icons/web": "npm:2.1.2"
     "@stylistic/stylelint-plugin": "npm:^4.0.0"
     "@textcomplete/core": "npm:0.1.13"
     "@textcomplete/textarea": "npm:0.1.13"
@@ -10947,7 +10955,7 @@ __metadata:
     fork-ts-checker-webpack-plugin: "npm:9.1.0"
     fuzzy: "npm:0.1.3"
     globals: "npm:16.5.0"
-    irc-framework: "https://github.com/cmd430/irc-framework"
+    irc-framework: "file:vendor/irc-framework"
     ldapts: "npm:8.0.9"
     linkify-it: "npm:5.0.0"
     lodash: "npm:4.17.21"

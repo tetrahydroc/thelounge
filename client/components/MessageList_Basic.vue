@@ -141,12 +141,19 @@ export default defineComponent({
 				}
 			}
 
+			// Anchor the request to the oldest message we hold so that when the
+			// in-memory buffer runs out, the server can skip straight to the
+			// next region of history in the database instead of stalling
+			const messages = props.channel.messages;
+			const beforeTime = messages.length > 0 ? new Date(messages[0].time).getTime() : undefined;
+
 			props.channel.historyLoading = true;
 
 			socket.emit("more", {
 				target: props.channel.id,
 				lastId: lastMessage,
 				condensed: store.state.settings.statusMessages !== "shown",
+				beforeTime,
 			});
 		};
 

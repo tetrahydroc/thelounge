@@ -281,7 +281,69 @@ export default defineComponent({
 			isAdjustingWindow.value = false;
 		};
 
-		// Shift window up (show older messages) while preserving scroll position
+		// --- Scroll anchoring -------------------------------------------------
+		// Capture a scroll anchor: the topmost message currently visible in the
+		// viewport, identified by its stable id, plus its offset from the top of
+		// the viewport (negative if that message is scrolled partway up). Used to
+		// restore the exact scroll position after the render window shifts.
+		const captureAnchor = (el: HTMLElement): {id: string | null, offset: number} => {
+			const containerRect = el.getBoundingClientRect();
+			const viewTop = containerRect.top;
+			const viewBottom = viewTop + el.clientHeight;
+
+			const msgEls = el.querySelectorAll<HTMLElement>(".msg");
+
+			for (const m of msgEls) {
+				const r = m.getBoundingClientRect();
+
+				// First message whose bottom is below the viewport top (i.e., visible).
+				if (r.bottom > viewTop + 0.5) {
+					return {id: m.id ? m.id.replace(/^msg-/, "") : null, offset: r.top - viewTop};
+				}
+
+				if (r.top > viewBottom) {
+					break; // rest of the list is past the viewport
+				}
+			}
+
+			return {id: null, offset: 0};
+		};
+
+		// Restore the scroll position so the anchored message sits at the same
+		// offset from the viewport top it had before the window shifted. Pinning to
+		// a real element (by id) is exact regardless of variable row heights or how
+		// many rows were added/removed at either edge of the render window. If the
+		// anchor fell out of the window (a very large shift), pin the window's first
+		// message to the viewport top as a stable approximation.
+		const restoreAnchor = (el: HTMLElement, anchor: {id: string | null, offset: number}) => {
+			let target: HTMLElement | null = null;
+
+			if (anchor.id) {
+				target = el.querySelector<HTMLElement>(`#msg-${anchor.id}`);
+			}
+
+			const containerRect = el.getBoundingClientRect();
+
+			if (target) {
+				const currentOffset = target.getBoundingClientRect().top - containerRect.top;
+				const correction = currentOffset - anchor.offset;
+
+				if (Math.abs(correction) > 0.5) {
+					el.scrollTop = el.scrollTop + correction;
+				}
+			} else {
+				const first = el.querySelector<HTMLElement>(".msg");
+
+				if (first) {
+					el.scrollTop = first.getBoundingClientRect().top - containerRect.top;
+				}
+			}
+		};
+
+		// Shift window up (show older messages) while preserving scroll position.
+		// Anchor-based restoration (see captureAnchor/restoreAnchor) keeps the view
+		// pinned exactly; the previous net-scrollHeight-delta approach drifted when
+		// added and removed row heights didn't match, causing visible jumps.
 		const shiftWindowUp = async (amount: number = 100) => {
 			if (isAdjustingWindow.value || windowStartIndex.value <= 0) return;
 
@@ -289,8 +351,7 @@ export default defineComponent({
 			if (!el) return;
 
 			isAdjustingWindow.value = true;
-			const oldScrollHeight = el.scrollHeight;
-			const oldScrollTop = el.scrollTop;
+			const anchor = captureAnchor(el);
 
 			// Shift window up
 			const newStart = Math.max(0, windowStartIndex.value - amount);
@@ -306,30 +367,31 @@ export default defineComponent({
 
 			await nextTick();
 
-			// Restore scroll position relative to the content that was visible
-			const newScrollHeight = el.scrollHeight;
-			const heightDiff = newScrollHeight - oldScrollHeight;
-			el.scrollTop = oldScrollTop + heightDiff;
-
+			restoreAnchor(el, anchor);
 			isAdjustingWindow.value = false;
 		};
 
-		// Shift window down (show newer messages) while preserving scroll position
+		// Shift window down (show newer messages) while preserving scroll position.
+		// Anchor-based (see shiftWindowUp). Also fixes a latent bug: the previous
+		// early-return for "already at maxStart" left isAdjustingWindow stuck true,
+		// which permanently froze all scroll adjustment.
 		const shiftWindowDown = async (amount: number = 100) => {
 			if (isAdjustingWindow.value) return;
-
-			const total = allCondensedMessages.value.length;
-			const maxStart = Math.max(0, total - MAX_RENDERED_MESSAGES);
-			if (windowStartIndex.value >= maxStart) return;
 
 			const el = chat.value;
 			if (!el) return;
 
 			isAdjustingWindow.value = true;
-			const oldScrollHeight = el.scrollHeight;
-			const oldScrollTop = el.scrollTop;
+			const anchor = captureAnchor(el);
 
-			// Shift window down
+			const total = allCondensedMessages.value.length;
+			const maxStart = Math.max(0, total - MAX_RENDERED_MESSAGES);
+
+			if (windowStartIndex.value >= maxStart) {
+				isAdjustingWindow.value = false;
+				return;
+			}
+
 			const newStart = Math.min(maxStart, windowStartIndex.value + amount);
 			windowStartIndex.value = newStart;
 
@@ -340,111 +402,209 @@ export default defineComponent({
 
 			await nextTick();
 
-			// Restore scroll position relative to the content that was visible
-			const newScrollHeight = el.scrollHeight;
-			const heightDiff = oldScrollHeight - newScrollHeight;
-			el.scrollTop = oldScrollTop - heightDiff;
-
+			restoreAnchor(el, anchor);
 			isAdjustingWindow.value = false;
 		};
 
-		// Find and scroll to a message by ID
+		// Find the index of the condensed entry containing a message id.
+		const findIndexById = (all: (ClientMessage | CondensedMessageContainer)[], msgId: number): number => {
+			for (let i = 0; i < all.length; i++) {
+				const msg = all[i];
+
+				if (msg.type === "condensed") {
+					if (msg.messages.some((inner) => inner.id === msgId)) {
+						return i;
+					}
+				} else if (msg.id === msgId) {
+					return i;
+				}
+			}
+
+			return -1;
+		};
+
+		// Find the index of the condensed entry containing a message by timestamp.
+		const findIndexByTime = (all: (ClientMessage | CondensedMessageContainer)[], targetTime: number): number => {
+			for (let i = 0; i < all.length; i++) {
+				const msg = all[i];
+				const msgTime = new Date(msg.time).getTime();
+
+				if (Math.abs(msgTime - targetTime) < 1000) {
+					return i;
+				}
+
+				if (msg.type === "condensed") {
+					for (const inner of msg.messages) {
+						if (Math.abs(new Date(inner.time).getTime() - targetTime) < 1000) {
+							return i;
+						}
+					}
+				}
+			}
+
+			return -1;
+		};
+
+		// Center the render window on the given index, then scroll the target
+		// message (or the nearest one at that index) into view and highlight it.
+		const performScrollTo = async (targetIndex: number) => {
+			const all = allCondensedMessages.value;
+
+			if (all.length > MAX_RENDERED_MESSAGES) {
+				const halfWindow = Math.floor(MAX_RENDERED_MESSAGES / 2);
+				windowStartIndex.value = Math.max(0, Math.min(targetIndex - halfWindow, all.length - MAX_RENDERED_MESSAGES));
+			}
+
+			await nextTick();
+
+			const el = chat.value;
+
+			if (!el) {
+				isAdjustingWindow.value = false;
+				return false;
+			}
+
+			const target = all[targetIndex];
+			let node: HTMLElement | null = null;
+
+			if (target) {
+				const nodeId =
+					target.type === "condensed"
+						? `msg-${target.messages[0]?.id ?? ""}`
+						: `msg-${target.id}`;
+				node = el.querySelector<HTMLElement>(`#${nodeId}`);
+			}
+
+			if (!node) {
+				// Fall back to the first rendered message in the window
+				node = el.querySelector<HTMLElement>(".msg");
+			}
+
+			if (!node) {
+				isAdjustingWindow.value = false;
+				return false;
+			}
+
+			isScrolling.value = true;
+			node.scrollIntoView({ behavior: "instant", block: "center" });
+
+			// BUGBUG: prevent the chat window offset bugging when scrolling to
+			// items near the bottom of the chat
+			const container = el.closest("#chat-container");
+
+			if (container) {
+				container.scrollTop = 0;
+			}
+
+			setTimeout(() => {
+				isScrolling.value = false;
+				isAdjustingWindow.value = false;
+			}, 50);
+
+			// Clear highlight after a few seconds
+			setTimeout(() => {
+				focusedMsgId.value = null;
+				focusedMsgTime.value = null;
+			}, 3000);
+
+			return true;
+		};
+
+		// Request a window of messages around a timestamp from the message
+		// storage database (the server's "skip to chunk" primitive) and wait
+		// for it to be merged into the channel. Resolves to the number of
+		// messages the channel holds afterwards, so callers can detect whether
+		// anything actually arrived.
+		const fetchChunkAround = (time: number, timeoutMs = 4000): Promise<number> => {
+			return new Promise((resolve) => {
+				const channel = store.getters.findChannel(props.channel.id)?.channel;
+				const baseline = channel ? channel.messages.length : 0;
+
+				const handler = (data: {chan: number; messages: Array<{id?: number}>}) => {
+					if (data.chan !== props.channel.id || !Array.isArray(data.messages)) {
+						return;
+					}
+
+					const ch = store.getters.findChannel(props.channel.id)?.channel;
+					resolve(ch ? ch.messages.length : baseline);
+					socket.off("messages:around", handler);
+				};
+
+				socket.on("messages:around", handler);
+				socket.emit("messages:around", {target: props.channel.id, time});
+
+				// The server always answers (even with an empty chunk), so this
+				// is purely a safety net against a lost response.
+				setTimeout(() => {
+					const ch = store.getters.findChannel(props.channel.id)?.channel;
+					resolve(ch ? ch.messages.length : baseline);
+					socket.off("messages:around", handler);
+				}, timeoutMs);
+			});
+		};
+
+		// Find and scroll to a message by ID. If the message is not in memory,
+		// fetch the region of history around it from the database (skip to
+		// chunk), merge it, and retry. If it still isn't there (no storage, or
+		// the window missed it), highlight the nearest loaded message instead
+		// of silently failing.
 		const jumpToMessage = async (msgId: number, fallbackTime?: number): Promise<boolean> => {
 			focusedMsgId.value = msgId;
 			focusedMsgTime.value = fallbackTime || null;
 			props.channel.scrolledToBottom = false;
 			isAdjustingWindow.value = true;
 
-			// Find the message index in all messages
-			const all = allCondensedMessages.value;
-			let targetIndex = -1;
+			let targetIndex = findIndexById(allCondensedMessages.value, msgId);
 
-			for (let i = 0; i < all.length; i++) {
-				const msg = all[i];
-
-				if (msg.type === "condensed") {
-					if (msg.messages.some(inner => inner.id === msgId)) {
-						targetIndex = i;
-						break;
-					}
-				} else if (msg.id === msgId) {
-					targetIndex = i;
-					break;
-				}
+			if (targetIndex === -1 && fallbackTime) {
+				targetIndex = findIndexByTime(allCondensedMessages.value, fallbackTime);
 			}
 
-			// If not found by ID and we have a fallback time, try time-based search
+			// Not in memory: ask the database for the region around this
+			// message, then look again.
 			if (targetIndex === -1 && fallbackTime) {
-				for (let i = 0; i < all.length; i++) {
-					const msg = all[i];
-					const msgTime = new Date(msg.time).getTime();
+				const before = props.channel.messages.length;
+				await fetchChunkAround(fallbackTime);
 
-					if (Math.abs(msgTime - fallbackTime) < 1000) {
-						targetIndex = i;
-						break;
-					}
+				if (props.channel.messages.length !== before) {
+					await nextTick();
+					targetIndex = findIndexById(allCondensedMessages.value, msgId);
+				}
 
-					if (msg.type === "condensed") {
-						for (const inner of msg.messages) {
-							const innerTime = new Date(inner.time).getTime();
-
-							if (Math.abs(innerTime - fallbackTime) < 1000) {
-								targetIndex = i;
-								break;
-							}
-						}
-					}
-
-					if (targetIndex !== -1) break;
+				if (targetIndex === -1) {
+					targetIndex = findIndexByTime(allCondensedMessages.value, fallbackTime);
 				}
 			}
 
 			if (targetIndex === -1) {
-				// Message not found in current messages
+				// Best effort: highlight the oldest loaded message, which is the
+				// message closest in time to a target we could not load.
+				const all = allCondensedMessages.value;
+
+				if (all.length > 0 && fallbackTime) {
+					let nearest = 0;
+					let nearestDist = Infinity;
+
+					for (let i = 0; i < all.length; i++) {
+						const dist = Math.abs(new Date(all[i].time).getTime() - fallbackTime);
+
+						if (dist < nearestDist) {
+							nearestDist = dist;
+							nearest = i;
+						}
+					}
+
+					targetIndex = nearest;
+				}
+			}
+
+			if (targetIndex === -1) {
+				// Nothing loaded at all - nothing we can show.
 				isAdjustingWindow.value = false;
 				return false;
 			}
 
-			// Adjust window to include the target message (center it if possible)
-			if (all.length > MAX_RENDERED_MESSAGES) {
-				const halfWindow = Math.floor(MAX_RENDERED_MESSAGES / 2);
-				windowStartIndex.value = Math.max(0, Math.min(
-					targetIndex - halfWindow,
-					all.length - MAX_RENDERED_MESSAGES
-				));
-			}
-
-			await nextTick();
-
-			// Find and scroll to the element
-			if (chat.value) {
-				const el = chat.value.querySelector(`#msg-${msgId}`) as HTMLElement;
-
-				if (el) {
-					isScrolling.value = true;
-					el.scrollIntoView({ behavior: "instant", block: "center" });
-
-					// BUGBUG: prevent the chat window offset bugging when scrolling to items near the bottom of the chat
-					const container = chat.value.closest('#chat-container')
-					if (container) container.scrollTop = 0;
-
-					setTimeout(() => {
-						isScrolling.value = false;
-						isAdjustingWindow.value = false;
-					}, 50);
-
-					// Clear highlight after a few seconds
-					setTimeout(() => {
-						focusedMsgId.value = null;
-						focusedMsgTime.value = null;
-					}, 3000);
-
-					return true;
-				}
-			}
-
-			isAdjustingWindow.value = false;
-			return false;
+			return await performScrollTo(targetIndex);
 		};
 
 		// Find and scroll to a message by timestamp (legacy fallback)
@@ -453,88 +613,44 @@ export default defineComponent({
 			props.channel.scrolledToBottom = false;
 			isAdjustingWindow.value = true;
 
-			// Find the message index in all messages by time
-			const all = allCondensedMessages.value;
-			let targetIndex = -1;
+			let targetIndex = findIndexByTime(allCondensedMessages.value, timestamp);
 
-			for (let i = 0; i < all.length; i++) {
-				const msg = all[i];
-				const msgTime = new Date(msg.time).getTime();
+			// Not in memory: fetch the region of history around this time.
+			if (targetIndex === -1) {
+				const before = props.channel.messages.length;
+				await fetchChunkAround(timestamp);
 
-				if (Math.abs(msgTime - timestamp) < 1000) {
-					targetIndex = i;
-					break;
-				}
-
-				if (msg.type === "condensed") {
-					for (const inner of msg.messages) {
-						const innerTime = new Date(inner.time).getTime();
-
-						if (Math.abs(innerTime - timestamp) < 1000) {
-							targetIndex = i;
-							break;
-						}
-					}
-
-					if (targetIndex !== -1) break;
+				if (props.channel.messages.length !== before) {
+					await nextTick();
+					targetIndex = findIndexByTime(allCondensedMessages.value, timestamp);
 				}
 			}
 
 			if (targetIndex === -1) {
-				isAdjustingWindow.value = false;
-				return false;
-			}
+				// Best effort: highlight the nearest loaded message in time.
+				const all = allCondensedMessages.value;
 
-			// Adjust window to include the target message
-			if (all.length > MAX_RENDERED_MESSAGES) {
-				const halfWindow = Math.floor(MAX_RENDERED_MESSAGES / 2);
-				windowStartIndex.value = Math.max(0, Math.min(
-					targetIndex - halfWindow,
-					all.length - MAX_RENDERED_MESSAGES
-				));
-			}
+				if (all.length === 0) {
+					isAdjustingWindow.value = false;
+					return false;
+				}
 
-			await nextTick();
+				let nearest = 0;
+				let nearestDist = Infinity;
 
-			// Find and scroll to the element
-			if (chat.value) {
-				const messages = chat.value.querySelectorAll(".msg[id^='msg-']");
+				for (let i = 0; i < all.length; i++) {
+					const dist = Math.abs(new Date(all[i].time).getTime() - timestamp);
 
-				for (const el of messages) {
-					const msgId = el.id.replace("msg-", "");
-					const msg = displayedMessages.value.find(m => {
-						if (m.type === "condensed") {
-							return m.messages.some(inner => String(inner.id) === msgId);
-						}
-
-						return String(m.id) === msgId;
-					});
-
-					if (msg) {
-						const msgTime = new Date(msg.time).getTime();
-
-						if (Math.abs(msgTime - timestamp) < 1000) {
-							isScrolling.value = true;
-							el.scrollIntoView({ behavior: "instant", block: "center" });
-
-							setTimeout(() => {
-								isScrolling.value = false;
-								isAdjustingWindow.value = false;
-							}, 50);
-
-							// Clear highlight after a few seconds
-							setTimeout(() => {
-								focusedMsgTime.value = null;
-							}, 3000);
-
-							return true;
-						}
+					if (dist < nearestDist) {
+						nearestDist = dist;
+						nearest = i;
 					}
 				}
+
+				targetIndex = nearest;
 			}
 
-			isAdjustingWindow.value = false;
-			return false;
+			return await performScrollTo(targetIndex);
 		};
 
 		// Handle scroll events - triggers window shifting when near edges
@@ -565,14 +681,20 @@ export default defineComponent({
 				props.channel.scrolledToBottom = false;
 			}
 
-			// Dynamic window shifting - shift when user scrolls near edges
-			// Shift up (load older) when near top and there are more messages above
+			// Dynamic window shifting - shift when user scrolls near edges.
+			// The shift amount scales with how deep into the edge zone we are, so a
+			// fast scroll covers more history per render tick instead of a fixed
+			// 50 rows (which made catching up to a fast scroll take many ticks).
 			if (distanceFromTop < SCROLL_THRESHOLD && canScrollBack.value) {
-				void shiftWindowUp(50);
+				const depth = Math.max(0, SCROLL_THRESHOLD - distanceFromTop);
+				const amount = Math.min(300, Math.max(50, Math.round(depth * 4)));
+				void shiftWindowUp(amount);
 			}
 			// Shift down (load newer) when near bottom but not at end
 			else if (distanceFromBottom < SCROLL_THRESHOLD && !isAtEnd.value) {
-				void shiftWindowDown(50);
+				const depth = Math.max(0, SCROLL_THRESHOLD - distanceFromBottom);
+				const amount = Math.min(300, Math.max(50, Math.round(depth * 4)));
+				void shiftWindowDown(amount);
 			}
 		};
 
@@ -589,11 +711,18 @@ export default defineComponent({
 				}
 			}
 
+			// Anchor the request to the oldest message we hold so that when the
+			// in-memory buffer runs out, the server can skip straight to the
+			// next region of history in the database instead of stalling
+			const messages = props.channel.messages;
+			const beforeTime = messages.length > 0 ? new Date(messages[0].time).getTime() : undefined;
+
 			props.channel.historyLoading = true;
 			socket.emit("more", {
 				target: props.channel.id,
 				lastId: lastMessage,
 				condensed: store.state.settings.statusMessages !== "shown",
+				beforeTime,
 			});
 		};
 
@@ -748,34 +877,42 @@ export default defineComponent({
 				if (oldFirstId === null || newFirstId === null) return;
 				if (newFirstId === oldFirstId) return;
 
-				// History was loaded - messages were prepended
-				// Adjust windowStartIndex to keep the same messages visible
+				// A history chunk was prepended (`more` or `messages:around`).
+				// Remap the render window so the region the user was reading
+				// stays exactly where it was. If we were at the top of the
+				// loaded history, keep the window at 0 so the freshly loaded
+				// chunk is visible.
 				const el = chat.value;
 				if (!el) return;
 
 				isAdjustingWindow.value = true;
 				const oldScrollTop = el.scrollTop;
 				const oldScrollHeight = el.scrollHeight;
-
-				// The window start needs to shift by the number of new messages
-				// to keep viewing the same content
-				const total = allCondensedMessages.value.length;
-				const maxStart = Math.max(0, total - MAX_RENDERED_MESSAGES);
-
-				// If we were viewing the oldest loaded messages, keep the window at 0
-				// so the user can see the newly loaded history
-				if (windowStartIndex.value === 0) {
-					// Don't shift - let user see new history
-				} else {
-					// Shift the window to compensate for new messages
-					windowStartIndex.value = Math.min(maxStart, windowStartIndex.value);
-				}
+				const oldStart = windowStartIndex.value;
+				const wasAtStart = oldStart === 0;
 
 				await nextTick();
 
-				// Restore scroll position
-				const newScrollHeight = el.scrollHeight;
-				const heightDiff = newScrollHeight - oldScrollHeight;
+				if (!wasAtStart) {
+					// How many condensed entries were prepended: the old first
+					// message (identified by its stable id) now sits at that
+					// index in the re-ordered list.
+					const prepended = findIndexById(allCondensedMessages.value, oldFirstId);
+
+					if (prepended > 0) {
+						// Shift the window start by the number of prepended
+						// entries so the same messages remain rendered.
+						const maxStart = Math.max(0, allCondensedMessages.value.length - MAX_RENDERED_MESSAGES);
+						windowStartIndex.value = Math.min(maxStart, oldStart + prepended);
+
+						await nextTick();
+					}
+				}
+
+				// Restore scroll position. For a prepend, everything the user
+				// was looking at moved down by exactly the height of the new
+				// rows, so a scroll-height delta is pixel-accurate.
+				const heightDiff = el.scrollHeight - oldScrollHeight;
 				isScrolling.value = true;
 				el.scrollTop = oldScrollTop + heightDiff;
 
