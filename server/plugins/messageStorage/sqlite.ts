@@ -234,6 +234,17 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 
 	async run_pragmas() {
 		await this.serialize_run("PRAGMA foreign_keys = ON;");
+
+		// WAL records only the pages a transaction actually touches instead
+		// of journaling the whole affected range up front like the default
+		// rollback-journal mode, and lets readers proceed without blocking
+		// on a writer. journal_mode is persisted in the database file, so
+		// this is a one-time switch (a no-op on later connections); NORMAL
+		// synchronous is per-connection and safe against corruption in WAL
+		// mode specifically (only a recent commit can be lost on a power
+		// loss, not the database itself).
+		await this.serialize_run("PRAGMA journal_mode = WAL;");
+		await this.serialize_run("PRAGMA synchronous = NORMAL;");
 	}
 
 	async run_migrations() {
