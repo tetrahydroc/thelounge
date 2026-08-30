@@ -2,6 +2,7 @@ import {reactive} from "vue";
 import {condensedTypes} from "../../../shared/irc";
 import {ChanType} from "../../../shared/types/chan";
 import {ClientChan, ClientMessage} from "../types";
+import {unshiftMany, pushMany} from "../chan";
 
 export type CondensedMessageContainer = {
 	type: "condensed";
@@ -92,12 +93,15 @@ export function useCondensedMessages(getChannel: () => ClientChan, getStatusMess
 		tailContainer = null;
 
 		if (mode === "raw") {
-			condensed.push(...channel.messages);
+			pushMany(condensed, channel.messages);
 		} else if (mode === "hidden") {
-			condensed.push(...channel.messages.filter((m) => !condensedTypes.has(m.type || "")));
+			pushMany(
+				condensed,
+				channel.messages.filter((m) => !condensedTypes.has(m.type || ""))
+			);
 		} else {
 			const {entries, openContainer} = foldRun(channel.messages, channel.firstUnread);
-			condensed.push(...entries);
+			pushMany(condensed, entries);
 			tailContainer = openContainer;
 		}
 
@@ -177,12 +181,15 @@ export function useCondensedMessages(getChannel: () => ClientChan, getStatusMess
 		const prepended = channel.messages.slice(0, count);
 
 		if (builtMode === "raw") {
-			condensed.unshift(...prepended);
+			unshiftMany(condensed, prepended);
 			return;
 		}
 
 		if (builtMode === "hidden") {
-			condensed.unshift(...prepended.filter((m) => !condensedTypes.has(m.type || "")));
+			unshiftMany(
+				condensed,
+				prepended.filter((m) => !condensedTypes.has(m.type || ""))
+			);
 			return;
 		}
 
@@ -207,7 +214,7 @@ export function useCondensedMessages(getChannel: () => ClientChan, getStatusMess
 			condensed.splice(0, 1);
 		}
 
-		condensed.unshift(...entries);
+		unshiftMany(condensed, entries);
 
 		if (wasEmpty) {
 			tailContainer = openContainer;

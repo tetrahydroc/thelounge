@@ -2,7 +2,7 @@ import {nextTick} from "vue";
 
 import socket from "../socket";
 import {store} from "../store";
-import {markMsgsRaw} from "../chan";
+import {markMsgsRaw, unshiftMany} from "../chan";
 
 // Handle a chunk of history fetched directly from the message storage database
 // (see server `messages:around` handler). This is the "skip to chunk" primitive:
@@ -22,7 +22,7 @@ socket.on("messages:around", async (data) => {
 
 	if (fresh.length > 0) {
 		// Oldest messages first, matching the order `more` uses
-		channel.messages.unshift(...markMsgsRaw(fresh));
+		unshiftMany(channel.messages, markMsgsRaw(fresh));
 	}
 
 	// Directional: whether there's more history *before* the target, not

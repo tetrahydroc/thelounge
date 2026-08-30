@@ -27,6 +27,34 @@ export function markMsgsRaw<T extends SharedMsg>(msgs: T[]): T[] {
 	return msgs.map(markMsgRaw);
 }
 
+// `target.unshift(...items)` (or any spread into a function call) blows the
+// call stack once `items` gets large enough - each JS engine caps how many
+// arguments a single call can take (V8 throws "Maximum call stack size
+// exceeded" somewhere in the tens-of-thousands), and a channel loaded with
+// `maxHistory: -1` can hand back a single history batch well past that.
+// Prepending in bounded chunks via splice keeps the same array reference
+// (required for reactive arrays like a channel's `messages` or the
+// condensed-message view, where callers hold onto that exact object) while
+// never spreading more than a small, fixed number of arguments at once.
+const PREPEND_CHUNK_SIZE = 1000;
+
+export function unshiftMany<T>(target: T[], items: T[]): void {
+	for (let end = items.length; end > 0; end -= PREPEND_CHUNK_SIZE) {
+		const start = Math.max(0, end - PREPEND_CHUNK_SIZE);
+		target.splice(0, 0, ...items.slice(start, end));
+	}
+}
+
+// Same reasoning as unshiftMany, for the tail end - `target.push(...items)`
+// with a large `items` (a full rebuild of the condensed view against a
+// channel with a huge in-memory history, e.g. maxHistory: -1) hits the same
+// call-stack limit.
+export function pushMany<T>(target: T[], items: T[]): void {
+	for (let start = 0; start < items.length; start += PREPEND_CHUNK_SIZE) {
+		target.push(...items.slice(start, start + PREPEND_CHUNK_SIZE));
+	}
+}
+
 export function toClientChan(shared: SharedNetworkChan): ClientChan {
 	const history: string[] = [""].concat(
 		shared.messages
