@@ -13,8 +13,6 @@ jobs:
       matrix:
         include:
           # EOL: April 2025
-          - os: macOS-latest
-            node_version: 18.x
           - os: windows-latest
             node_version: 18.x
           - os: ubuntu-latest
