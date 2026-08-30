@@ -164,6 +164,30 @@
 			</label>
 		</div>
 		<div>
+			<h2>Performance</h2>
+			<label class="opt">
+				Keep {{ channelCacheSizeDisplay }} recently-left channel{{
+					channelCacheSizeDisplay === 1 ? "" : "s"
+				}}
+				fully loaded
+				<input
+					:value="store.state.settings.channelCacheSize"
+					type="range"
+					name="channelCacheSize"
+					min="0"
+					max="20"
+					step="1"
+					@input="onChannelCacheSizeInput"
+				/>
+				<span
+					class="tooltipped tooltipped-n tooltipped-no-delay"
+					aria-label="Channels you switch away from normally trim down to their last 100 messages. Keeping more of them fully loaded makes switching back instant, at the cost of more memory."
+				>
+					<button class="extra-help" />
+				</span>
+			</label>
+		</div>
+		<div>
 			<h2>Input</h2>
 			<label class="opt">
 				<input
@@ -274,6 +298,14 @@ export default defineComponent({
 		const store = useStore();
 		const canRegisterProtocol = ref(false);
 
+		// Live-updates while dragging the slider; the form's @change handler
+		// (Settings.vue) commits the actual setting only once you release it.
+		const channelCacheSizeDisplay = ref(store.state.settings.channelCacheSize);
+
+		const onChannelCacheSizeInput = (event: Event) => {
+			channelCacheSizeDisplay.value = Number((event.target as HTMLInputElement).value);
+		};
+
 		const hasInstallPromptEvent = computed(() => {
 			// TODO: This doesn't hide the button after clicking
 			return installPromptEvent !== null;
@@ -344,6 +376,8 @@ export default defineComponent({
 			registerProtocol,
 			UploadProviders,
 			currentUploadBackend,
+			channelCacheSizeDisplay,
+			onChannelCacheSizeInput,
 		};
 	},
 });

@@ -37,10 +37,14 @@ export default defineComponent({
 				return;
 			}
 
-			let value: boolean | string;
+			let value: boolean | string | number;
 
-			if ((event.target as HTMLInputElement).type === "checkbox") {
+			const inputType = (event.target as HTMLInputElement).type;
+
+			if (inputType === "checkbox") {
 				value = (event.target as HTMLInputElement).checked;
+			} else if (inputType === "range" || inputType === "number") {
+				value = Number((event.target as HTMLInputElement).value);
 			} else {
 				value = (event.target as HTMLInputElement).value;
 			}

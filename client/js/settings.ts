@@ -199,7 +199,12 @@ const defaultConfig = {
 	},
 	enableReplyToMessage: {
 		default: true,
-	}
+	},
+	channelCacheSize: {
+		// Number of recently-left channels kept fully loaded in memory instead
+		// of trimmed to the last 100 messages - see router.ts's afterEach guard.
+		default: 5,
+	},
 };
 
 export const config = normalizeConfig(defaultConfig);
