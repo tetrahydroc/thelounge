@@ -78,6 +78,12 @@ export type State = {
 	serverHasSettings: boolean;
 	messageSearchResults: {
 		results: ClientMessage[];
+		// The query these results belong to, so a remount can tell "same search,
+		// restore from cache" from "different search, fetch fresh" - and the
+		// scroll position, so jumping to a message and coming back resumes
+		// exactly where the search was left.
+		query: {searchTerm: string; networkUuid: string; channelName: string; offset: number};
+		scrollTop: number;
 	} | null;
 	messageSearchPendingQuery: SearchQuery | null;
 	searchEnabled: boolean;
@@ -230,6 +236,7 @@ type Mutations = {
 	messageSearchPendingQuery(state: State, value: State["messageSearchPendingQuery"]): void;
 	messageSearchResults(state: State, value: State["messageSearchResults"]): void;
 	addMessageSearchResults(state: State, value: NonNullable<State["messageSearchResults"]>): void;
+	messageSearchScrollTop(state: State, value: number): void;
 };
 
 const mutations: Mutations = {
@@ -312,20 +319,25 @@ const mutations: Mutations = {
 		state.messageSearchResults = value;
 	},
 	addMessageSearchResults(state, value) {
-		// Append the search results and add networks and channels to new messages
-		if (!state.messageSearchResults) {
-			state.messageSearchResults = {results: []};
-		}
-
 		if (!value) {
 			return;
 		}
 
-		const results = [...value.results, ...state.messageSearchResults.results];
+		// Append the search results and add networks and channels to new messages
+		const previousResults = state.messageSearchResults?.results ?? [];
+		const previousScrollTop = state.messageSearchResults?.scrollTop ?? 0;
+		const results = [...value.results, ...previousResults];
 
 		state.messageSearchResults = {
 			results,
+			query: value.query,
+			scrollTop: previousScrollTop,
 		};
+	},
+	messageSearchScrollTop(state, value) {
+		if (state.messageSearchResults) {
+			state.messageSearchResults.scrollTop = value;
+		}
 	},
 };
 
