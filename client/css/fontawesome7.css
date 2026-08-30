@@ -16412,7 +16412,7 @@
 	font-style: normal;
 	font-weight: 400;
 	font-display: block;
-	src: url(https://luminarr.me/build/assets/fa-brands-400-lzda1r4M.woff2)
+	src: url("../fonts/font-awesome/fa-brands-400.woff2") format("woff2")
 }
 
 .fab,

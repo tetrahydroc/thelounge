@@ -62,19 +62,6 @@ const copyPatterns = (isProduction) => [
 		to: "fonts/font-awesome/[name][ext]",
 	},
 	{
-		from: resolveFromRoot("node_modules/@phosphor-icons/web/src/*/Phosphor*.*").replace(
-			/\\/g,
-			"/"
-		),
-		to: "css/[name][ext]",
-	},
-	{
-		from: resolveFromRoot(
-			"node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff*"
-		).replace(/\\/g, "/"),
-		to: "fonts/[name][ext]",
-	},
-	{
 		from: resolveFromRoot("client/js/loading-error-handlers.js"),
 		to: "js/[name][ext]",
 	},

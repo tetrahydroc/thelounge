@@ -1,6 +1,7 @@
 import _ from "lodash";
 import {WebSocketServer as wsServer} from "ws";
 import express, {NextFunction, Request, Response} from "express";
+import compression from "compression";
 import fs from "fs";
 import path from "path";
 import {Server as ioServer, Socket as ioSocket} from "socket.io";
@@ -97,6 +98,7 @@ export default async function (
 		.disable("x-powered-by")
 		.use(allRequests)
 		.use(addSecurityHeaders)
+		.use(compression({threshold: 1024}))
 		.get("/", indexRequest)
 		.get("/service-worker.js", forceNoCacheRequest)
 		.get("/js/bundle.js.map", forceNoCacheRequest)
