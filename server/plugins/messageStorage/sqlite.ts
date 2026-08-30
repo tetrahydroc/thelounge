@@ -14,7 +14,7 @@ import {SearchQuery, SearchResponse} from "../../../shared/types/storage.js";
 type Migration = {version: number; stmts: string[]};
 type Rollback = {version: number; rollback_forbidden?: boolean; stmts: string[]};
 
-export const currentSchemaVersion = 1785000000000; // use `new Date().getTime()`
+export const currentSchemaVersion = 1788000000000; // use `new Date().getTime()`
 
 // Desired schema, adapt to the newest version and add migrations to the array below
 const schema = [
@@ -35,6 +35,16 @@ const schema = [
 	"CREATE INDEX time ON messages (time)",
 	"CREATE INDEX msg_type_idx on messages (type)", // needed for efficient storageCleaner queries
 	"CREATE INDEX network_channel_time ON messages (network, channel, time)", // needed for efficient chunked history queries
+	// FTS5 trigram index over message text, so search() can use LIKE '%term%' against
+	// an index instead of a full table scan of json_extract(msg, '$.text').
+	// Not an external-content table: FTS5's automatic content lookup requires a
+	// same-named column in the content table, but text lives inside the msg JSON blob.
+	// detail=none is safe since we only ever use LIKE, never bm25()/snippet/highlight.
+	"CREATE VIRTUAL TABLE messages_fts USING fts5(text, tokenize='trigram', detail=none)",
+	`CREATE TRIGGER messages_ai AFTER INSERT ON messages WHEN new.type = 'message'
+        BEGIN INSERT INTO messages_fts(rowid, text) VALUES (new.id, json_extract(new.msg, '$.text')); END`,
+	`CREATE TRIGGER messages_ad AFTER DELETE ON messages WHEN old.type = 'message'
+        BEGIN DELETE FROM messages_fts WHERE rowid = old.id; END`,
 ];
 
 // the migrations will be executed in an exclusive transaction as a whole
@@ -78,6 +88,19 @@ export const migrations: Migration[] = [
 		version: 1785000000000,
 		stmts: ["CREATE INDEX network_channel_time ON messages (network, channel, time)"],
 	},
+	{
+		// FTS5 trigram index backing search() - see schema comment above. Backfills
+		// existing rows; this is a one-time blocking step proportional to message count.
+		version: 1788000000000,
+		stmts: [
+			"CREATE VIRTUAL TABLE messages_fts USING fts5(text, tokenize='trigram', detail=none)",
+			`CREATE TRIGGER messages_ai AFTER INSERT ON messages WHEN new.type = 'message'
+                BEGIN INSERT INTO messages_fts(rowid, text) VALUES (new.id, json_extract(new.msg, '$.text')); END`,
+			`CREATE TRIGGER messages_ad AFTER DELETE ON messages WHEN old.type = 'message'
+                BEGIN DELETE FROM messages_fts WHERE rowid = old.id; END`,
+			"INSERT INTO messages_fts(rowid, text) SELECT id, json_extract(msg, '$.text') FROM messages WHERE type = 'message'",
+		],
+	},
 ];
 
 // down migrations need to restore the state of the prior version.
@@ -98,6 +121,10 @@ export const rollbacks: Rollback[] = [
 	{
 		version: 1785000000000,
 		stmts: ["DROP INDEX network_channel_time"],
+	},
+	{
+		version: 1788000000000,
+		stmts: ["DROP TRIGGER messages_ad", "DROP TRIGGER messages_ai", "DROP TABLE messages_fts"],
 	},
 ];
 
@@ -626,37 +653,37 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		const escapedSearchTerm = searchTermParts.join(" ").replace(/([%_@])/g, "@$1");
 
 		let select =
-			"SELECT id, msg, type, time, network, channel FROM messages WHERE type = 'message' AND json_extract(msg, '$.text') LIKE ? ESCAPE '@'";
+			"SELECT m.id, m.msg, m.type, m.time, m.network, m.channel FROM messages_fts f JOIN messages m ON m.id = f.rowid WHERE f.text LIKE ? ESCAPE '@'";
 		const params: unknown[] = [`%${escapedSearchTerm}%`];
 
 		if (query.networkUuid) {
-			select += " AND network = ? ";
+			select += " AND m.network = ? ";
 			params.push(query.networkUuid);
 		}
 
 		if (query.channelName) {
-			select += " AND channel = ? ";
+			select += " AND m.channel = ? ";
 			params.push(query.channelName.toLowerCase());
 		}
 
 		if (userFilter !== null) {
-			select += " AND LOWER(json_extract(msg, '$.from.nick')) = ? ";
+			select += " AND LOWER(json_extract(m.msg, '$.from.nick')) = ? ";
 			params.push(userFilter.toLowerCase());
 		}
 
 		if (dateEndFilter !== null) {
-			select += " AND time <= ? ";
+			select += " AND m.time <= ? ";
 			params.push(dateEndFilter);
 		}
 
 		if (dateStartFilter !== null) {
-			select += " AND time >= ? ";
+			select += " AND m.time >= ? ";
 			params.push(dateStartFilter);
 		}
 
 		const maxResults = 100;
 
-		select += " ORDER BY time DESC, id DESC LIMIT ? OFFSET ? ";
+		select += " ORDER BY m.time DESC, m.id DESC LIMIT ? OFFSET ? ";
 		params.push(maxResults);
 		params.push(query.offset);
 
