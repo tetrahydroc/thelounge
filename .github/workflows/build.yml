@@ -26,7 +26,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
-          cache: yarn
+          # No cache: yarn here - actions/setup-node runs `yarn cache dir`
+          # internally as part of *this* step to resolve the cache path,
+          # using whichever Yarn is already on PATH (the runner's global
+          # Yarn Classic 1.22.22) - before "Enable corepack" below ever gets
+          # a chance to run. That immediately hits the same "packageManager
+          # yarn@4.11.0 but global version is 1.22.22" error this fork's CI
+          # has already been bitten by once. Corepack has to be enabled
+          # before anything invokes yarn at all, which this step's own
+          # caching logic can't wait for.
 
       - name: Enable corepack
         run: corepack enable
