@@ -1,6 +1,7 @@
 import _ from "lodash";
 import log from "../log.js";
 import Config from "../config.js";
+import Helper from "../helper.js";
 import User from "./user.js";
 import Msg from "./msg.js";
 import storage from "../plugins/storage.js";
@@ -326,7 +327,7 @@ class Chan {
 					return;
 				}
 
-				this.messages.unshift(...messages);
+				Helper.unshiftMany(this.messages, messages);
 
 				if (!this.firstUnread) {
 					this.firstUnread = messages[messages.length - 1].id;

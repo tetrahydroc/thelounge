@@ -19,7 +19,7 @@ This fork diverged from `tetrahydroc/thelounge` to move faster on performance an
 
 - Message search now uses a SQLite FTS5 trigram index instead of an unindexed `LIKE` scan - meaningfully faster on large histories (measured on a real ~17M-message dataset).
 - Infinite scroll on search results, resuming a search session (with result count) after clicking into a result and coming back, and a jump-to-date picker.
-- The FTS5 index lives in its own disposable sidecar file next to each user's message database, not inside it - your actual message history stays in exactly the shape tetrahydroc/thelounge (and upstream) already expect, always, with nothing to manually revert. A database from an earlier build of this fork (before the index moved out) is detected and repaired automatically on first startup. See "Reliability" and `MIGRATION.md`.
+- The FTS5 index lives in its own disposable sidecar file next to each user's message database, not inside it - your actual message history stays in exactly the shape tetrahydroc/thelounge already expects, always, with nothing to manually revert. (Verified against tetra specifically, not upstream `thelounge/thelounge` - it has continued its own independent schema changes since the fork point, see `MIGRATION.md`.) A database from an earlier build of this fork (before the index moved out) is detected and repaired automatically on first startup. See "Reliability" and `MIGRATION.md`.
 
 ### Reliability
 

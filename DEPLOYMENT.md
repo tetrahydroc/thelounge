@@ -4,6 +4,10 @@ This covers running this fork via Docker, and specifically how to move an existi
 
 The image is built on [LinuxServer.io](https://linuxserver.io)'s Alpine base image (same lineage as [cmd430/docker-thelounge](https://github.com/cmd430/docker-thelounge) and [linuxserver/docker-thelounge](https://github.com/linuxserver/docker-thelounge)), so if you've run any LSIO-style container before, the conventions below (`PUID`/`PGID`/`TZ`, `/config` volume, port 9000) will already be familiar.
 
+> **`ghcr.io/fhori/thelounge:latest` does not currently contain this branch's work.** The image-publish workflow only runs on pushes to `master`, and as of this writing `master` has been reset back to the tetra fork point for an eventual squash-merge - the workflow itself isn't even present there yet. Until that merge happens, `:latest` reflects whatever was last actually published, not what's described here. If you want to run this branch's code today, build the image yourself from this branch (`docker build .`) rather than pulling the tag.
+
+> **The image defaults to a public (unauthenticated) instance on a fresh volume.** The Dockerfile forces `public: true` into `defaults/config.js` at build time. On a genuinely empty `/config` volume, first boot generates its `config.js` from those defaults - meaning an unmodified first `docker compose up` is an open IRC proxy anyone can connect through, not a private instance you log into. See "Application setup" below - **stop the container and set `public: false` in `config.js` before exposing the port to anything but yourself.**
+
 ## Quick start
 
 ```sh
@@ -45,6 +49,25 @@ id your_user
 ```
 
 and match `PUID`/`PGID` to the `uid`/`gid` printed there.
+
+## Application setup
+
+1. Start the container once to let it populate `/config`.
+2. **Stop the container.**
+3. From the host, edit `config.js` in wherever you've mapped `/config`, and set:
+   ```js
+   public: false,
+   ```
+   (the image's Dockerfile bakes in `public: true` as the built-in default - see the warning above; a private, login-required instance needs this flipped explicitly, every time, on every fresh volume).
+4. Start the container again.
+5. For each user:
+   ```bash
+   docker exec -it thelounge s6-setuidgid abc thelounge add <user>
+   ```
+   You'll be prompted for a password (not echoed).
+6. Browse to `http://<hostip>:9000` - you should be prompted to log in, not dropped straight into a public instance.
+
+Leave `fileUpload` and `prefetch` off in `config.js` unless you specifically need them - both proxy attacker-influenced URLs server-side (inherited from upstream, not fork-specific), and are off by default for that reason.
 
 ## Migrating from a bare Linux install (npm/systemd, no Docker)
 

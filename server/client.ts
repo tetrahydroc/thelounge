@@ -6,6 +6,7 @@ import crypto from "crypto";
 import colors from "chalk";
 
 import log from "./log.js";
+import Helper from "./helper.js";
 import Chan, {ChanConfig} from "./models/chan.js";
 import Msg from "./models/msg.js";
 import Config from "./config.js";
@@ -739,7 +740,7 @@ class Client {
 							// Keep the buffer in sync with the DB chunk so
 							// subsequent "more" requests can be served from
 							// memory (or skip cleanly past it) again.
-							chan.messages.unshift(...fresh);
+							Helper.unshiftMany(chan.messages, fresh);
 						}
 					}
 				} catch (err) {
