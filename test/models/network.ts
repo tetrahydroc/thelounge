@@ -137,7 +137,7 @@ describe("Network", function () {
 					{name: "&foobar", key: "", muted: false},
 					{name: "#secret", key: "foo", muted: false},
 					{name: "&secure", key: "bar", muted: true},
-					{name: "PrivateChat", type: "query", muted: true},
+					{name: "PrivateChat", type: "query", muted: true, pinned: false},
 				],
 				ignoreList: [],
 			});

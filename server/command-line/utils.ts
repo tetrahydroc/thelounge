@@ -179,7 +179,7 @@ class Utils {
 		} else {
 			// yarn4/berry
 			executable = "yarn";
-			args = this.#buildYarn4Args(command, parameters, packagesPath);
+			args = this.#buildYarn4Args(command, parameters);
 		}
 
 		return new Promise((resolve, reject) => {
@@ -196,13 +196,16 @@ class Utils {
 
 			proc.stdout.on("data", (data) => {
 				const output = data.toString().trim();
+
 				if (output) {
 					// For yarn1 JSON output, check for success type
 					if (pm.name === "yarn1") {
 						try {
 							const lines = output.split("\n");
+
 							for (const line of lines) {
 								const json = JSON.parse(line);
+
 								if (json.type === "success") {
 									success = true;
 								}
@@ -211,12 +214,14 @@ class Utils {
 							// Not JSON, just log it
 						}
 					}
+
 					log.debug(output);
 				}
 			});
 
 			proc.stderr.on("data", (data) => {
 				const output = data.toString().trim();
+
 				if (output) {
 					// Filter out noise
 					if (output.includes("WARN") || output.includes("warning")) {
@@ -259,6 +264,7 @@ class Utils {
 		switch (command) {
 			case "add":
 				npmCommand = "install";
+
 				for (const param of parameters) {
 					if (param === "--exact") {
 						args.push("--save-exact");
@@ -266,6 +272,7 @@ class Utils {
 						args.push(param);
 					}
 				}
+
 				break;
 			case "remove":
 				npmCommand = "uninstall";
@@ -295,15 +302,17 @@ class Utils {
 		return args;
 	}
 
-	static #buildYarn4Args(command: string, parameters: string[], packagesPath: string): string[] {
-		// Yarn 4 (Berry) has different syntax
-		// It uses the cwd option via process.cwd() or --cwd flag
+	static #buildYarn4Args(command: string, parameters: string[]): string[] {
+		// Yarn 4 (Berry) has different syntax - the working directory is set
+		// via the spawn() call's cwd option above (pm.name === "yarn4"
+		// branch), not a flag here.
 		let yarnCommand = command;
 		const args: string[] = [];
 
 		switch (command) {
 			case "add":
 				yarnCommand = "add";
+
 				for (const param of parameters) {
 					if (param === "--exact") {
 						args.push("--exact");
@@ -311,6 +320,7 @@ class Utils {
 						args.push(param);
 					}
 				}
+
 				break;
 			case "remove":
 				yarnCommand = "remove";

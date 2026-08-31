@@ -9,10 +9,12 @@ describe("public folder", function () {
 	const publicFolder = path.join(__dirname, "..", "..", "public");
 
 	it("font awesome files are copied", function () {
-		expect(fs.existsSync(path.join(publicFolder, "fonts", "fa-solid-900.woff"))).to.equal(true);
-		expect(fs.existsSync(path.join(publicFolder, "fonts", "fa-solid-900.woff2"))).to.equal(
-			true
-		);
+		expect(
+			fs.existsSync(path.join(publicFolder, "fonts", "font-awesome", "fa-solid-900.woff2"))
+		).to.equal(true);
+		expect(
+			fs.existsSync(path.join(publicFolder, "fonts", "font-awesome", "fa-solid-900.ttf"))
+		).to.equal(true);
 	});
 
 	it("files in root folder are copied", function () {
@@ -48,7 +50,9 @@ describe("public folder", function () {
 			expect(err).to.equal(null);
 
 			expect(contents.includes("var(--body-color)")).to.equal(true);
-			expect(contents.includes("url(../fonts/fa-solid-900.woff2)")).to.equal(true);
+			expect(contents.includes("url(../fonts/font-awesome/fa-solid-900.woff2)")).to.equal(
+				true
+			);
 			expect(contents.includes(".tooltipped{position:relative}")).to.equal(true);
 			expect(contents.includes("sourceMappingURL")).to.equal(true);
 
