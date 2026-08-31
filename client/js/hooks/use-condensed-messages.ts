@@ -75,7 +75,10 @@ function foldRun(
  * which avoids needing to flip an already-emitted array entry's shape as
  * more messages join or leave a container.
  */
-export function useCondensedMessages(getChannel: () => ClientChan, getStatusMessages: () => string) {
+export function useCondensedMessages(
+	getChannel: () => ClientChan,
+	getStatusMessages: () => string
+) {
 	const condensed = reactive<CondensedEntry[]>([]) as CondensedEntry[];
 
 	// Bookkeeping for appendOne(): the container currently open at the tail

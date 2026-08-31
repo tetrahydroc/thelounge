@@ -366,9 +366,9 @@ export default {
 	// This value is set to enable mass event detection by default:
 	massEventDetection: {
 		enable: true,
-		threshold: 10,        // Trigger after 10 messages (was 20)
-		windowMs: 10000,      // 10 second window (was 5s)
-		cooldownMs: 10000,    // 10 seconds of inactivity to end (was 3s)
+		threshold: 10, // Trigger after 10 messages (was 20)
+		windowMs: 10000, // 10 second window (was 5s)
+		cooldownMs: 10000, // 10 seconds of inactivity to end (was 3s)
 		maxDurationMs: 300000, // 5 minute max (was 1 min)
 		refreshNamesAfter: true,
 	},

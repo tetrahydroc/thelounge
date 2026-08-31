@@ -24,10 +24,7 @@
 					:message="message as any"
 					:is-focused="isMessageFocused(message)"
 				/>
-				<div
-					v-if="shouldDisplayUnreadMarker(Number(message.id))"
-					class="unread-marker"
-				>
+				<div v-if="shouldDisplayUnreadMarker(Number(message.id))" class="unread-marker">
 					<span class="unread-marker-text" />
 				</div>
 
@@ -149,7 +146,10 @@ export default defineComponent({
 			}
 
 			// Use the window start index, clamped to valid range
-			const start = Math.max(0, Math.min(windowStartIndex.value, total - MAX_RENDERED_MESSAGES));
+			const start = Math.max(
+				0,
+				Math.min(windowStartIndex.value, total - MAX_RENDERED_MESSAGES)
+			);
 			return all.slice(start, start + MAX_RENDERED_MESSAGES);
 		});
 
@@ -161,8 +161,10 @@ export default defineComponent({
 		// Check if we're showing the latest messages
 		const isAtEnd = computed(() => {
 			const total = condensed.length;
-			return total <= MAX_RENDERED_MESSAGES ||
-				windowStartIndex.value >= total - MAX_RENDERED_MESSAGES;
+			return (
+				total <= MAX_RENDERED_MESSAGES ||
+				windowStartIndex.value >= total - MAX_RENDERED_MESSAGES
+			);
 		});
 
 		// Should we show the "load more" button?
@@ -186,7 +188,7 @@ export default defineComponent({
 			// Check by ID first (preferred)
 			if (focusedMsgId.value !== null) {
 				if (message.type === "condensed") {
-					return message.messages.some(inner => inner.id === focusedMsgId.value);
+					return message.messages.some((inner) => inner.id === focusedMsgId.value);
 				}
 
 				return message.id === focusedMsgId.value;
@@ -245,7 +247,7 @@ export default defineComponent({
 		// viewport, identified by its stable id, plus its offset from the top of
 		// the viewport (negative if that message is scrolled partway up). Used to
 		// restore the exact scroll position after the render window shifts.
-		const captureAnchor = (el: HTMLElement): {id: string | null, offset: number} => {
+		const captureAnchor = (el: HTMLElement): {id: string | null; offset: number} => {
 			const containerRect = el.getBoundingClientRect();
 			const viewTop = containerRect.top;
 			const viewBottom = viewTop + el.clientHeight;
@@ -274,7 +276,7 @@ export default defineComponent({
 		// many rows were added/removed at either edge of the render window. If the
 		// anchor fell out of the window (a very large shift), pin the window's first
 		// message to the viewport top as a stable approximation.
-		const restoreAnchor = (el: HTMLElement, anchor: {id: string | null, offset: number}) => {
+		const restoreAnchor = (el: HTMLElement, anchor: {id: string | null; offset: number}) => {
 			let target: HTMLElement | null = null;
 
 			if (anchor.id) {
@@ -366,7 +368,10 @@ export default defineComponent({
 		};
 
 		// Find the index of the condensed entry containing a message id.
-		const findIndexById = (all: (ClientMessage | CondensedMessageContainer)[], msgId: number): number => {
+		const findIndexById = (
+			all: (ClientMessage | CondensedMessageContainer)[],
+			msgId: number
+		): number => {
 			for (let i = 0; i < all.length; i++) {
 				const msg = all[i];
 
@@ -383,7 +388,10 @@ export default defineComponent({
 		};
 
 		// Find the index of the condensed entry containing a message by timestamp.
-		const findIndexByTime = (all: (ClientMessage | CondensedMessageContainer)[], targetTime: number): number => {
+		const findIndexByTime = (
+			all: (ClientMessage | CondensedMessageContainer)[],
+			targetTime: number
+		): number => {
 			for (let i = 0; i < all.length; i++) {
 				const msg = all[i];
 				const msgTime = new Date(msg.time).getTime();
@@ -411,7 +419,10 @@ export default defineComponent({
 
 			if (all.length > MAX_RENDERED_MESSAGES) {
 				const halfWindow = Math.floor(MAX_RENDERED_MESSAGES / 2);
-				windowStartIndex.value = Math.max(0, Math.min(targetIndex - halfWindow, all.length - MAX_RENDERED_MESSAGES));
+				windowStartIndex.value = Math.max(
+					0,
+					Math.min(targetIndex - halfWindow, all.length - MAX_RENDERED_MESSAGES)
+				);
 			}
 
 			await nextTick();
@@ -445,7 +456,7 @@ export default defineComponent({
 			}
 
 			isScrolling.value = true;
-			node.scrollIntoView({ behavior: "instant", block: "center" });
+			node.scrollIntoView({behavior: "instant", block: "center"});
 
 			// BUGBUG: prevent the chat window offset bugging when scrolling to
 			// items near the bottom of the chat
@@ -674,7 +685,8 @@ export default defineComponent({
 			// in-memory buffer runs out, the server can skip straight to the
 			// next region of history in the database instead of stalling
 			const messages = props.channel.messages;
-			const beforeTime = messages.length > 0 ? new Date(messages[0].time).getTime() : undefined;
+			const beforeTime =
+				messages.length > 0 ? new Date(messages[0].time).getTime() : undefined;
 
 			props.channel.historyLoading = true;
 			socket.emit("more", {
@@ -772,7 +784,7 @@ export default defineComponent({
 
 		// Initialize
 		onMounted(async () => {
-			chat.value?.addEventListener("scroll", handleScroll, { passive: true });
+			chat.value?.addEventListener("scroll", handleScroll, {passive: true});
 			eventbus.on("resize", handleResize);
 
 			// Handle initial focus from search - try ID first, then time fallback
@@ -802,7 +814,7 @@ export default defineComponent({
 							}
 						});
 					},
-					{ root: chat.value }
+					{root: chat.value}
 				);
 				historyObserver.value.observe(loadMoreButton.value);
 			}

@@ -81,7 +81,8 @@ export function toClientChan(shared: SharedNetworkChan): ClientChan {
 		// event `loadMessages()` sends once its fetch resolves), assume more
 		// history may exist so "Show older messages" / infinite-scroll-up
 		// stay available instead of looking like a channel with no history.
-		moreHistoryAvailable: !shared.historyLoaded || shared.totalMessages > shared.messages.length,
+		moreHistoryAvailable:
+			!shared.historyLoaded || shared.totalMessages > shared.messages.length,
 		inputHistory: history,
 		messages: sharedMsgToClientMsg(messages),
 		// Initialize groups for reactivity (will be populated by SPGROUPS)

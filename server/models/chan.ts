@@ -332,7 +332,10 @@ class Chan {
 					this.firstUnread = messages[messages.length - 1].id;
 				}
 
-				const enhancedSearch = Boolean(client.config.clientSettings.searchEnabled && client.config.clientSettings.enableEnhancedSearch)
+				const enhancedSearch = Boolean(
+					client.config.clientSettings.searchEnabled &&
+						client.config.clientSettings.enableEnhancedSearch
+				);
 
 				// if enhancedSearchEnabled = true send all loaded messages to the client
 				// otherwise only send 100

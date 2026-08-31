@@ -4,7 +4,7 @@
 			<button
 				:class="['icon', className, {active: isExactActive}]"
 				@click="navigate"
-				@keypress.enter="(navigate as (e?: KeyboardEvent) => void)"
+				@keypress.enter="navigate as (e?: KeyboardEvent) => void"
 			>
 				{{ name }}
 			</button>

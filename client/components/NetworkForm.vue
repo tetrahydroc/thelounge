@@ -453,7 +453,7 @@ export type NetworkFormDefaults = Partial<ClientNetwork> & {
 	port?: number;
 	sasl?: string;
 	password?: string;
-	hasSTSPolicy?: boolean
+	hasSTSPolicy?: boolean;
 	saslAccount?: string;
 	saslPassword?: string;
 	leaveMessage?: string;
@@ -516,7 +516,6 @@ export default defineComponent({
 		};
 
 		watch(
-
 			() => props.defaults?.commands,
 			() => {
 				void nextTick(() => {
@@ -526,7 +525,6 @@ export default defineComponent({
 		);
 
 		watch(
-
 			() => props.defaults?.tls,
 			(isSecureChecked) => {
 				const ports = [6667, 6697];

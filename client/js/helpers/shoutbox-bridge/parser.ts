@@ -1,16 +1,16 @@
-import type { SharedMsg } from "../../../../shared/types/msg";
-import { toRaw } from "vue";
-import { matchers } from "./matchers";
+import type {SharedMsg} from "../../../../shared/types/msg";
+import {toRaw} from "vue";
+import {matchers} from "./matchers";
 
 /**
  * Parse message aganst `Matchers` and edit the Nick and Content based on `transform` results
  */
-export function parser (originalMessage: SharedMsg) {
+export function parser(originalMessage: SharedMsg) {
 	const originalSender = originalMessage.from?.nick?.toLowerCase();
 
 	if (!originalMessage.text || !originalSender) return originalMessage;
 
-	const matcher = matchers.find(m => {
+	const matcher = matchers.find((m) => {
 		if (m.type === "basic") return m.matches.includes(originalSender);
 		if (m.type === "advanced") return m.matches(originalSender);
 	});
@@ -26,7 +26,7 @@ export function parser (originalMessage: SharedMsg) {
 		nick: sanitizeNick(edit.nick),
 		mode: "",
 		shoutbox: true,
-		original_nick: originalSender
+		original_nick: originalSender,
 	};
 
 	return message;
@@ -35,6 +35,6 @@ export function parser (originalMessage: SharedMsg) {
 /**
  * Helper to remove invalid chars from nick string
  */
-function sanitizeNick (nick: string) {
+function sanitizeNick(nick: string) {
 	return nick.replaceAll(/[^0-9a-z_-|]/gi, "");
 }

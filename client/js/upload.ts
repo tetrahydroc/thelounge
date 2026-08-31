@@ -2,7 +2,7 @@ import {update as updateCursor} from "undate";
 
 import socket from "./socket";
 import {store} from "./store";
-import { UploadProviders } from "../../shared/upload-providers";
+import {UploadProviders} from "../../shared/upload-providers";
 
 class Uploader {
 	xhr: XMLHttpRequest | null = null;
@@ -227,12 +227,14 @@ class Uploader {
 	}
 
 	performUpload(token: string, file: File) {
-		const uploadEndpoint = store.state.serverConfiguration?.allowFileUploadBackendSelection ? store.state.settings.uploadTo : "new";
-		const uploadProvider = UploadProviders.find(b => b.id === uploadEndpoint)!;
+		const uploadEndpoint = store.state.serverConfiguration?.allowFileUploadBackendSelection
+			? store.state.settings.uploadTo
+			: "new";
+		const uploadProvider = UploadProviders.find((b) => b.id === uploadEndpoint)!;
 
 		// if not using local uploads set the token to user given api token
 		if (uploadProvider.id !== "new") {
-			token = token ? token : `_${uploadEndpoint}_`
+			token = token ? token : `_${uploadEndpoint}_`;
 
 			if (uploadProvider.requiresURL) {
 				// if needing to pass url for upload prepend it to the token
@@ -246,8 +248,8 @@ class Uploader {
 		// the user-entered seconds value the server should actually use.
 		const ttl =
 			store.state.settings.uploadTTL === "custom"
-				? store.state.settings.uploadTTLCustom ?? ""
-				: store.state.settings.uploadTTL ?? "";
+				? (store.state.settings.uploadTTLCustom ?? "")
+				: (store.state.settings.uploadTTL ?? "");
 
 		this.xhr = new XMLHttpRequest();
 

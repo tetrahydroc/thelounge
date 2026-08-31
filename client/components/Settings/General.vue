@@ -54,8 +54,12 @@
 						</option>
 					</select>
 					<div v-if="currentUploadBackend?.supportNote">
-						<p v-for="supportNote in currentUploadBackend?.supportNote?.split('\n')" :key="supportNote" class="upload-note">
-							{{supportNote}}
+						<p
+							v-for="supportNote in currentUploadBackend?.supportNote?.split('\n')"
+							:key="supportNote"
+							class="upload-note"
+						>
+							{{ supportNote }}
 						</p>
 					</div>
 					<div v-if="currentUploadBackend?.requiresURL">
@@ -269,10 +273,10 @@
 </template>
 
 <style>
-	p.upload-note {
-		color: var(--body-color-muted);
-		font-style: italic;
-	}
+p.upload-note {
+	color: var(--body-color-muted);
+	font-style: italic;
+}
 </style>
 
 <script lang="ts">
@@ -333,14 +337,20 @@ export default defineComponent({
 		};
 
 		const currentUploadBackend = computed(() => {
-			return UploadProviders.find(b => b.id === store.state.settings.uploadTo);
+			return UploadProviders.find((b) => b.id === store.state.settings.uploadTo);
 		});
 
 		onUpdated(() => {
-			if (!currentUploadBackend.value?.validTtl?.find(ttl => ttl.id === store.state.settings.uploadTTL)) {
-				store.state.settings.uploadTTL = currentUploadBackend.value?.validTtl?.find(ttl => ttl.default === true)?.id ?? ""
+			if (
+				!currentUploadBackend.value?.validTtl?.find(
+					(ttl) => ttl.id === store.state.settings.uploadTTL
+				)
+			) {
+				store.state.settings.uploadTTL =
+					currentUploadBackend.value?.validTtl?.find((ttl) => ttl.default === true)?.id ??
+					"";
 			}
-		})
+		});
 
 		const onForceSyncClick = () => {
 			store.dispatch("settings/syncAll", true).catch((e) => {

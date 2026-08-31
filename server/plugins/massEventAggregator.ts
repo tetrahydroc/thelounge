@@ -90,7 +90,9 @@ class MassEventAggregator {
 			state.preBuffer = state.preBuffer.filter((m) => m.timestamp > windowStart);
 
 			if (state.recentTimestamps.length >= config.threshold) {
-				log.debug(`MassEvent: ACTIVATING for ${chan.name} (${state.recentTimestamps.length} msgs, ${state.preBuffer.length} in preBuffer)`);
+				log.debug(
+					`MassEvent: ACTIVATING for ${chan.name} (${state.recentTimestamps.length} msgs, ${state.preBuffer.length} in preBuffer)`
+				);
 
 				// Move preBuffer to main buffer when activating
 				state.buffer = [...state.preBuffer];
@@ -143,11 +145,7 @@ class MassEventAggregator {
 		}, config.maxDurationMs);
 	}
 
-	private resetCooldownTimer(
-		state: ChannelMassEventState,
-		chan: Chan,
-		network: Network
-	): void {
+	private resetCooldownTimer(state: ChannelMassEventState, chan: Chan, network: Network): void {
 		if (state.cooldownTimer) {
 			clearTimeout(state.cooldownTimer);
 		}
@@ -159,11 +157,7 @@ class MassEventAggregator {
 		}, config.cooldownMs);
 	}
 
-	private endMassEvent(
-		state: ChannelMassEventState,
-		chan: Chan,
-		network: Network
-	): void {
+	private endMassEvent(state: ChannelMassEventState, chan: Chan, network: Network): void {
 		if (!state.isActive) {
 			return;
 		}
@@ -183,7 +177,9 @@ class MassEventAggregator {
 
 		// Generate summary
 		const summary = this.generateSummary(state);
-		log.debug(`MassEvent: Summary - joins=${summary.joins} parts=${summary.parts} quits=${summary.quits}`);
+		log.debug(
+			`MassEvent: Summary - joins=${summary.joins} parts=${summary.parts} quits=${summary.quits}`
+		);
 
 		// Create summary message
 		const summaryMsg = new Msg({

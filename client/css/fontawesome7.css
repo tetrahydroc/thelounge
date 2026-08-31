@@ -5,6 +5,7 @@
 }
 
 /* purgecss start ignore */
+
 /*!
  * Font Awesome Pro 7.3.0 by @fontawesome - https://fontawesome.com
 */
@@ -66,6 +67,7 @@
 .fa-whiteboard,
 .fa {
 	--_fa-family: var(--fa-family, var(--fa-style-family, "Font Awesome 7 Pro"));
+
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	display: var(--fa-display, inline-block);
@@ -81,168 +83,166 @@
 }
 
 :is(.fas,
-	.fass,
-	.far,
-	.fasr,
-	.fal,
-	.fasl,
-	.fat,
-	.fast,
-	.fad,
-	.fadr,
-	.fadl,
-	.fadt,
-	.fasds,
-	.fasdr,
-	.fasdl,
-	.fasdt,
-	.fab,
-	.faslr,
-	.faslpr,
-	.fawsb,
-	.fatl,
-	.fans,
-	.fands,
-	.faes,
-	.fajr,
-	.fajfr,
-	.fajdr,
-	.facr,
-	.fausb,
-	.faudsb,
-	.faufsb,
-	.fa-solid,
-	.fa-semibold,
-	.fa-regular,
-	.fa-light,
-	.fa-thin,
-	.fa-brands,
-	.fa-classic,
-	.fa-duotone,
-	.fa-sharp,
-	.fa-sharp-duotone,
-	.fa-chisel,
-	.fa-etch,
-	.fa-jelly,
-	.fa-jelly-duo,
-	.fa-jelly-fill,
-	.fa-notdog,
-	.fa-notdog-duo,
-	.fa-slab,
-	.fa-slab-press,
-	.fa-thumbprint,
-	.fa-utility,
-	.fa-utility-duo,
-	.fa-utility-fill,
-	.fa-whiteboard,
-	.fa):before {
+.fass,
+.far,
+.fasr,
+.fal,
+.fasl,
+.fat,
+.fast,
+.fad,
+.fadr,
+.fadl,
+.fadt,
+.fasds,
+.fasdr,
+.fasdl,
+.fasdt,
+.fab,
+.faslr,
+.faslpr,
+.fawsb,
+.fatl,
+.fans,
+.fands,
+.faes,
+.fajr,
+.fajfr,
+.fajdr,
+.facr,
+.fausb,
+.faudsb,
+.faufsb,
+.fa-solid,
+.fa-semibold,
+.fa-regular,
+.fa-light,
+.fa-thin,
+.fa-brands,
+.fa-classic,
+.fa-duotone,
+.fa-sharp,
+.fa-sharp-duotone,
+.fa-chisel,
+.fa-etch,
+.fa-jelly,
+.fa-jelly-duo,
+.fa-jelly-fill,
+.fa-notdog,
+.fa-notdog-duo,
+.fa-slab,
+.fa-slab-press,
+.fa-thumbprint,
+.fa-utility,
+.fa-utility-duo,
+.fa-utility-fill,
+.fa-whiteboard,
+.fa)::before {
 	content: var(--fa)/""
 }
 
 @supports not (content: "" /"") {
-
 	:is(.fas,
-		.fass,
-		.far,
-		.fasr,
-		.fal,
-		.fasl,
-		.fat,
-		.fast,
-		.fad,
-		.fadr,
-		.fadl,
-		.fadt,
-		.fasds,
-		.fasdr,
-		.fasdl,
-		.fasdt,
-		.fab,
-		.faslr,
-		.faslpr,
-		.fawsb,
-		.fatl,
-		.fans,
-		.fands,
-		.faes,
-		.fajr,
-		.fajfr,
-		.fajdr,
-		.facr,
-		.fausb,
-		.faudsb,
-		.faufsb,
-		.fa-solid,
-		.fa-semibold,
-		.fa-regular,
-		.fa-light,
-		.fa-thin,
-		.fa-brands,
-		.fa-classic,
-		.fa-duotone,
-		.fa-sharp,
-		.fa-sharp-duotone,
-		.fa-chisel,
-		.fa-etch,
-		.fa-jelly,
-		.fa-jelly-duo,
-		.fa-jelly-fill,
-		.fa-notdog,
-		.fa-notdog-duo,
-		.fa-slab,
-		.fa-slab-press,
-		.fa-thumbprint,
-		.fa-utility,
-		.fa-utility-duo,
-		.fa-utility-fill,
-		.fa-whiteboard,
-		.fa):before {
+.fass,
+.far,
+.fasr,
+.fal,
+.fasl,
+.fat,
+.fast,
+.fad,
+.fadr,
+.fadl,
+.fadt,
+.fasds,
+.fasdr,
+.fasdl,
+.fasdt,
+.fab,
+.faslr,
+.faslpr,
+.fawsb,
+.fatl,
+.fans,
+.fands,
+.faes,
+.fajr,
+.fajfr,
+.fajdr,
+.facr,
+.fausb,
+.faudsb,
+.faufsb,
+.fa-solid,
+.fa-semibold,
+.fa-regular,
+.fa-light,
+.fa-thin,
+.fa-brands,
+.fa-classic,
+.fa-duotone,
+.fa-sharp,
+.fa-sharp-duotone,
+.fa-chisel,
+.fa-etch,
+.fa-jelly,
+.fa-jelly-duo,
+.fa-jelly-fill,
+.fa-notdog,
+.fa-notdog-duo,
+.fa-slab,
+.fa-slab-press,
+.fa-thumbprint,
+.fa-utility,
+.fa-utility-duo,
+.fa-utility-fill,
+.fa-whiteboard,
+.fa)::before {
 		content: var(--fa)
 	}
 }
 
 :is(.fad,
-	.fa-duotone,
-	.fadr,
-	.fadl,
-	.fadt,
-	.fasds,
-	.fa-sharp-duotone,
-	.fasdr,
-	.fasdl,
-	.fasdt,
-	.fatl,
-	.fa-thumbprint,
-	.fands,
-	.fa-notdog-duo,
-	.fajdr,
-	.fa-jelly-duo,
-	.faudsb,
-	.fa-utility-duo):after {
+.fa-duotone,
+.fadr,
+.fadl,
+.fadt,
+.fasds,
+.fa-sharp-duotone,
+.fasdr,
+.fasdl,
+.fasdt,
+.fatl,
+.fa-thumbprint,
+.fands,
+.fa-notdog-duo,
+.fajdr,
+.fa-jelly-duo,
+.faudsb,
+.fa-utility-duo)::after {
 	content: var(--fa);
 	font-feature-settings: "ss01"
 }
 
 @supports not (content: "" /"") {
-
 	:is(.fad,
-		.fa-duotone,
-		.fadr,
-		.fadl,
-		.fadt,
-		.fasds,
-		.fa-sharp-duotone,
-		.fasdr,
-		.fasdl,
-		.fasdt,
-		.fatl,
-		.fa-thumbprint,
-		.fands,
-		.fa-notdog-duo,
-		.fajdr,
-		.fa-jelly-duo,
-		.faudsb,
-		.fa-utility-duo):after {
+.fa-duotone,
+.fadr,
+.fadl,
+.fadt,
+.fasds,
+.fa-sharp-duotone,
+.fasdr,
+.fasdl,
+.fasdt,
+.fatl,
+.fa-thumbprint,
+.fands,
+.fa-notdog-duo,
+.fajdr,
+.fa-jelly-duo,
+.faudsb,
+.fa-utility-duo)::after {
 		content: var(--fa)
 	}
 }
@@ -448,7 +448,6 @@
 }
 
 @media(prefers-reduced-motion:reduce) {
-
 	.fa-beat,
 	.fa-bounce,
 	.fa-fade,
@@ -464,7 +463,6 @@
 }
 
 @keyframes fa-beat {
-
 	0%,
 	90% {
 		transform: scale(1)
@@ -500,7 +498,7 @@
 		transform: scale(1) translateY(0)
 	}
 
-	to {
+	100% {
 		transform: scale(1) translateY(0)
 	}
 }
@@ -512,9 +510,8 @@
 }
 
 @keyframes fa-beat-fade {
-
 	0%,
-	to {
+	100% {
 		opacity: var(--fa-beat-fade-opacity, .4);
 		transform: scale(1)
 	}
@@ -567,7 +564,7 @@
 	}
 
 	40%,
-	to {
+	100% {
 		transform: rotate(0)
 	}
 }
@@ -577,7 +574,7 @@
 		transform: rotate(0)
 	}
 
-	to {
+	100% {
 		transform: rotate(360deg)
 	}
 }
@@ -623,6 +620,7 @@
 .fa-stack-1x,
 .fa-stack-2x {
 	--fa-width: 100%;
+
 	inset: 0;
 	position: absolute;
 	text-align: center;

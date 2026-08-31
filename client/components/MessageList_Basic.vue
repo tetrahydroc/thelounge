@@ -34,18 +34,18 @@
 					left: 0,
 					width: '100%',
 					transform: `translateY(${virtualRow.start + MESSAGES_PADDING}px)`,
-					padding: '0 0 ' + (virtualRow.index === condensedMessages.length - 1 ? MESSAGES_PADDING : 0) + 'px',
+					padding:
+						'0 0 ' +
+						(virtualRow.index === condensedMessages.length - 1 ? MESSAGES_PADDING : 0) +
+						'px',
 				}"
 			>
 				<DateMarker
 					v-if="shouldDisplayDateMarker(entryAt(virtualRow.index), virtualRow.index)"
-					:message="(entryAt(virtualRow.index) as any)"
+					:message="entryAt(virtualRow.index) as any"
 					:focused="entryAt(virtualRow.index).id === focused"
 				/>
-				<div
-					v-if="shouldDisplayUnreadMarker(virtualRow.index)"
-					class="unread-marker"
-				>
+				<div v-if="shouldDisplayUnreadMarker(virtualRow.index)" class="unread-marker">
 					<span class="unread-marker-text" />
 				</div>
 
@@ -62,7 +62,9 @@
 					:network="network"
 					:message="messageAt(virtualRow.index)"
 					:keep-scroll-position="keepScrollPosition"
-					:is-previous-source="isPreviousSource(entryAt(virtualRow.index), virtualRow.index)"
+					:is-previous-source="
+						isPreviousSource(entryAt(virtualRow.index), virtualRow.index)
+					"
 					:focused="entryAt(virtualRow.index).id === focused"
 					@toggle-link-preview="onLinkPreviewToggle"
 				/>
@@ -79,7 +81,17 @@ import socket from "../js/socket";
 import Message from "./Message.vue";
 import MessageCondensed from "./MessageCondensed.vue";
 import DateMarker from "./DateMarker.vue";
-import {computed, defineComponent, nextTick, onBeforeUnmount, onMounted, onUnmounted, PropType, ref, watch} from "vue";
+import {
+	computed,
+	defineComponent,
+	nextTick,
+	onBeforeUnmount,
+	onMounted,
+	onUnmounted,
+	PropType,
+	ref,
+	watch,
+} from "vue";
 import {useVirtualizer} from "@tanstack/vue-virtual";
 import {useStore} from "../js/store";
 import {ClientChan, ClientMessage, ClientNetwork, ClientLinkPreview} from "../js/types";
@@ -201,7 +213,8 @@ export default defineComponent({
 			// in-memory buffer runs out, the server can skip straight to the
 			// next region of history in the database instead of stalling
 			const messages = props.channel.messages;
-			const beforeTime = messages.length > 0 ? new Date(messages[0].time).getTime() : undefined;
+			const beforeTime =
+				messages.length > 0 ? new Date(messages[0].time).getTime() : undefined;
 
 			props.channel.historyLoading = true;
 
@@ -265,7 +278,7 @@ export default defineComponent({
 
 		const highestIdAt = (entry: CondensedEntry): number =>
 			entry.type === "condensed"
-				? entry.id ?? entry.messages[entry.messages.length - 1].id
+				? (entry.id ?? entry.messages[entry.messages.length - 1].id)
 				: entry.id;
 
 		// Shows the unread marker exactly once, on the first entry (in array

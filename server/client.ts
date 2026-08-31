@@ -593,50 +593,53 @@ class Client {
 		const chan = target.chan;
 		let messages: Msg[] = [];
 
-		const enhancedSearch = Boolean(this.config.clientSettings.searchEnabled && this.config.clientSettings.enableEnhancedSearch)
+		const enhancedSearch = Boolean(
+			this.config.clientSettings.searchEnabled &&
+				this.config.clientSettings.enableEnhancedSearch
+		);
 
 		// Use batch sizes for "more" requests, batch sizes are based on enableEnhancedSearch setting
 		// When enableEnhancedSearch = true send upto 10000 messages at a time
 		const batchSize = enhancedSearch ? 1000 : 100;
-		const maxBatchSize =  enhancedSearch ? 10000 : 1000;
+		const maxBatchSize = enhancedSearch ? 10000 : 1000;
 
 		const beforeTime = data.beforeTime;
 
-			// The client anchors on the timestamp of its oldest loaded message
-			// (`beforeTime`). If given, we page back from *that* point instead of
-			// the buffer tail — this is what makes scroll-up work after a jump or
-			// an around-chunk fetch: without the anchor the server would keep
-			// re-sending the same tail batch, the client would dedupe it away,
-			// and the "Show older messages" button would vanish.
-			let index: number;
+		// The client anchors on the timestamp of its oldest loaded message
+		// (`beforeTime`). If given, we page back from *that* point instead of
+		// the buffer tail — this is what makes scroll-up work after a jump or
+		// an around-chunk fetch: without the anchor the server would keep
+		// re-sending the same tail batch, the client would dedupe it away,
+		// and the "Show older messages" button would vanish.
+		let index: number;
 
-			if (typeof beforeTime === "number") {
-				// Binary search for the first in-memory message whose time is
-				// >= beforeTime. Everything before that index is strictly older
-				// than the anchor and therefore qualifies for the next page.
-				let lo = 0;
-				let hi = chan.messages.length;
+		if (typeof beforeTime === "number") {
+			// Binary search for the first in-memory message whose time is
+			// >= beforeTime. Everything before that index is strictly older
+			// than the anchor and therefore qualifies for the next page.
+			let lo = 0;
+			let hi = chan.messages.length;
 
-				while (lo < hi) {
-					const mid = (lo + hi) >> 1;
+			while (lo < hi) {
+				const mid = (lo + hi) >> 1;
 
-					if (new Date(chan.messages[mid].time).getTime() < beforeTime) {
-						lo = mid + 1;
-					} else {
-						hi = mid;
-					}
+				if (new Date(chan.messages[mid].time).getTime() < beforeTime) {
+					lo = mid + 1;
+				} else {
+					hi = mid;
 				}
+			}
 
-				index = lo;
+			index = lo;
 
-				if (index === chan.messages.length) {
-					// The client's anchor is at (or beyond) the head of our
-					// in-memory buffer: we hold nothing older than it. Serve the
-					// page straight from the database (see the fallback below),
-					// anchored at the client's own oldest message.
-					index = 0;
-				}
-			} else if (data.lastId < 0) {
+			if (index === chan.messages.length) {
+				// The client's anchor is at (or beyond) the head of our
+				// in-memory buffer: we hold nothing older than it. Serve the
+				// page straight from the database (see the fallback below),
+				// anchored at the client's own oldest message.
+				index = 0;
+			}
+		} else if (data.lastId < 0) {
 			// Legacy/first load: send the last batch of in-memory messages
 			index = chan.messages.length;
 		} else {
@@ -696,8 +699,7 @@ class Client {
 			// message and hasMore flips to false.
 			if (this.messageProvider?.canProvideMessages()) {
 				try {
-					const anchor =
-						typeof beforeTime === "number" ? beforeTime : Date.now();
+					const anchor = typeof beforeTime === "number" ? beforeTime : Date.now();
 
 					const chunk = await this.messageProvider.getMessagesBefore(
 						target.network.uuid,

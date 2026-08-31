@@ -125,7 +125,11 @@ class Utils {
 				log.debug(`Detected Yarn Classic v${yarnVersion}`);
 				this.#detectedPM = {name: "yarn1"};
 				return this.#detectedPM;
-			} else if (yarnVersion.startsWith("4.") || yarnVersion.startsWith("3.") || yarnVersion.startsWith("2.")) {
+			} else if (
+				yarnVersion.startsWith("4.") ||
+				yarnVersion.startsWith("3.") ||
+				yarnVersion.startsWith("2.")
+			) {
 				log.debug(`Detected Yarn Berry v${yarnVersion}`);
 				this.#detectedPM = {name: "yarn4"};
 				return this.#detectedPM;
@@ -257,7 +261,12 @@ class Utils {
 		});
 	}
 
-	static #buildNpmArgs(command: string, parameters: string[], packagesPath: string, cachePath: string): string[] {
+	static #buildNpmArgs(
+		command: string,
+		parameters: string[],
+		packagesPath: string,
+		cachePath: string
+	): string[] {
 		let npmCommand = command;
 		const args: string[] = [];
 
@@ -286,14 +295,29 @@ class Utils {
 				args.push(...parameters);
 		}
 
-		return [npmCommand, "--prefix", packagesPath, "--cache", cachePath, "--ignore-scripts", ...args];
+		return [
+			npmCommand,
+			"--prefix",
+			packagesPath,
+			"--cache",
+			cachePath,
+			"--ignore-scripts",
+			...args,
+		];
 	}
 
-	static #buildYarn1Args(command: string, parameters: string[], packagesPath: string, cachePath: string): string[] {
+	static #buildYarn1Args(
+		command: string,
+		parameters: string[],
+		packagesPath: string,
+		cachePath: string
+	): string[] {
 		const args = [
 			command,
-			"--cache-folder", cachePath,
-			"--cwd", packagesPath,
+			"--cache-folder",
+			cachePath,
+			"--cwd",
+			packagesPath,
 			"--json",
 			"--ignore-scripts",
 			"--non-interactive",

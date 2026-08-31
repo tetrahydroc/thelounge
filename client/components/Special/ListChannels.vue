@@ -32,11 +32,11 @@ export default defineComponent({
 		network: {type: Object as PropType<ClientNetwork>, required: true},
 		channel: {type: Object as PropType<ClientChan>, required: true},
 	},
-	setup (props) {
+	setup(props) {
 		return {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			channelData: (props.channel.data as any)
-		}
+			channelData: props.channel.data as any,
+		};
 	},
 });
 </script>

@@ -70,7 +70,9 @@
 								v-for="(message, id) in messages"
 								:key="message.id"
 								class="result"
-								:data-jump-to="store.state.settings.enableEnhancedSearch || undefined"
+								:data-jump-to="
+									store.state.settings.enableEnhancedSearch || undefined
+								"
 							>
 								<DateMarker
 									v-if="shouldDisplayDateMarker(message, id)"
@@ -457,13 +459,16 @@ export default defineComponent({
 					return;
 				}
 
-				historyObserver.value = new window.IntersectionObserver((entries) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting) {
-							onShowMoreClick();
-						}
-					});
-				}, {root: chat.value});
+				historyObserver.value = new window.IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								onShowMoreClick();
+							}
+						});
+					},
+					{root: chat.value}
+				);
 
 				if (loadMoreButton.value) {
 					historyObserver.value.observe(loadMoreButton.value);
