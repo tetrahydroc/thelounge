@@ -40,6 +40,10 @@
 
 	/* Color of the progress bar that appears as a file is being uploaded to the server. Defaults to button color */
 	--upload-progressbar-color: var(--button-color);
+
+	/* Hints native form controls (e.g. the <input type=date> popup calendar)
+	   to render with a light or dark native UI matching this theme. */
+	--native-color-scheme: light;
 }
 
 ::placeholder {

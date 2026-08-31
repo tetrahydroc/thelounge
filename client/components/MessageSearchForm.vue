@@ -1,5 +1,8 @@
 <template>
-	<form :class="['message-search', {opened: searchOpened}]" @submit.prevent="searchMessages">
+	<form
+		:class="['message-search', {opened: searchOpened, inline: onSearchPage}]"
+		@submit.prevent="searchMessages"
+	>
 		<div class="input-wrapper">
 			<input
 				ref="searchInputField"
@@ -7,20 +10,17 @@
 				type="search"
 				name="search"
 				class="input"
-				:class="{'has-resume-hint': showResumeHint}"
 				placeholder="Search messages…"
 				@blur="closeSearch"
 				@keyup.esc="closeSearch"
 				@input="resumedFromCache = false"
 			/>
-			<span
-				v-if="showResumeHint"
-				class="tooltipped tooltipped-w tooltipped-no-delay resume-hint"
-				aria-label="Press Enter to resume your last search"
-			>
-				⟲
-			</span>
 		</div>
+		<span v-if="showResumeHint" class="resume-hint">
+			Continue search<template v-if="resumeResultCount !== null">
+				({{ resumeResultCount }} result{{ resumeResultCount === 1 ? "" : "s" }})</template
+			>
+		</span>
 		<button
 			v-if="!onSearchPage"
 			class="search"
@@ -79,22 +79,73 @@ form.message-search .input-wrapper input {
 	margin: 7px;
 }
 
-form.message-search .input-wrapper input.has-resume-hint {
-	padding-right: 22px;
-}
-
+/* A small tab hanging directly off the bottom of the input - same
+   background/border as the input itself (matching its own hardcoded
+   #fafafa/border colors right above, not a semantic accent color like the
+   highlight-* variables, which mean "you were mentioned" elsewhere in the
+   app) and flush against it (no gap, square top corners) so it reads as
+   part of the search bar rather than a separate floating tooltip.
+   It's a sibling of .input-wrapper rather than nested inside it, since
+   .input-wrapper's own overflow:hidden (needed for the open/close collapse
+   animation below) would otherwise clip it off. Positioned against the same
+   coordinate space .input-wrapper uses (the dropdown sits at top:45px,
+   opens to 50px tall) - overridden below for the .inline variant, which has
+   its own local, much smaller box. */
 form.message-search .resume-hint {
 	position: absolute;
-	right: 20px;
-	top: 50%;
-	transform: translateY(-50%);
-	color: rgba(0, 0, 0, 0.35);
-	font-size: 14px;
+	left: 7px;
+	top: 95px;
+	padding: 1px 6px;
+	border: 1px solid #cdd3da;
+	border-top: none;
+	border-radius: 0 0 3px 3px;
+	background-color: #fafafa;
+	color: var(--body-color-muted);
+	font-size: 11px;
+	line-height: 1.3;
+	white-space: nowrap;
+	pointer-events: none;
 	cursor: default;
 }
 
 form.message-search.opened .input-wrapper {
 	height: 50px;
+}
+
+/* On the search results page the form is always "open" and sits inline in
+   the header next to the date picker and close button, rather than as a
+   toggled full-width dropdown - so lay it out normally instead of via the
+   absolute overlay above, which otherwise stretches under those siblings. */
+form.message-search.inline {
+	position: relative;
+	flex-shrink: 0;
+}
+
+form.message-search.inline .input-wrapper {
+	position: relative;
+	top: auto;
+	left: auto;
+	right: auto;
+	z-index: auto;
+	height: auto;
+	overflow: visible;
+	background: none;
+	width: 180px;
+	transition: width 0.15s;
+}
+
+form.message-search.inline .input-wrapper:focus-within {
+	width: 220px;
+}
+
+form.message-search.inline .input-wrapper input {
+	margin: 0 6px;
+	min-width: 0;
+}
+
+form.message-search.inline .resume-hint {
+	left: 6px;
+	top: 100%;
 }
 
 #chat form.message-search button {
@@ -124,7 +175,12 @@ export default defineComponent({
 		const route = useRoute();
 		const store = useStore();
 
-		const showResumeHint = computed(() => resumedFromCache.value && !!searchInput.value);
+		const showResumeHint = computed(
+			() => searchOpened.value && resumedFromCache.value && !!searchInput.value
+		);
+		const resumeResultCount = computed(
+			() => store.state.messageSearchResults?.results.length ?? null
+		);
 
 		const searchInputField = ref<HTMLInputElement | null>(null);
 
@@ -215,6 +271,7 @@ export default defineComponent({
 			searchInputField,
 			resumedFromCache,
 			showResumeHint,
+			resumeResultCount,
 			closeSearch,
 			toggleSearch,
 			searchMessages,

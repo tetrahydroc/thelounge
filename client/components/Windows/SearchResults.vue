@@ -21,7 +21,7 @@
 					<span class="topic">{{ route.query.q }}</span>
 					<input
 						type="date"
-						class="search-date-jump"
+						class="input search-date-jump"
 						title="Jump to date"
 						aria-label="Jump to date"
 						@change="jumpToDate"
@@ -109,6 +109,33 @@
 
 .chat-view[data-type="search-results"] .chat-content {
 	margin-top: 45px;
+}
+
+/* Unlike other .input fields (which stay white in every theme by existing
+   convention), this control's native browser chrome - the calendar icon and
+   popup - can't be restyled at all, so it needs to actually track the theme
+   via variables (plus color-scheme, which is what themes the native popup)
+   rather than staying forced white to look intentional against it. */
+input.search-date-jump {
+	appearance: none;
+	flex-shrink: 0;
+	width: auto;
+	height: 28px;
+	line-height: 28px;
+	margin: 0 6px;
+	padding: 0 8px;
+	font-family: inherit;
+	color-scheme: var(--native-color-scheme, light);
+	background-color: var(--window-bg-color);
+	color: var(--body-color);
+	border: 1px solid var(--highlight-border-color);
+	border-radius: 2px;
+}
+
+input.search-date-jump:hover,
+input.search-date-jump:focus {
+	border-color: var(--link-color);
+	outline: 0;
 }
 </style>
 
