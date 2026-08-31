@@ -143,7 +143,7 @@ class Uploader {
 		let destPath: fs.PathLike | null;
 		let streamWriter: fs.WriteStream | null;
 
-		const uploadProvider = UploadProviders.find(b => b.id === req.params.service);
+		const uploadProvider = UploadProviders.find((b) => b.id === req.params.service);
 		const token = req.params.token;
 		const ttl = req.params.ttl ?? "";
 
@@ -299,37 +299,44 @@ class Uploader {
 			// service upload
 			busboyInstance.on("finish", () => {
 				const upload = () => {
-					const file = new File([new Blob([fs.readFileSync(<string>destPath)])], originalFilename, {
-						type: mime.getType(originalFilename) ?? undefined,
-					});
-
-					uploadProvider.upload(file, ttl, token)
-					.then((url) => {
-						fs.unlink(<string>destPath, () => undefined);
-
-						uploadUrl = url;
-
-						// Allow host masking to allow vanity url for external hosted images
-						// eslint-disable-next-line eqeqeq
-						if (Config.values.maskFileHost && Config.values.fileUpload.baseUrl != null) {
-							const oldHost = new URL(url).host;
-							const newHost = new URL(Config.values.fileUpload.baseUrl).host;
-
-							uploadUrl = url.replace(oldHost, newHost);
+					const file = new File(
+						[new Blob([fs.readFileSync(<string>destPath)])],
+						originalFilename,
+						{
+							type: mime.getType(originalFilename) ?? undefined,
 						}
+					);
 
-						if (!uploadUrl) {
-							return res.status(400).json({error: "Missing file"});
-						}
+					uploadProvider
+						.upload(file, ttl, token)
+						.then((url) => {
+							fs.unlink(<string>destPath, () => undefined);
 
-						// upload was done, send the generated file url to the client
-						return res.status(200).json({
-							url: uploadUrl,
+							uploadUrl = url;
+
+							// Allow host masking to allow vanity url for external hosted images
+							if (
+								Config.values.maskFileHost &&
+								Config.values.fileUpload.baseUrl != null // eslint-disable-line eqeqeq
+							) {
+								const oldHost = new URL(url).host;
+								const newHost = new URL(Config.values.fileUpload.baseUrl).host;
+
+								uploadUrl = url.replace(oldHost, newHost);
+							}
+
+							if (!uploadUrl) {
+								return res.status(400).json({error: "Missing file"});
+							}
+
+							// upload was done, send the generated file url to the client
+							return res.status(200).json({
+								url: uploadUrl,
+							});
+						})
+						.catch((err) => {
+							abortWithError(err);
 						});
-					})
-					.catch((err) => {
-						abortWithError(err);
-					});
 				};
 
 				if (!streamWriter || streamWriter.closed === true) {

@@ -3,6 +3,9 @@ public/
 dist/
 .yarn/
 node_modules/
+# Third-party vendored library - not ours to reformat (see eslint.config.js's
+# own vendor/** ignore, mirrored here)
+vendor/
 test/fixtures/.thelounge/logs/
 test/fixtures/.thelounge/certificates/
 test/fixtures/.thelounge/storage/
@@ -24,8 +27,14 @@ yarn.lock
 .thelounge_home
 .editorconfig
 .eslintignore
+.stylelintignore
 .gitattributes
 .browserslistrc
+.dockerignore
+Dockerfile*
+*.ttf
+*.woff
+*.woff2
 
 *.css
 
