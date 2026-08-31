@@ -2496,6 +2496,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/virtual-core@npm:3.17.8":
+  version: 3.17.8
+  resolution: "@tanstack/virtual-core@npm:3.17.8"
+  checksum: 10c0/0889044d89d1c403939f3984017857c68c54769e538e7bac52d8af6a3feaa20a6a9ffd627cadd95a7cdd0136856a03d8eb8302d0e53a53910fdb05916d7b4a79
+  languageName: node
+  linkType: hard
+
+"@tanstack/vue-virtual@npm:^3":
+  version: 3.13.36
+  resolution: "@tanstack/vue-virtual@npm:3.13.36"
+  dependencies:
+    "@tanstack/virtual-core": "npm:3.17.8"
+  peerDependencies:
+    vue: ^2.7.0 || ^3.0.0
+  checksum: 10c0/278fe367a7c4490fee1cd777464a011013a564b74d846ad45d0577b46ee07204d330821a6f60163766c9568853c52c2b81c094f3382c3e3ab376776c7da7f31d
+  languageName: node
+  linkType: hard
+
 "@textcomplete/core@npm:0.1.13":
   version: 0.1.13
   resolution: "@textcomplete/core@npm:0.1.13"
@@ -10970,6 +10988,7 @@ __metadata:
     "@fastify/busboy": "npm:3.2.0"
     "@istanbuljs/nyc-config-typescript": "npm:1.0.2"
     "@stylistic/stylelint-plugin": "npm:^4.0.0"
+    "@tanstack/vue-virtual": "npm:^3"
     "@textcomplete/core": "npm:0.1.13"
     "@textcomplete/textarea": "npm:0.1.13"
     "@types/bcryptjs": "npm:2.4.6"

@@ -54,6 +54,7 @@
   ],
   "dependencies": {
     "@fastify/busboy": "3.2.0",
+    "@tanstack/vue-virtual": "^3",
     "bcryptjs": "3.0.3",
     "chalk": "5.6.2",
     "cheerio": "1.1.2",
