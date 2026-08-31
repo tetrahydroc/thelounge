@@ -460,14 +460,13 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 			await this.serialize_run(stmt);
 		}
 
-		const have_options = await this.serialize_get(
-			"select 1 from sqlite_master where type = 'table' and name = 'hori_options'"
-		);
-
-		if (!have_options) {
-			return; // just created by horiSchema above via IF NOT EXISTS - unreachable in practice
-		}
-
+		// horiSchema above just unconditionally CREATE TABLE IF NOT EXISTS'd
+		// fts.hori_options, so it's guaranteed to exist here - go straight to
+		// reading it. (An earlier version of this check queried the
+		// unqualified sqlite_master, which resolves against the main file's
+		// schema by default, not the attached fts one - hori_options never
+		// lives there, so that check always missed and this whole function
+		// returned early every time, silently never writing hori_ext_version.)
 		const row = await this.serialize_get(
 			"SELECT value FROM fts.hori_options WHERE name = 'hori_ext_version'"
 		);
@@ -775,8 +774,9 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 				rollback.rollback_forbidden || 0
 			);
 
+			let step = 0;
+
 			for (const stmt of rollback.stmts) {
-				let step = 0;
 				await this.serialize_run(
 					`insert into rollback_steps
                     (migration_id, step, statement)

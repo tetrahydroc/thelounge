@@ -542,6 +542,138 @@ describe("computeSidecarSyncPlan", function () {
 	});
 });
 
+// computeSidecarSyncPlan above only tests the pure decision logic - these
+// exercise the actual I/O path (reconcileSidecar / catchUpSidecarAppend /
+// fullRebuildSidecar) against real files, simulating the scenarios the
+// planner is meant to handle: the sidecar going missing entirely, and tetra
+// (or anything else) mutating the main file while the sidecar isn't looking.
+describe("SQLite sidecar reconcile (real I/O)", function () {
+	const userName = "sidecarReconcileTestUser";
+	const mainPath = path.join(Config.getHomePath(), "logs", `${userName}.sqlite3`);
+	const sidecarPath = path.join(Config.getHomePath(), "logs", `${userName}.fts.sqlite3`);
+
+	afterEach(function () {
+		for (const p of [mainPath, sidecarPath]) {
+			if (fs.existsSync(p)) {
+				fs.unlinkSync(p);
+			}
+		}
+	});
+
+	async function indexMessages(
+		store: MessageStorage,
+		net: TestNetwork,
+		chan: TestChannel,
+		texts: string[]
+	) {
+		for (const text of texts) {
+			await store.index(net, chan, new Msg({text}));
+		}
+	}
+
+	it("rebuilds search from scratch when the sidecar file is deleted", async function () {
+		const net: TestNetwork = {uuid: "recon-net"};
+		const chan: TestChannel = {name: "#recon"};
+
+		let store = new MessageStorage(userName);
+		await store.enable();
+		await indexMessages(store, net, chan, ["alpha one", "alpha two", "alpha three"]);
+		await store.close();
+
+		expect(fs.existsSync(sidecarPath)).to.equal(true);
+		fs.unlinkSync(sidecarPath);
+		expect(fs.existsSync(sidecarPath)).to.equal(false);
+
+		store = new MessageStorage(userName);
+		await store.enable();
+
+		const results = await store.search({
+			searchTerm: "alpha",
+			networkUuid: net.uuid,
+			channelName: "",
+			offset: 0,
+		});
+		expect(results.results).to.have.lengthOf(3);
+
+		await store.close();
+	});
+
+	it("catches up when new messages were added directly to the main file (pure append)", async function () {
+		const net: TestNetwork = {uuid: "recon-net-2"};
+		const chan: TestChannel = {name: "#recon2"};
+
+		let store = new MessageStorage(userName);
+		await store.enable();
+		await indexMessages(store, net, chan, ["bravo one", "bravo two"]);
+		await store.close();
+
+		// Simulate tetra (or anything else without sidecar knowledge) writing
+		// straight to the main file - no FTS involvement at all.
+		const rawDb = new Database(mainPath);
+		rawDb
+			.prepare(
+				"INSERT INTO messages(network, channel, time, type, msg) VALUES (?, ?, ?, ?, ?)"
+			)
+			.run(net.uuid, chan.name, Date.now(), "message", JSON.stringify({text: "bravo three"}));
+		rawDb.close();
+
+		store = new MessageStorage(userName);
+		await store.enable(); // should take the cheap append path, not a full rebuild
+
+		const results = await store.search({
+			searchTerm: "bravo",
+			networkUuid: net.uuid,
+			channelName: "",
+			offset: 0,
+		});
+		expect(results.results.map((m) => m.text)).to.have.members([
+			"bravo one",
+			"bravo two",
+			"bravo three",
+		]);
+
+		await store.close();
+	});
+
+	it("rebuilds when a message was deleted from within the already-indexed range", async function () {
+		const net: TestNetwork = {uuid: "recon-net-3"};
+		const chan: TestChannel = {name: "#recon3"};
+
+		let store = new MessageStorage(userName);
+		await store.enable();
+		await indexMessages(store, net, chan, ["charlie one", "charlie two", "charlie three"]);
+		await store.close();
+
+		// Simulate tetra deleting a message directly from the main file
+		// (not through this fork's deleteChannel/deleteMessages, which would
+		// keep the sidecar in sync themselves) - a real inconsistency within
+		// the range the sidecar already believed was fully indexed.
+		const rawDb = new Database(mainPath);
+		rawDb.prepare("DELETE FROM messages WHERE msg LIKE '%charlie two%'").run();
+		const remainingCount = (
+			rawDb.prepare("SELECT COUNT(*) as c FROM messages").get() as {c: number}
+		).c;
+		rawDb.close();
+		expect(remainingCount).to.equal(2);
+
+		store = new MessageStorage(userName);
+		await store.enable(); // should detect the prefix mismatch and fully rebuild
+
+		const results = await store.search({
+			searchTerm: "charlie",
+			networkUuid: net.uuid,
+			channelName: "",
+			offset: 0,
+		});
+		expect(results.results.map((m) => m.text)).to.have.members([
+			"charlie one",
+			"charlie three",
+		]);
+
+		await store.close();
+	});
+});
+
 describe("SQLite legacy fork repair", function () {
 	// Shape of the main file this fork wrote before the sidecar refactor -
 	// schema_version 1788000000000, FTS5 table + triggers living directly in
