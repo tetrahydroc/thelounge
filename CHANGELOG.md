@@ -6,24 +6,25 @@ All notable changes to this project will be documented in this file.
 
 ## fHori fork - Unreleased
 
-This fork diverged from `tetrahydroc/thelounge` (schema version `1785000000000`) to move faster on performance and search. See [`MIGRATION.md`](./MIGRATION.md) for what this means if you're switching from another instance, including how to go back.
+This fork diverged from `tetrahydroc/thelounge` to move faster on performance and search. See [`MIGRATION.md`](./MIGRATION.md) for what this means if you're switching from another instance, including how to go back.
 
 ### Performance
 
 - The default message list is now virtualized (`@tanstack/vue-virtual`) - only messages near the viewport are mounted as real DOM nodes, fixing a UI freeze when opening/scrolling channels with tens of thousands of messages. Tradeoff: copy-paste and browser Ctrl+F no longer work across scrolled-away, unrendered messages (same as Slack/Discord).
 - Channels you switch away from now stay fully loaded in memory for a while instead of always trimming to the last 100 messages, so switching back and forth between a few channels is instant. Configurable via **Settings → General → Performance** (default 5, max 20, 0 for the old always-trim behavior).
-- WAL journal mode enabled for the message database; unused icon fonts stripped, an external CDN dependency removed, and HTTP response compression added, all reducing initial page load.
+- Unused icon fonts stripped, an external CDN dependency removed, and HTTP response compression added, all reducing initial page load.
 - Fixed a `RangeError: Maximum call stack size exceeded` crash loading very large channels.
 
 ### Search
 
-- Message search now uses a SQLite FTS5 trigram index instead of an unindexed `LIKE` scan - meaningfully faster on large histories. First startup after upgrading rebuilds the index once, proportional to message count.
+- Message search now uses a SQLite FTS5 trigram index instead of an unindexed `LIKE` scan - meaningfully faster on large histories (measured on a real ~17M-message dataset).
 - Infinite scroll on search results, resuming a search session (with result count) after clicking into a result and coming back, and a jump-to-date picker.
+- The FTS5 index lives in its own disposable sidecar file next to each user's message database, not inside it - your actual message history stays in exactly the shape tetrahydroc/thelounge (and upstream) already expect, always, with nothing to manually revert. A database from an earlier build of this fork (before the index moved out) is detected and repaired automatically on first startup. See "Reliability" and `MIGRATION.md`.
 
 ### Reliability
 
 - A small banner now appears if your browser tab is running client code older than what the server is currently serving (checked every 10 minutes and once on load), with a one-click reload.
-- `thelounge storage version [username]` and `thelounge storage downgrade <version> [username]` - check and roll back the message storage schema version. Also fixes a bug in the underlying (inherited) migration engine where downgrading dropped the right schema objects but mislabeled the resulting version as still current, silently breaking both further downgrades and this build's own ability to detect it needed to re-migrate.
+- The message-storage migration engine's downgrade path had a bug where it dropped the right schema objects but mislabeled the resulting version as still current - found and fixed while building the FTS5 sidecar work above, which depends on the version bookkeeping being trustworthy.
 
 ### Deployment
 

@@ -1,0 +1,14 @@
+---
+services:
+  thelounge:
+    image: ghcr.io/fhori/thelounge:latest
+    container_name: thelounge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./config:/config
+    ports:
+      - 9000:9000
+    restart: unless-stopped

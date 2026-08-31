@@ -6,35 +6,37 @@
 </h1>
 
 <h3 align="center">
-	Modern web IRC client designed for self-hosting
+	fHori/thelounge — a standalone performance/search-focused fork of The Lounge
 </h3>
 
 <p align="center">
 	<strong>
-		<a href="https://thelounge.chat/">Website</a>
+		<a href="https://thelounge.chat/">Upstream website</a>
 		•
-		<a href="https://thelounge.chat/docs">Docs</a>
+		<a href="https://thelounge.chat/docs">Upstream docs</a>
 		•
-		<a href="https://demo.thelounge.chat/">Demo</a>
-    •
-		<a href="https://github.com/thelounge/thelounge-docker">Docker</a>
+		<a href="./MIGRATION.md">Migration guide</a>
+		•
+		<a href="./DEPLOYMENT.md">Deployment guide</a>
+		•
+		<a href="./CHANGELOG.md">Changelog</a>
 	</strong>
 </p>
 <p align="center">
-	<a href="https://demo.thelounge.chat/"><img
-		alt="#thelounge IRC channel on Libera.Chat"
-		src="https://img.shields.io/badge/Libera.Chat-%23thelounge-415364.svg?colorA=ff9e18"></a>
-	<a href="https://yarn.pm/thelounge"><img
-		alt="npm version"
-		src="https://img.shields.io/npm/v/thelounge.svg?colorA=333a41&maxAge=3600"></a>
-	<a href="https://github.com/thelounge/thelounge/actions"><img
+	<a href="https://github.com/fHori/thelounge/actions"><img
 		alt="Build Status"
-		src="https://github.com/thelounge/thelounge/workflows/Build/badge.svg"></a>
+		src="https://github.com/fHori/thelounge/workflows/Build/badge.svg"></a>
 </p>
 
 <p align="center">
 	<img src="https://raw.githubusercontent.com/thelounge/thelounge.github.io/master/img/thelounge-screenshot.png" width="550">
 </p>
+
+## About this fork
+
+This is a standalone fork of [The Lounge](https://github.com/thelounge/thelounge), diverged from [tetrahydroc/thelounge](https://github.com/tetrahydroc/thelounge). It is **not** submitted upstream and will not be merged back — it exists to move faster on performance and search than upstream's release cadence allows, while staying fully compatible with tetrahydroc/thelounge's own message database: this fork's own additions (FTS5 search) live in a disposable sidecar file next to your data, never inside it, so your main database always stays exactly what tetrahydroc/thelounge (or upstream) would produce. See [`MIGRATION.md`](./MIGRATION.md) for what's changed and what that means if you're switching from another instance, and [`CHANGELOG.md`](./CHANGELOG.md) for the running list of changes.
+
+Issues and pull requests for this fork belong at [github.com/fHori/thelounge](https://github.com/fHori/thelounge), not upstream.
 
 ## Overview
 
@@ -43,27 +45,24 @@
 - **Cross platform.** It doesn't matter what OS you use, it just works wherever Node.js runs.
 - **Responsive interface.** The client works smoothly on every desktop, smartphone and tablet.
 - **Synchronized experience.** Always resume where you left off no matter what device.
+- **Fast, indexed search** and a message list that stays smooth even on channels with hundreds of thousands of messages — see [`CHANGELOG.md`](./CHANGELOG.md) for what this fork adds on top of the above.
 
-To learn more about configuration, usage and features of The Lounge, take a look at [the website](https://thelounge.chat).
+To learn more about the general configuration, usage and features The Lounge itself provides, take a look at [the upstream website](https://thelounge.chat) — most of it applies here unchanged; this fork only diverges in the specific areas covered by `MIGRATION.md`/`CHANGELOG.md`.
 
 The Lounge is the official and community-managed fork of [Shout](https://github.com/erming/shout), by [Mattias Erming](https://github.com/erming).
 
 ## Installation and usage
 
-The Lounge requires [Node.js](https://nodejs.org/) v24.11.1 or newer (Node.js v24 LTS or v25+ recommended).
-The [Yarn package manager](https://yarnpkg.com/) v4.11.0+ is also recommended.
-If you want to install with npm, `--unsafe-perm` is required for a correct install.
+This fork requires the same [Node.js](https://nodejs.org/) v24.11.1+ and [Yarn](https://yarnpkg.com/) v4.11.0+ as upstream. If you want to install with npm, `--unsafe-perm` is required for a correct install.
 
-### Running stable releases
+### Docker
 
-Please refer to the [install and upgrade documentation on our website](https://thelounge.chat/docs/install-and-upgrade) for all available installation methods.
+Images are built and published directly from this repo (`ghcr.io/fhori/thelounge:latest`, multi-arch). See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for a ready-to-use [`docker-compose.yml`](./docker-compose.yml), the full parameters list, and specifically how to move an existing bare-Linux or other-Docker-image install over to this one.
 
 ### Running from source
 
-The following commands install and run the development version of The Lounge:
-
 ```sh
-git clone https://github.com/thelounge/thelounge.git
+git clone https://github.com/fHori/thelounge.git
 cd thelounge
 yarn install
 NODE_ENV=production yarn build
@@ -82,7 +81,7 @@ fork.
 
 Before submitting any change, make sure to:
 
-- Read the [Contributing instructions](https://github.com/thelounge/thelounge/blob/master/.github/CONTRIBUTING.md#contributing)
+- Read the [Contributing instructions](./.github/CONTRIBUTING.md) (inherited from upstream — still broadly applicable to this fork)
 - Run `yarn test` to execute linters and the test suite
   - Run `yarn format:prettier` if linting fails
 - Run `yarn build:client` if you change or add anything in `client/js` or `client/components`

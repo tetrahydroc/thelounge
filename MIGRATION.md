@@ -5,15 +5,15 @@ This is a standalone fork of [The Lounge](https://github.com/thelounge/thelounge
 ## TL;DR
 
 - **Your data is compatible.** Point this fork at your existing `.thelounge` home directory (config, logs, uploads) and start it - no export/import step. The server runs its normal schema migrations automatically on first startup.
-- **The first startup after upgrading will take longer than usual** if you have a large message history (see "The search migration" below) - this is expected, not a hang.
-- **It's reversible** - `thelounge storage downgrade <version>` rolls the DB schema back (see "Is this reversible?"). Back up your data directory before upgrading anyway; it's the option that always works.
+- **The first startup after upgrading will take longer than usual** if you have a large message history (see "Search: SQLite FTS5" below) - this is expected, not a hang.
+- **It's reversible automatically, not just in principle** - this fork's own search index lives entirely in a separate, disposable file next to your message database, never inside it. Your main `.sqlite3` file stays exactly what tetrahydroc/thelounge (or upstream) would produce, continuously, with nothing to manually undo. See "Is this reversible?". Back up your data directory before upgrading anyway; it's the option that always works regardless.
 - **The Docker image moved.** If you were building/pulling from the old separate `docker-thelounge` packaging repo, that's gone - see "Docker users".
 
 ## What's changed
 
 ### Search: SQLite FTS5 (full-text index)
 
-Message search used to be an unindexed `LIKE '%term%'` scan over every stored message. It now uses a SQLite FTS5 trigram index, which is meaningfully faster on large message histories (multi-second scans down to roughly 1-2 seconds against a real ~7M-row dataset in testing - don't expect the synthetic 1000x numbers sometimes quoted for FTS5 on tiny datasets).
+Message search used to be an unindexed `LIKE '%term%'` scan over every stored message. It now uses a SQLite FTS5 trigram index, which is meaningfully faster on large message histories (multi-second scans down to roughly 1-2 seconds against a real ~17M-row dataset in testing - don't expect the synthetic 1000x numbers sometimes quoted for FTS5 on tiny datasets).
 
 The search UI also gained:
 
@@ -21,7 +21,9 @@ The search UI also gained:
 - Resuming a search session after clicking into a result and coming back - the last search, its scroll position, and result count are remembered.
 - A jump-to-date picker.
 
-**Migration impact:** on first startup after upgrading, the server builds the FTS5 index from your existing message history in one blocking step before it finishes starting up. This is proportional to how many messages you have stored - for a small/medium instance it's unnoticeable; for a large one (millions of messages) budget real time for it and don't kill the process if it looks like it's taking a while. This is a normal, one-time schema migration (see "Is this reversible?" for how it fits into the existing migration system).
+**The index lives in its own file, not your message database.** Each user's logs directory gets a `NAME.fts.sqlite3` alongside `NAME.sqlite3` - the search index itself, entirely disposable and safe to delete (it gets rebuilt automatically from your real messages the next time the server starts). Your actual message history stays in `NAME.sqlite3`, in exactly the shape tetrahydroc/thelounge and upstream thelounge already expect, permanently - this fork's schema version is pinned to theirs and never bumped further. See "Is this reversible?" for what this actually buys you.
+
+**Migration impact:** on first startup after upgrading, the server builds the FTS5 index from your existing message history in one step before it finishes starting up. This is proportional to how many messages you have stored - for a small/medium instance it's unnoticeable; for a large one (millions of messages) budget real time for it and don't kill the process if it looks like it's taking a while (measured ~5 minutes on a 26M-row/17M-searchable-message real dataset, most of that being SQLite's own `VACUUM` step, not the index build itself).
 
 ### Performance: the big one - the UI no longer freezes on large channels
 
@@ -34,7 +36,6 @@ This only affects the _default_ message list (Enhanced Search off, which is the 
 Related fixes bundled in the same effort:
 
 - A `RangeError: Maximum call stack size exceeded` crash that could occur loading very large channels is fixed.
-- WAL journal mode is now enabled for the message database (better write concurrency, standard SQLite practice for this workload).
 - Unused icon fonts were stripped and an external CDN dependency (a source of both a privacy leak and a single point of failure) was removed, and HTTP response compression was added - all reduce initial page load size/time.
 
 ### Channels now stay "warm" when you switch away
@@ -55,14 +56,9 @@ If a browser tab is left open across a server rebuild/redeploy, it now shows a s
 
 **Code-level: yes, trivially** - it's a git fork, revert to any prior commit or go back to running upstream `thelounge/thelounge` on the same data directory at any time.
 
-**Database schema-level: yes, via a CLI command.** The Lounge's existing (upstream) migration framework - which this fork uses unmodified - tracks every schema change with a matching rollback statement, including the FTS5 migration added here (`DROP TRIGGER`/`DROP TABLE`, cleanly removing the search index and nothing else). Run:
+**Database schema-level: yes, automatically, all the time - not a manual step.** Earlier builds of this fork bumped `NAME.sqlite3`'s own schema version to add the search index, which meant tetrahydroc/thelounge's own code would refuse to open a database this fork had touched (its `run_migrations()` throws if it sees a schema version newer than its own). That's fixed at the root now, not worked around: FTS5 search lives entirely in the separate `NAME.fts.sqlite3` sidecar described above, and `NAME.sqlite3` itself never gets a schema version tetrahydroc/thelounge (or upstream) wouldn't recognize as its own - there's nothing to downgrade because nothing diverges in the first place. Just point tetrahydroc/thelounge (or upstream) at the same `.thelounge` home directory and start it; `NAME.fts.sqlite3` is simply ignored (delete it if you like, it's just the disposable index).
 
-```
-thelounge storage version [username]     # check the current schema version first
-thelounge storage downgrade <version> [username]
-```
-
-to go back to an older schema version - `username` is optional (all users if omitted). This prompts for confirmation before doing anything, since it's a destructive operation past that point (only recoverable via a backup, not another downgrade). To go back specifically to running tetrahydroc/thelounge's code on the same data directory, the version to downgrade to is `1785000000000` - the schema version this fork diverged from (confirmed via `git show bbbb075d^:server/plugins/messageStorage/sqlite.ts`). **Caveat:** that's this fork's divergence point, not necessarily tetrahydroc/thelounge's schema version _today_ - if they've kept developing independently since, check their own `currentSchemaVersion` constant in `server/plugins/messageStorage/sqlite.ts` before relying on `1785000000000` being correct.
+If you're picking up an install that ran an _earlier_ build of this fork (before this fix), the first startup on the current build detects that automatically and repairs the main file in place - moving its old in-file index into the sidecar, dropping the schema objects tetrahydroc/thelounge wouldn't recognize, and resetting the schema version - no CLI command needed, it just happens.
 
 **Practical recommendation:** back up your `.thelounge` home directory (specifically the `logs/*.sqlite3` files and `config.js`) before upgrading, the same way you should before any thelounge version bump, regardless of the above - it's the one option that's always simple and always works.
 
@@ -76,7 +72,7 @@ If you were pulling from the old `fHori/docker-thelounge` repo/image, switch to:
 ghcr.io/fhori/thelounge:latest
 ```
 
-built and published directly from this repo now. Volumes/environment variables are unchanged from upstream's Docker setup - no data migration needed there either.
+built and published directly from this repo now. Volumes/environment variables are unchanged from upstream's Docker setup - no data migration needed there either. See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for a ready-to-use `docker-compose.yml`, the full parameters list, and step-by-step instructions for moving a bare-Linux (non-Docker) install or another thelounge Docker image over to this one.
 
 ## Where to file issues
 
