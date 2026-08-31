@@ -33,31 +33,6 @@ program
 		});
 	});
 
-program
-	.command("version")
-	.argument("[username]", "check a specific user only, all if not provided")
-	.description("Print the message storage schema version")
-	.on("--help", Utils.extraHelp)
-	.action(function (user) {
-		runVersionCheck(user).catch((err) => {
-			log.error(err.toString());
-			process.exit(1);
-		});
-	});
-
-program
-	.command("downgrade")
-	.argument("<version>", "schema version to downgrade to, e.g. a value printed by 'version'")
-	.argument("[username]", "downgrade a specific user only, all if not provided")
-	.description("Downgrade message storage to an older schema version")
-	.on("--help", Utils.extraHelp)
-	.action(function (version, user) {
-		runDowngrade(version, user).catch((err) => {
-			log.error(err.toString());
-			process.exit(1);
-		});
-	});
-
 async function runMigrations(user?: string) {
 	const manager = new ClientManager();
 	const users = manager.getUsers();
@@ -120,92 +95,6 @@ async function runCleaning(user: string) {
 		// if any migration fails we blow up,
 		// chances are the rest won't complete either
 	}
-}
-
-async function runVersionCheck(user?: string) {
-	const manager = new ClientManager();
-	const users = manager.getUsers();
-
-	if (user) {
-		if (!users.includes(user)) {
-			throw new Error(`invalid user ${user}`);
-		}
-
-		return checkUserVersion(manager, user);
-	}
-
-	for (const name of users) {
-		await checkUserVersion(manager, name);
-	}
-}
-
-async function checkUserVersion(manager: ClientManager, user: string) {
-	if (!isUserLogEnabled(manager, user)) {
-		log.info("logging disabled for user", user, ". Skipping");
-		return;
-	}
-
-	const sqlite = new SqliteMessageStorage(user);
-	await sqlite.enable();
-	const version = await sqlite.current_version();
-	await sqlite.close();
-	log.info("user", user, "schema version:", version.toString());
-}
-
-// Downgrades every affected user's message storage schema to an older
-// version, e.g. to go back to running an older/upstream build on the same
-// data directory. Interactive on purpose - see server/command-line/users/
-// add.ts and reset.ts for the same log.prompt() confirmation pattern used
-// elsewhere in this CLI for a destructive/irreversible action.
-async function runDowngrade(versionArg: string, user?: string) {
-	const version = Number(versionArg);
-
-	if (!Number.isFinite(version) || version <= 0) {
-		throw new Error(`invalid version ${versionArg}`);
-	}
-
-	const manager = new ClientManager();
-	const users = manager.getUsers();
-	const targetUsers = user ? [user] : users;
-
-	if (user && !users.includes(user)) {
-		throw new Error(`invalid user ${user}`);
-	}
-
-	log.warn(
-		`This will drop any schema objects (tables, indexes, triggers) added after version ${version} for ${
-			user ? `user ${user}` : `all ${targetUsers.length} user(s)`
-		} - this is only reversible by restoring a backup.`
-	);
-
-	const answer = await log.prompt({
-		text: `Type "yes" to continue downgrading to version ${version}:`,
-		default: "no",
-	});
-
-	if (answer !== "yes") {
-		log.info("Aborted, nothing was changed.");
-		return;
-	}
-
-	for (const name of targetUsers) {
-		await downgradeUser(manager, name, version);
-	}
-}
-
-async function downgradeUser(manager: ClientManager, user: string, version: number) {
-	log.info("handling user", user);
-
-	if (!isUserLogEnabled(manager, user)) {
-		log.info("logging disabled for user", user, ". Skipping");
-		return;
-	}
-
-	const sqlite = new SqliteMessageStorage(user);
-	await sqlite.enable();
-	const newVersion = await sqlite.downgrade_to(version);
-	await sqlite.close();
-	log.info("user", user, "downgraded to schema version", newVersion.toString());
 }
 
 async function cleanUser(manager: ClientManager, user: string) {
