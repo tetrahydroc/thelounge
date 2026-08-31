@@ -64,7 +64,7 @@
     "express": "5.1.0",
     "file-type": "21.1.0",
     "filenamify": "7.0.1",
-    "irc-framework": "file:vendor/irc-framework",
+    "irc-framework": "patch:irc-framework@npm%3A4.14.0#~/.yarn/patches/irc-framework-npm-4.14.0-53cf25da14.patch",
     "ldapts": "8.0.9",
     "linkify-it": "5.0.0",
     "lodash": "4.17.21",

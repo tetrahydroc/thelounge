@@ -1,8 +1,0 @@
-/coverage/
-/node_modules/
-/dist/
-/*.sublime-project
-/*.sublime-workspace
-/irc-framework-*.tgz
-/.nyc_output/
-/yarn-error.log
