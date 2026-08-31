@@ -103,6 +103,7 @@ export default async function (
 		.get("/service-worker.js", forceNoCacheRequest)
 		.get("/js/bundle.js.map", forceNoCacheRequest)
 		.get("/css/style.css.map", forceNoCacheRequest)
+		.get("/version-hash", forceNoCacheRequest, versionHashRequest)
 		.use(express.static(Utils.getFileFromRelativeToRoot("public"), staticOptions))
 		.use("/storage/", express.static(Config.getStoragePath(), staticOptions));
 
@@ -453,6 +454,14 @@ function forceNoCacheRequest(_req: Request, res: Response, next: NextFunction) {
 	// browsers must fetch the latest version of these files (service worker, source maps)
 	res.setHeader("Cache-Control", "no-cache, no-transform");
 	return next();
+}
+
+function versionHashRequest(_req: Request, res: Response) {
+	// Polled periodically by an already-open client tab to detect that the
+	// server has been rebuilt/redeployed since it loaded - see
+	// client/js/buildStaleness.ts. Must never be cached (forceNoCacheRequest
+	// above), otherwise a stale tab could keep reading a stale answer too.
+	res.type("text/plain").send(Helper.getVersionCacheBust());
 }
 
 function indexRequest(_req: Request, res: Response) {
@@ -969,6 +978,7 @@ function getClientConfiguration(): SharedConfiguration | LockedSharedConfigurati
 		applicationServerKey: manager!.webPush.vapidKeys!.publicKey,
 		version: Helper.getVersionNumber(),
 		gitCommit: Helper.getGitCommit(),
+		buildHash: Helper.getVersionCacheBust(),
 		themes: themes.getAll(),
 		defaultTheme: Config.values.theme,
 		public: Config.values.public,

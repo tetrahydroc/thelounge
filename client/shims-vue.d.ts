@@ -6,3 +6,7 @@ declare module "*.vue" {
 	const component: DefineComponent<Record<string, unknown>, Record<string, unknown>, unknown>;
 	export default component;
 }
+
+// Injected by webpack's DefinePlugin (webpack.config.mjs) - "dev" outside
+// production builds. See client/js/buildStaleness.ts.
+declare const __CLIENT_BUILD_HASH__: string;

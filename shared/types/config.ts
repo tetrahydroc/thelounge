@@ -13,6 +13,7 @@ type SharedConfigurationBase = {
 	applicationServerKey: string;
 	version: string;
 	gitCommit: string | null;
+	buildHash: string;
 	themes: ConfigTheme[];
 	defaultTheme: string;
 	fileUploadMaxFileSize?: number;

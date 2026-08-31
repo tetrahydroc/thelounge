@@ -87,6 +87,7 @@ export type State = {
 	} | null;
 	messageSearchPendingQuery: SearchQuery | null;
 	searchEnabled: boolean;
+	clientBuildStale: boolean;
 };
 
 const state = (): State => ({
@@ -112,6 +113,7 @@ const state = (): State => ({
 	messageSearchResults: null,
 	messageSearchPendingQuery: null,
 	searchEnabled: false,
+	clientBuildStale: false,
 });
 
 type Getters = {
@@ -237,6 +239,7 @@ type Mutations = {
 	messageSearchResults(state: State, value: State["messageSearchResults"]): void;
 	addMessageSearchResults(state: State, value: NonNullable<State["messageSearchResults"]>): void;
 	messageSearchScrollTop(state: State, value: number): void;
+	clientBuildStale(state: State, value: State["clientBuildStale"]): void;
 };
 
 const mutations: Mutations = {
@@ -338,6 +341,9 @@ const mutations: Mutations = {
 		if (state.messageSearchResults) {
 			state.messageSearchResults.scrollTop = value;
 		}
+	},
+	clientBuildStale(state, value) {
+		state.clientBuildStale = value;
 	},
 };
 
