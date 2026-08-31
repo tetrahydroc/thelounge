@@ -238,10 +238,19 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		return storedSchemaVersion;
 	}
 
-	async update_version_in_db() {
+	// Defaults to currentSchemaVersion for the upgrade path (_run_migrations,
+	// which always migrates up to the running build's version); _downgrade_to
+	// passes its own target explicitly - it must NOT fall back to
+	// currentSchemaVersion, or a downgrade would drop the schema objects but
+	// then mislabel the DB as still being at the newer version, which both
+	// defeats downgrading for compatibility with older code (which would see
+	// a version newer than itself and refuse to start) and would silently
+	// stop this build's own upgrade path from ever recreating what was
+	// dropped (current_version() === currentSchemaVersion looks up to date).
+	async update_version_in_db(version: number = currentSchemaVersion) {
 		return this.serialize_run(
 			"UPDATE options SET value = ? WHERE name = 'schema_version'",
-			currentSchemaVersion.toString()
+			version.toString()
 		);
 	}
 
@@ -438,7 +447,7 @@ class SqliteMessageStorage implements SearchableMessageStorage {
 		}
 
 		await this.delete_migrations_older_than(version);
-		await this.update_version_in_db();
+		await this.update_version_in_db(version);
 
 		return version;
 	}
