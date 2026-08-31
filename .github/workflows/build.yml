@@ -34,6 +34,9 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Install
         run: yarn --frozen-lockfile --non-interactive
 
