@@ -40,7 +40,7 @@ jobs:
         run: corepack enable
 
       - name: Install
-        run: yarn --frozen-lockfile --non-interactive
+        run: yarn install --immutable
 
       - name: Build
         run: yarn build
