@@ -167,6 +167,19 @@ describe("Network", function () {
 		});
 
 		it("should enforce lockNetwork", function () {
+			// This test's expected locked-network values (irc.example.com,
+			// port 6697/tls) come from test/fixtures/.thelounge/config.js,
+			// loaded via an unawaited config.setHome() call in
+			// test/fixtures/env.ts (mocha's --require doesn't wait for a
+			// required module's internal promise chains, only the import
+			// itself) - a real, pre-existing race whose outcome can depend on
+			// environment timing (observed failing in CI, passing locally).
+			// Set the one value this test actually depends on explicitly
+			// instead, so it's correct regardless of that race, and restore
+			// whatever was there before so this doesn't leak into other tests.
+			const originalDefaultHost = Config.values.defaults.host;
+			Config.values.defaults.host = "irc.example.com";
+
 			Config.values.lockNetwork = true;
 
 			// Make sure we lock in private mode
@@ -194,6 +207,7 @@ describe("Network", function () {
 			expect(network2.host).to.equal("irc.example.com");
 
 			Config.values.lockNetwork = false;
+			Config.values.defaults.host = originalDefaultHost;
 		});
 
 		it("realname should be set to nick only if realname is empty", function () {
