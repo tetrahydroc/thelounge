@@ -25,6 +25,11 @@ This fork diverged from `tetrahydroc/thelounge` to move faster on performance an
 
 - A small banner now appears if your browser tab is running client code older than what the server is currently serving (checked every 10 minutes and once on load), with a one-click reload.
 - The message-storage migration engine's downgrade path had a bug where it dropped the right schema objects but mislabeled the resulting version as still current - found and fixed while building the FTS5 sidecar work above, which depends on the version bookkeeping being trustworthy.
+- Loading scrollback (regular scroll-up or an Enhanced Search jump-to-hit) no longer grows a channel's in-memory message buffer without bound - it's now capped independently of the existing `maxHistory` setting, since that setting's unlimited option is meant for the live tail, not scrollback. Scrolling back past the cap just re-reads that range from storage instead of memory.
+
+### Maintenance
+
+- Replaced the vendored copy of `irc-framework` (a full source fork, ~14k LOC) with the real npm package plus a 98-line Yarn patch carrying only the two fixes actually in use (a ping-timer double-schedule guard and a reconnect-attempt counting fix). The other patched behaviors in the old vendored copy (IRCv3 standard-replies, a Unix socket transport, a re-enabled `Channel.action()`) had no caller anywhere in the app and were dropped.
 
 ### Deployment
 
