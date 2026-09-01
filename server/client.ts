@@ -741,6 +741,25 @@ class Client {
 							// subsequent "more" requests can be served from
 							// memory (or skip cleanly past it) again.
 							Helper.unshiftMany(chan.messages, fresh);
+
+							// Backward paging grows this buffer with no
+							// natural ceiling (Enhanced Search's 10k-row
+							// jumps are the worst case, against a
+							// potentially multi-million-row history). Cap it
+							// independently of maxHistory: that setting's
+							// -1/unlimited is an admin's deliberate choice
+							// for the live tail, not license for scrollback
+							// to grow unbounded. `messages` above was
+							// already sliced out for this response, so
+							// trimming the oldest rows off the front here
+							// doesn't affect what gets sent to the client -
+							// it only means a re-scroll past this point
+							// re-fetches from storage instead of memory.
+							const scrollbackCap = maxBatchSize * 3;
+
+							if (chan.messages.length > scrollbackCap) {
+								chan.messages.splice(0, chan.messages.length - scrollbackCap);
+							}
 						}
 					}
 				} catch (err) {
