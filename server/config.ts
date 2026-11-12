@@ -16,6 +16,10 @@ export type WebIRC = {
 	[key: string]: unknown;
 };
 
+type TorrentSites = TorrentSite[];
+
+type TorrentSitesInfo = TorrentSiteInfo[];
+
 type Https = {
 	enable: boolean;
 	key: string;
@@ -118,6 +122,9 @@ export type ConfigType = {
 	massEventDetection: MassEventDetection;
 	useHexIp: boolean;
 	webirc?: WebIRC;
+	defaultTorrentSiteInfo: DefaultTorrentSiteInfo;
+	torrentSites?: TorrentSites;
+	torrentSitesInfo?: TorrentSitesInfo; // This is the normalized version of torrentSites, where all sites have the default info applied, so that the client doesn't have to do it.
 	identd: Identd;
 	oidentd?: string;
 	ldap: Ldap;
@@ -126,10 +133,45 @@ export type ConfigType = {
 };
 
 import defaultConfig from "../defaults/config.js";
+import {DefaultTorrentSiteInfo, TorrentSite, TorrentSiteInfo} from "../shared/types/chan.js";
 
 class Config {
 	values = {..._.cloneDeep(defaultConfig), themeColor: ""} as unknown as ConfigType;
 	#homePath = "";
+
+	private normalizeTorrentSite(site: TorrentSite, defaultSiteInfo: DefaultTorrentSiteInfo): TorrentSiteInfo {
+		const normalized = {
+			...defaultSiteInfo,
+			...site,
+		};
+
+		normalized.profileUrl = `https://${normalized.domain}${normalized.profileUrl}`;
+
+		return normalized as TorrentSiteInfo;
+	}
+
+	private normalizeTorrentSites(sites: TorrentSite[] | undefined, defaultSiteInfo: DefaultTorrentSiteInfo): TorrentSiteInfo[] | undefined {
+		if (!sites) {
+			return undefined;
+		}
+
+		return sites.map(site => this.normalizeTorrentSite(site, defaultSiteInfo));
+	}
+
+
+	getTorrentSiteInfo(host: string, channelName: string) {
+		if (!this.values.torrentSitesInfo) {
+			return undefined;
+		}
+
+		for (const site of this.values.torrentSitesInfo) {
+			if (site.host === host && (!site.channels || site.channels.includes(channelName))) {
+				return site;
+			}
+		}
+
+		return undefined;
+	}
 
 	getHomePath() {
 		return this.#homePath;
@@ -248,6 +290,11 @@ class Config {
 				log.warn("Using default configuration...");
 			}
 		}
+
+		this.values.torrentSitesInfo = this.normalizeTorrentSites(
+			this.values.torrentSites,
+			this.values.defaultTorrentSiteInfo
+		);
 
 		if (this.values.fileUpload.baseUrl) {
 			try {
