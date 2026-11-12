@@ -81,7 +81,7 @@ class Uploader {
 	}
 
 	static async routeGetFile(this: void, req: Request, res: Response) {
-		const name = req.params.name;
+		const name = <string>req.params.name;
 
 		const nameRegex = /^[0-9a-f]{16}$/;
 
@@ -100,7 +100,7 @@ class Uploader {
 		}
 
 		// Force a download in the browser if it's not an allowed type (binary or otherwise unknown)
-		let slug = req.params.slug;
+		let slug = <string>req.params.slug;
 		const isInline = detectedMimeType in inlineContentDispositionTypes;
 		let disposition = isInline ? "inline" : "attachment";
 
@@ -144,8 +144,8 @@ class Uploader {
 		let streamWriter: fs.WriteStream | null;
 
 		const uploadProvider = UploadProviders.find(b => b.id === req.params.service);
-		const token = req.params.token;
-		const ttl = req.params.ttl ?? "";
+		const token = <string>req.params.token;
+		const ttl = <string>req.params.ttl ?? "";
 
 		const doneCallback = () => {
 			// detach the stream and drain any remaining data

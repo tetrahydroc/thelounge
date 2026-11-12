@@ -38,6 +38,7 @@ export default (app: express.Application) => {
 			publicPath: webpackConfig.output?.publicPath,
 		})
 	).use(
+		/* @ts-expect-error TS2345 */ // dirty fix for stupid compile issue
 		webpackHotMiddleware(compiler, {
 			path: "/storage/__webpack_hmr",
 		})
