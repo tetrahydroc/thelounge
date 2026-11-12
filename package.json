@@ -27,8 +27,7 @@
     "test:mocha": "webpack --mode=development && cross-env NODE_ENV=test tsx node_modules/.bin/mocha --config=test/.mocharc.yml 'test/**/*.ts'",
     "test:nospec": "webpack --mode=development && cross-env NODE_ENV=test tsx node_modules/.bin/mocha --config=test/.mocharc.yml",
     "watch": "webpack --watch",
-    "githooks-install": "git config core.hooksPath scripts/git-hooks",
-    "build-start:prod": "$env:NODE_ENV='production'; yarn build; yarn start"
+    "githooks-install": "git config core.hooksPath scripts/git-hooks"
   },
   "keywords": [
     "lounge",
