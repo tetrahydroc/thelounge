@@ -262,7 +262,11 @@ export default defineComponent({
 				return;
 			}
 
-			eventbus.emit("message:reply", `\x02${nick}\x02: \x0314,99"\x1D${content}\x1D"\x03`);
+			const replyText = store.state.settings.replyToMessagePlainText
+				? `${nick}: (re: "${content}") `
+				: `\x02${nick}\x02: \x0314,99"\x1D${content}\x1D"\x03 `;
+
+			eventbus.emit("message:reply", replyText);
 		};
 
 		return {

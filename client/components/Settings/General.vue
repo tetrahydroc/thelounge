@@ -193,6 +193,20 @@
 					<button class="extra-help" />
 				</span>
 			</label>
+			<label v-if="store.state.settings.enableReplyToMessage" class="opt">
+				<input
+					:checked="store.state.settings.replyToMessagePlainText"
+					type="checkbox"
+					name="replyToMessagePlainText"
+				/>
+				Use plain text quote in reply
+				<span
+					class="tooltipped tooltipped-n tooltipped-no-delay"
+					aria-label="Quote replies without IRC bold/color/italic formatting codes"
+				>
+					<button class="extra-help" />
+				</span>
+			</label>
 		</div>
 		<div v-if="!store.state.serverConfiguration?.public">
 			<h2>Settings synchronisation</h2>
