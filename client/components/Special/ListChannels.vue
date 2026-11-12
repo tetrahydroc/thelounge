@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from "vue";
+import {computed, defineComponent, PropType} from "vue";
 import {ClientChan, ClientNetwork} from "../../js/types";
 import ParsedMessage from "../ParsedMessage.vue";
 
@@ -32,11 +32,11 @@ export default defineComponent({
 		network: {type: Object as PropType<ClientNetwork>, required: true},
 		channel: {type: Object as PropType<ClientChan>, required: true},
 	},
-	setup (props) {
+	setup(props) {
 		return {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			channelData: (props.channel.data as any)
-		}
+			channelData: computed<any>(() => props.channel.data),
+		};
 	},
 });
 </script>
