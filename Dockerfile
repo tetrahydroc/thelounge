@@ -1,0 +1,52 @@
+# syntax=docker/dockerfile:1
+
+FROM ghcr.io/linuxserver/baseimage-alpine:3.22
+
+# set version label
+ARG BUILD_DATE
+ARG VERSION
+LABEL build_version="Build-date:- ${BUILD_DATE} Version:- ${VERSION}"
+LABEL maintainer="fHori"
+
+# environment settings
+ENV THELOUNGE_HOME="/config"
+
+WORKDIR /app/thelounge
+
+COPY . /app/thelounge
+
+RUN \
+  echo "**** install build packages ****" && \
+  apk add --no-cache --virtual=build-dependencies \
+    build-base \
+    git \
+    py3-setuptools \
+    python3-dev && \
+  echo "**** install runtime packages ****" && \
+  apk add --no-cache \
+    nodejs \
+    npm && \
+  echo "**** modify thelounge source ****" && \
+  sed -i "s/public: false,/public: true,/g" defaults/config.js && \
+  echo "**** install thelounge ****" && \
+  npm install -g corepack && \
+  yarn install && \
+  NODE_ENV=production yarn build && \
+  npm link && \
+  yarn cache clean && \
+  printf "Build-date: ${BUILD_DATE}\nVersion: ${VERSION}" > /build_version && \
+  echo "**** cleanup ****" && \
+  apk del --purge \
+    build-dependencies && \
+  rm -rf \
+    /root \
+    /tmp/* && \
+  mkdir -p / \
+    /root
+
+# copy local files
+COPY root/ /
+
+# ports and volumes
+EXPOSE 9000
+VOLUME /config

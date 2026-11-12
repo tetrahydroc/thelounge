@@ -62,19 +62,6 @@ const copyPatterns = (isProduction) => [
 		to: "fonts/font-awesome/[name][ext]",
 	},
 	{
-		from: resolveFromRoot("node_modules/@phosphor-icons/web/src/*/Phosphor*.*").replace(
-			/\\/g,
-			"/"
-		),
-		to: "css/[name][ext]",
-	},
-	{
-		from: resolveFromRoot(
-			"node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff*"
-		).replace(/\\/g, "/"),
-		to: "fonts/[name][ext]",
-	},
-	{
 		from: resolveFromRoot("client/js/loading-error-handlers.js"),
 		to: "js/[name][ext]",
 	},
@@ -200,6 +187,10 @@ function createBaseConfig(mode, isProduction) {
 			new DefinePlugin({
 				__VUE_PROD_DEVTOOLS__: false,
 				__VUE_OPTIONS_API__: false,
+				// Same hash service-worker.js's cacheName gets below, so the
+				// running client bundle can compare itself against what the
+				// server is currently serving - see client/js/buildStaleness.ts.
+				__CLIENT_BUILD_HASH__: JSON.stringify(isProduction ? getVersionCacheBust() : "dev"),
 			}),
 			createMiniCssExtractPlugin(),
 			new CopyPlugin({patterns: copyPatterns(isProduction)}),

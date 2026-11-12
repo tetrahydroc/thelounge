@@ -10,6 +10,7 @@ import MessageStorage, {
 	migrations,
 	necessaryMigrations,
 	rollbacks,
+	computeSidecarSyncPlan,
 } from "../../dist/server/plugins/messageStorage/sqlite.js";
 import Database from "better-sqlite3";
 import type {DeletionRequest} from "../../server/plugins/messageStorage/types.js";
@@ -252,10 +253,16 @@ describe("SQLite Message Storage", function () {
 		}
 	}
 
+	const expectedSidecarPath = path.join(Config.getHomePath(), "logs", "testUser.fts.sqlite3");
+
 	before(function (done) {
 		store = new MessageStorage("testUser");
 
-		// Delete database file from previous test run
+		// Delete database file (and fts sidecar) from previous test run
+		if (fs.existsSync(expectedSidecarPath)) {
+			fs.unlinkSync(expectedSidecarPath);
+		}
+
 		if (fs.existsSync(expectedPath)) {
 			fs.unlink(expectedPath, done);
 		} else {
@@ -267,6 +274,11 @@ describe("SQLite Message Storage", function () {
 		// After tests run, remove the logs folder
 		// so we return to the clean state
 		fs.unlinkSync(expectedPath);
+
+		if (fs.existsSync(expectedSidecarPath)) {
+			fs.unlinkSync(expectedSidecarPath);
+		}
+
 		fs.rmdir(path.join(Config.getHomePath(), "logs"), done);
 	});
 
@@ -276,6 +288,31 @@ describe("SQLite Message Storage", function () {
 
 		await store.enable();
 		expect(store.isEnabled).to.equal(true);
+	});
+
+	it("should create the fts sidecar file", function () {
+		expect(fs.existsSync(expectedSidecarPath)).to.equal(true);
+	});
+
+	it("main file stays tetra-openable (no fork-only objects, pinned version)", async function () {
+		const optRow = await db_get_one("SELECT value FROM options WHERE name = 'schema_version'");
+		expect(optRow.value).to.equal("1703322560448");
+
+		const ftsTable = await db_get_one(
+			"SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'messages_fts'"
+		);
+		expect(ftsTable).to.equal(undefined);
+
+		const triggers = store.database
+			.prepare("SELECT name FROM sqlite_master WHERE type = 'trigger'")
+			.all();
+		expect(triggers).to.have.lengthOf(0);
+
+		const columns = store.database
+			.prepare("PRAGMA table_info(messages)")
+			.all()
+			.map((c) => (c as Record<string, unknown>).name);
+		expect(columns).to.deep.equal(["id", "network", "channel", "time", "type", "msg"]);
 	});
 
 	it("should resolve an empty array when disabled", async function () {
@@ -457,6 +494,303 @@ describe("SQLite Message Storage", function () {
 	it("should close database", async function () {
 		await store.close();
 		expect(fs.existsSync(expectedPath)).to.equal(true);
+	});
+});
+
+describe("computeSidecarSyncPlan", function () {
+	it("plans a rebuild when the indexed prefix doesn't match", function () {
+		const plan = computeSidecarSyncPlan({
+			mainCount: 10,
+			ftsCount: 8,
+			ftsMaxRowid: 10,
+			prefixCount: 9, // a row within [1, 10] was deleted from messages
+		});
+		expect(plan.action).to.equal("rebuild");
+	});
+
+	it("plans a cheap append when the drift is a pure tail", function () {
+		const plan = computeSidecarSyncPlan({
+			mainCount: 20,
+			ftsCount: 10,
+			ftsMaxRowid: 10,
+			prefixCount: 10, // everything up to ftsMaxRowid is still accounted for
+		});
+		expect(plan.action).to.equal("append");
+		expect(plan.fromId).to.equal(10);
+	});
+
+	it("plans a no-op-shaped append for a brand-new empty sidecar", function () {
+		const plan = computeSidecarSyncPlan({
+			mainCount: 5,
+			ftsCount: 0,
+			ftsMaxRowid: 0,
+			prefixCount: 0,
+		});
+		expect(plan.action).to.equal("append");
+		expect(plan.fromId).to.equal(0);
+	});
+
+	it("plans a no-op-shaped append when already fully in sync", function () {
+		const plan = computeSidecarSyncPlan({
+			mainCount: 5,
+			ftsCount: 5,
+			ftsMaxRowid: 5,
+			prefixCount: 5,
+		});
+		expect(plan.action).to.equal("append");
+		expect(plan.fromId).to.equal(5);
+	});
+});
+
+// computeSidecarSyncPlan above only tests the pure decision logic - these
+// exercise the actual I/O path (reconcileSidecar / catchUpSidecarAppend /
+// fullRebuildSidecar) against real files, simulating the scenarios the
+// planner is meant to handle: the sidecar going missing entirely, and tetra
+// (or anything else) mutating the main file while the sidecar isn't looking.
+describe("SQLite sidecar reconcile (real I/O)", function () {
+	const userName = "sidecarReconcileTestUser";
+	const mainPath = path.join(Config.getHomePath(), "logs", `${userName}.sqlite3`);
+	const sidecarPath = path.join(Config.getHomePath(), "logs", `${userName}.fts.sqlite3`);
+
+	afterEach(function () {
+		for (const p of [mainPath, sidecarPath]) {
+			if (fs.existsSync(p)) {
+				fs.unlinkSync(p);
+			}
+		}
+	});
+
+	async function indexMessages(
+		store: MessageStorage,
+		net: TestNetwork,
+		chan: TestChannel,
+		texts: string[]
+	) {
+		for (const text of texts) {
+			await store.index(net, chan, new Msg({text}));
+		}
+	}
+
+	it("rebuilds search from scratch when the sidecar file is deleted", async function () {
+		const net: TestNetwork = {uuid: "recon-net"};
+		const chan: TestChannel = {name: "#recon"};
+
+		let store = new MessageStorage(userName);
+		await store.enable();
+		await indexMessages(store, net, chan, ["alpha one", "alpha two", "alpha three"]);
+		await store.close();
+
+		expect(fs.existsSync(sidecarPath)).to.equal(true);
+		fs.unlinkSync(sidecarPath);
+		expect(fs.existsSync(sidecarPath)).to.equal(false);
+
+		store = new MessageStorage(userName);
+		await store.enable();
+
+		const results = await store.search({
+			searchTerm: "alpha",
+			networkUuid: net.uuid,
+			channelName: "",
+			offset: 0,
+		});
+		expect(results.results).to.have.lengthOf(3);
+
+		await store.close();
+	});
+
+	it("catches up when new messages were added directly to the main file (pure append)", async function () {
+		const net: TestNetwork = {uuid: "recon-net-2"};
+		const chan: TestChannel = {name: "#recon2"};
+
+		let store = new MessageStorage(userName);
+		await store.enable();
+		await indexMessages(store, net, chan, ["bravo one", "bravo two"]);
+		await store.close();
+
+		// Simulate tetra (or anything else without sidecar knowledge) writing
+		// straight to the main file - no FTS involvement at all.
+		const rawDb = new Database(mainPath);
+		rawDb
+			.prepare(
+				"INSERT INTO messages(network, channel, time, type, msg) VALUES (?, ?, ?, ?, ?)"
+			)
+			.run(net.uuid, chan.name, Date.now(), "message", JSON.stringify({text: "bravo three"}));
+		rawDb.close();
+
+		store = new MessageStorage(userName);
+		await store.enable(); // should take the cheap append path, not a full rebuild
+
+		const results = await store.search({
+			searchTerm: "bravo",
+			networkUuid: net.uuid,
+			channelName: "",
+			offset: 0,
+		});
+		expect(results.results.map((m) => m.text)).to.have.members([
+			"bravo one",
+			"bravo two",
+			"bravo three",
+		]);
+
+		await store.close();
+	});
+
+	it("rebuilds when a message was deleted from within the already-indexed range", async function () {
+		const net: TestNetwork = {uuid: "recon-net-3"};
+		const chan: TestChannel = {name: "#recon3"};
+
+		let store = new MessageStorage(userName);
+		await store.enable();
+		await indexMessages(store, net, chan, ["charlie one", "charlie two", "charlie three"]);
+		await store.close();
+
+		// Simulate tetra deleting a message directly from the main file
+		// (not through this fork's deleteChannel/deleteMessages, which would
+		// keep the sidecar in sync themselves) - a real inconsistency within
+		// the range the sidecar already believed was fully indexed.
+		const rawDb = new Database(mainPath);
+		rawDb.prepare("DELETE FROM messages WHERE msg LIKE '%charlie two%'").run();
+		const remainingCount = (
+			rawDb.prepare("SELECT COUNT(*) as c FROM messages").get() as {c: number}
+		).c;
+		rawDb.close();
+		expect(remainingCount).to.equal(2);
+
+		store = new MessageStorage(userName);
+		await store.enable(); // should detect the prefix mismatch and fully rebuild
+
+		const results = await store.search({
+			searchTerm: "charlie",
+			networkUuid: net.uuid,
+			channelName: "",
+			offset: 0,
+		});
+		expect(results.results.map((m) => m.text)).to.have.members([
+			"charlie one",
+			"charlie three",
+		]);
+
+		await store.close();
+	});
+});
+
+describe("SQLite legacy fork repair", function () {
+	// Shape of the main file this fork wrote before the sidecar refactor -
+	// schema_version 1788000000000, FTS5 table + triggers living directly in
+	// the main file. DO NOT change this to match the current schema; the
+	// whole point of this fixture is to be the *old* shape.
+	const legacyMainSchema = [
+		"CREATE TABLE options (name TEXT, value TEXT, CONSTRAINT name_unique UNIQUE (name))",
+		"CREATE TABLE messages (id INTEGER PRIMARY KEY AUTOINCREMENT, network TEXT, channel TEXT, time INTEGER, type TEXT, msg TEXT)",
+		`CREATE TABLE migrations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            version INTEGER NOT NULL UNIQUE,
+            rollback_forbidden INTEGER DEFAULT 0 NOT NULL
+        )`,
+		`CREATE TABLE rollback_steps (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            migration_id INTEGER NOT NULL REFERENCES migrations ON DELETE CASCADE,
+            step INTEGER NOT NULL,
+            statement TEXT NOT NULL
+        )`,
+		"CREATE INDEX network_channel ON messages (network, channel)",
+		"CREATE INDEX time ON messages (time)",
+		"CREATE INDEX msg_type_idx on messages (type)",
+		"CREATE INDEX network_channel_time ON messages (network, channel, time)",
+		"CREATE VIRTUAL TABLE messages_fts USING fts5(text, tokenize='trigram', detail=none)",
+		`CREATE TRIGGER messages_ai AFTER INSERT ON messages WHEN new.type = 'message'
+            BEGIN INSERT INTO messages_fts(rowid, text) VALUES (new.id, json_extract(new.msg, '$.text')); END`,
+		`CREATE TRIGGER messages_ad AFTER DELETE ON messages WHEN old.type = 'message'
+            BEGIN DELETE FROM messages_fts WHERE rowid = old.id; END`,
+	];
+
+	const legacyUserName = "legacyForkRepairTestUser";
+	const legacyPath = path.join(Config.getHomePath(), "logs", `${legacyUserName}.sqlite3`);
+	const legacySidecarPath = path.join(
+		Config.getHomePath(),
+		"logs",
+		`${legacyUserName}.fts.sqlite3`
+	);
+
+	afterEach(function () {
+		if (fs.existsSync(legacyPath)) {
+			fs.unlinkSync(legacyPath);
+		}
+
+		if (fs.existsSync(legacySidecarPath)) {
+			fs.unlinkSync(legacySidecarPath);
+		}
+	});
+
+	it("repairs a main file this fork previously upgraded, without losing search", async function () {
+		fs.mkdirSync(path.join(Config.getHomePath(), "logs"), {recursive: true});
+
+		const legacyDb = new Database(legacyPath);
+
+		for (const stmt of legacyMainSchema) {
+			legacyDb.prepare(stmt).run();
+		}
+
+		legacyDb
+			.prepare("INSERT INTO options(name, value) VALUES ('schema_version', '1788000000000')")
+			.run();
+
+		const insertMsg = legacyDb.prepare(
+			"INSERT INTO messages(network, channel, time, type, msg) VALUES (?, ?, ?, ?, ?)"
+		);
+
+		for (let i = 0; i < 5; i++) {
+			insertMsg.run(
+				"legacy-net",
+				"#legacy",
+				1600000000000 + i,
+				"message",
+				JSON.stringify({text: `legacy message ${i}`, from: {nick: "old"}})
+			);
+		}
+
+		legacyDb.close();
+
+		const store = new MessageStorage(legacyUserName);
+		await store.enable();
+
+		try {
+			const optRow = store.database
+				.prepare("SELECT value FROM options WHERE name = 'schema_version'")
+				.get() as Record<string, unknown>;
+			expect(optRow.value).to.equal(currentSchemaVersion.toString());
+
+			const ftsTable = store.database
+				.prepare(
+					"SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'messages_fts'"
+				)
+				.get();
+			expect(ftsTable).to.equal(undefined);
+
+			const triggers = store.database
+				.prepare("SELECT name FROM sqlite_master WHERE type = 'trigger'")
+				.all();
+			expect(triggers).to.have.lengthOf(0);
+
+			const legacyMigrationRows = store.database
+				.prepare(
+					"SELECT version FROM migrations WHERE version IN (1785000000000, 1788000000000)"
+				)
+				.all();
+			expect(legacyMigrationRows).to.have.lengthOf(0);
+
+			// End-to-end: the sidecar copy actually worked, not just that the
+			// main file got cleaned up.
+			const results = await store.search({
+				searchTerm: "legacy",
+				networkUuid: "legacy-net",
+				channelName: "",
+				offset: 0,
+			});
+			expect(results.results).to.have.lengthOf(5);
+		} finally {
+			await store.close();
+		}
 	});
 });
 

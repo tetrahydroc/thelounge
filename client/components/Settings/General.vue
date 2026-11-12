@@ -54,8 +54,12 @@
 						</option>
 					</select>
 					<div v-if="currentUploadBackend?.supportNote">
-						<p v-for="supportNote in currentUploadBackend?.supportNote?.split('\n')" :key="supportNote" class="upload-note">
-							{{supportNote}}
+						<p
+							v-for="supportNote in currentUploadBackend?.supportNote?.split('\n')"
+							:key="supportNote"
+							class="upload-note"
+						>
+							{{ supportNote }}
 						</p>
 					</div>
 					<div v-if="currentUploadBackend?.requiresURL">
@@ -164,6 +168,30 @@
 			</label>
 		</div>
 		<div>
+			<h2>Performance</h2>
+			<label class="opt">
+				Keep {{ channelCacheSizeDisplay }} recently-left channel{{
+					channelCacheSizeDisplay === 1 ? "" : "s"
+				}}
+				fully loaded
+				<input
+					:value="store.state.settings.channelCacheSize"
+					type="range"
+					name="channelCacheSize"
+					min="0"
+					max="20"
+					step="1"
+					@input="onChannelCacheSizeInput"
+				/>
+				<span
+					class="tooltipped tooltipped-n tooltipped-no-delay"
+					aria-label="Channels you switch away from normally trim down to their last 100 messages. Keeping more of them fully loaded makes switching back instant, at the cost of more memory."
+				>
+					<button class="extra-help" />
+				</span>
+			</label>
+		</div>
+		<div>
 			<h2>Input</h2>
 			<label class="opt">
 				<input
@@ -245,10 +273,10 @@
 </template>
 
 <style>
-	p.upload-note {
-		color: var(--body-color-muted);
-		font-style: italic;
-	}
+p.upload-note {
+	color: var(--body-color-muted);
+	font-style: italic;
+}
 </style>
 
 <script lang="ts">
@@ -273,6 +301,14 @@ export default defineComponent({
 	setup() {
 		const store = useStore();
 		const canRegisterProtocol = ref(false);
+
+		// Live-updates while dragging the slider; the form's @change handler
+		// (Settings.vue) commits the actual setting only once you release it.
+		const channelCacheSizeDisplay = ref(store.state.settings.channelCacheSize);
+
+		const onChannelCacheSizeInput = (event: Event) => {
+			channelCacheSizeDisplay.value = Number((event.target as HTMLInputElement).value);
+		};
 
 		const hasInstallPromptEvent = computed(() => {
 			// TODO: This doesn't hide the button after clicking
@@ -301,14 +337,20 @@ export default defineComponent({
 		};
 
 		const currentUploadBackend = computed(() => {
-			return UploadProviders.find(b => b.id === store.state.settings.uploadTo);
+			return UploadProviders.find((b) => b.id === store.state.settings.uploadTo);
 		});
 
 		onUpdated(() => {
-			if (!currentUploadBackend.value?.validTtl?.find(ttl => ttl.id === store.state.settings.uploadTTL)) {
-				store.state.settings.uploadTTL = currentUploadBackend.value?.validTtl?.find(ttl => ttl.default === true)?.id ?? ""
+			if (
+				!currentUploadBackend.value?.validTtl?.find(
+					(ttl) => ttl.id === store.state.settings.uploadTTL
+				)
+			) {
+				store.state.settings.uploadTTL =
+					currentUploadBackend.value?.validTtl?.find((ttl) => ttl.default === true)?.id ??
+					"";
 			}
-		})
+		});
 
 		const onForceSyncClick = () => {
 			store.dispatch("settings/syncAll", true).catch((e) => {
@@ -344,6 +386,8 @@ export default defineComponent({
 			registerProtocol,
 			UploadProviders,
 			currentUploadBackend,
+			channelCacheSizeDisplay,
+			onChannelCacheSizeInput,
 		};
 	},
 });

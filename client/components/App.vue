@@ -12,6 +12,7 @@
 		<ImageViewer ref="imageViewer" />
 		<ContextMenu ref="contextMenu" />
 		<ConfirmDialog ref="confirmDialog" />
+		<StaleBuildBanner />
 		<div id="upload-overlay"></div>
 	</div>
 </template>
@@ -29,6 +30,8 @@ import ImageViewer from "./ImageViewer.vue";
 import ContextMenu from "./ContextMenu.vue";
 import ConfirmDialog from "./ConfirmDialog.vue";
 import Mentions from "./Mentions.vue";
+import StaleBuildBanner from "./StaleBuildBanner.vue";
+import {startBuildStalenessCheck} from "../js/buildStaleness";
 import {
 	computed,
 	provide,
@@ -54,6 +57,7 @@ export default defineComponent({
 		ContextMenu,
 		ConfirmDialog,
 		Mentions,
+		StaleBuildBanner,
 	},
 	setup() {
 		const store = useStore();
@@ -160,6 +164,8 @@ export default defineComponent({
 			};
 
 			dayChangeTimeout.value = setTimeout(emitDayChange, msUntilNextDay());
+
+			startBuildStalenessCheck();
 		});
 
 		onBeforeUnmount(() => {

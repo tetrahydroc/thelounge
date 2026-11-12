@@ -19,6 +19,13 @@
 						>Searching in <span class="channel-name">{{ channel.name }}</span> for</span
 					>
 					<span class="topic">{{ route.query.q }}</span>
+					<input
+						type="date"
+						class="input search-date-jump"
+						title="Jump to date"
+						aria-label="Jump to date"
+						@change="jumpToDate"
+					/>
 					<MessageSearchForm :network="network" :channel="channel" />
 					<button
 						class="close"
@@ -63,7 +70,9 @@
 								v-for="(message, id) in messages"
 								:key="message.id"
 								class="result"
-								:data-jump-to="store.state.settings.enableEnhancedSearch || undefined"
+								:data-jump-to="
+									store.state.settings.enableEnhancedSearch || undefined
+								"
 							>
 								<DateMarker
 									v-if="shouldDisplayDateMarker(message, id)"
@@ -103,6 +112,33 @@
 .chat-view[data-type="search-results"] .chat-content {
 	margin-top: 45px;
 }
+
+/* Unlike other .input fields (which stay white in every theme by existing
+   convention), this control's native browser chrome - the calendar icon and
+   popup - can't be restyled at all, so it needs to actually track the theme
+   via variables (plus color-scheme, which is what themes the native popup)
+   rather than staying forced white to look intentional against it. */
+input.search-date-jump {
+	appearance: none;
+	flex-shrink: 0;
+	width: auto;
+	height: 28px;
+	line-height: 28px;
+	margin: 0 6px;
+	padding: 0 8px;
+	font-family: inherit;
+	color-scheme: var(--native-color-scheme, light);
+	background-color: var(--window-bg-color);
+	color: var(--body-color);
+	border: 1px solid var(--highlight-border-color);
+	border-radius: 2px;
+}
+
+input.search-date-jump:hover,
+input.search-date-jump:focus {
+	border-color: var(--link-color);
+	outline: 0;
+}
 </style>
 
 <script lang="ts">
@@ -117,9 +153,13 @@ import {watch, computed, defineComponent, nextTick, ref, onMounted, onUnmounted}
 import type {ClientMessage} from "../../js/types";
 
 import {useStore} from "../../js/store";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {switchToChannel} from "../../js/router";
 import {SearchQuery} from "../../../shared/types/storage";
+
+// Matches datebefore:/dateafter: tokens the date-jump picker manages, so
+// selecting a new date replaces any previous one instead of stacking up.
+const DATE_TOKEN_RE = /\b(?:datebefore|dateafter):\S+/gi;
 
 export default defineComponent({
 	name: "SearchResults",
@@ -132,10 +172,12 @@ export default defineComponent({
 	setup() {
 		const store = useStore();
 		const route = useRoute();
+		const router = useRouter();
 
 		const chat = ref<HTMLDivElement>();
 
 		const loadMoreButton = ref<HTMLButtonElement>();
+		const historyObserver = ref<IntersectionObserver | null>(null);
 
 		const offset = ref(0);
 		const moreResultsAvailable = ref(false);
@@ -205,24 +247,75 @@ export default defineComponent({
 			store.commit("messageSearchPendingQuery", null);
 		};
 
-		const doSearch = () => {
+		// Re-checks intersection of the "load more" button - needed when the
+		// component stays mounted across a query change (route.query watcher):
+		// if the button was already intersecting before the switch, a pure
+		// content swap won't refire the IntersectionObserver callback on its own.
+		const reobserveLoadMore = () => {
+			if (historyObserver.value && loadMoreButton.value) {
+				historyObserver.value.unobserve(loadMoreButton.value);
+				historyObserver.value.observe(loadMoreButton.value);
+			}
+		};
+
+		const restoreScroll = async (scrollTop: number) => {
+			await nextTick();
+
+			if (chat.value) {
+				chat.value.scrollTop = scrollTop;
+			}
+		};
+
+		const sameSearch = (
+			a: {searchTerm: string; networkUuid: string; channelName: string},
+			b: {searchTerm: string; networkUuid: string; channelName: string}
+		) =>
+			a.searchTerm === b.searchTerm &&
+			a.networkUuid === b.networkUuid &&
+			a.channelName === b.channelName;
+
+		// force=true bypasses the cache-restore path (used by the "re-search"
+		// eventbus event, when the user deliberately reruns the same query to
+		// pick up new messages) and always fetches fresh.
+		const doSearch = (force = false) => {
 			if (!network.value || !channel.value) {
 				return;
 			}
 
-			clearSearchState(); // this is a new search, so we need to clear anything before that
 			const query: SearchQuery = {
 				networkUuid: network.value.uuid,
 				channelName: channel.value.name,
 				searchTerm: String(route.query.q || ""),
-				offset: offset.value,
+				offset: 0,
 			};
+
+			const cached = store.state.messageSearchResults;
+
+			if (!force && cached && sameSearch(cached.query, query)) {
+				// Same search session as before (e.g. jumped to a message and came
+				// back) - resume instead of re-querying the server.
+				offset.value = cached.query.offset;
+				moreResultsAvailable.value = !!(
+					cached.results.length && !(cached.results.length % 100)
+				);
+				void restoreScroll(cached.scrollTop);
+				return;
+			}
+
+			clearSearchState(); // this is a new search, so we need to clear anything before that
 			store.commit("messageSearchPendingQuery", query);
 			socket.emit("search", query);
+			reobserveLoadMore();
 		};
 
 		const onShowMoreClick = () => {
 			if (!chat.value || !network.value || !channel.value) {
+				return;
+			}
+
+			if (store.state.messageSearchPendingQuery) {
+				// Already loading - avoid a duplicate request (the IntersectionObserver
+				// can keep firing while the button stays visible during the fetch).
 				return;
 			}
 
@@ -264,6 +357,56 @@ export default defineComponent({
 			switchToChannel(channel.value, message.id, messageTime);
 		};
 
+		// Jump to a specific date: reuses the datebefore:/dateafter: token syntax
+		// search() already understands server-side - no backend changes needed.
+		// Replaces any date tokens the picker previously added rather than
+		// stacking them; other free-text search terms are preserved as-is.
+		const jumpToDate = (event: Event) => {
+			const value = (event.target as HTMLInputElement).value;
+
+			if (!channel.value) {
+				return;
+			}
+
+			const baseText = String(route.query.q || "")
+				.replace(DATE_TOKEN_RE, "")
+				.replace(/\s+/g, " ")
+				.trim();
+
+			if (!value) {
+				router
+					.push({
+						name: "SearchResults",
+						params: {id: channel.value.id},
+						query: baseText ? {q: baseText} : {},
+					})
+					.catch((err) => {
+						if (err.name === "NavigationDuplicated") {
+							eventbus.emit("re-search");
+						}
+					});
+				return;
+			}
+
+			// A single-day window: dateafter:<day> datebefore:<next day>.
+			const endDate = new Date(`${value}T00:00:00`);
+			endDate.setDate(endDate.getDate() + 1);
+			const end = endDate.toISOString().slice(0, 10);
+			const dateTokens = `dateafter:${value} datebefore:${end}`;
+
+			router
+				.push({
+					name: "SearchResults",
+					params: {id: channel.value.id},
+					query: {q: baseText ? `${baseText} ${dateTokens}` : dateTokens},
+				})
+				.catch((err) => {
+					if (err.name === "NavigationDuplicated") {
+						eventbus.emit("re-search");
+					}
+				});
+		};
+
 		watch(
 			() => route.params.id,
 			() => {
@@ -301,18 +444,49 @@ export default defineComponent({
 			}
 		});
 
+		// Named so onUnmounted can unregister the exact same listener.
+		const forceSearch = () => doSearch(true);
+
 		onMounted(() => {
 			setActiveChannel();
 			doSearch();
 
 			eventbus.on("escapekey", closeSearch);
-			eventbus.on("re-search", doSearch);
+			eventbus.on("re-search", forceSearch);
+
+			void nextTick(() => {
+				if (!chat.value || !window.IntersectionObserver) {
+					return;
+				}
+
+				historyObserver.value = new window.IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								onShowMoreClick();
+							}
+						});
+					},
+					{root: chat.value}
+				);
+
+				if (loadMoreButton.value) {
+					historyObserver.value.observe(loadMoreButton.value);
+				}
+			});
 		});
 
 		onUnmounted(() => {
 			eventbus.off("escapekey", closeSearch);
-			eventbus.off("re-search", doSearch);
-			clearSearchState();
+			eventbus.off("re-search", forceSearch);
+
+			historyObserver.value?.disconnect();
+
+			// Persist scroll position (not the results/query - those already live
+			// in the store) so a resumed session lands back where it was left.
+			if (chat.value) {
+				store.commit("messageSearchScrollTop", chat.value.scrollTop);
+			}
 		});
 
 		return {
@@ -332,6 +506,7 @@ export default defineComponent({
 			onShowMoreClick,
 			jumpToBottom,
 			jump,
+			jumpToDate,
 		};
 	},
 });

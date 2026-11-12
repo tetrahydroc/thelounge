@@ -24,6 +24,8 @@ const Helper = {
 	compareHostmask,
 	compareWithWildcard,
 	catch_to_error,
+	unshiftMany,
+	pushMany,
 
 	password: {
 		hash: passwordHash,
@@ -195,4 +197,28 @@ function catch_to_error(prefix: string, err: unknown): Error {
 	}
 
 	return new Error(`${prefix}: ${msg}`);
+}
+
+// Server-side counterpart to client/js/chan.ts's unshiftMany/pushMany.
+// `target.unshift(...items)`/`.push(...items)` throws RangeError: Maximum
+// call stack size exceeded once `items` gets large enough (spread-call
+// argument-count limits) - already fixed client-side for the browser's own
+// message arrays, but the same pattern exists server-side wherever a
+// channel's in-memory history is loaded from storage (maxHistory: -1
+// channels can return up to 100000 messages, or 10000 per page with
+// Enhanced Search on - both comfortably over the limit). Chunking in
+// batches keeps each individual splice/push call's argument count bounded.
+const PREPEND_CHUNK_SIZE = 1000;
+
+function unshiftMany<T>(target: T[], items: T[]): void {
+	for (let end = items.length; end > 0; end -= PREPEND_CHUNK_SIZE) {
+		const start = Math.max(0, end - PREPEND_CHUNK_SIZE);
+		target.splice(0, 0, ...items.slice(start, end));
+	}
+}
+
+function pushMany<T>(target: T[], items: T[]): void {
+	for (let start = 0; start < items.length; start += PREPEND_CHUNK_SIZE) {
+		target.push(...items.slice(start, start + PREPEND_CHUNK_SIZE));
+	}
 }

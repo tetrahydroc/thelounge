@@ -52,10 +52,14 @@
 					<div
 						class="content"
 						dir="auto"
-						:data-jump-to="(store.state.settings.searchEnabled && store.state.settings.enableEnhancedSearch) || undefined"
+						:data-jump-to="
+							(store.state.settings.searchEnabled &&
+								store.state.settings.enableEnhancedSearch) ||
+							undefined
+						"
 						@click="jumpToMention(message)"
 					>
-						<ParsedMessage :message="(message as any)" />
+						<ParsedMessage :message="message as any" />
 					</div>
 				</div>
 			</template>
@@ -110,7 +114,8 @@
 	word-break: break-word; /* Webkit-specific */
 	cursor: pointer;
 
-	&[data-jump-to]:hover { /** WIP */
+	&[data-jump-to]:hover {
+		/** WIP */
 		color: var(--highlight-bg-color);
 		background-color: var(--highlight-border-color);
 	}

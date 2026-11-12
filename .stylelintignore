@@ -1,0 +1,3 @@
+# Vendored/generated Font Awesome distribution CSS - not ours to reformat,
+# uses FA's own internal naming/precision conventions (e.g. --_fa-family)
+client/css/fontawesome7.css

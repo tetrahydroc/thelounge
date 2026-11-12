@@ -129,6 +129,31 @@ router.beforeEach((to) => {
 	return true;
 });
 
+// A small MRU of recently-active channels that stay fully loaded in memory
+// (skip the trim-to-100 below) instead of every single channel switch
+// re-fetching older history the moment you scroll up. Only channels aged out
+// of this window get trimmed - bouncing between a handful of channels stays
+// instant, at the cost of holding more of their history in memory at once.
+// Size is user-configurable (Settings > General > Performance).
+const warmChannelIds: number[] = [];
+
+function getMaxWarmChannels(): number {
+	const configured = Number(store.state.settings.channelCacheSize);
+
+	if (!Number.isFinite(configured) || configured < 0) {
+		return 5;
+	}
+
+	return Math.min(configured, 20);
+}
+
+function trimChannelMessages(channel: ClientChan) {
+	if (channel.messages?.length > 100) {
+		channel.messages.splice(0, channel.messages.length - 100);
+		channel.moreHistoryAvailable = true;
+	}
+}
+
 router.afterEach((to) => {
 	if (store.state.appLoaded) {
 		if (window.innerWidth <= constants.mobileViewportPixels) {
@@ -152,9 +177,21 @@ router.afterEach((to) => {
 			// If  Enhanced Search is enabled dont truncate messages
 			// keep messages in memory for search/navigation purposes
 		} else {
-			if (channel.messages?.length > 100) {
-				channel.messages.splice(0, channel.messages.length - 100);
-				channel.moreHistoryAvailable = true;
+			const warmIdx = warmChannelIds.indexOf(channel.id);
+
+			if (warmIdx !== -1) {
+				warmChannelIds.splice(warmIdx, 1);
+			}
+
+			warmChannelIds.unshift(channel.id);
+
+			while (warmChannelIds.length > getMaxWarmChannels()) {
+				const evictedId = warmChannelIds.pop();
+				const evictedChannel = store.getters.findChannel(evictedId ?? -1);
+
+				if (evictedChannel) {
+					trimChannelMessages(evictedChannel.channel);
+				}
 			}
 		}
 	}
@@ -175,7 +212,11 @@ async function navigate(
 	}
 }
 
-function switchToChannel(channel: ClientChan, focusedMessageId?: number, focusedMessageTime?: number) {
+function switchToChannel(
+	channel: ClientChan,
+	focusedMessageId?: number,
+	focusedMessageTime?: number
+) {
 	const query: Record<string, number> = {};
 
 	if (focusedMessageId) {

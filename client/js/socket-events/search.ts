@@ -19,10 +19,17 @@ socket.on("search:results", (response) => {
 
 	store.commit("messageSearchPendingQuery", null);
 
+	const query = {
+		searchTerm: response.searchTerm,
+		networkUuid: response.networkUuid,
+		channelName: response.channelName,
+		offset: response.offset,
+	};
+
 	if (store.state.messageSearchResults) {
-		store.commit("addMessageSearchResults", response);
+		store.commit("addMessageSearchResults", {results: response.results, query, scrollTop: 0});
 		return;
 	}
 
-	store.commit("messageSearchResults", {results: response.results});
+	store.commit("messageSearchResults", {results: response.results, query, scrollTop: 0});
 });

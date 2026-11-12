@@ -21,7 +21,11 @@ interface MessageStorage {
 
 	deleteChannel(network: Network, channel: Channel): Promise<void>;
 
-	getMessages(network: Network, channel: Channel, nextID: () => number): Promise<Message[]>;
+	getMessages(
+		network: Network,
+		channel: Channel,
+		ensureIdAbove: (maxId: number) => void
+	): Promise<Message[]>;
 
 	canProvideMessages(): boolean;
 }

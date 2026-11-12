@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 
 <!-- New entries go after this line -->
 
+## fHori fork - Unreleased
+
+This fork diverged from `tetrahydroc/thelounge` to move faster on performance and search. See [`MIGRATION.md`](./MIGRATION.md) for what this means if you're switching from another instance, including how to go back.
+
+### Performance
+
+- The default message list is now virtualized (`@tanstack/vue-virtual`) - only messages near the viewport are mounted as real DOM nodes, fixing a UI freeze when opening/scrolling channels with tens of thousands of messages. Tradeoff: copy-paste and browser Ctrl+F no longer work across scrolled-away, unrendered messages (same as Slack/Discord).
+- Channels you switch away from now stay fully loaded in memory for a while instead of always trimming to the last 100 messages, so switching back and forth between a few channels is instant. Configurable via **Settings → General → Performance** (default 5, max 20, 0 for the old always-trim behavior).
+- Unused icon fonts stripped, an external CDN dependency removed, and HTTP response compression added, all reducing initial page load.
+- Fixed a `RangeError: Maximum call stack size exceeded` crash loading very large channels.
+
+### Search
+
+- Message search now uses a SQLite FTS5 trigram index instead of an unindexed `LIKE` scan - meaningfully faster on large histories (measured on a real ~17M-message dataset).
+- Infinite scroll on search results, resuming a search session (with result count) after clicking into a result and coming back, and a jump-to-date picker.
+- The FTS5 index lives in its own disposable sidecar file next to each user's message database, not inside it - your actual message history stays in exactly the shape tetrahydroc/thelounge already expects, always, with nothing to manually revert. (Verified against tetra specifically, not upstream `thelounge/thelounge` - it has continued its own independent schema changes since the fork point, see `MIGRATION.md`.) A database from an earlier build of this fork (before the index moved out) is detected and repaired automatically on first startup. See "Reliability" and `MIGRATION.md`.
+
+### Reliability
+
+- A small banner now appears if your browser tab is running client code older than what the server is currently serving (checked every 10 minutes and once on load), with a one-click reload.
+- The message-storage migration engine's downgrade path had a bug where it dropped the right schema objects but mislabeled the resulting version as still current - found and fixed while building the FTS5 sidecar work above, which depends on the version bookkeeping being trustworthy.
+- Loading scrollback (regular scroll-up or an Enhanced Search jump-to-hit) no longer grows a channel's in-memory message buffer without bound - it's now capped independently of the existing `maxHistory` setting, since that setting's unlimited option is meant for the live tail, not scrollback. Scrolling back past the cap just re-reads that range from storage instead of memory.
+
+### Maintenance
+
+- Replaced the vendored copy of `irc-framework` (a full source fork, ~14k LOC) with the real npm package plus a 98-line Yarn patch carrying only the two fixes actually in use (a ping-timer double-schedule guard and a reconnect-attempt counting fix). The other patched behaviors in the old vendored copy (IRCv3 standard-replies, a Unix socket transport, a re-enabled `Channel.action()`) had no caller anywhere in the app and were dropped.
+
+### Deployment
+
+- Docker build/publish now lives directly in this repo instead of a separate packaging repo; macOS dropped from the CI build matrix; CI fixed to enable Corepack (Yarn 4) before install; Renovate configured for dependency updates.
+
 ## v4.4.3 - 2024-04-01
 
 The Lounge finally gains the ability to automatically clean up sqlite databases.

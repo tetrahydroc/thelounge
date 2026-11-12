@@ -31,7 +31,7 @@ export default <IrcEventHandler>function (irc, network) {
 
 		// Remove user from any existing group (in case of group change)
 		for (const group of chan.groups) {
-			const lowerUsers = group.users.map(u => u.toLowerCase());
+			const lowerUsers = group.users.map((u) => u.toLowerCase());
 			const userIndex = lowerUsers.indexOf(nickname.toLowerCase());
 
 			if (userIndex !== -1) {
@@ -40,19 +40,18 @@ export default <IrcEventHandler>function (irc, network) {
 		}
 
 		// Find the target group or create it
-		let targetGroup = chan.groups.find(g => g.name === groupName);
+		let targetGroup = chan.groups.find((g) => g.name === groupName);
 
 		if (!targetGroup) {
 			// Find the lowest existing position and go below it
-			const lowestPosition = chan.groups.length > 0
-				? Math.min(...chan.groups.map(g => g.position)) - 1
-				: 0;
+			const lowestPosition =
+				chan.groups.length > 0 ? Math.min(...chan.groups.map((g) => g.position)) - 1 : 0;
 			targetGroup = {name: groupName, position: lowestPosition, users: []};
 			chan.groups.push(targetGroup);
 		}
 
 		// Add user to the group
-		if (!targetGroup.users.map(u => u.toLowerCase()).includes(nickname.toLowerCase())) {
+		if (!targetGroup.users.map((u) => u.toLowerCase()).includes(nickname.toLowerCase())) {
 			targetGroup.users.push(nickname);
 		}
 

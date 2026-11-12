@@ -1,7 +1,6 @@
 import _ from "lodash";
 import {v4 as uuidv4} from "uuid";
 import IrcFramework, {Client as IRCClient} from "irc-framework";
-import log from "../log.js";
 import Chan, {ChanConfig, Channel} from "./chan.js";
 import Msg from "./msg.js";
 import Prefix from "./prefix.js";

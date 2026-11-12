@@ -1,6 +1,7 @@
 import _ from "lodash";
 import {WebSocketServer as wsServer} from "ws";
 import express, {NextFunction, Request, Response} from "express";
+import compression from "compression";
 import fs from "fs";
 import path from "path";
 import {Server as ioServer, Socket as ioSocket} from "socket.io";
@@ -97,10 +98,12 @@ export default async function (
 		.disable("x-powered-by")
 		.use(allRequests)
 		.use(addSecurityHeaders)
+		.use(compression({threshold: 1024}))
 		.get("/", indexRequest)
 		.get("/service-worker.js", forceNoCacheRequest)
 		.get("/js/bundle.js.map", forceNoCacheRequest)
 		.get("/css/style.css.map", forceNoCacheRequest)
+		.get("/version-hash", forceNoCacheRequest, versionHashRequest)
 		.use(express.static(Utils.getFileFromRelativeToRoot("public"), staticOptions))
 		.use("/storage/", express.static(Config.getStoragePath(), staticOptions));
 
@@ -237,6 +240,9 @@ export default async function (
 					serveClient: false,
 					transports: Config.values.transports,
 					pingTimeout: 60000,
+					perMessageDeflate: {
+						threshold: 1024, // skip compressing tiny/frequent payloads
+					},
 				});
 
 				sockets.on("connect", (socket) => {
@@ -450,6 +456,14 @@ function forceNoCacheRequest(_req: Request, res: Response, next: NextFunction) {
 	return next();
 }
 
+function versionHashRequest(_req: Request, res: Response) {
+	// Polled periodically by an already-open client tab to detect that the
+	// server has been rebuilt/redeployed since it loaded - see
+	// client/js/buildStaleness.ts. Must never be cached (forceNoCacheRequest
+	// above), otherwise a stale tab could keep reading a stale answer too.
+	res.type("text/plain").send(Helper.getVersionCacheBust());
+}
+
 function indexRequest(_req: Request, res: Response) {
 	res.setHeader("Content-Type", "text/html");
 
@@ -516,9 +530,9 @@ function initializeClient(
 		}
 	});
 
-	socket.on("more", (data) => {
+	socket.on("more", async (data) => {
 		if (_.isPlainObject(data)) {
-			const history = client.more(data);
+			const history = await client.more(data);
 
 			if (history !== null) {
 				socket.emit("more", history);
@@ -531,9 +545,13 @@ function initializeClient(
 		if (_.isPlainObject(data)) {
 			const result = await client.getMessagesAround(data);
 
-			if (result !== null) {
-				socket.emit("messages:around", result);
-			}
+			// Always respond so the client's pending jump resolves quickly,
+			// even when there is no message storage provider (empty messages)
+			socket.emit("messages:around", {
+				chan: result ? result.chan : data.target,
+				messages: result ? result.messages : [],
+				hasMoreBefore: result ? result.hasMoreBefore : false,
+			});
 		}
 	});
 
@@ -673,7 +691,7 @@ function initializeClient(
 	// so there's no need to handle msg:preview:toggle
 	if (!Config.values.public) {
 		socket.on("msg:preview:toggle", (data) => {
-			if (_.isPlainObject(data)) {
+			if (!_.isPlainObject(data)) {
 				return;
 			}
 
@@ -960,6 +978,7 @@ function getClientConfiguration(): SharedConfiguration | LockedSharedConfigurati
 		applicationServerKey: manager!.webPush.vapidKeys!.publicKey,
 		version: Helper.getVersionNumber(),
 		gitCommit: Helper.getGitCommit(),
+		buildHash: Helper.getVersionCacheBust(),
 		themes: themes.getAll(),
 		defaultTheme: Config.values.theme,
 		public: Config.values.public,

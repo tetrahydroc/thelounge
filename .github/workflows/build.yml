@@ -7,26 +7,17 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: Node ${{ matrix.node_version }} on ${{ matrix.os }}
+    name: Node ${{ matrix.node_version }} on ubuntu-latest
 
     strategy:
       matrix:
-        include:
-          # EOL: April 2025
-          - os: macOS-latest
-            node_version: 18.x
-          - os: windows-latest
-            node_version: 18.x
-          - os: ubuntu-latest
-            node_version: 18.x
-          # EOL: April 2026
-          - os: ubuntu-latest
-            node_version: 20.x
-          # EOL: April June 2024
-          - os: ubuntu-latest
-            node_version: 21.x
+        node_version:
+          # Active LTS
+          - 22.x
+          # Latest LTS
+          - 24.x
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@master
@@ -35,9 +26,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
+          # No cache: yarn here - actions/setup-node runs `yarn cache dir`
+          # internally as part of *this* step to resolve the cache path,
+          # using whichever Yarn is already on PATH (the runner's global
+          # Yarn Classic 1.22.22) - before "Enable corepack" below ever gets
+          # a chance to run. That immediately hits the same "packageManager
+          # yarn@4.11.0 but global version is 1.22.22" error this fork's CI
+          # has already been bitten by once. Corepack has to be enabled
+          # before anything invokes yarn at all, which this step's own
+          # caching logic can't wait for.
+
+      - name: Enable corepack
+        run: corepack enable
 
       - name: Install
-        run: yarn --frozen-lockfile --non-interactive
+        run: yarn install --immutable
 
       - name: Build
         run: yarn build

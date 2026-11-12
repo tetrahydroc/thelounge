@@ -6,6 +6,7 @@ import crypto from "crypto";
 import colors from "chalk";
 
 import log from "./log.js";
+import Helper from "./helper.js";
 import Chan, {ChanConfig} from "./models/chan.js";
 import Msg from "./models/msg.js";
 import Config from "./config.js";
@@ -209,7 +210,15 @@ class Client {
 			let delay = this.manager.clients.length * 500;
 			this.networks.forEach((network) => {
 				setTimeout(() => {
-					network.channels.forEach((channel) => channel.loadMessages(this, network));
+					// Only eager-load history for the channel the client will
+					// actually land on (or this network's lobby, if none of
+					// its channels is the last active one). Every other
+					// channel's history loads lazily on first Client.open()
+					// instead of all being pulled into memory up front.
+					const activeChannel =
+						network.channels.find((channel) => channel.id === this.lastActiveChannel) ||
+						network.getLobby();
+					activeChannel.loadMessages(this, network);
 
 					if (!network.userDisconnected && network.irc) {
 						network.irc.connect();
@@ -575,7 +584,7 @@ class Client {
 		);
 	}
 
-	more(data) {
+	async more(data: {target: number; lastId: number; condensed: boolean; beforeTime?: number}) {
 		const target = this.find(data.target);
 
 		if (!target) {
@@ -584,20 +593,64 @@ class Client {
 
 		const chan = target.chan;
 		let messages: Msg[] = [];
-		let index = 0;
 
-		const enhancedSearch = Boolean(this.config.clientSettings.searchEnabled && this.config.clientSettings.enableEnhancedSearch)
+		const enhancedSearch = Boolean(
+			this.config.clientSettings.searchEnabled &&
+				this.config.clientSettings.enableEnhancedSearch
+		);
 
 		// Use batch sizes for "more" requests, batch sizes are based on enableEnhancedSearch setting
 		// When enableEnhancedSearch = true send upto 10000 messages at a time
 		const batchSize = enhancedSearch ? 1000 : 100;
-		const maxBatchSize =  enhancedSearch ? 10000 : 1000;
+		const maxBatchSize = enhancedSearch ? 10000 : 1000;
 
-		// If client requests -1, send last batch of messages
-		if (data.lastId < 0) {
+		const beforeTime = data.beforeTime;
+
+		// The client anchors on the timestamp of its oldest loaded message
+		// (`beforeTime`). If given, we page back from *that* point instead of
+		// the buffer tail — this is what makes scroll-up work after a jump or
+		// an around-chunk fetch: without the anchor the server would keep
+		// re-sending the same tail batch, the client would dedupe it away,
+		// and the "Show older messages" button would vanish.
+		let index: number;
+
+		if (typeof beforeTime === "number") {
+			// Binary search for the first in-memory message whose time is
+			// >= beforeTime. Everything before that index is strictly older
+			// than the anchor and therefore qualifies for the next page.
+			let lo = 0;
+			let hi = chan.messages.length;
+
+			while (lo < hi) {
+				const mid = (lo + hi) >> 1;
+
+				if (new Date(chan.messages[mid].time).getTime() < beforeTime) {
+					lo = mid + 1;
+				} else {
+					hi = mid;
+				}
+			}
+
+			index = lo;
+
+			if (index === chan.messages.length) {
+				// The client's anchor is at (or beyond) the head of our
+				// in-memory buffer: we hold nothing older than it. Serve the
+				// page straight from the database (see the fallback below),
+				// anchored at the client's own oldest message.
+				index = 0;
+			}
+		} else if (data.lastId < 0) {
+			// Legacy/first load: send the last batch of in-memory messages
 			index = chan.messages.length;
 		} else {
 			index = chan.messages.findIndex((val) => val.id === data.lastId);
+
+			if (index === -1) {
+				// Requested id is no longer in memory (chunked out); fall back
+				// to the tail rather than returning nothing.
+				index = chan.messages.length;
+			}
 		}
 
 		// If requested id is not found, an empty array will be sent
@@ -629,10 +682,97 @@ class Client {
 			messages = chan.messages.slice(startIndex, index);
 		}
 
+		// A full in-memory batch means older messages are available (either
+		// still in memory or further back in the database), so the client can
+		// keep paging.
+		let hasMore = messages.length >= batchSize;
+
+		if (!hasMore) {
+			// The in-memory region ran out (or the anchor is beyond our
+			// buffer head). Fetch the next chunk directly from the message
+			// storage database — skip-to-chunk, no pagination walk.
+			//
+			// The anchor is the client's own oldest message. With
+			// getMessagesBefore's "time <= ?" that row itself is included
+			// and deduped away by id, so the response is exactly "the rows
+			// older than everything the client already holds". If the
+			// fetch comes back short, we have reached the oldest stored
+			// message and hasMore flips to false.
+			if (this.messageProvider?.canProvideMessages()) {
+				try {
+					const anchor = typeof beforeTime === "number" ? beforeTime : Date.now();
+
+					const chunk = await this.messageProvider.getMessagesBefore(
+						target.network.uuid,
+						chan.name,
+						anchor,
+						maxBatchSize,
+						(maxId) => {
+							this.idMsg = Math.max(this.idMsg, maxId + 1);
+						}
+					);
+
+					if (chunk.length > 0) {
+						// The client dedupes by id on receipt, but the
+						// response still has to be a single ascending run:
+						// `more.ts` unshifts it as a block, so anything out
+						// of order would scramble the visible log. Drop
+						// rows the client already has (anchor row, overlap
+						// with the in-memory slice above), keep the rest in
+						// time order, oldest first.
+						const known = new Set<number>(chan.messages.map((m) => m.id));
+
+						const fresh = chunk.filter((m) => !known.has(m.id));
+
+						fresh.sort(
+							(a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+						);
+
+						messages = [...messages, ...fresh];
+
+						// A full raw fetch means the database holds more
+						// history. Require actual fresh rows as well, so a
+						// chunk fully covered by memory cannot loop forever
+						// reporting hasMore with nothing new.
+						hasMore = chunk.length >= maxBatchSize && fresh.length > 0;
+
+						if (fresh.length > 0) {
+							// Keep the buffer in sync with the DB chunk so
+							// subsequent "more" requests can be served from
+							// memory (or skip cleanly past it) again.
+							Helper.unshiftMany(chan.messages, fresh);
+
+							// Backward paging grows this buffer with no
+							// natural ceiling (Enhanced Search's 10k-row
+							// jumps are the worst case, against a
+							// potentially multi-million-row history). Cap it
+							// independently of maxHistory: that setting's
+							// -1/unlimited is an admin's deliberate choice
+							// for the live tail, not license for scrollback
+							// to grow unbounded. `messages` above was
+							// already sliced out for this response, so
+							// trimming the oldest rows off the front here
+							// doesn't affect what gets sent to the client -
+							// it only means a re-scroll past this point
+							// re-fetches from storage instead of memory.
+							const scrollbackCap = maxBatchSize * 3;
+
+							if (chan.messages.length > scrollbackCap) {
+								chan.messages.splice(0, chan.messages.length - scrollbackCap);
+							}
+						}
+					}
+				} catch (err) {
+					log.error(`Failed to load history chunk from storage: ${String(err)}`);
+				}
+			}
+		}
+
 		return {
 			chan: chan.id,
 			messages: messages,
 			totalMessages: chan.messages.length,
+			hasMore: hasMore,
 		};
 	}
 
@@ -687,16 +827,20 @@ class Client {
 		}
 
 		try {
-			const messages = await this.messageProvider.getMessagesAround(
+			const {messages, hasMoreBefore} = await this.messageProvider.getMessagesAround(
 				network.uuid,
 				chan.name,
 				data.time,
-				200
+				200,
+				(maxId) => {
+					this.idMsg = Math.max(this.idMsg, maxId + 1);
+				}
 			);
 
 			return {
 				chan: chan.id,
 				messages: messages,
+				hasMoreBefore,
 			};
 		} catch (err) {
 			log.error("Failed to get messages around time:", String(err));
@@ -731,6 +875,13 @@ class Client {
 			targetNetChan.chan.firstUnread =
 				targetNetChan.chan.messages[targetNetChan.chan.messages.length - 1].id;
 		}
+
+		// History for this channel may not have been loaded yet (only the
+		// last-active channel per network is eager-loaded at connect - see
+		// Client.connect()). This is a no-op if it's already loaded/loading.
+		// firstUnread for messages that arrive via this load is set inside
+		// loadMessages() itself once they land.
+		targetNetChan.chan.loadMessages(this, targetNetChan.network);
 
 		attachedClient.openChannel = targetNetChan.chan.id;
 		this.lastActiveChannel = targetNetChan.chan.id;

@@ -1,6 +1,6 @@
 import socket from "../socket";
 import storage from "../localStorage";
-import {toClientChan} from "../chan";
+import {toClientChan, markMsgsRaw} from "../chan";
 import {router, switchToChannel, navigate} from "../router";
 import {store} from "../store";
 import parseIrcUri from "../helpers/parseIrcUri";
@@ -125,9 +125,11 @@ function mergeChannelData(
 		// Reconnection only sends new messages, so merge it on the client
 		// Only concat if server sent us less than 100 messages so we don't introduce gaps
 		if (currentChannel.messages && newChannel.messages.length < 100) {
-			currentChannel.messages = currentChannel.messages.concat(newChannel.messages);
+			currentChannel.messages = currentChannel.messages.concat(
+				markMsgsRaw(newChannel.messages)
+			);
 		} else {
-			currentChannel.messages = newChannel.messages;
+			currentChannel.messages = markMsgsRaw(newChannel.messages);
 		}
 
 		// TODO: this is copies more than what the compiler knows about

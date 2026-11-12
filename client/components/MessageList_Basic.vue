@@ -16,50 +16,64 @@
 			role="log"
 			aria-live="polite"
 			aria-relevant="additions"
+			:style="{
+				position: 'relative',
+				height: totalSize + 'px',
+				padding: 0,
+			}"
 			@copy="onCopy"
 		>
-			<template v-for="(message, id) in condensedMessages">
+			<div
+				v-for="virtualRow in virtualItems"
+				:key="virtualRow.key"
+				:ref="(el) => rowVirtualizer.measureElement(el as Element)"
+				:data-index="virtualRow.index"
+				:style="{
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					width: '100%',
+					transform: `translateY(${virtualRow.start + MESSAGES_PADDING}px)`,
+					padding:
+						'0 0 ' +
+						(virtualRow.index === condensedMessages.length - 1 ? MESSAGES_PADDING : 0) +
+						'px',
+				}"
+			>
 				<DateMarker
-					v-if="shouldDisplayDateMarker(message, id)"
-					:key="message.id + '-date'"
-					:message="(message as any)"
-					:focused="message.id === focused"
+					v-if="shouldDisplayDateMarker(entryAt(virtualRow.index), virtualRow.index)"
+					:message="entryAt(virtualRow.index) as any"
+					:focused="entryAt(virtualRow.index).id === focused"
 				/>
-				<div
-					v-if="shouldDisplayUnreadMarker(Number(message.id))"
-					:key="message.id + '-unread'"
-					class="unread-marker"
-				>
+				<div v-if="shouldDisplayUnreadMarker(virtualRow.index)" class="unread-marker">
 					<span class="unread-marker-text" />
 				</div>
 
 				<MessageCondensed
-					v-if="message.type === 'condensed'"
-					:key="message.messages[0].id"
+					v-if="condensedGroupAt(virtualRow.index)"
 					:network="network"
 					:keep-scroll-position="keepScrollPosition"
-					:messages="message.messages"
-					:focused="message.id === focused"
+					:messages="condensedGroupAt(virtualRow.index)!.messages"
+					:focused="entryAt(virtualRow.index).id === focused"
 				/>
 				<Message
 					v-else
-					:key="message.id"
 					:channel="channel"
 					:network="network"
-					:message="message"
+					:message="messageAt(virtualRow.index)"
 					:keep-scroll-position="keepScrollPosition"
-					:is-previous-source="isPreviousSource(message, id)"
-					:focused="message.id === focused"
+					:is-previous-source="
+						isPreviousSource(entryAt(virtualRow.index), virtualRow.index)
+					"
+					:focused="entryAt(virtualRow.index).id === focused"
 					@toggle-link-preview="onLinkPreviewToggle"
 				/>
-			</template>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import {condensedTypes} from "../../shared/irc";
-import {ChanType} from "../../shared/types/chan";
 import {MessageType, SharedMsg} from "../../shared/types/msg";
 import eventbus from "../js/eventbus";
 import clipboard from "../js/clipboard";
@@ -72,25 +86,26 @@ import {
 	defineComponent,
 	nextTick,
 	onBeforeUnmount,
-	onBeforeUpdate,
 	onMounted,
 	onUnmounted,
 	PropType,
 	ref,
 	watch,
 } from "vue";
+import {useVirtualizer} from "@tanstack/vue-virtual";
 import {useStore} from "../js/store";
 import {ClientChan, ClientMessage, ClientNetwork, ClientLinkPreview} from "../js/types";
+import {
+	useCondensedMessages,
+	CondensedEntry,
+	CondensedMessageContainer,
+} from "../js/hooks/use-condensed-messages";
 
-type CondensedMessageContainer = {
-	type: "condensed";
-	time: Date;
-	messages: ClientMessage[];
-	id?: number;
-};
-
-// TODO; move into component
-let unreadMarkerShown = false;
+// Matches the previous (unvirtualized) `#chat .messages { padding: 10px 0; }`
+// rule - absolutely-positioned rows don't respect that CSS padding (it
+// applies to the containing block's padding edge, which is where `top: 0`
+// starts from), so the equivalent inset is baked into row offsets/height here.
+const MESSAGES_PADDING = 10;
 
 export default defineComponent({
 	name: "MessageListBasic",
@@ -114,14 +129,67 @@ export default defineComponent({
 
 		const isWaitingForNextTick = ref(false);
 
+		// Maintains the condensed (status-message-folding) view
+		// incrementally instead of rebuilding it from scratch on every
+		// incoming message - see use-condensed-messages.ts.
+		const {
+			condensed: condensedMessages,
+			rebuildAll: rebuildCondensed,
+			appendOne: appendCondensed,
+			prependChunk: prependCondensed,
+		} = useCondensedMessages(
+			() => props.channel,
+			() => store.state.settings.statusMessages
+		);
+
+		const entryAt = (index: number) => condensedMessages[index];
+
+		const condensedGroupAt = (index: number): CondensedMessageContainer | null => {
+			const entry = condensedMessages[index];
+			return entry.type === "condensed" && entry.messages.length > 1 ? entry : null;
+		};
+
+		const messageAt = (index: number): ClientMessage => {
+			const entry = condensedMessages[index];
+			return entry.type === "condensed" ? entry.messages[0] : entry;
+		};
+
+		// Every message in a channel's history used to be a real mounted DOM
+		// node with no windowing, which froze the UI on large (maxHistory: -1)
+		// channels. This renders only the rows near the viewport; heights vary
+		// a lot (plain messages, async-loading link previews, collapsible
+		// condensed groups) so sizes start as a rough estimate and are
+		// corrected per-row by measureElement's ResizeObserver after mount.
+		const getEntryKey = (entry: CondensedEntry): number =>
+			entry.type === "condensed" && entry.messages.length > 1
+				? entry.messages[0].id
+				: (entry.id as number);
+
+		// The whole options object must be wrapped in `computed()` (rather
+		// than passed as a plain object with `condensedMessages.length` read
+		// once at setup time) so @tanstack/vue-virtual re-subscribes whenever
+		// condensedMessages actually changes length - see its own
+		// `computed(() => ({...unref(options)}))` wrapping internally, which
+		// only re-runs when its own dependency (this computed) changes.
+		const rowVirtualizer = useVirtualizer(
+			computed(() => ({
+				count: condensedMessages.length,
+				getScrollElement: () => chat.value,
+				estimateSize: () => 28,
+				overscan: 8,
+				getItemKey: (index: number) => getEntryKey(condensedMessages[index]),
+			}))
+		);
+
+		const virtualItems = computed(() => rowVirtualizer.value.getVirtualItems());
+		const totalSize = computed(() => rowVirtualizer.value.getTotalSize() + MESSAGES_PADDING);
+
 		const jumpToBottom = () => {
 			skipNextScrollEvent.value = true;
 			props.channel.scrolledToBottom = true;
 
-			const el = chat.value;
-
-			if (el) {
-				el.scrollTop = el.scrollHeight;
+			if (condensedMessages.length > 0) {
+				rowVirtualizer.value.scrollToIndex(condensedMessages.length - 1, {align: "end"});
 			}
 		};
 
@@ -141,12 +209,20 @@ export default defineComponent({
 				}
 			}
 
+			// Anchor the request to the oldest message we hold so that when the
+			// in-memory buffer runs out, the server can skip straight to the
+			// next region of history in the database instead of stalling
+			const messages = props.channel.messages;
+			const beforeTime =
+				messages.length > 0 ? new Date(messages[0].time).getTime() : undefined;
+
 			props.channel.historyLoading = true;
 
 			socket.emit("more", {
 				target: props.channel.id,
 				lastId: lastMessage,
 				condensed: store.state.settings.statusMessages !== "shown",
+				beforeTime,
 			});
 		};
 
@@ -177,76 +253,14 @@ export default defineComponent({
 			console.error("Error in new IntersectionObserver", e);
 		});
 
-		const condensedMessages = computed(() => {
-			if (props.channel.type !== ChanType.CHANNEL && props.channel.type !== ChanType.QUERY) {
-				return props.channel.messages;
-			}
+		// Manually tracked (not reactive) - lets the messages-length watcher
+		// below classify what kind of change happened (prepend vs append vs
+		// a shrink) without needing a second watcher and its ordering.
+		let prevFirstId: number | null =
+			props.channel.messages.length > 0 ? props.channel.messages[0].id : null;
 
-			// If actions are hidden, just return a message list with them excluded
-			if (store.state.settings.statusMessages === "hidden") {
-				return props.channel.messages.filter(
-					(message) => !condensedTypes.has(message.type || "")
-				);
-			}
-
-			// If actions are not condensed, just return raw message list
-			if (store.state.settings.statusMessages !== "condensed") {
-				return props.channel.messages;
-			}
-
-			let lastCondensedContainer: CondensedMessageContainer | null = null;
-
-			const condensed: (ClientMessage | CondensedMessageContainer)[] = [];
-
-			for (const message of props.channel.messages) {
-				// If this message is not condensable, or its an action affecting our user,
-				// then just append the message to container and be done with it
-				if (message.self || message.highlight || !condensedTypes.has(message.type || "")) {
-					lastCondensedContainer = null;
-
-					condensed.push(message);
-
-					continue;
-				}
-
-				if (!lastCondensedContainer) {
-					lastCondensedContainer = {
-						time: message.time,
-						type: "condensed",
-						messages: [],
-					};
-
-					condensed.push(lastCondensedContainer);
-				}
-
-				lastCondensedContainer.messages.push(message);
-
-				// Set id of the condensed container to last message id,
-				// which is required for the unread marker to work correctly
-				lastCondensedContainer.id = message.id;
-
-				// If this message is the unread boundary, create a split condensed container
-				if (message.id === props.channel.firstUnread) {
-					lastCondensedContainer = null;
-				}
-			}
-
-			return condensed.map((message) => {
-				// Skip condensing single messages, it doesn't save any
-				// space but makes useful information harder to see
-				if (message.type === "condensed" && message.messages.length === 1) {
-					return message.messages[0];
-				}
-
-				return message;
-			});
-		});
-
-		const shouldDisplayDateMarker = (
-			message: SharedMsg | CondensedMessageContainer,
-			id: number
-		) => {
-			const previousMessage = condensedMessages.value[id - 1];
+		const shouldDisplayDateMarker = (message: SharedMsg | CondensedEntry, id: number) => {
+			const previousMessage = condensedMessages[id - 1];
 
 			if (!previousMessage) {
 				return true;
@@ -262,17 +276,32 @@ export default defineComponent({
 			);
 		};
 
-		const shouldDisplayUnreadMarker = (id: number) => {
-			if (!unreadMarkerShown && id > props.channel.firstUnread) {
-				unreadMarkerShown = true;
-				return true;
+		const highestIdAt = (entry: CondensedEntry): number =>
+			entry.type === "condensed"
+				? (entry.id ?? entry.messages[entry.messages.length - 1].id)
+				: entry.id;
+
+		// Shows the unread marker exactly once, on the first entry (in array
+		// order) whose highest contained message id crosses past firstUnread.
+		// Index-independent (only ever looks at condensedMessages[index] and
+		// condensedMessages[index - 1]) so it works under partial/out-of-order
+		// virtualized rendering, unlike the old version's shared mutable
+		// "already shown this pass" flag, which assumed a full top-to-bottom
+		// render every update.
+		const shouldDisplayUnreadMarker = (index: number) => {
+			const entry = condensedMessages[index];
+
+			if (!entry || highestIdAt(entry) <= props.channel.firstUnread) {
+				return false;
 			}
 
-			return false;
+			const previous = condensedMessages[index - 1];
+
+			return !previous || highestIdAt(previous) <= props.channel.firstUnread;
 		};
 
-		const isPreviousSource = (currentMessage: ClientMessage, id: number) => {
-			const previousMessage = condensedMessages.value[id - 1];
+		const isPreviousSource = (currentMessage: CondensedEntry, id: number) => {
+			const previousMessage = condensedMessages[id - 1];
 			return (
 				previousMessage &&
 				currentMessage.type === MessageType.MESSAGE &&
@@ -303,19 +332,15 @@ export default defineComponent({
 			}
 
 			if (!props.channel.scrolledToBottom) {
-				if (props.channel.historyLoading) {
-					const heightOld = el.scrollHeight - el.scrollTop;
-
-					isWaitingForNextTick.value = true;
-
-					await nextTick();
-
-					isWaitingForNextTick.value = false;
-					skipNextScrollEvent.value = true;
-
-					el.scrollTop = el.scrollHeight - heightOld;
-				}
-
+				// No manual restore needed here for a prepend (loading older
+				// history while scrolled up): the virtualizer already keeps the
+				// viewport visually stable as newly-prepended rows above the
+				// fold get measured for the first time (see
+				// @tanstack/virtual-core's built-in scroll-adjustment-on-resize
+				// logic) - a second, manual restore on top of that fought with
+				// it and was the actual cause of the scrollbar visibly jumping
+				// back and forth as rows settled from their estimated size to
+				// their real one.
 				return;
 			}
 
@@ -379,6 +404,19 @@ export default defineComponent({
 			() => {
 				props.channel.scrolledToBottom = true;
 
+				// Switching channels swaps in a whole different messages
+				// array - rebuild the condensed view for it outright rather
+				// than trying to classify this as a prepend/append.
+				rebuildCondensed();
+				prevFirstId =
+					props.channel.messages.length > 0 ? props.channel.messages[0].id : null;
+
+				// The virtualizer's measurement cache is keyed by message id,
+				// which is only unique within a channel - clear it so the new
+				// channel's rows don't briefly render at a previous channel's
+				// (possibly numerically colliding) cached heights.
+				rowVirtualizer.value.measure();
+
 				// Re-add the intersection observer to trigger the check again on channel switch
 				// Otherwise if last channel had the button visible, switching to a new channel won't trigger the history
 				if (historyObserver.value && loadMoreButton.value) {
@@ -388,13 +426,49 @@ export default defineComponent({
 			}
 		);
 
+		// Replaces a `deep: true` watch over the whole messages array (which
+		// deep-traverses every message's object graph on every single
+		// incoming message - expensive, and the actual cause of most
+		// chat-while-scrolling lag under default settings). A shallow watch
+		// on `.length` plus comparing the first message's id is enough to
+		// tell a tail-append from a head-prepend from a shrink (client-side
+		// history trimming), and drives the condensed view incrementally.
 		watch(
-			() => props.channel.messages,
-			async () => {
+			() => props.channel.messages.length,
+			async (newLen, oldLen) => {
+				const messages = props.channel.messages;
+				const newFirstId = messages.length > 0 ? messages[0].id : null;
+				const isPrepend =
+					oldLen !== undefined &&
+					newLen > oldLen &&
+					prevFirstId !== null &&
+					newFirstId !== prevFirstId;
+				const isAppend = oldLen !== undefined && newLen > oldLen && !isPrepend;
+
+				if (isAppend) {
+					const addedCount = newLen - (oldLen ?? 0);
+
+					if (addedCount === 1) {
+						appendCondensed(messages[messages.length - 1]);
+					} else if (addedCount > 0 && addedCount <= 20) {
+						for (let i = messages.length - addedCount; i < messages.length; i++) {
+							appendCondensed(messages[i]);
+						}
+					} else {
+						rebuildCondensed();
+					}
+				} else if (isPrepend) {
+					prependCondensed(newLen - (oldLen ?? 0));
+				} else {
+					// Shrink (client-side trim once over the message cap in
+					// msg.ts) or anything else ambiguous - safe, infrequent
+					// fallback.
+					rebuildCondensed();
+				}
+
+				prevFirstId = newFirstId;
+
 				await keepScrollPosition();
-			},
-			{
-				deep: true,
 			}
 		);
 
@@ -405,10 +479,6 @@ export default defineComponent({
 				await keepScrollPosition();
 			}
 		);
-
-		onBeforeUpdate(() => {
-			unreadMarkerShown = false;
-		});
 
 		onBeforeUnmount(() => {
 			eventbus.off("resize", handleResize);
@@ -428,6 +498,13 @@ export default defineComponent({
 			loadMoreButton,
 			onCopy,
 			condensedMessages,
+			entryAt,
+			condensedGroupAt,
+			messageAt,
+			rowVirtualizer,
+			virtualItems,
+			totalSize,
+			MESSAGES_PADDING,
 			shouldDisplayDateMarker,
 			shouldDisplayUnreadMarker,
 			keepScrollPosition,
