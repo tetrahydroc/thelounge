@@ -231,7 +231,7 @@ export default defineComponent({
 
 		// IRC Bridge formatter
 		const prettyMessage = computed(() => {
-			if (props.channel?.type !== ChanType.CHANNEL || !store.state.settings.beautifyBridgedMessages || props.message.type !== MessageType.MESSAGE) {
+			if (props.channel?.type !== ChanType.CHANNEL || !store.state.settings.beautifyBridgedMessages || (props.message.type !== MessageType.MESSAGE && props.message.type !== MessageType.ACTION)) {
 				return props.message;
 			}
 
